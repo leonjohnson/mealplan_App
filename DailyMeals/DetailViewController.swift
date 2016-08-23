@@ -1,11 +1,3 @@
-//
-//  DetailViewController.swift
-//  DailyMeals
-//
-//  Created by Mzalih on 18/11/15.
-//  Copyright © 2015 Meals. All rights reserved.
-//
-//TO DO COMMENDTS (Add proper comments for all method)
 import UIKit
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {

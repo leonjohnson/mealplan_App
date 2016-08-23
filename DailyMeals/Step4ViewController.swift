@@ -26,7 +26,6 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("loaded....")
         //To hide close button when app. loads normaly from Profile view.
         closeButton.hidden = true
         

@@ -35,6 +35,9 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         
         thisWeek = futureWeeks[0]
+        
+        assert(futureWeeks[1] != Week(), "Invalid futureWeek")
+        
         nextWeek = futureWeeks[1]
         
         print("Week 1: \(thisWeek)")

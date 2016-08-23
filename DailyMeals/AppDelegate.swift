@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         //enableLocalNotification();
+        
+        DataHandler.calculateCalorieAllowance()
     
         if(Config.getBoolValue(Config.HAS_PROFILE)){
             

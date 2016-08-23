@@ -286,7 +286,6 @@ class DataHandler: NSObject {
             print("added \(food.name)")
             
         }
-        print("filter contains : \(namesOfFoodsLiked.count)")
         
         let items = realm.objects(Food).filter("name contains '" + name + "' and pk != 0").filter("NOT name IN %@", namesOfFoodsLiked)
         print("NEW items contain : %f", items.count)
@@ -328,7 +327,12 @@ class DataHandler: NSObject {
         return realm.objects(Week).filter(latestWeekPredicate).sorted("start_date", ascending: true).first!
     }
     
-    
+    /**
+     This function gets all future week objects or creates them along with their meal plan.
+     
+     - Return Results<Week>
+     
+     */
     static func getFutureWeeks()-> Results<Week>
     {
         let calender = NSCalendar.currentCalendar()
@@ -485,7 +489,7 @@ class DataHandler: NSObject {
         }
         else
         {
-            heightInCm = bio.heightMeasurement * Constants.FEET_TO_CM_CONSTANT
+            heightInCm = bio.heightMeasurement * Constants.INCH_TO_CM_CONSTANT
         }
         
         if bio.weightUnit == "kg" {
@@ -495,8 +499,10 @@ class DataHandler: NSObject {
         {
             weightInKg = bio.weightMeasurement * Constants.POUND_TO_KG_CONSTANT
         }
+        
+        print("kConstant:\(kConstant) \n heightInCm: \(heightInCm) \n heightCoefficient:\(heightCoefficient) weightInKg: \(weightInKg) \n weightCoeffecient: \(weightCoeffecient) \n Age: \(Double(getAge())) \n ageCoefficient: \(ageCoefficient)")
 
-        let k = kConstant + heightInCm * heightCoefficient + weightInKg * weightCoeffecient + Double(getAge()) * ageCoefficient
+        let k = kConstant + (heightInCm * heightCoefficient) + (weightInKg * weightCoeffecient) + (Double(getAge()) * ageCoefficient)
         print ("Calories allowed is: \(k)")
         return Int(k)
     }

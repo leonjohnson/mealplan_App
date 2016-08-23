@@ -1,26 +1,19 @@
-//
-//  settings.swift
-//  DailyMeals
-//
-//  Created by Jithu on 5/26/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
-
 import UIKit
 
 class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     @IBOutlet var settingsTable : UITableView!
+    @IBOutlet var settingsLabel : UILabel!
     
-    //variable created for constant class
     let bio  = Biographical()
-    
     let settingstableImages = ["Profile", "Diet", "LikeFood", "DislikeFood", "AboutUs", "ContactUs"]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        settingsLabel.attributedText = NSAttributedString(string: "Settings", attributes: [NSFontAttributeName:Constants.DETAIL_PAGE_FOOD_NAME_LABEL, NSForegroundColorAttributeName:Constants.MP_GREY])
         
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,19 +21,8 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     //TABLEVIEW DELEGATE & DATASOURCE
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
@@ -53,9 +35,13 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         
     }
-
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return Constants.TABLE_ROW_HEIGHT
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         
         if (indexPath.section == 0){
             
@@ -71,7 +57,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 cell.textLabel?.text = "Your details"
                 cell.imageView?.image = imageName
             case 1:
-                cell.textLabel?.text = "Your dietary"
+                cell.textLabel?.text = "Your diet"
                 cell.imageView?.image = imageName
             case 2:
                 cell.textLabel?.text = "Food you like"

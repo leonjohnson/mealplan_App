@@ -118,8 +118,6 @@ class DataStructure : NSObject{
         
         meal1.name = "Meal " +  day.description
         
-        print("modulo: \(1 % (day*countValue) + 1) ")
-        
         meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFood(1 % (day*countValue) + 1)! ,numberServing: 1.0));
         meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFood(2 % (day*countValue) + 1)! ,numberServing: 1));
         meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFood(3 % (day*countValue) + 1)! ,numberServing: 1));
@@ -148,12 +146,13 @@ class DataStructure : NSObject{
         let desiredNumberOfDailyMeals = bio.numberOfDailyMeals
         
         //Predicates
-        var listOfPredicates : [NSPredicate] = []
+        var listOfAndPredicates : [NSPredicate] = []
+        var listOfORPredicates : [NSPredicate] = []
         let lowCarbPredicate = NSPredicate(format: "carbohydrates < 10")
         let highCarbPredicate = NSPredicate(format: "carbohydrates > 10")
         let vegetablePredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.vegetableFoodType)
         let lowFatPredicate = NSPredicate(format: "fats < 8")
-        let highProteinPredicate = NSPredicate(format: "proteins > 15 AND fats < 10 AND carbohydrates < 60")
+        let highProteinPredicate = NSPredicate(format: "(proteins > 15) AND (fats < 10) AND (carbohydrates < 60)")
         let fatTreatPredicate = NSPredicate(format: "fats BETWEEN {15, 40} AND carbohydrates BETWEEN {4,10}")
         let carbTreatPredicate = NSPredicate(format: "carbohydrates BETWEEN {14, 80}")
         let likedFoodsPredicate = NSPredicate(format: "self.name in %@", likedFoods)
@@ -161,7 +160,7 @@ class DataStructure : NSObject{
         // let predicate = NSPredicate(format: "NOT name IN %@", namesStr)
         let dietaryNeedPredicate = NSPredicate(format: "self.dietSuitablity.name == %@", dietaryNeed!)
         let noPretFood = NSPredicate(format: "NOT name CONTAINS[c] 'PRET'")
-        var compoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: listOfPredicates)
+        var compoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: listOfAndPredicates)
         let onlyBreakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.onlyBreakfastFoodType)
         let eatenAtBreakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.eatenAtBreakfastFoodType)
         
@@ -201,22 +200,25 @@ class DataStructure : NSObject{
                 var sortedFoodBasket :[String :[Food]] = [Constants.PROTEINS:[], Constants.CARBOHYDRATES:[],Constants.FATS:[], Constants.vegetableFoodType:[]]
                 var sortedFoodItemBasket :[String :[FoodItem]] = [Constants.PROTEINS:[], Constants.CARBOHYDRATES:[],Constants.FATS:[], Constants.vegetableFoodType:[]]
                 
-                listOfPredicates = []
-                listOfPredicates.appendContentsOf([dislikedFoodsPredicate, highProteinPredicate])
+                listOfORPredicates = []
+                listOfAndPredicates = []
+                listOfAndPredicates.appendContentsOf([dislikedFoodsPredicate, highProteinPredicate])
                 
                 if mealIndex == 1{
-                    listOfPredicates.appendContentsOf([onlyBreakfastPredicate, eatenAtBreakfastPredicate])
+                    //listOfAndPredicates.append(eatenAtBreakfastPredicate)
+                    //listOfORPredicates.append(onlyBreakfastPredicate)
                     //random_yay_nay == 0 ? listOfPredicates.append(lowFatPredicate) : listOfPredicates.append(lowCarbPredicate)
-                    listOfPredicates.append(lowFatPredicate)
+                    listOfAndPredicates.append(lowFatPredicate)
                 }
                 
                 if mealIndex == desiredNumberOfDailyMeals{
-                    listOfPredicates.append(lowFatPredicate)
-                    listOfPredicates.append(noPretFood)
+                    listOfAndPredicates.append(lowFatPredicate)
+                    listOfAndPredicates.append(noPretFood)
                 }
                 
-                let newCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: listOfPredicates)
-                let foodResults = realm.objects(Food).filter(newCompoundPredicate)
+                let newAndCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: listOfAndPredicates)
+                //let newOrCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: listOfORPredicates)
+                let foodResults = realm.objects(Food).filter(newAndCompoundPredicate)//.filter(newOrCompoundPredicate)
                 var randomNumber : UInt32 = arc4random_uniform(UInt32(foodResults.count))
                 
                 
@@ -311,6 +313,11 @@ class DataStructure : NSObject{
                         foodArrayEmpty: if foodArray.isEmpty{
                             break foodArrayEmpty
                         } else {
+                            print("trying to sort: \(key)")
+                            for each in foodArray{
+                                print("trying to sort: \(each.name)")
+                            }
+                            
                             sortedFoodBasket[key]?.appendContentsOf(foodArray.sort(foodSort))
                         }
                         

@@ -39,7 +39,8 @@ struct Constants {
     static let MEAL_PLAN_SERVINGSIZE_LABEL = UIFont.systemFontOfSize(9, weight: UIFontWeightRegular)
     static let DETAIL_PAGE_FOOD_NAME_LABEL = UIFont.systemFontOfSize(17, weight: UIFontWeightBold)
     
-    
+    //Table Row height
+    static let TABLE_ROW_HEIGHT = CGFloat(55)
     
     static let MACRO_LABEL = UIFont(name: "HelveticaNeue", size: 12)!
     
@@ -102,11 +103,11 @@ struct Constants {
     static let grams = "g"
     static let slice = "slice"
     static let item = "item"
-    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "100g", "100ml", "cup"]
+    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "g", "ml", "cup"]
     
     //Calender
     struct Calendar {
-        static let usersCalendar = NSCalendar(calendarIdentifier: NSLocale.currentLocale().localeIdentifier)!
+        static let usersCalendar = NSCalendar.currentCalendar()
     }
     static var START_OF_WEEK: NSDate {
         let tommorrow = NSDate(timeInterval: 60 * 60 * 24, sinceDate: NSDate())
