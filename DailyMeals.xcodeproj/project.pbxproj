@@ -67,6 +67,7 @@
 		96FC99411C9BD706008426BA /* FoodListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FC99401C9BD706008426BA /* FoodListTableViewCell.swift */; };
 		96FC99451C9BE1FD008426BA /* PremiumPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FC99441C9BE1FD008426BA /* PremiumPlanViewController.swift */; };
 		96FD95621C9818D3009F318F /* LastWeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FD95611C9818D3009F318F /* LastWeekViewController.swift */; };
+		F70418661D9C434B003270C2 /* initialLoad3.json in Resources */ = {isa = PBXBuildFile; fileRef = F70418651D9C434B003270C2 /* initialLoad3.json */; };
 		F7057F711D3586620017B7C9 /* bkgrd.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7057F701D3586620017B7C9 /* bkgrd.swift */; };
 		F73A6C3E1D526B25006C34F9 /* createMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A6C3D1D526B25006C34F9 /* createMealPlan.swift */; };
 		F76D64AA1D09901B00542C53 /* mpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76D64A91D09901B00542C53 /* mpButton.swift */; };
@@ -161,6 +162,7 @@
 		96FC99401C9BD706008426BA /* FoodListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListTableViewCell.swift; sourceTree = "<group>"; };
 		96FC99441C9BE1FD008426BA /* PremiumPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PremiumPlanViewController.swift; sourceTree = "<group>"; };
 		96FD95611C9818D3009F318F /* LastWeekViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastWeekViewController.swift; sourceTree = "<group>"; };
+		F70418651D9C434B003270C2 /* initialLoad3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = initialLoad3.json; sourceTree = "<group>"; };
 		F7057F701D3586620017B7C9 /* bkgrd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bkgrd.swift; sourceTree = "<group>"; };
 		F73A6C3D1D526B25006C34F9 /* createMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = createMealPlan.swift; sourceTree = "<group>"; };
 		F76D64A91D09901B00542C53 /* mpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mpButton.swift; sourceTree = "<group>"; };
@@ -246,12 +248,12 @@
 		9626D4491CB3F1820094A0C8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				960187621CB78985002E4904 /* DataHandler.swift */,
 				96E13F171CDB1D4000EE3689 /* FeedBack.swift */,
 				96E13F091CDB1C7600EE3689 /* DailyMealPlan.swift */,
 				96E13F0A1CDB1C7600EE3689 /* Food.swift */,
 				96E13F0B1CDB1C7600EE3689 /* FoodItem.swift */,
 				96E13F0C1CDB1C7600EE3689 /* Meal.swift */,
-				960187621CB78985002E4904 /* DataHandler.swift */,
 				96E13F151CDB1C9500EE3689 /* ServingSize.swift */,
 				96E13F191CDB273B00EE3689 /* User.swift */,
 				96E13F1B1CDB27AC00EE3689 /* DietSuitability.swift */,
@@ -268,6 +270,7 @@
 		9636EC861D05544600D822E1 /* JSON files */ = {
 			isa = PBXGroup;
 			children = (
+				F70418651D9C434B003270C2 /* initialLoad3.json */,
 				9636EC871D05548200D822E1 /* initalLoad.json */,
 				F7DB5D211D42D335001AE827 /* initialLoad2.json */,
 			);
@@ -565,6 +568,7 @@
 				F7DB5D221D42D335001AE827 /* initialLoad2.json in Resources */,
 				9636EC881D05548200D822E1 /* initalLoad.json in Resources */,
 				965A5F1C1BFC48D00055ACA4 /* LaunchScreen.storyboard in Resources */,
+				F70418661D9C434B003270C2 /* initialLoad3.json in Resources */,
 				96FB5AB51C92954B00DA99EA /* IconImages.xcassets in Resources */,
 				965A5F191BFC48D00055ACA4 /* Assets.xcassets in Resources */,
 				965A5F441BFC809D0055ACA4 /* Media.xcassets in Resources */,

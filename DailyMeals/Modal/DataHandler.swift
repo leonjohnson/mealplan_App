@@ -4,6 +4,17 @@ import RealmSwift
 class DataHandler: NSObject {
     
     //MARK: Data Handler For Profile
+    
+    static func userExists()->Bool?{
+        let realm = try! Realm()
+        let user = realm.objects(User)
+        if(user.count == 0){
+            return false
+        }else{
+            return true
+        }
+    }
+    
     static func getActiveUser()->User{
         let realm = try! Realm()
         let profile = realm.objects(User).first
@@ -69,8 +80,8 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             
-            profile.name                = newData.name
-            profile.email               = newData.email
+            profile.name                = newData.name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            profile.email               = newData.email.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             profile.gender              = newData.gender
             profile.birthdate           = newData.birthdate
             
@@ -117,7 +128,7 @@ class DataHandler: NSObject {
             for data in newData {
                 
                 if let item = data as? Food {
-                    profile.foods.append(item);
+                    profile.foods.append(item);                    
                 }
             }
         }
@@ -195,7 +206,7 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             realm.add(foodItem)
-            //print("creating FoodItem \(foodItem.food!.name )")
+            print("creating FoodItem \(foodItem.food!.name )")
         }
         
     }
@@ -237,7 +248,7 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             realm.add(food)
-           // print("creating Food \(food.name )")
+            print("creating Food \(food.name )")
         }
         return food
         
@@ -308,24 +319,81 @@ class DataHandler: NSObject {
         return (items?.dailyMeals[weekNumber-1])!;
     }
     
+    static func createWeeks(weeksInTheFutureToCreate:[Int]) {
+        let kcal = calculateCalorieAllowance()
+        let newKcal = Double(kcal) * 0.95
+        
+        let realm = try! Realm()
+        let numWeeks = realm.objects(Week).count + 1
+        let calender = NSCalendar.currentCalendar()
+        
+        
+        for weekInTheFuture in weeksInTheFutureToCreate{
+            let newWeek = Week()
+            newWeek.name = String(numWeeks + weekInTheFuture)
+            let futureWeekStartDate = calender.dateByAddingUnit(.Day, value: (weekInTheFuture*7), toDate: calender.startOfDayForDate(NSDate()), options: [.MatchFirst])
+            if (futureWeekStartDate != nil){
+                newWeek.start_date = futureWeekStartDate!
+            }
+            newWeek.macroAllocation.appendContentsOf(macroAllocation())
+            newWeek.calorieAllowance = kcal
+            newWeek.TDEE = Int(newKcal)
+            //newWeek.dailyMeals.appendContentsOf(DataStructure.createMeal())
+            newWeek.dailyMeals.appendContentsOf(DataStructure.createMealPlans(newWeek))
+            
+            try! realm.write {
+                realm.add(newWeek)
+            }
+        }
+    }
+    
+    
+    
+    
+    static func createThisWeekAndNextWeek()
+    {
+        
+        print("createThisWeekAndNextWeek CALLED.")
+        let realm = try! Realm()
+        let calender = NSCalendar.currentCalendar()
+        let aWeekAgo = calender.dateByAddingUnit(.Day, value: -6, toDate: calender.startOfDayForDate(NSDate()), options: [.MatchFirst])
+        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo!)
+        let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted("start_date", ascending: true).count
+        
+        
+        
+        var bangOn = 0
+        var variance = 0.0
+        let foods = realm.objects(Food)
+        for food in foods {
+            let foodCalculation : Double = (food.carbohydrates * 4) + (food.fats * 4) + (food.proteins * 9)
+            if foodCalculation == food.calories{
+                bangOn = bangOn + 1
+            }
+            variance = variance + (foodCalculation - food.calories)
+        }
+        
+        print("Bang on: \((bangOn/foods.count)*100)%")
+        print("The average variance is : \(variance/Double(foods.count))")
+        
+        
+        switch weeks {
+        case 0:
+            createWeeks([0, 1])
+        case 1:
+            createWeeks([1])
+        default:
+            print("No weeks need to be created")
+            return
+        }
+    }
+    
     
     // get the current week, which is the week ordered by start_date and the last object.
     // get todays date and find out how many days have lapsed since the start_date, = x
     // if x == 2 then get the second dailymeal in this weeks list of daily meals
     // display that on screen.
     
-    static func getThisWeek()->Week
-    {
-        
-        
-        let calender = NSCalendar.currentCalendar()
-        let aWeekAgo = calender.dateByAddingUnit(.Day, value: -6, toDate: calender.startOfDayForDate(NSDate()), options: [.MatchFirst])
-        
-        let realm = try! Realm()
-        let latestWeekPredicate = NSPredicate(format: "start_date > %@", aWeekAgo!)
-        
-        return realm.objects(Week).filter(latestWeekPredicate).sorted("start_date", ascending: true).first!
-    }
     
     /**
      This function gets all future week objects or creates them along with their meal plan.
@@ -339,57 +407,17 @@ class DataHandler: NSObject {
         let aWeekAgo = calender.dateByAddingUnit(.Day, value: -6, toDate: calender.startOfDayForDate(NSDate()), options: [.MatchFirst])
         
         let realm = try! Realm()
-        let latestWeekPredicate = NSPredicate(format: "start_date > %@", aWeekAgo!)
+        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo!)
         
-        let weeks = realm.objects(Week).filter(latestWeekPredicate).sorted("start_date", ascending: true)
+        let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted("start_date", ascending: true).count
         
-        if (weeks.count == 0)
-        {
-            let kcal = calculateCalorieAllowance()
-            let newKcal = Double(kcal) * 0.8
-            
-            let newWeek = Week()
-            
-            newWeek.name = String("1")
-            
-            newWeek.start_date = NSDate()
-            
-            newWeek.macroAllocation.appendContentsOf(macroAllocation())
-            
-            newWeek.calorieAllowance = kcal
-            
-            newWeek.TDEE = Int(newKcal)
-            
-            newWeek.dailyMeals.appendContentsOf(DataStructure.createMeal())
-            
-            
-            //Next week
-            let nextWeek = Week()
-            nextWeek.name = String("2")
-            nextWeek.start_date = startOfNextWeek()
-            nextWeek.macroAllocation.appendContentsOf(macroAllocation())
-            nextWeek.calorieAllowance = kcal
-            nextWeek.TDEE = Int(newKcal)
-            nextWeek.dailyMeals.appendContentsOf(DataStructure.createMeal())
-
-            
-            try! realm.write {
-                realm.add(newWeek)
-                realm.add(nextWeek)
-                
-            }
-            
-            return realm.objects(Week).filter(latestWeekPredicate).sorted("start_date", ascending: true)
+        if weeks < 2 {
+            createThisWeekAndNextWeek()
         }
         
-        else
-        {
-            return weeks
-        }
-        
-        
-        
+        return realm.objects(Week).filter(futureWeeksPredicate).sorted("start_date", ascending: true)  
     }
+
     
     static func startOfNextWeek() -> NSDate
     {
@@ -417,31 +445,31 @@ class DataHandler: NSObject {
         {
             // carbs:40, protein:40, fat:20
             carb.name = Constants.CARBOHYDRATES
-            carb.value = (Double(kcal)*0.4)/4 //grams
+            carb.value = ceil((Double(kcal)*0.4)/4) //grams
             
             protein.name = Constants.PROTEINS
-            protein.value = (Double(kcal)*0.4)/4 //grams
+            protein.value = ceil((Double(kcal)*0.4)/4) //grams
             
             fats.name = Constants.FATS
-            fats.value = (Double(kcal)*0.2)/9 //grams
+            fats.value = ceil((Double(kcal)*0.2)/9) //grams
             
         }
         else
         {
             // carbs:30, protein:45, fat:25
             carb.name = Constants.CARBOHYDRATES
-            carb.value = (Double(kcal)*0.3)/4 //grams
+            carb.value = ceil((Double(kcal)*0.3)/4) //grams
             
             protein.name = Constants.PROTEINS
-            protein.value = (Double(kcal)*0.45)/4 //grams
+            protein.value = ceil((Double(kcal)*0.45)/4) //grams
             
             fats.name = Constants.FATS
-            fats.value = (Double(kcal)*0.25)/9 //grams
+            fats.value = ceil((Double(kcal)*0.25)/9) //grams
         }
         
         let list = List() as List<Macronutrient>
-        list.append(carb)
         list.append(protein)
+        list.append(carb)
         list.append(fats)
         
         return list
@@ -487,53 +515,54 @@ class DataHandler: NSObject {
         if bio.heightUnit == "cm" {
             heightInCm = bio.heightMeasurement
         }
-        else
-        {
+        else {
             heightInCm = bio.heightMeasurement * Constants.INCH_TO_CM_CONSTANT
         }
         
         if bio.weightUnit == "kg" {
             weightInKg = bio.weightMeasurement
         }
-        else
-        {
+        else {
             weightInKg = bio.weightMeasurement * Constants.POUND_TO_KG_CONSTANT
         }
         
         print("kConstant:\(kConstant) \n heightInCm: \(heightInCm) \n heightCoefficient:\(heightCoefficient) weightInKg: \(weightInKg) \n weightCoeffecient: \(weightCoeffecient) \n Age: \(Double(getAge())) \n ageCoefficient: \(ageCoefficient)")
 
         let k = kConstant + (heightInCm * heightCoefficient) + (weightInKg * weightCoeffecient) + (Double(getAge()) * ageCoefficient)
-        print ("Calories allowed is: \(k)")
-        return Int(k)
+        
+        
+        var sessionsCount = Double(bio.numberOfCardioSessionsEachWeek + bio.numberOfResistanceSessionsEachWeek)
+        if sessionsCount > 7{
+            sessionsCount = 7 //min 0, max 7
+        }
+        let jobIntensity = Double(Constants.activityLevelsAtWork.indexOf(bio.activityLevelAtWork!)!) + 1.0 //min 1, max 4
+        let workOutIntensity = 3.0 //Upper end of between 1 and 4
+        let n = Int(ceil((sessionsCount * workOutIntensity) + (jobIntensity))) //min 1, max 22
+        
+        assert(n > 0 && n < 28, "Error in the \(#function) as number of ")
+        
+        
+        let distribution = [0.000, 1.200, 1.217, 1.234, 1.251, 1.268, 1.285, 1.302, 1.319, 1.335, 1.352, 1.369, 1.386, 1.403, 1.420, 1.437, 1.454, 1.471, 1.488, 1.505, 1.522, 1.539, 1.556, 1.573, 1.590, 1.606, 1.623, 1.640, 1.657, 1.674, 1.691, 1.708, 1.725]
+        
+        let tdee = distribution[n] * k
+        print ("REE: \(k) \n TDEE:\(tdee) \n -5%\(tdee*0.95)")
+        //The number of workouts multiplied by 2.5, and then adds the index of job intensity plus one to get A(n)
+        
+        // If aim is to gain muscle then add 10% if loose weight then reduce to 5% below TDEE or 20% whichever is the lowest of the two and then 5% each week.
+        
+        let aim = getActiveBiographical()
+        if aim.gainMuscle.value == true {
+            return Int(tdee * 1.1)
+        }
+        if aim.looseFat.value == true {
+            return Int(tdee * 0.95)
+        }
+        // If the user wants to loose fat and gain muscle then we treat this as looseFat.
+        return Int(tdee)
     }
     
     
-    static func setCaloriesAndMealsForThisWeek()
-    {
-        //1. Get the current week
-        let thisWeek = DataHandler.getThisWeek()
-        
-        // 2. get todays date and find out how many days have lapsed since the start_date
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day], fromDate: thisWeek.start_date, toDate: NSDate(), options: [])
-        let daysLapsed = components.day
-        
-        //3. get todays meals
-        let todaysMeals = thisWeek.dailyMeals[daysLapsed]
-        
-        
-        //4. Set the number of TDEE and new calorie allowance for this week
-        let tdee = calculateCalorieAllowance()
-        let calorieAllowance = Double(tdee) * 0.8
-        thisWeek.calorieAllowance = Int(calorieAllowance)
-        thisWeek.TDEE = tdee
-        
-        //thisWeek.name = ""
-        //thisWeek.macroAllocation = nil
-        
-        
-        //5. Run the meal plan algorithm and set the meal plan for the week
-    }
+
     
     static func updateServingSizes()
     {
@@ -586,6 +615,49 @@ class DataHandler: NSObject {
         return foodItem;
     }
     
+    /** INTERNAL TESTING */
     
+    static func macrosCorrect() {
+        let weeks = getFutureWeeks()
+        
+        let errorMargin = 1.5
+        
+        print("Week count == \(weeks.count)")
+        for week in weeks{
+            var dailyProtein = 0.0
+            var dailyCarbs = 0.0
+            var dailyFats = 0.0
+            
+            print(" Week \(week.name)")
+            for dailyMealPlan in week.dailyMeals{
+                dailyProtein = dailyProtein + dailyMealPlan.totalProteins()
+                dailyCarbs = dailyCarbs + dailyMealPlan.totalCarbohydrates()
+                dailyFats = dailyFats + dailyMealPlan.totalFats()
+                
+                
+                if (week.macroAllocation.first!.value < dailyProtein + errorMargin) && (week.macroAllocation.first!.value > dailyMealPlan.totalProteins() - errorMargin){
+                    print("Protein 😇")
+                } else {
+                    print("Protein 😫")
+                }
+                
+                if (week.macroAllocation[1].value < dailyCarbs + errorMargin) && (week.macroAllocation[1].value > dailyMealPlan.totalCarbohydrates() - errorMargin){
+                    print("Carbs 😇")
+                } else {
+                    print("Carbs 😫")
+                }
+                
+                if (week.macroAllocation[2].value < dailyFats + errorMargin) && (week.macroAllocation[1].value > dailyMealPlan.totalFats() - errorMargin){
+                    print("Fats 😇")
+                } else {
+                    print("Fats 😫")
+                }
+ 
+            }
+            //print("\(dailyProtein, dailyCarbs, dailyFats)")
+            
+            
+        }
+    }
     
 }

@@ -30,20 +30,9 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         
         let futureWeeks = DataHandler.getFutureWeeks()
-        
-        print("future weeks : \(futureWeeks)")
-        
-        
         thisWeek = futureWeeks[0]
-        
         assert(futureWeeks[1] != Week(), "Invalid futureWeek")
-        
         nextWeek = futureWeeks[1]
-        
-        print("Week 1: \(thisWeek)")
-        print("Week 2: \(thisWeek)")
-        
-        
         showPercentOnly = true
         
         
@@ -51,8 +40,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
          
          Check if the week exists. If not, create a week, set calories, and set its meals.
          If the week does exist, retrieve it.
-         
-         
+
          */
         
         self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
@@ -78,9 +66,6 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         caloriesCountLabel.attributedText = NSMutableAttributedString(string:numberFormatter.stringFromNumber(largeNumber!)! + " calories", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
         
-        
-        
-      
         // To display Regestered Users name on Meal Plan's page
         // namelabel.text = DataHandler.getActiveUser().name + ", you need"
         
@@ -145,14 +130,14 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
             
             switch indexPath.row {
             case 0:
-                macroName = (thisWeek?.macroAllocation[0].name)! //carbs
-                macroValue = String(Int((thisWeek?.macroAllocation[0].value)!))+"g"
-                let a = (thisWeek?.macroAllocation[0].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
-                macroPercent = Int(a * 100)
-            case 1:
                 macroName = (thisWeek?.macroAllocation[1].name)!//proteins
                 macroValue = String(Int((thisWeek?.macroAllocation[1].value)!))+"g"
                 let a = (thisWeek?.macroAllocation[1].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
+                macroPercent = Int(a * 100)
+            case 1:
+                macroName = (thisWeek?.macroAllocation[0].name)! //carbs
+                macroValue = String(Int((thisWeek?.macroAllocation[0].value)!))+"g"
+                let a = (thisWeek?.macroAllocation[0].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
                 macroPercent = Int(a * 100)
             case 2:
                 macroName = (thisWeek?.macroAllocation[2].name)!//fats

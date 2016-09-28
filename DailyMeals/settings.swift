@@ -134,6 +134,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
             navigationController?.pushViewController(destination, animated: true)
 
         }
+        self.settingsTable.deselectRowAtIndexPath(indexPath, animated: true)
 
 
     }

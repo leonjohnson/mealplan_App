@@ -2,6 +2,8 @@ import UIKit
 
 struct Constants {
     
+    static let LOCALISATION_NEEDED = "LOCALISATION_NEEDED"
+    
     static let API_URL  = BASE_URL + API_SEPERATOR + API_KEY + API_SEPERATOR
     static let BASE_URL = "http://mp0.herokuapp.com"
     static let API_SEARCH_LIMIT = 20
@@ -25,6 +27,7 @@ struct Constants {
     static let GENERAL_LABEL = UIFont.systemFontOfSize(14, weight: UIFontWeightBold)
     static let MEAL_PLAN_TITLE = UIFont.systemFontOfSize(16, weight: UIFontWeightBold)
     static let MEAL_PLAN_SUBTITLE = UIFont.systemFontOfSize(13, weight: UIFontWeightBold)
+    static let MEAL_PLAN_DATE = UIFont.systemFontOfSize(13, weight: UIFontWeightLight)
     
     static let FOOD_LABEL_FONT = UIFont(name: "Helvetica",size: 17.0)!
     static let FOOD_LABEL_FONT_BOLD = UIFont(name: "Helvetica-Bold",size: 17.0)!
@@ -84,12 +87,14 @@ struct Constants {
     static let FATS = "Fats"
     static let CALORIES = "kCals"
     static let NUMBER_OF_NUTRIENTS_TO_DISPLAY = 8
+    static let MACRONUTRIENTS = ["Proteins", "Carbohydrates", "Fats", "Vegetable"]
     
     
     //NSPredicate constants
     static let onlyBreakfastFoodType = "Breakfast only"
     static let eatenAtBreakfastFoodType = "Eaten At Breakfast"
     static let vegetableFoodType = "Vegetable"
+    static let drinkFoodType = "Drink"
     
     
     //NSPredicates
@@ -103,7 +108,10 @@ struct Constants {
     static let grams = "g"
     static let slice = "slice"
     static let item = "item"
-    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "g", "ml", "cup"]
+    static let tablet = "tablet"
+    static let heaped_teaspoon = "heaped teaspoon"
+    static let pinch = "pinch"
+    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "g", "ml", "cup", "tablet", "heaped teaspoon", "pinch"]
     
     //Calender
     struct Calendar {
@@ -127,6 +135,9 @@ struct Constants {
         return components.day
     }
     
+    
+    //Activity levels
+    static let activityLevelsAtWork = ["Sedentary", "Lightly active", "Moderately active", "Very active"] // This array is used for display purposes
     
     
     

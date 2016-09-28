@@ -86,6 +86,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
    
     
     override func viewDidLoad() {
+        print("here 4")
         super.viewDidLoad()
         
         //Set Label fonts

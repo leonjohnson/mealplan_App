@@ -42,7 +42,6 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
     var cardioPickerData =  [0, 1, 2, 3, 4, 5, 6, 7]
     
     //Active Work Values
-    var activeWorkValues = ["Sedentary", "Lightly active", "Moderately active", "Very active"]
     var activeWorkEgValues = ["e.g. Desk job, Driver", "e.g. Retail assistant, Teacher", "e.g. Waiter, Postman", "e.g. Manual laborer, Dancer"]
     var selectedWorkValue = 4
     
@@ -88,8 +87,8 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         
         setUpDefaltView();
         
-        if(parentView?.bio.activityLevelAtWork != nil && activeWorkValues.contains((parentView?.bio.activityLevelAtWork)!)){
-            selectedWorkValue = activeWorkValues.indexOf((parentView?.bio.activityLevelAtWork)!)!;
+        if(parentView?.bio.activityLevelAtWork != nil && Constants.activityLevelsAtWork.contains((parentView?.bio.activityLevelAtWork)!)){
+            selectedWorkValue = Constants.activityLevelsAtWork.indexOf((parentView?.bio.activityLevelAtWork)!)!;
         }
     }
     
@@ -108,10 +107,10 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
     
     //WorkActive Table Delagates.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activeWorkValues.count
+        return Constants.activityLevelsAtWork.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let item = activeWorkValues[indexPath.row];
+        let item = Constants.activityLevelsAtWork[indexPath.row];
         let item1 = activeWorkEgValues[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         cell.textLabel?.font = Constants.STANDARD_FONT
@@ -182,7 +181,7 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         }else{
             
             //Adding values to constant Class
-            parentView?.bio.activityLevelAtWork = activeWorkValues[selectedWorkValue]
+            parentView?.bio.activityLevelAtWork = Constants.activityLevelsAtWork[selectedWorkValue]
 
         }
         

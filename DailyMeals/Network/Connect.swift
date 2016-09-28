@@ -201,7 +201,7 @@ class Connect: NSObject {
      */
     static func importDataFromJSON() -> NSArray  {
          var items = [Food]();
-        if let path = NSBundle.mainBundle().pathForResource("initalLoad2", ofType: "json") {
+        if let path = NSBundle.mainBundle().pathForResource("initalLoad3", ofType: "json") {
             do {
                 let jsonData = try NSData(contentsOfFile: path, options: NSDataReadingOptions.DataReadingMappedIfSafe)
                 do {
