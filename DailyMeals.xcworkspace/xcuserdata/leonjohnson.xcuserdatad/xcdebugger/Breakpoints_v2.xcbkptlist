@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DailyMeals/DataStructure.swift"
-            timestampString = "496793820.12755"
+            timestampString = "496871061.45654"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "596"
-            endingLineNumber = "596"
+            startingLineNumber = "607"
+            endingLineNumber = "607"
             landmarkName = "createMealPlans(_:)"
             landmarkType = "5">
          </BreakpointContent>

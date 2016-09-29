@@ -30,6 +30,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     var dateCount:Int = 0
     override func viewDidAppear(animated: Bool)
     {
+        super.viewDidAppear(true)
+        
         thisWeek = DataHandler.getFutureWeeks()[0]
         
         let calendar: NSCalendar = NSCalendar.currentCalendar()

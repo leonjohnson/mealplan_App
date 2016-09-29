@@ -37,4 +37,31 @@ class DailyMealPlan: Object {
         }
         return totalFat
     }
+    
+    func containsFood(food:Food)->Bool{
+        for meal in meals{
+            for fi in meal.foodItems{
+                if fi.food == food{
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func foods()->Set<Food>{
+        var set:Set<Food> = Set()
+        for meal in meals{
+            for fi in meal.foodItems{
+                set.insert(fi.food!)
+                }
+        }
+        
+        return set
+    }
+    
+    
+    
+    
 }
+

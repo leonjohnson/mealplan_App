@@ -620,7 +620,7 @@ class DataHandler: NSObject {
     static func macrosCorrect() {
         let weeks = getFutureWeeks()
         
-        let errorMargin = 1.5
+        let errorMargin = 2.0
         
         print("Week count == \(weeks.count)")
         for week in weeks{

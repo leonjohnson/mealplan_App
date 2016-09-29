@@ -153,14 +153,22 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     {
         // Update the user interface for the detail item.
         
-        nutrientsToDisplay += [(name: "Calories", value: (Int((detailItem?.food?.calories)!).description) + " kcal")]
-        nutrientsToDisplay += [(name: "Fats", value: (detailItem?.food?.fats.description)! + " g")]
-        nutrientsToDisplay += [(name: "Saturated fats", value: (detailItem?.food?.sat_fats.value!.description)! + " g")]
-        nutrientsToDisplay += [(name: "Carbohydrates", value: (detailItem?.food?.carbohydrates.description)! + " g")]
-        nutrientsToDisplay += [(name: "Sugars", value: (detailItem?.food?.sugars.value!.description)! + " g")]
-        nutrientsToDisplay += [(name: "Fibre", value: (detailItem?.food?.fibre.value!.description)! + " g")]
-        nutrientsToDisplay += [(name: "Proteins", value: (detailItem?.food?.proteins.description)! + " g")]
-        nutrientsToDisplay += [(name: "Salt", value: (detailItem?.food?.salt.description)! + " mg")]
+        nutrientsToDisplay += [(name: "Calories", value: (Int(((detailItem?.food?.calories)! * (detailItem?.numberServing)!)).description) + " kcal")]
+        let fa = (detailItem?.food?.fats)! * (detailItem?.numberServing)!
+        let sa = (detailItem?.food?.sat_fats.value)! * (detailItem?.numberServing)!
+        let ca = (detailItem?.food?.carbohydrates)! * (detailItem?.numberServing)!
+        let su = (detailItem?.food?.sugars.value)! * (detailItem?.numberServing)!
+        let fi = (detailItem?.food?.fibre.value)! * (detailItem?.numberServing)!
+        let pr = (detailItem?.food?.proteins)! * (detailItem?.numberServing)!
+        let salt = (detailItem?.food?.salt)! * (detailItem?.numberServing)!
+        
+        nutrientsToDisplay += [(name: "Fats", value: fa.description + " g")]
+        nutrientsToDisplay += [(name: "Saturated fats", value: sa.description + " g")]
+        nutrientsToDisplay += [(name: "Carbohydrates", value: ca.description + " g")]
+        nutrientsToDisplay += [(name: "Sugars", value: su.description + " g")]
+        nutrientsToDisplay += [(name: "Fibre", value: fi.description + " g")]
+        nutrientsToDisplay += [(name: "Proteins", value: pr.description + " g")]
+        nutrientsToDisplay += [(name: "Salt", value: salt.description + " mg")]
     }
     
     
