@@ -138,6 +138,10 @@ class DataStructure : NSObject{
     static func createMealPlans(thisWeek:Week) -> [DailyMealPlan]{
         
         
+        var csv1 : String = ""
+        var csv2 : String = ""
+        var csv3 : String = ""
+        
         var plans : [DailyMealPlan] = []
         DataHandler.updateServingSizes()
         
@@ -153,28 +157,26 @@ class DataStructure : NSObject{
         let likedFoods = DataHandler.getLikeFoods()
         let dislikedFoods = DataHandler.getDisLikedFoods().foods
         
-        
-        
-        
-        
         let macros = thisWeek.macroAllocation
         let kcal = Double(thisWeek.calorieAllowance)
         
         print("macros: \(macros) and kcal:\(kcal)")
         
         let bio = DataHandler.getActiveBiographical()
-        let dietaryNeed = bio.dietaryMethod
+        let dietaryNeed = bio.dietaryRequirement
         let desiredNumberOfDailyMeals = Double(bio.numberOfDailyMeals)
         
         //Predicates
         var listOfAndPredicates : [NSPredicate] = []
         var listOfORPredicates : [NSPredicate] = []
         let lowCarbPredicate = NSPredicate(format: "carbohydrates <= 5")
-        let highCarbPredicate = NSPredicate(format: "carbohydrates > 15 AND fats < 5")
+        let highCarbPredicate = NSPredicate(format: "carbohydrates > 15 AND fats < 5") //Used to search only the foods associated with the choosen protein source
+        let carbTreatPredicate = NSPredicate(format: "carbohydrates BETWEEN {14, 80} AND fats BETWEEN {0, 5}") // Used to search across all foods in db
         let vegetablePredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.vegetableFoodType)
         let lowFatPredicate = NSPredicate(format: "fats < 5")
+        let fatTreatPredicate = NSPredicate(format: "fats BETWEEN {15, 40} AND carbohydrates BETWEEN {4,10}")
         let highProteinPredicate = NSPredicate(format: "(proteins > 20) AND (fats < 7) AND (carbohydrates < 7)")
-        let middleOfTheRoadProteinTreat = NSPredicate(format: "(proteins BETWEEN {7, 15}) AND (fats < 5) AND (carbohydrates < 5)")
+        let lightProteinTreat = NSPredicate(format: "(proteins BETWEEN {7, 20}) AND (fats < 8) AND (carbohydrates < 8)")
         
         let pureProteinsPredicate = NSPredicate(format: "(proteins > 15) AND (fats <= 4) AND (carbohydrates <= 4)")
         let pureFatsPredicate = NSPredicate(format: "(proteins < 5) AND (fats > 20) AND (carbohydrates < 5)")
@@ -182,29 +184,27 @@ class DataStructure : NSObject{
         let drinkPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.drinkFoodType)
         
         
-        let fatTreatPredicate = NSPredicate(format: "fats BETWEEN {15, 40} AND carbohydrates BETWEEN {4,10}")
-        let carbTreatPredicate = NSPredicate(format: "carbohydrates BETWEEN {14, 80} AND fats BETWEEN {0, 8}")
+        
+        
         let likedFoodsPredicate = NSPredicate(format: "self.name in %@", likedFoods)
         let dislikedFoodsPredicate = NSPredicate(format: "NOT SELF.name IN %@", dislikedFoods)
-        // let predicate = NSPredicate(format: "NOT name IN %@", namesStr)
         let dietaryNeedPredicate = NSPredicate(format: "self.dietSuitablity.name == %@", dietaryNeed!)
         let noPretFood = NSPredicate(format: "NOT name CONTAINS[c] 'PRET'")
         var compoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates: listOfAndPredicates)
         let onlyBreakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.onlyBreakfastFoodType)
         let eatenAtBreakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.eatenAtBreakfastFoodType)
-        /*
-        let mediumBreakfastProteinPredicate = NSPredicate {
+        
+        let dynamicProteinPredicate = NSPredicate {
             (evaluatedObject, _) in
             let food = (evaluatedObject as! Food)
             return food.proteins <= food.fats*1.1 && (food.proteins >= food.fats*0.9) || (food.proteins >= 10)
+            /* Terminating app due to uncaught exception 'Invalid predicate', reason: 'Only support compound, comparison, and constant predicates'*/
         }
          
-         *** Terminating app due to uncaught exception 'Invalid predicate', reason: 'Only support compound, comparison, and constant predicates'
-        */
-        let mediumBreakfastProteinPredicate = NSPredicate(format: "(proteins >= 8) AND (fats <= 6) OR (proteins >= 16) AND (fats <= 12) OR (proteins >= 24) AND (fats <= 18)")
         
-        //Bool
-        //let random_yay_nay = arc4random_uniform(2)
+        
+        let mediumBreakfastProteinPredicate = NSPredicate(format: "(proteins >= 8) AND (fats <= 6) OR (proteins >= 21) AND (fats <= 21) OR (proteins >= 24) AND (fats <= 18)")
+        
         
         //Indices
         let proteinIndex = Constants.MACRONUTRIENTS.indexOf(Constants.PROTEINS)!
@@ -222,6 +222,12 @@ class DataStructure : NSObject{
         // Create the desiredNumberOfDailyMeals for 7 days
         // Put this week into a Week object.
         // Do the same for next week.
+        
+        
+        // CREATE PREDICATES
+        //Get carb and also a fat treat
+        let compoundPredForCarbs = NSCompoundPredicate(andPredicateWithSubpredicates: [carbTreatPredicate, dislikedFoodsPredicate])
+        var extraCarbTreats = realm.objects(Food).filter(compoundPredForCarbs)
         
         
             
@@ -268,249 +274,300 @@ class DataStructure : NSObject{
                 let foodResults = realm.objects(Food).filter(newAndCompoundPredicate)//.filter(newOrCompoundPredicate)
                 var randomNumber : UInt32 = arc4random_uniform(UInt32(foodResults.count))
                 
+                guard foodResults.count > 0 else {
+                    break
+                }
+                let p = foodResults[Int(randomNumber)]
+                //var pro = foodBasket[Constants.PROTEINS]
+                //var pro = foodBasket[proteinIndex]
+                //pro.append(p)
+                //foodBasket.insertContentsOf(p, at: proteinIndex)
+                foodBasket[proteinIndex].append(p)
                 
-                if foodResults.count > 0{
-                    let p = foodResults[Int(randomNumber)]
-                    //var pro = foodBasket[Constants.PROTEINS]
-                    //var pro = foodBasket[proteinIndex]
-                    //pro.append(p)
-                    //foodBasket.insertContentsOf(p, at: proteinIndex)
-                    foodBasket[proteinIndex].append(p)
-                    
-                    if p.alwaysEatenWithOneOf.count > 0{
-                        // one of these must be choosen. It will be a carb because only carbs will be paired with protein sources.
-                        let options = p.alwaysEatenWithOneOf.filter(dislikedFoodsPredicate)
-                        randomNumber = arc4random_uniform(UInt32(options.count))
-                        foodBasket[carbIndex].append(options[Int(randomNumber)])
+                if p.alwaysEatenWithOneOf.count > 0{
+                    // one of these must be choosen. It will be a carb because only carbs will be paired with protein sources.
+                    let options = p.alwaysEatenWithOneOf.filter(dislikedFoodsPredicate)
+                    randomNumber = arc4random_uniform(UInt32(options.count))
+                    foodBasket[carbIndex].append(options[Int(randomNumber)])
+                }
+                
+                //Get a number of light protein snacks throughout the day
+                //Applies to all circumstances...if a high protein diet then get a second source of protein to mix it up
+                var random_yay_nay = Int(arc4random_uniform(2)) //if 0 t1hen lets get a second food, else move on and just use one.
+                if random_yay_nay == 0 {
+                    // ensure we don't select the same item
+                    var lightProteins = realm.objects(Food).filter(lightProteinTreat)
+                    var newRandNum = arc4random_uniform(UInt32(lightProteins.count))
+                    if lightProteins.count == 0{
+                        lightProteins = foodResults
                     }
+                    newRandNum = arc4random_uniform(UInt32(lightProteins.count))
+                    let newFood = lightProteins[Int(newRandNum)]
                     
-                    //Applies to all circumstances...if a high protein diet then get a second source of protein to mix it up
-                    if macrosDesiredToday[Constants.PROTEINS] > 200 {
-                        let random_yay_nay = Int(arc4random_uniform(2)) //if 0 then lets get a second food, else move on and just use one.
-                        if random_yay_nay == 0 {
-                            // ensure we don't select the same item
-                            var newRandNum = arc4random_uniform(UInt32(foodResults.count))
-                            while randomNumber == newRandNum {
-                                newRandNum = arc4random_uniform(UInt32(foodResults.count))
-                            }
-                            // get a second one
-                            foodBasket[proteinIndex].append(foodResults[Int(newRandNum)])
-                        }
-                        
-                        
-                    }
-                    
-                    
-                    //Carbs if required FOR THIS MEAL!
-                    let carbsNeededToday = macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!
-                    
-
-                    
-                    var carbsSoFarFromFoodBasket : Double = 0
-                    for foodArray in foodBasket{
-                        foodArrayEmpty: if foodArray.isEmpty{
-                            break foodArrayEmpty
-                        } else {
-                            for food in foodArray{
-                                carbsSoFarFromFoodBasket = carbsSoFarFromFoodBasket + food.carbohydrates
-                            }
-                        }
-                    }
-                    
-                    let carbsApportionatedSoFar = dailyMealPlan.totalCarbohydrates() + carbsSoFarFromFoodBasket
-                    var carbOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, highCarbPredicate]))
-                    let OEWcarbOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, highCarbPredicate]))
-                    //&& (carbsApportionatedSoFar <= Double(carbsRequiredSoFar))
-                    if (carbsNeededToday > 0) && (carbOptions.count > 0) {
-                        if OEWcarbOptions.count > 0{
-                            carbOptions = OEWcarbOptions
-                        }
-                        randomNumber = arc4random_uniform(UInt32(carbOptions.count))
-                        print("CARB COUNT: \(carbOptions.count)")
-                        print("RANDOM NUMBER: \(randomNumber)")
-                        foodBasket[carbIndex].append(carbOptions[Int(randomNumber)])
-                    }
-                    
-                    
-                    
-
-                    
-                    //fats if required FOR THIS MEAL!
-                    let fatsNeededToday = macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!
-                    let fatsRequiredSoFar = (macrosDesiredToday[Constants.FATS]! / desiredNumberOfDailyMeals) * (desiredNumberOfDailyMeals - Double(numberOfMealsRemaining))
-                    
-                    var fatsSoFarFromFoodBasket : Double = 0
-                    for foodArray in foodBasket{
-                        foodArrayEmpty: if foodArray.isEmpty{
-                            break foodArrayEmpty
-                        } else {
-                            for food in foodArray{
-                                fatsSoFarFromFoodBasket = fatsSoFarFromFoodBasket + food.fats
-                            }
-                        }
-                    }
-                    
-                    let fatsApportionatedSoFar = dailyMealPlan.totalFats() + fatsSoFarFromFoodBasket
-                    var fatOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, fatTreatPredicate]))
-                    let OEWfatOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, fatTreatPredicate]))
-                    if (fatsNeededToday > 0) && (fatsApportionatedSoFar < Double(fatsRequiredSoFar)) && (fatOptions.count > 0) {
-                        if OEWfatOptions.count > 0{
-                            fatOptions = OEWfatOptions
-                        }
-                        randomNumber = arc4random_uniform(UInt32(fatOptions.count))
-                        foodBasket[fatIndex].append(fatOptions[Int(randomNumber)])
-                    }
-                    
-                    
-                    //vegetables or fruit
-                    if mealIndex > 1{
-                        var vegetableOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
-                        let OEWvegetableOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
-                        if OEWvegetableOptions.count > 0{
-                            vegetableOptions = OEWvegetableOptions
-                        }
-                        for vegetableIndex in 1...vegetableOptions.count{
-                            if vegetableIndex < 4{
-                                foodBasket[vegIndex].append(vegetableOptions[vegetableIndex])
-                            }
-                            //break
-                        }
-                    }
-                    
-                    
-                    /*
-                        1.       Get food basket, 
-                        2.       sort by non-gram items,
-                        3.       determine how much of each nutrient for this meal,
-                        4.       then scale up,
-                        5.       create a food item,
-                        6.       ask for preferred amount of this item that should be added,
-                        7.       return all food items.
-                     
-                     
-                     I want a table that says, meal 1 == over protein +15%, under carbs-15%, normal fats. meal 2 == under protein-15%, over carbs+15%, normal fats.
-                    */
-                    
-                    
-                    
-                    
-                    for foodArray in foodBasket{
-                        foodArrayEmpty: if foodArray.isEmpty{
-                            sortedFoodBasket.append([])// if any food group is empty then fill it with an empty as loop below depends on there being 4 in the order of constants.MACRONUTRIENTS
-                            break foodArrayEmpty
-                        } else {
-                            var list = [String]()
-                            
-                            for each in foodArray{
-                                list.append(each.name)
-                            }
-                            sortedFoodBasket.append(foodArray.sort(foodSort))
-                        }
-                    }
-                    
-                    
-                    
-                    
-                    //divide kcal required by number of meals, each one should not be +-20% of this
-                    var loop = 0
-                    for foodArray in sortedFoodBasket{
-                        
-                        var overflow = [Double]() // You get this overflow limit for each meal, and its fixed, not for each food group.
-                        //overflow.append(proteinDesiredFromThisFood)
-                        //overflow.append(carbsDesiredFromThisFood)
-                        //overflow.append(fatDesiredFromThisFood)
-                        
-                        let overflowP : Double
-                        let overflowC : Double
-                        let overflowF : Double
-                        
-                        
-                        if numberOfMealsRemaining <= 2{
-                            overflowP = (macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!)/Double(numberOfMealsRemaining)
-                            overflowC = (macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!)/Double(numberOfMealsRemaining)
-                            overflowF = (macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!)/Double(numberOfMealsRemaining)
-                            //overflowP = (macrosDesiredToday[Constants.PROTEINS]!/desiredNumberOfDailyMeals)
-                            //overflowC = (macrosDesiredToday[Constants.CARBOHYDRATES]!/desiredNumberOfDailyMeals)
-                            //overflowF = (macrosDesiredToday[Constants.FATS]!/desiredNumberOfDailyMeals)
-                        }
-                        else {
-                            overflowP = ((macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!)/Double(numberOfMealsRemaining)) //* 1.1
-                            overflowC = ((macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!)/Double(numberOfMealsRemaining)) //* 1.1
-                            overflowF = ((macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!)/Double(numberOfMealsRemaining)) //* 1.1
-                            //overflowP = (macrosDesiredToday[Constants.PROTEINS]!/desiredNumberOfDailyMeals) * 1.2
-                            //overflowC = (macrosDesiredToday[Constants.CARBOHYDRATES]!/desiredNumberOfDailyMeals) * 1.2
-                            //overflowF = (macrosDesiredToday[Constants.FATS]!/desiredNumberOfDailyMeals) * 1.2
-                        }
-                        
-                        overflow.append(overflowP)
-                        overflow.append(overflowC)
-                        overflow.append(overflowF)
-
-                        
-                        
-                        let key = Constants.MACRONUTRIENTS[loop]
-                        
-                        var findMoreFoods = false
-                        if (foodArray.count > 0) && (key != Constants.vegetableFoodType) {
-                            //Get the remaining amount left for today, for this macronutrient, and divide it amongst the remaining number of meals for today
-                            let desiredToday = Double((macrosDesiredToday[key]!))
-                            let allocatedtoday = Double((macrosAllocatedToday[key]!))
-                            let desiredAmount = (desiredToday - allocatedtoday) / Double(numberOfMealsRemaining)
-                            
-                            
-                            
-                            
-                            
-                            //print("IMPORTANT \n desiredToday:\(desiredToday) \n allocatedtoday:\(allocatedtoday) \n desiredAmount:\(desiredAmount) \n")
-                            
-                            /*
-                             Once the function has returned and the items summed, calculate the difference between what I would expect to see (the limit at the start) and what I just summed up, and add that back to overflow so the next loop takes this into consideration.
-                             */
-
-                            repeat {                                
-                                //if the overflow for any attribute is less than 3g is it worth apportioning?
-                                let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday)
-                                sortedFoodItemBasket.append(results.foodItems)
+                    foodBreak: for f in foodBasket[proteinIndex]{
+                        if f != newFood{
+                            foodBasket[proteinIndex].append(f)
+                            if f.alwaysEatenWithOneOf.count > 0{
+                                newRandNum = arc4random_uniform(UInt32(f.alwaysEatenWithOneOf.count))
+                                let selectedFood = f.alwaysEatenWithOneOf[Int(newRandNum)]
                                 
-                                for fi in results.foodItems{
-                                    let ka = (fi.food?.calories)! * fi.numberServing
-                                    let ca = (fi.food?.carbohydrates)! * fi.numberServing
-                                    let pr = (fi.food?.proteins)! * fi.numberServing
-                                    let fa = (fi.food?.fats)! * fi.numberServing
-                                    
-                                    overflow[0] = (overflow[0] - pr)
-                                    overflow[1] = (overflow[1] - ca)
-                                    overflow[2] = (overflow[2] - fa)
-                                    
-                                    macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
-                                    macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
-                                    macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
-                                    macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
+                                if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
+                                    foodBasket[vegIndex].append(selectedFood)
+                                    break foodBreak
                                 }
                                 
-                                findMoreFoods = results.isAddittionalFoodRequired
-                            } while findMoreFoods
-                            
-                            
-                            
-                            
-                            //CHECK with delegate method before selection.
-                            
-                            // NOW NEED TO UPDATE - macrosAllocatedToday WITH fItem
-                            
+                                if selectedFood.proteins > selectedFood.fats && selectedFood.proteins > selectedFood.carbohydrates{
+                                    foodBasket[proteinIndex].append(selectedFood)
+                                    break foodBreak
+                                }
+                                if selectedFood.carbohydrates > selectedFood.fats && selectedFood.carbohydrates > selectedFood.proteins{
+                                    foodBasket[carbIndex].append(selectedFood)
+                                    break foodBreak
+                                }
+                                if selectedFood.fats > selectedFood.carbohydrates && selectedFood.fats > selectedFood.proteins{
+                                    foodBasket[fatIndex].append(selectedFood)
+                                    break foodBreak
+                                }
+                            }
                         }
-                        if key == Constants.vegetableFoodType{
-                            var vegs = [FoodItem]()
-                            for foo in foodArray{
-                                let fooditem = FoodItem()
-                                fooditem.food = foo
-                                fooditem.numberServing = 0.5
-                                vegs.append(fooditem)
+                    }
+                    
+                }
+                
+                
+                
+                
+                
+                
+                
+                    
+                
+                //Carbs if required FOR THIS MEAL!
+                let carbsNeededToday = macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!
+                var carbsSoFarFromFoodBasket : Double = 0
+                for foodArray in foodBasket{
+                    foodArrayEmpty: if foodArray.isEmpty{
+                        break foodArrayEmpty
+                    } else {
+                        for food in foodArray{
+                            carbsSoFarFromFoodBasket = carbsSoFarFromFoodBasket + food.carbohydrates
+                        }
+                    }
+                }
+                
+                //let carbsApportionatedSoFar = dailyMealPlan.totalCarbohydrates() + carbsSoFarFromFoodBasket
+                var carbPredicateList = [dislikedFoodsPredicate, highCarbPredicate]
+                if mealIndex == 1{
+                    carbPredicateList.append(eatenAtBreakfastPredicate)
+                }
+                var carbOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: carbPredicateList))
+                let OEWcarbOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: carbPredicateList))
+                //&& (carbsApportionatedSoFar <= Double(carbsRequiredSoFar))
+                if (carbsNeededToday > 0) && (carbOptions.count > 0) {
+                    if OEWcarbOptions.count > 0{
+                        print("OEWcarbOptions COUNT: \(OEWcarbOptions.count)")
+                        carbOptions = OEWcarbOptions
+                    }
+                    randomNumber = arc4random_uniform(UInt32(carbOptions.count))
+                    let foodSelected = carbOptions[Int(randomNumber)]
+                    foodBasket[carbIndex].append(foodSelected)
+                }
+                
+                
+                random_yay_nay = Int(arc4random_uniform(2)) //if 0 t1hen lets get a second food, else move on and just use one.
+                if random_yay_nay == 0 && extraCarbTreats.count > 0 {
+                    var newRandNum = arc4random_uniform(UInt32(extraCarbTreats.count))
+                    let newFood = extraCarbTreats[Int(newRandNum)]
+                    
+                    foodBreak: for f in foodBasket[carbIndex]{
+                        if f != newFood{
+                            foodBasket[carbIndex].append(f)
+                            
+                            if f.alwaysEatenWithOneOf.count > 0{
+                                newRandNum = arc4random_uniform(UInt32(f.alwaysEatenWithOneOf.count))
+                                let selectedFood = f.alwaysEatenWithOneOf[Int(newRandNum)]
                                 
-                                let ka = (fooditem.food?.calories)! * fooditem.numberServing
-                                let ca = (fooditem.food?.carbohydrates)! * fooditem.numberServing
-                                let pr = (fooditem.food?.proteins)! * fooditem.numberServing
-                                let fa = (fooditem.food?.fats)! * fooditem.numberServing
+                                if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
+                                    foodBasket[vegIndex].append(selectedFood)
+                                    break foodBreak
+                                }
+                                
+                                if selectedFood.proteins > selectedFood.fats && selectedFood.proteins > selectedFood.carbohydrates{
+                                    foodBasket[proteinIndex].append(selectedFood)
+                                    break foodBreak
+                                }
+                                if selectedFood.carbohydrates > selectedFood.fats && selectedFood.carbohydrates > selectedFood.proteins{
+                                    foodBasket[carbIndex].append(selectedFood)
+                                    break foodBreak
+                                }
+                                if selectedFood.fats > selectedFood.carbohydrates && selectedFood.fats > selectedFood.proteins{
+                                    foodBasket[fatIndex].append(selectedFood)
+                                    break foodBreak
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+                
+                
+                
+                
+                
+                
+                
+
+                
+                //fats if required FOR THIS MEAL!
+                var fatPredicateList = [dislikedFoodsPredicate, highCarbPredicate]
+                if mealIndex == 1{
+                    fatPredicateList.append(eatenAtBreakfastPredicate)
+                }
+
+                let fatsNeededToday = macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!
+                let fatsRequiredSoFar = (macrosDesiredToday[Constants.FATS]! / desiredNumberOfDailyMeals) * (desiredNumberOfDailyMeals - Double(numberOfMealsRemaining))
+                
+                var fatsSoFarFromFoodBasket : Double = 0
+                for foodArray in foodBasket{
+                    foodArrayEmpty: if foodArray.isEmpty{
+                        break foodArrayEmpty
+                    } else {
+                        for food in foodArray{
+                            fatsSoFarFromFoodBasket = fatsSoFarFromFoodBasket + food.fats
+                        }
+                    }
+                }
+                
+                let fatsApportionatedSoFar = dailyMealPlan.totalFats() + fatsSoFarFromFoodBasket
+                var fatOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: fatPredicateList))
+                let OEWfatOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: fatPredicateList))
+                if (fatsNeededToday > 0) && (fatsApportionatedSoFar < Double(fatsRequiredSoFar)) && (fatOptions.count > 0) {
+                    if OEWfatOptions.count > 0{
+                        fatOptions = OEWfatOptions
+                    }
+                    randomNumber = arc4random_uniform(UInt32(fatOptions.count))
+                    foodBasket[fatIndex].append(fatOptions[Int(randomNumber)])
+                }
+                
+                
+                //vegetables or fruit
+                if mealIndex > 1{
+                    var vegetableOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
+                    let OEWvegetableOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
+                    if OEWvegetableOptions.count > 0{
+                        vegetableOptions = OEWvegetableOptions
+                    }
+                    for vegetableIndex in 1...vegetableOptions.count{
+                        if vegetableIndex < 4{
+                            foodBasket[vegIndex].append(vegetableOptions[vegetableIndex])
+                        }
+                        //break
+                    }
+                }
+                
+                
+                /*
+                    1.       Get food basket, 
+                    2.       sort by non-gram items,
+                    3.       determine how much of each nutrient for this meal,
+                    4.       then scale up,
+                    5.       create a food item,
+                    6.       ask for preferred amount of this item that should be added,
+                    7.       return all food items.
+                 
+                 
+                 I want a table that says, meal 1 == over protein +15%, under carbs-15%, normal fats. meal 2 == under protein-15%, over carbs+15%, normal fats.
+                */
+                
+                
+                
+                
+                for foodArray in foodBasket{
+                    foodArrayEmpty: if foodArray.isEmpty{
+                        sortedFoodBasket.append([])// if any food group is empty then fill it with an empty as loop below depends on there being 4 in the order of constants.MACRONUTRIENTS
+                        break foodArrayEmpty
+                    } else {
+                        
+                        for food in foodArray{
+                            csv1 += food.name + ","
+                        }
+                        
+                        sortedFoodBasket.append(foodArray.sort(foodSort))
+                    }
+                }
+                csv1 += "\n"
+                
+                
+                
+                
+                
+                
+                //divide kcal required by number of meals, each one should not be +-20% of this
+                var loop = 0
+                for foodArray in sortedFoodBasket{
+                    
+                    var overflow = [Double]() // You get this overflow limit for each meal, and its fixed, not for each food group.
+                    //overflow.append(proteinDesiredFromThisFood)
+                    //overflow.append(carbsDesiredFromThisFood)
+                    //overflow.append(fatDesiredFromThisFood)
+                    
+                    let overflowP : Double
+                    let overflowC : Double
+                    let overflowF : Double
+                    
+                    
+                    if numberOfMealsRemaining <= 2{
+                        overflowP = (macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!)/Double(numberOfMealsRemaining)
+                        overflowC = (macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!)/Double(numberOfMealsRemaining)
+                        overflowF = (macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!)/Double(numberOfMealsRemaining)
+                        //overflowP = (macrosDesiredToday[Constants.PROTEINS]!/desiredNumberOfDailyMeals)
+                        //overflowC = (macrosDesiredToday[Constants.CARBOHYDRATES]!/desiredNumberOfDailyMeals)
+                        //overflowF = (macrosDesiredToday[Constants.FATS]!/desiredNumberOfDailyMeals)
+                    }
+                    else {
+                        overflowP = ((macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!)/Double(numberOfMealsRemaining)) //* 1.1
+                        overflowC = ((macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!)/Double(numberOfMealsRemaining)) //* 1.1
+                        overflowF = ((macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!)/Double(numberOfMealsRemaining)) //* 1.1
+                        //overflowP = (macrosDesiredToday[Constants.PROTEINS]!/desiredNumberOfDailyMeals) * 1.2
+                        //overflowC = (macrosDesiredToday[Constants.CARBOHYDRATES]!/desiredNumberOfDailyMeals) * 1.2
+                        //overflowF = (macrosDesiredToday[Constants.FATS]!/desiredNumberOfDailyMeals) * 1.2
+                    }
+                    
+                    overflow.append(overflowP)
+                    overflow.append(overflowC)
+                    overflow.append(overflowF)
+
+                    
+                    
+                    let key = Constants.MACRONUTRIENTS[loop]
+                    
+                    var findMoreFoods = false
+                    if (foodArray.count > 0) && (key != Constants.vegetableFoodType) {
+                        //Get the remaining amount left for today, for this macronutrient, and divide it amongst the remaining number of meals for today
+                        let desiredToday = Double((macrosDesiredToday[key]!))
+                        let allocatedtoday = Double((macrosAllocatedToday[key]!))
+                        let desiredAmount = (desiredToday - allocatedtoday) / Double(numberOfMealsRemaining)
+                        
+                        
+                        
+                        
+                        
+                        //print("IMPORTANT \n desiredToday:\(desiredToday) \n allocatedtoday:\(allocatedtoday) \n desiredAmount:\(desiredAmount) \n")
+                        
+                        /*
+                         Once the function has returned and the items summed, calculate the difference between what I would expect to see (the limit at the start) and what I just summed up, and add that back to overflow so the next loop takes this into consideration.
+                         */
+
+                        repeat {                                
+                            //if the overflow for any attribute is less than 3g is it worth apportioning?
+                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday)
+                            sortedFoodItemBasket.append(results.foodItems)
+                            
+                            for fi in results.foodItems{
+                                let ka = (fi.food?.calories)! * fi.numberServing
+                                let ca = (fi.food?.carbohydrates)! * fi.numberServing
+                                let pr = (fi.food?.proteins)! * fi.numberServing
+                                let fa = (fi.food?.fats)! * fi.numberServing
                                 
                                 overflow[0] = (overflow[0] - pr)
                                 overflow[1] = (overflow[1] - ca)
@@ -521,24 +578,58 @@ class DataStructure : NSObject{
                                 macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
                                 macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
                             }
-                            sortedFoodItemBasket.append(vegs)
+                            
+                            findMoreFoods = results.isAddittionalFoodRequired
+                        } while findMoreFoods
+                        
+                        
+                        
+                        
+                        //CHECK with delegate method before selection.
+                        
+                        // NOW NEED TO UPDATE - macrosAllocatedToday WITH fItem
+                        
+                    }
+                    if key == Constants.vegetableFoodType{
+                        var vegs = [FoodItem]()
+                        for foo in foodArray{
+                            let fooditem = FoodItem()
+                            fooditem.food = foo
+                            fooditem.numberServing = 0.5
+                            vegs.append(fooditem)
+                            
+                            let ka = (fooditem.food?.calories)! * fooditem.numberServing
+                            let ca = (fooditem.food?.carbohydrates)! * fooditem.numberServing
+                            let pr = (fooditem.food?.proteins)! * fooditem.numberServing
+                            let fa = (fooditem.food?.fats)! * fooditem.numberServing
+                            
+                            overflow[0] = (overflow[0] - pr)
+                            overflow[1] = (overflow[1] - ca)
+                            overflow[2] = (overflow[2] - fa)
+                            
+                            macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
+                            macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
+                            macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
+                            macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
                         }
-                        
-                        
-                        
-                        loop+=1
+                        sortedFoodItemBasket.append(vegs)
                     }
                     
                     
                     
-                    
+                    loop+=1
+                }
+                
+                
+                for foodArray in sortedFoodItemBasket{
+                    for foodItem in foodArray{
+                        csv2 += (foodItem.food?.name)! + ","
+                    }
                     
                 }
-                else
-                {
-                    print("NO FOOD RESULTS FOUND")
-                    
-                }
+                csv2 += "\n"
+                
+                
                 
                 
                 let meal = Meal()
@@ -590,11 +681,22 @@ class DataStructure : NSObject{
             
             print("DailyMeal Plan m1:\nCalories: \(dailyMealPlan.totalCalories())\nCarbs: \(dailyMealPlan.totalCarbohydrates()) \nProtein: \(dailyMealPlan.totalProteins()) \nFats: \(dailyMealPlan.totalFats()) \n\n")
             
+            
+            
+            
+            // THE COMEBACK!
+
+            
             for macro in Constants.MACRONUTRIENTS {
-                let foodsAlreadySelected = NSPredicate(format: "NOT IN %@", dailyMealPlan.foods())
+                var foodsAlreadySelected :[Food] = []
+                for each in dailyMealPlan.foods(){
+                    foodsAlreadySelected.append(each)
+                }
+                
+                //let foodsAlreadySelectedPred = NSPredicate(format: "NOT SELF IN %@", foodsAlreadySelected)
                 
                 switch macro {
-                case Constants.PROTEINS:
+                case Constants.PROTEINS: // TODO - DELETE as this should never be called.
                     deficient = macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!
                     
                     //print("macrosDesiredToday[Constants.PROTEINS] = \(macrosDesiredToday[Constants.PROTEINS]!)")
@@ -606,7 +708,7 @@ class DataStructure : NSObject{
                     }
                     
                     
-                    let dPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates:[pureProteinsPredicate, foodsAlreadySelected])
+                    let dPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates:[pureProteinsPredicate,])
                     let extraFoods = realm.objects(Food).filter(dPredicate).sorted(Constants.PROTEINS.lowercaseString, ascending: true)
                     let foodi = FoodItem()
                     let food :Food
@@ -644,9 +746,10 @@ class DataStructure : NSObject{
                     
                 case Constants.CARBOHYDRATES:
                     
+                    
                     deficient = macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!
                     
-                    let cPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates:[carbTreatPredicate, foodsAlreadySelected])
+                    let cPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates:[carbTreatPredicate/*, foodsAlreadySelected*/])
                     let extraFood = realm.objects(Food).filter(cPredicate).sorted(Constants.CARBOHYDRATES.lowercaseString, ascending: true)
                     
                     let randomNumber : UInt32 = arc4random_uniform(UInt32(extraFood.count))
@@ -662,13 +765,13 @@ class DataStructure : NSObject{
                     guard deficient > 0  else {
                         break
                     }
-                    if deficient < 3 {
+                    if deficient < Constants.maximumNumberOfGramsToIgnore {
                         break
                     }
                     if deficient < 20{
-                        food = extraFood.first!
+                        food = extraCarbTreats.first!
                     } else {
-                        food = extraFood.last!
+                        food = extraCarbTreats.last!
                     }
                     foodi.food = food
                     foodi.numberServing = (deficient/(food.carbohydrates)) // just because it tends to be a little high
@@ -690,7 +793,7 @@ class DataStructure : NSObject{
                     
                 case Constants.FATS:
                     deficient = macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!
-                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates:[fatTreatPredicate, foodsAlreadySelected])
+                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .AndPredicateType, subpredicates:[fatTreatPredicate, /*foodsAlreadySelected*/])
                     let extraFood = realm.objects(Food).filter(fPredicate).sorted(Constants.FATS.lowercaseString, ascending: true)
                     //TODO: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
                     let foodi = FoodItem()
@@ -742,10 +845,42 @@ class DataStructure : NSObject{
             print("DailyMeal Plan:\nCalories: \(dailyMealPlan.totalCalories())\nCarbs: \(dailyMealPlan.totalCarbohydrates()) \nProtein: \(dailyMealPlan.totalProteins()) \nFats: \(dailyMealPlan.totalFats()) \n\n")
             
             plans.append(dailyMealPlan)
-            //thisWeek.dailyMeals.append(dailyMealPlan)
             
+            
+            for foodArray in dailyMealPlan.meals{
+                for foodItem in foodArray.foodItems{
+                    csv3 += (foodItem.food?.name)! + ","
+                }
+                
+            }
+            csv3 += "\n"
             
         }
+        
+        let fileManager = NSFileManager()
+        let urls = fileManager.URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask) as [NSURL]
+        
+        if urls.count > 0 {
+            let documentsFolder = urls[0]
+            print("\(documentsFolder)")
+        } else {
+            print("could not find the documents folder")
+        }
+        
+        
+        
+        for csv in [csv1]{
+            let destinationPath = NSTemporaryDirectory() + "testfly \(NSDate().timeIntervalSince1970*1000).csv"
+            try! csv.writeToFile(destinationPath, atomically: true, encoding: NSUTF8StringEncoding)
+                /*
+                file?.writeData(csv.dataUsingEncoding(NSUTF8StringEncoding)!) // Set the data we want to write, write it to the file
+                file?.closeFile() // Close the file
+ */
+        }
+        
+        
+        
+        
         return plans
     }
     

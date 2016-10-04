@@ -37,6 +37,9 @@ class FoodType: Object {
         let foodType7 = FoodType();
         foodType7.name = "Drink"
         
+        let foodType8 = FoodType();
+        foodType8.name = "Condiment"
+        
         
         
         let realm = try! Realm()
@@ -48,6 +51,7 @@ class FoodType: Object {
             realm.add(foodType5);
             realm.add(foodType6);
             realm.add(foodType7);
+            realm.add(foodType8);
         }
         
         

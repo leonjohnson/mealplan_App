@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'DD6D875799A44CCF5D4E8F7C'
+               BlueprintIdentifier = '76C9030B02C5D6EF980347B59384A661'
                BlueprintName = 'UnderKeyboard'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'UnderKeyboard.framework'>

@@ -139,18 +139,6 @@ struct Constants {
     //Activity levels
     static let activityLevelsAtWork = ["Sedentary", "Lightly active", "Moderately active", "Very active"] // This array is used for display purposes
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //MINIMUM NUMBER OF GRAMS TO IGNORE IF DEFICIT
+    static let maximumNumberOfGramsToIgnore = 3.0
 }

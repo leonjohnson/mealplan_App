@@ -49,15 +49,14 @@ class DailyMealPlan: Object {
         return false
     }
     
-    func foods()->Set<Food>{
-        var set:Set<Food> = Set()
+    func foods()->[Food]{
+        var foodsArray:[Food] = []
         for meal in meals{
             for fi in meal.foodItems{
-                set.insert(fi.food!)
+                foodsArray.append(fi.food!)
                 }
         }
-        
-        return set
+        return foodsArray
     }
     
     

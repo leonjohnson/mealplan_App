@@ -1,15 +1,17 @@
 //
-//  DailyMealsTests.swift
-//  DailyMealsTests
+//  DailMealTests.swift
+//  DailyMeals
 //
-//  Created by Mzalih on 18/11/15.
-//  Copyright © 2015 Meals. All rights reserved.
+//  Created by Leon Johnson on 02/10/2016.
+//  Copyright © 2016 Meals. All rights reserved.
 //
 
 import XCTest
+import UIKit
+import RealmSwift
 @testable import DailyMeals
 
-class DailyMealsTests: XCTestCase {
+class DailMealTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -31,6 +33,11 @@ class DailyMealsTests: XCTestCase {
         self.measureBlock {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testExportFoodChoices(){
+        //let appDelegate = NSApplication.sharedApplication().
+        
     }
     
 }

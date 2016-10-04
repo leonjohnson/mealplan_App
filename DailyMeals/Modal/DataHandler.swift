@@ -115,7 +115,7 @@ class DataHandler: NSObject {
         let profile = getActiveBiographical()
         let realm = try! Realm()
         try! realm.write {
-            profile.dietaryMethod = newData
+            profile.dietaryRequirement = newData
             
         }
     }
@@ -613,6 +613,11 @@ class DataHandler: NSObject {
         foodItem.numberServing = numberServing;
         DataHandler.createFoodItem(foodItem);
         return foodItem;
+    }
+    
+    static func getFoodType(ft:String)->FoodType{
+        let realm = try! Realm()
+        return realm.objects(FoodType).filter("name == %", ft).first!
     }
     
     /** INTERNAL TESTING */

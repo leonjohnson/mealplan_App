@@ -6,7 +6,7 @@ use_frameworks!
 target 'DailyMeals' do
     pod 'AFNetworking', '~> 2.0'
     pod 'UnderKeyboard', '~> 4.0'
-    pod 'RealmSwift', '~>1.0.2'
-    pod 'MBProgressHUD'
+    pod 'MBProgressHUD', '~> 1.0.0'
     pod 'Reachability'
+    pod 'RealmSwift', '~> 2.0.1'
 end

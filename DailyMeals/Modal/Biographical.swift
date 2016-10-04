@@ -8,8 +8,8 @@ class Biographical: Object {
     dynamic var howLong: Int = 0
     
     dynamic var muscularity: String? = nil
+    dynamic var dietaryRequirement: String? = nil
     dynamic var activityLevelAtWork: String? = nil
-    dynamic var dietaryMethod: String? = nil
     
     var looseFat = RealmOptional<Bool>()
     var gainMuscle = RealmOptional<Bool>()

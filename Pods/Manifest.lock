@@ -20,28 +20,30 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - MBProgressHUD (0.9.2)
+  - MBProgressHUD (1.0.0)
   - Reachability (3.2)
-  - Realm (1.0.2):
-    - Realm/Headers (= 1.0.2)
-  - Realm/Headers (1.0.2)
-  - RealmSwift (1.0.2):
-    - Realm (= 1.0.2)
+  - Realm (2.0.1):
+    - Realm/Headers (= 2.0.1)
+  - Realm/Headers (2.0.1)
+  - RealmSwift (2.0.1):
+    - Realm (= 2.0.1)
   - UnderKeyboard (4.0.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - MBProgressHUD
+  - MBProgressHUD (~> 1.0.0)
   - Reachability
-  - RealmSwift (~> 1.0.2)
+  - RealmSwift (~> 2.0.1)
   - UnderKeyboard (~> 4.0)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
-  RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
+  Realm: 0557ee0e4ab4f0936c90e370056d1ed6265f93d6
+  RealmSwift: 64e00af79bdcd7d2a7a23fdc1cb3faf22b80ae4c
   UnderKeyboard: 6ec3057822332c985806da7c36b8dd57647d54e9
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 9fcd2806b28495734ec71b3e987dee09371fad92
+
+COCOAPODS: 1.1.0.rc.2

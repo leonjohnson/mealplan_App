@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationDidBecomeActive(application: UIApplication) {
         DataStructure.loadDatabaseWithData();
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
     }
     
     
@@ -29,6 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
             NSUserDefaults.standardUserDefaults().setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+            
+            let thisWeek = DataHandler.getFutureWeeks()[0]
+            for _ in 1...100{
+                DataStructure.createMealPlans(thisWeek)
+            }
         }
         
         return true

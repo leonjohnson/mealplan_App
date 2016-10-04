@@ -48,7 +48,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
             //Close Button whn app. loads from settings view.
             closeButton.hidden = false
             
-        activeDietValue = DataHandler.getActiveBiographical().dietaryMethod!
+        activeDietValue = DataHandler.getActiveBiographical().dietaryRequirement!
         selectedPath = types.indexOf(activeDietValue)!
         }
 
