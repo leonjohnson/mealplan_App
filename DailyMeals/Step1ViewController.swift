@@ -22,7 +22,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
 
     
     // Numer of eat times to select from
-    var eatTimes = [1, 2, 3, 4, 5, 6]
+    var eatTimes = [2, 3, 4, 5, 6]
     
     // Number of weeks to select from
     var numberOfweeks   = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
@@ -228,8 +228,8 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     //For saving Default Selected index values from the picker as Values:
     func prefill(){
-        eatTimeValue      = eatTimes[0]
-        weekTimeValue     = numberOfweeks [0]
+        eatTimeValue      = eatTimes[2]
+        weekTimeValue     = numberOfweeks [4]
     }
 
     

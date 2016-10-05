@@ -107,7 +107,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             }
            // self.navigationController?.popViewControllerAnimated(true)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let scene = storyboard.instantiateViewControllerWithIdentifier("servingSizeList") as! DetailViewController
+            let scene = storyboard.instantiateViewControllerWithIdentifier("servingDetails") as! DetailViewController
             scene.detailItem = item
             //scene.hideAddButton = false
             scene.meal = meal

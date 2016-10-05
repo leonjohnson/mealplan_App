@@ -43,7 +43,7 @@ class Network {
         addApiKey(parameters)
         if (!Network.isDataConnectionAvailable()) {
             
-            MBProgressHUD.hideAllHUDsForView(parentView, animated: true)
+            //MBProgressHUD.hideAllHUDsForView(parentView!, animated: true)
             if((parentView) != nil && showNetWorkError){
                 showNetWorkError = false
                 Config.showAlert(nil, message:   Constants.ERROR_NETWORK)
@@ -65,12 +65,12 @@ class Network {
         // manager.requestSerializer.setValue(token, forHTTPHeaderField: "Authorization")
         
         if (parentView != nil) {
-            MBProgressHUD.showHUDAddedTo(parentView, animated: true)
+            MBProgressHUD.showHUDAddedTo(parentView!, animated: true)
         }
         print(METHOD_GET+url)
         manager.GET(url, parameters: parameters, success: { (operation:AFHTTPRequestOperation, responseObject:AnyObject) -> Void in
             if (parentView != nil) {
-                MBProgressHUD.hideAllHUDsForView(parentView, animated: true)
+                //MBProgressHUD.hideAllHUDsForView(parentView!, animated: true)
             }
             if (operation.cancelled) {
                 return
@@ -82,7 +82,7 @@ class Network {
             }) { (operation: AFHTTPRequestOperation?, error:NSError) -> Void in
                 
                 if (parentView != nil) {
-                    MBProgressHUD.hideAllHUDsForView(parentView, animated: true)
+                    //MBProgressHUD.hideAllHUDsForView(parentView!, animated: true)
                 }
                 failure(AFHTTPRequestOperation(), NSError(domain:  Constants.ERROR_NETWORK, code: 0, userInfo: [ Constants.KEY_EMPTY: Constants.KEY_EMPTY]))
         }

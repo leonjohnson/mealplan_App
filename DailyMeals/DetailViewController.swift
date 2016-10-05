@@ -1,7 +1,9 @@
 import UIKit
 
+
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+
     @IBOutlet var foodNameLabel: UILabel!
     @IBOutlet var weightHolder: UIView!
     @IBOutlet var valSize: UILabel!
@@ -69,7 +71,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         valServing.inputAccessoryView = toolbar
         valServing.borderStyle = .None
         
-        valServing.attributedText = NSAttributedString(string: (detailItem?.numberServing.description)!, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        var label:String = ""
+        if detailItem?.food?.servingSize == Constants.grams || detailItem?.food?.servingSize == Constants.ml{
+            label = String(roundToPlaces((detailItem?.numberServing)!, decimalPlaces: 2))
+        }
+        
+        
+        valServing.attributedText = NSAttributedString(string: label, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
         valSize.attributedText = NSAttributedString(string: (detailItem?.food?.servingSize!.name)!, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
@@ -249,6 +257,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
+    func roundToPlaces(value: Double, decimalPlaces: Int) -> Double {
+        let divisor = pow(10.0, Double(decimalPlaces))
+        return round(value * divisor) / divisor
+    }
+
     
     
 }

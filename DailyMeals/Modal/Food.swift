@@ -39,8 +39,9 @@ class Food: Object {
     var deprecated = false
     dynamic var readyToEat = false
     
-    var oftenEatenWith = List<Food>()
-    var alwaysEatenWithOneOf = List<Food>()
+    //var oftenEatenWith = List<Food>()
+    var oftenEatenWith = LinkingObjects(fromType: Food.self, property: "oftenEatenWith")
+    var alwaysEatenWithOneOf = LinkingObjects(fromType: Food.self, property: "alwaysEatenWithOneOf")
     var similarFoods = List<Food>()
     
     dynamic var external_note = ""

@@ -104,14 +104,14 @@ struct Constants {
     //ServingSizes
     static let pot = "pot"
     static let cup = "cup"
-    static let ml = "ml"
-    static let grams = "g"
+    static let ml = "100ml"
+    static let grams = "100g"
     static let slice = "slice"
     static let item = "item"
     static let tablet = "tablet"
     static let heaped_teaspoon = "heaped teaspoon"
     static let pinch = "pinch"
-    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "g", "ml", "cup", "tablet", "heaped teaspoon", "pinch"]
+    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100g", "100ml"] //portion up everything before 100g and 100ml
     
     //Calender
     struct Calendar {

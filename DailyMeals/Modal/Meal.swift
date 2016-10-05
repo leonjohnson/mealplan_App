@@ -3,6 +3,7 @@ import RealmSwift
 
 class Meal: Object {
     
+    
     dynamic var name = "" // 1,2,3, Working day breakfast, leg day dinner etc
     dynamic var date = NSDate()
     let foodItems = List<FoodItem>()
@@ -40,4 +41,6 @@ class Meal: Object {
         }
         return totalFat
     }
+    
+    
 }

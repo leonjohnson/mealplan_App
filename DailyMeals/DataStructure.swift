@@ -77,6 +77,7 @@ class DataStructure : NSObject{
         //let likedFoods = DataHandler.getLikeFoods() //TODO: SHOW USERS FOODS THAT HE LIKES
         let dislikedFoods = DataHandler.getDisLikedFoods().foods
         
+        
         let macros = thisWeek.macroAllocation
         let kcal = Double(thisWeek.calorieAllowance)
         
@@ -96,8 +97,6 @@ class DataStructure : NSObject{
         let fatTreatPredicate = NSPredicate(format: "fats BETWEEN {15, 40} AND carbohydrates BETWEEN {4,10}")
         let highProteinPredicate = NSPredicate(format: "(proteins > 20) AND (fats < 7) AND (carbohydrates < 7)")
         let lightProteinTreat = NSPredicate(format: "(proteins BETWEEN {7, 20}) AND (fats < 8) AND (carbohydrates < 8)")
-        
-        let pureProteinsPredicate = NSPredicate(format: "(proteins > 15) AND (fats <= 4) AND (carbohydrates <= 4)")
         
         
         
@@ -292,6 +291,29 @@ class DataStructure : NSObject{
                     randomNumber = arc4random_uniform(UInt32(carbOptions.count))
                     let foodSelected = carbOptions[Int(randomNumber)]
                     foodBasket[carbIndex].append(foodSelected)
+                    
+                    foodSelectedBreak: if foodSelected.alwaysEatenWithOneOf.count > 0{
+                        randomNumber = arc4random_uniform(UInt32(foodSelected.alwaysEatenWithOneOf.count))
+                        let selectedFood = foodSelected.alwaysEatenWithOneOf[Int(randomNumber)]
+                        
+                        if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
+                            foodBasket[vegIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                        
+                        if selectedFood.proteins > selectedFood.fats && selectedFood.proteins > selectedFood.carbohydrates{
+                            foodBasket[proteinIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                        if selectedFood.carbohydrates > selectedFood.fats && selectedFood.carbohydrates > selectedFood.proteins{
+                            foodBasket[carbIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                        if selectedFood.fats > selectedFood.carbohydrates && selectedFood.fats > selectedFood.proteins{
+                            foodBasket[fatIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                    }
                 }
                 
                 
@@ -300,13 +322,15 @@ class DataStructure : NSObject{
                     var newRandNum = arc4random_uniform(UInt32(extraCarbTreats.count))
                     let newFood = extraCarbTreats[Int(newRandNum)]
                     
+                    
                     foodBreak: for f in foodBasket[carbIndex]{
-                        if f != newFood{
-                            foodBasket[carbIndex].append(f)
+                        // the first item found that we dont have
+                        if newFood != f{
+                            foodBasket[carbIndex].append(newFood)
                             
-                            if f.alwaysEatenWithOneOf.count > 0{
-                                newRandNum = arc4random_uniform(UInt32(f.alwaysEatenWithOneOf.count))
-                                let selectedFood = f.alwaysEatenWithOneOf[Int(newRandNum)]
+                            if newFood.alwaysEatenWithOneOf.count > 0{
+                                newRandNum = arc4random_uniform(UInt32(newFood.alwaysEatenWithOneOf.count))
+                                let selectedFood = newFood.alwaysEatenWithOneOf[Int(newRandNum)]
                                 
                                 if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
                                     foodBasket[vegIndex].append(selectedFood)
@@ -367,7 +391,32 @@ class DataStructure : NSObject{
                         fatOptions = OEWfatOptions
                     }
                     randomNumber = arc4random_uniform(UInt32(fatOptions.count))
-                    foodBasket[fatIndex].append(fatOptions[Int(randomNumber)])
+                    let fatSelected = fatOptions[Int(randomNumber)]
+                    foodBasket[fatIndex].append(fatSelected)
+                    
+                    
+                    foodSelectedBreak: if fatSelected.alwaysEatenWithOneOf.count > 0{
+                        randomNumber = arc4random_uniform(UInt32(fatSelected.alwaysEatenWithOneOf.count))
+                        let selectedFood = fatSelected.alwaysEatenWithOneOf[Int(randomNumber)]
+                        
+                        if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
+                            foodBasket[vegIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                        
+                        if selectedFood.proteins > selectedFood.fats && selectedFood.proteins > selectedFood.carbohydrates{
+                            foodBasket[proteinIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                        if selectedFood.carbohydrates > selectedFood.fats && selectedFood.carbohydrates > selectedFood.proteins{
+                            foodBasket[carbIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                        if selectedFood.fats > selectedFood.carbohydrates && selectedFood.fats > selectedFood.proteins{
+                            foodBasket[fatIndex].append(selectedFood)
+                            break foodSelectedBreak
+                        }
+                    }
                 }
                 
                 
@@ -402,7 +451,7 @@ class DataStructure : NSObject{
                 
                 
                 
-                
+                //TODO: REFACTOR. We can ensure that the below is only used for debugging. Sorting should come at the end.
                 for foodArray in foodBasket{
                     foodArrayEmpty: if foodArray.isEmpty{
                         sortedFoodBasket.append([])// if any food group is empty then fill it with an empty as loop below depends on there being 4 in the order of constants.MACRONUTRIENTS
@@ -413,7 +462,7 @@ class DataStructure : NSObject{
                             csv1 += food.name + ","
                         }
                         
-                        sortedFoodBasket.append(foodArray.sort(foodSort))
+                        //sortedFoodBasket.append(foodArray.sort(foodSort))
                     }
                 }
                 csv1 += "\n"
@@ -470,9 +519,6 @@ class DataStructure : NSObject{
                         let desiredAmount = (desiredToday - allocatedtoday) / Double(numberOfMealsRemaining)
                         
                         
-                        
-                        
-                        
                         //print("IMPORTANT \n desiredToday:\(desiredToday) \n allocatedtoday:\(allocatedtoday) \n desiredAmount:\(desiredAmount) \n")
                         
                         /*
@@ -502,10 +548,7 @@ class DataStructure : NSObject{
                             
                             findMoreFoods = results.isAddittionalFoodRequired
                         } while findMoreFoods
-                        
-                        
-                        
-                        
+
                         //CHECK with delegate method before selection.
                         
                         // NOW NEED TO UPDATE - macrosAllocatedToday WITH fItem
@@ -941,6 +984,7 @@ class DataStructure : NSObject{
                     //(foodIsFromToday)? listOfFoodsFromToday.append(fooditem.food): pass
                     if foodIsFromToday == true {
                         listOfFoodsFromToday.append(fooditem.food!)
+                        
                     }
                 }
             }
@@ -958,6 +1002,80 @@ class DataStructure : NSObject{
         }
         
     }
+    
+    
+    
+    
+    static func constrainPortionSizeBasedOnFood(foodBasket: [FoodItem])->[FoodItem]{
+        // ensure that the fooditem returned contains a sensible serving size.
+        // "item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100g", "100ml"
+        let realm = try! Realm()
+        
+        let condiment = realm.objects(FoodType).filter("name = Condiment")
+        
+        for fooditem in foodBasket{
+            switch (fooditem.food?.servingSize?.name)! {
+            case Constants.pot:
+                break
+            case Constants.cup:
+                if fooditem.numberServing > 1{
+                    fooditem.numberServing = 1
+                }
+            case Constants.ml:
+                if fooditem.numberServing > 5{
+                    fooditem.numberServing = 5
+                }
+            case Constants.grams:
+                break
+            case Constants.slice:
+                if fooditem.numberServing > 4{
+                    fooditem.numberServing = 4
+                }
+            case Constants.item:
+                if fooditem.numberServing > 5{
+                    fooditem.numberServing = 5
+                }
+            case Constants.tablet:
+                if fooditem.numberServing > 3{
+                    fooditem.numberServing = 3
+                }
+            case Constants.heaped_teaspoon:
+                if fooditem.numberServing > 4{
+                    fooditem.numberServing = 4
+                }
+            case Constants.pinch:
+                if fooditem.numberServing > 6{
+                    fooditem.numberServing = 6
+                }
+            default:
+                break
+            }
+            
+            if condiment.count > 0{
+                if ((fooditem.food?.foodType.contains(condiment.first!)) != nil){
+                    if fooditem.numberServing > 0.25{
+                        fooditem.numberServing = 0.25
+                        // if it's greater than 25g or 25ml then turn it down and make it 25.
+                    }
+                }
+            }
+            
+        }
+        return foodBasket
+        
+    }
+    
+        /*
+
+     if a condiment then no more than 25g,
+     if slices then no more than 4,
+     if it's ml then no more than 500ml unless it's water,
+     if it's a heaped teaspoon no more than 4
+     
+ 
+    */
+    
+    
 
     /**
     This function takes a given food and returns a fooditem with the given amount of a macro. For example Bread, fat:20g will return a fooditem that contains enough bread to give 20g of fat.

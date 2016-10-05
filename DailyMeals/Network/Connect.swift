@@ -91,10 +91,7 @@ class Connect: NSObject {
         }
         
         
-        if var value : String =  Util.checkNullString("servingSize", pdt: pdt) {
-            if value == "grams"{
-                value = "g"
-            }
+        if let value : String =  Util.checkNullString("servingSize", pdt: pdt) {
             itemFood.servingSize = ServingSize.get(value)
         }
         
