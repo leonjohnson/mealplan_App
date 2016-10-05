@@ -617,7 +617,11 @@ class DataHandler: NSObject {
     
     static func getFoodType(ft:String)->FoodType{
         let realm = try! Realm()
-        return realm.objects(FoodType).filter("name == %", ft).first!
+        let x = realm.objects(FoodType)
+        for each in x {
+            print("FTs : \(each.name)")
+        }
+        return x.first!
     }
     
     /** INTERNAL TESTING */

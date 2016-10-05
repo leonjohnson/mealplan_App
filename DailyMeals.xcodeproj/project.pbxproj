@@ -116,6 +116,7 @@
 		F73CB6B11DA1C65000ACE506 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965A5F3F1BFC49ED0055ACA4 /* ListViewController.swift */; };
 		F76D64AA1D09901B00542C53 /* mpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76D64A91D09901B00542C53 /* mpButton.swift */; };
 		F76D64AC1D134B6D00542C53 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76D64AB1D134B6D00542C53 /* ArrayExtension.swift */; };
+		F7863D651DA41AD500D46665 /* DataStructure+methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7863D641DA41AD500D46665 /* DataStructure+methods.swift */; };
 		F7930DD91D295C5E00150004 /* Macronutrient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7930DD81D295C5E00150004 /* Macronutrient.swift */; };
 		F7A70E141D5E79AF00C735A4 /* Assumptions.rtf in Resources */ = {isa = PBXBuildFile; fileRef = F7A70E131D5E79AF00C735A4 /* Assumptions.rtf */; };
 		F7DB5D221D42D335001AE827 /* initialLoad2.json in Resources */ = {isa = PBXBuildFile; fileRef = F7DB5D211D42D335001AE827 /* initialLoad2.json */; };
@@ -211,6 +212,7 @@
 		F73CB67F1DA1C3B700ACE506 /* DailMealTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailMealTests.swift; sourceTree = "<group>"; };
 		F76D64A91D09901B00542C53 /* mpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mpButton.swift; sourceTree = "<group>"; };
 		F76D64AB1D134B6D00542C53 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		F7863D641DA41AD500D46665 /* DataStructure+methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataStructure+methods.swift"; sourceTree = "<group>"; };
 		F7930DD81D295C5E00150004 /* Macronutrient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macronutrient.swift; sourceTree = "<group>"; };
 		F7A70E131D5E79AF00C735A4 /* Assumptions.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Assumptions.rtf; sourceTree = "<group>"; };
 		F7D6AACE1D08473600FAAD22 /* DailyMeals-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DailyMeals-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				965A5F411BFC573B0055ACA4 /* DataStructure.swift */,
+				F7863D641DA41AD500D46665 /* DataStructure+methods.swift */,
 				F73A6C3D1D526B25006C34F9 /* createMealPlan.swift */,
 			);
 			name = DBHandler;
@@ -738,6 +741,7 @@
 				96C834AF1C9AC54B00C1CD4E /* FoodSearchViewController.swift in Sources */,
 				965A5F101BFC48D00055ACA4 /* AppDelegate.swift in Sources */,
 				961D8A7F1CFD86F8006B6FA4 /* TabBarController.swift in Sources */,
+				F7863D651DA41AD500D46665 /* DataStructure+methods.swift in Sources */,
 				96EC07001CDB33F7006DA1F7 /* FoodsLiked.swift in Sources */,
 				96E13F101CDB1C7600EE3689 /* Food.swift in Sources */,
 				96A9A8AD1CBB8B250057BE5A /* PayemtAddsTableViewCell.swift in Sources */,

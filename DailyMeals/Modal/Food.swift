@@ -16,7 +16,6 @@ class Food: Object {
     dynamic var salt : Double = 0.00
     
     
-    
     dynamic  var image          = ""
     dynamic  var servingSize : ServingSize? = nil
     dynamic var authoredBy: User? //Should this be a string or a User object. Users will be just you and us?
