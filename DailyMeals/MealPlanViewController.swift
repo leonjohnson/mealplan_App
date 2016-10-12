@@ -93,10 +93,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func changeMealPlanDisplayed(sender: UIButton){
-        print("dateCount = \(dateCount)")
-        print("sender tag = \(sender.tag)")
-        
-        
         var index : Int?
         dateCount = dateCount + sender.tag
         
@@ -273,8 +269,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         
-        let foodItem = meals[indexPath.section].foodItems[indexPath.row]
-        
+        let foodItem : FoodItem = meals[indexPath.section].foodItems[indexPath.row]
         let label =  cell.viewWithTag(102) as? UILabel
         label?.attributedText = NSAttributedString(string: foodItem.food!.name, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
@@ -295,9 +290,16 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             cell.backgroundColor = UIColor.clearColor();
             let label2 =  cell.viewWithTag(103) as? UILabel
-            let ending = foodItem.food!.servingSize!.name
-            let quantity = ServingSize.getQuantity((foodItem.food?.servingSize)!)
-            label2?.attributedText = NSAttributedString(string: Int(foodItem.numberServing * quantity).description + ending , attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
+            
+            var ending = foodItem.food!.servingSize!.name
+            if ending != Constants.grams || ending !=  Constants.ml{
+                ending = " " + ending
+            }
+            
+            let q = ServingSize.getQuantity((foodItem.food?.servingSize)!)
+            let quantity = roundToPlaces(q, decimalPlaces: 2)
+            
+            label2?.attributedText = NSAttributedString(string: (foodItem.numberServing * quantity).description + ending , attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
             
             let label3 =  cell.viewWithTag(101) as? UILabel
             label3?.attributedText = NSAttributedString(string: Int(foodItem.getTotalCal()).description, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
@@ -351,7 +353,15 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         calorieCountLabel.textAlignment = NSTextAlignment.Right
         calorieCountLabel.textColor = UIColor.whiteColor()
         calorieCountLabel.font = UIFont.systemFontOfSize(17)
-        calorieCountLabel.attributedText = NSAttributedString(string: String(Int(meals[section].totalCalories())) + " kcal", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        var totalCaloriesString = ""
+        if meals[section].totalCalories() > 0 {
+            totalCaloriesString = String(Int(meals[section].totalCalories()))
+        } else {
+            totalCaloriesString = "0"
+        }
+        
+        //totalCaloriesString = Int(meals[section].totalCalories())
+        calorieCountLabel.attributedText = NSAttributedString(string: totalCaloriesString + " kcal", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
         
         vheadView.addSubview(calorieCountLabel)
@@ -436,6 +446,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
+    func roundToPlaces(value: Double, decimalPlaces: Int) -> Double {
+        let divisor = pow(10.0, Double(decimalPlaces))
+        return round(value * divisor) / divisor
+    }
     
     
 }

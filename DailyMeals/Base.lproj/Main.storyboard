@@ -690,8 +690,8 @@
                         <outlet property="foodNameLabel" destination="0XM-y9-sOw" id="xCI-ZF-M4E"/>
                         <outlet property="likeButton" destination="ooH-3o-RRE" id="xDM-QM-bnE"/>
                         <outlet property="nutritionTable" destination="Lrc-wv-oYS" id="ePe-SV-XOd"/>
-                        <outlet property="valServing" destination="Iw7-dn-WR7" id="AQm-ah-VHY"/>
-                        <outlet property="valSize" destination="eaF-Y0-KPd" id="Xj5-Lh-CKf"/>
+                        <outlet property="valServingSize" destination="Iw7-dn-WR7" id="k9H-Xh-zON"/>
+                        <outlet property="valServingType" destination="eaF-Y0-KPd" id="jd4-Pa-j5J"/>
                         <outlet property="weightHolder" destination="CIo-gG-Ki0" id="Rnu-qg-8lO"/>
                     </connections>
                 </viewController>

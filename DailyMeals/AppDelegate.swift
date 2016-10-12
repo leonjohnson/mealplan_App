@@ -30,11 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
             NSUserDefaults.standardUserDefaults().setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-            
+            /*
             let thisWeek = DataHandler.getFutureWeeks()[0]
             for _ in 1...100{
                 DataStructure.createMealPlans(thisWeek)
             }
+            */
         }
         
         return true

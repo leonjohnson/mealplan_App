@@ -6,8 +6,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBOutlet var foodNameLabel: UILabel!
     @IBOutlet var weightHolder: UIView!
-    @IBOutlet var valSize: UILabel!
-    @IBOutlet var valServing: UITextField!
+    @IBOutlet var valServingType: UILabel!
+    @IBOutlet var valServingSize: UITextField!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var addFoodButton: UIButton!
     
@@ -22,7 +22,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var masterView:ListViewController!
     var nutrientsToDisplay:[(name: String, value: String)] = []
-    var detailItem: FoodItem? {
+    var detailItem: FoodItem! = FoodItem() {
         didSet {
             
             // Update the view.
@@ -47,7 +47,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
         // Set the like image
-        if likedFoods.containsObject((detailItem?.food?.name)!)
+        if likedFoods.containsObject((detailItem.food?.name)!)
         {
             likeButton.setImage(UIImage(named: "likeImage")!, forState: .Normal)
             likeButton.tag = 0
@@ -63,23 +63,29 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //let arrayOfObjects = Array(DataHandler.getDisLikedFoods().food);
         
         //Done button View for Serving Size Text Field keyboard
-        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: valServing, action: #selector(UIResponder.resignFirstResponder))
+        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: valServingType, action: #selector(UIResponder.resignFirstResponder))
         //let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: valServing, action: "resignFirstResponder")
         barButton.tintColor = UIColor.blackColor()
         let toolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
         toolbar.items = [barButton]
-        valServing.inputAccessoryView = toolbar
-        valServing.borderStyle = .None
+        valServingSize.inputAccessoryView = toolbar
+        valServingSize.borderStyle = .None
         
         var label:String = ""
-        if detailItem?.food?.servingSize == Constants.grams || detailItem?.food?.servingSize == Constants.ml{
-            label = String(roundToPlaces((detailItem?.numberServing)!, decimalPlaces: 2))
+        if detailItem.food?.servingSize!.name == Constants.grams || detailItem.food?.servingSize!.name == Constants.ml{
+            label = String(roundToPlaces((detailItem.numberServing), decimalPlaces: 2))
+            print("label in 1: \(label)")
+        } else {
+            label = String(detailItem.numberServing)
+            print("label in 2: \(label)")
+            
         }
         
         
-        valServing.attributedText = NSAttributedString(string: label, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        valServingSize.attributedText = NSAttributedString(string: label, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
-        valSize.attributedText = NSAttributedString(string: (detailItem?.food?.servingSize!.name)!, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        //The number of serving
+        valServingType.attributedText = NSAttributedString(string: (detailItem.food?.servingSize?.name)!.capitalizedString , attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
 
         //presentTransparentNavigationBar();
@@ -95,7 +101,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         weightHolder.layer.borderColor = Constants.MP_GREY.CGColor
         weightHolder.layer.borderWidth = 0.5
         
-        foodNameLabel.attributedText = NSAttributedString(string: (detailItem?.food?.name)!, attributes: [NSFontAttributeName:Constants.DETAIL_PAGE_FOOD_NAME_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        foodNameLabel.attributedText = NSAttributedString(string: (detailItem.food?.name)!, attributes: [NSFontAttributeName:Constants.DETAIL_PAGE_FOOD_NAME_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
  
         
         let servingSizeTextLabel =  self.view.viewWithTag(120) as? UILabel
@@ -105,7 +111,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         numberOfServingsTextLabel?.attributedText = NSAttributedString(string: "Number of servings", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
-        print("self : \(detailItem?.food?.oftenEatenWith.count)")
+        print("self : \(detailItem.food?.oftenEatenWith.count)")
 
         
     }
@@ -113,24 +119,25 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     @IBAction func onClickAdd(sender: AnyObject) {
+        /*
         if(self.detailItem == nil)
         {
             onBackClick(sender);
             return
         }
+        */
         
-        
-        if (meal?.foodItems.contains(detailItem!))! { // existing food
-            DataHandler.updateFoodItem(detailItem!, numberServing: Double(valServing.text!)!)
+        if ((meal?.foodItems.contains(detailItem)) != nil) { // existing food
+            DataHandler.updateFoodItem(detailItem, numberServing:roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2) )
         }
         else
         {
             // it's a new food item
-            let num = Double(valServing.text!)
-            if(num != nil && num > 0){
+            let num = roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2)
+            if(num > 0){
                 
-                DataHandler.updateFoodItem(detailItem!, numberServing: Double(valServing.text!)!)
-                DataHandler.addFoodItemToMeal(meal!, foodItem:detailItem!);
+                DataHandler.updateFoodItem(detailItem, numberServing: roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2))
+                DataHandler.addFoodItemToMeal(meal!, foodItem:detailItem);
                 onBackClick(sender);
             }else{
                 //Invalid value entered in the serving field
@@ -161,22 +168,22 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     {
         // Update the user interface for the detail item.
         
-        nutrientsToDisplay += [(name: "Calories", value: (Int(((detailItem?.food?.calories)! * (detailItem?.numberServing)!)).description) + " kcal")]
-        let fa = (detailItem?.food?.fats)! * (detailItem?.numberServing)!
-        let sa = (detailItem?.food?.sat_fats.value)! * (detailItem?.numberServing)!
-        let ca = (detailItem?.food?.carbohydrates)! * (detailItem?.numberServing)!
-        let su = (detailItem?.food?.sugars.value)! * (detailItem?.numberServing)!
-        let fi = (detailItem?.food?.fibre.value)! * (detailItem?.numberServing)!
-        let pr = (detailItem?.food?.proteins)! * (detailItem?.numberServing)!
-        let salt = (detailItem?.food?.salt)! * (detailItem?.numberServing)!
+        nutrientsToDisplay += [(name: "Calories", value: (Int(((detailItem.food?.calories)! * (detailItem.numberServing))).description) + " kcal")]
+        let fa = (detailItem.food?.fats)! * (detailItem.numberServing)
+        let sa = (detailItem.food?.sat_fats.value)! * (detailItem.numberServing)
+        let ca = (detailItem.food?.carbohydrates)! * (detailItem.numberServing)
+        let su = (detailItem.food?.sugars.value)! * (detailItem.numberServing)
+        let fi = (detailItem.food?.fibre.value)! * (detailItem.numberServing)
+        let pr = (detailItem.food?.proteins)! * (detailItem.numberServing)
+        let salt = (detailItem.food?.salt)! * (detailItem.numberServing)
         
-        nutrientsToDisplay += [(name: "Fats", value: fa.description + " g")]
-        nutrientsToDisplay += [(name: "Saturated fats", value: sa.description + " g")]
-        nutrientsToDisplay += [(name: "Carbohydrates", value: ca.description + " g")]
-        nutrientsToDisplay += [(name: "Sugars", value: su.description + " g")]
-        nutrientsToDisplay += [(name: "Fibre", value: fi.description + " g")]
-        nutrientsToDisplay += [(name: "Proteins", value: pr.description + " g")]
-        nutrientsToDisplay += [(name: "Salt", value: salt.description + " mg")]
+        nutrientsToDisplay += [(name: "Fats", value: String(roundToPlaces(fa, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Saturated fats", value: String(roundToPlaces(sa, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Carbohydrates", value: String(roundToPlaces(ca, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Sugars", value: String(roundToPlaces(su, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Fibre", value: String(roundToPlaces(fi, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Proteins", value: String(roundToPlaces(pr, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Salt", value: String(roundToPlaces(salt, decimalPlaces: 2)) + " mg")]
     }
     
     
@@ -203,11 +210,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if sender.tag == 1 {
             sender.setImage(UIImage(named: "likeImage")!, forState: .Normal)
             sender.tag = 0
-            likedFoods.addObject((detailItem?.food)!)
+            likedFoods.addObject((detailItem.food)!)
         } else {
             sender.setImage(UIImage(named: "UnlikeImage")!, forState: .Normal)
             sender.tag = 1
-            likedFoods.removeObject((detailItem?.food)!)
+            likedFoods.removeObject((detailItem.food)!)
         }
         
     }

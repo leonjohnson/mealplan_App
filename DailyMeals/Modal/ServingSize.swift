@@ -31,6 +31,7 @@ class ServingSize: Object {
     //func minMax(array: [Int]) -> (min: Int, max: Int) {
     static func getQuantity(serving:ServingSize) -> Double {
         if serving.name == "grams" || serving.name == "ml" {
+            
             return 100
         } else{
             return 1

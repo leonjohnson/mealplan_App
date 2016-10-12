@@ -95,10 +95,16 @@ struct Constants {
     static let eatenAtBreakfastFoodType = "Eaten At Breakfast"
     static let vegetableFoodType = "Vegetable"
     static let drinkFoodType = "Drink"
+    static let condiment = "Condiment"
+    static let glutenFree = "Gluten free"
+    static let Vegan = "Vegan"
+    static let vegetarian = "Vegetarian"
+    static let lactoseFree = "Lactose free"
+
     
     
     //NSPredicates
-    static let isFat = NSPredicate(format: "fats > 30 AND carbohydrates < 2")
+    static let isFat = NSPredicate(format: "fats > 30 AND carbohydrates < 5")
     let vegetablePredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.vegetableFoodType)
     
     //ServingSizes

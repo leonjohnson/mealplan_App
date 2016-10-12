@@ -69,6 +69,18 @@ class DataHandler: NSObject {
         }
     }
     
+    static func getBreakfastOnlyFoods()->[Food]{
+        let realm = try! Realm()
+        let breakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.onlyBreakfastFoodType)
+        let breakfastFoods = realm.objects(Food).filter(breakfastPredicate)
+        var foods : [Food] = []
+        for f in breakfastFoods{
+            foods.append(f)
+        }
+        return foods
+    }
+
+    
     static func createUser(user:User){
         let realm = try! Realm()
         try! realm.write {
@@ -619,8 +631,12 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         let x = realm.objects(FoodType)
         for each in x {
-            print("FTs : \(each.name)")
+            if each.name == ft{
+                print("FTs : Condiment")
+                return each
+            }
         }
+        print("RETURNING THE WRONG FOODTYPE !!")
         return x.first!
     }
     

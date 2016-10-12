@@ -6,6 +6,7 @@ class DailyMealPlan: Object {
     dynamic var dayId = 0; //  Day of the week can vary from 1 to 7
     let meals = List<Meal>() // A list of meals to be eaten this day
     
+    
     func totalCalories()->Double{
         var totalKcal = 0.0
         for meal in meals{

@@ -71,7 +71,15 @@ class Connect: NSObject {
     }
     
     
-     //TO DO COMMENDTS
+    /**
+     This function takes a dictionary from the JSON, and creates a Food object from it.
+     
+     
+     - parameter foods: A List of Foods in the database that don't have 'oftenEatenWith' or 'alwaysEatenWithOneOf' yet.
+     - parameter json: NSArray of foods and their attributes including.
+     
+     
+     */
      static func createFood(pdt: NSDictionary!)->Food{
         let itemFood = Food();
         
@@ -139,6 +147,11 @@ class Connect: NSObject {
             }
         }
         
+        if (pdt!.valueForKey("readyToEat") as! Bool?)! == true{
+            itemFood.readyToEat = true
+        } else if (pdt!.valueForKey("readyToEat") as! Bool?)! == false {
+            itemFood.readyToEat = false
+        }
         
         
         return itemFood;
