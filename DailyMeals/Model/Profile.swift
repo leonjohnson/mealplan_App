@@ -6,7 +6,7 @@
 //  Copyright © 2016 Meals. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import RealmSwift
 
 class Profile: Object {

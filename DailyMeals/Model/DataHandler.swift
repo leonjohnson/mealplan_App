@@ -311,7 +311,7 @@ class DataHandler: NSObject {
         }
         
         let items = realm.objects(Food).filter("name contains '" + name + "' and pk != 0").filter("NOT name IN %@", namesOfFoodsLiked)
-        print("NEW items contain : %f", items.count)
+        print("NEW items contain : \(items.count)")
         
         return Array(items)
     }
@@ -645,7 +645,7 @@ class DataHandler: NSObject {
     static func macrosCorrect() {
         let weeks = getFutureWeeks()
         
-        let errorMargin = 2.0
+        let errorMargin = Constants.maximumNumberOfGramsToIgnore
         
         print("Week count == \(weeks.count)")
         for week in weeks{

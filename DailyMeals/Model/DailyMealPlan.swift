@@ -50,11 +50,11 @@ class DailyMealPlan: Object {
         return false
     }
     
-    func foods()->[Food]{
-        var foodsArray:[Food] = []
+    func foods()->[String]{
+        var foodsArray:[String] = []
         for meal in meals{
             for fi in meal.foodItems{
-                foodsArray.append(fi.food!)
+                foodsArray.append(fi.food!.name)
                 }
         }
         return foodsArray

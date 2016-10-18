@@ -5,6 +5,7 @@
  */
 
 import UIKit
+import RealmSwift
 
 class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -291,15 +292,26 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.backgroundColor = UIColor.clearColor();
             let label2 =  cell.viewWithTag(103) as? UILabel
             
+            let q = ServingSize.getServingQuantityAsNumber((foodItem.food?.servingSize)!)
+            let servingQuantityAsNumber = roundToPlaces(q, decimalPlaces: 2)
+            
             var ending = foodItem.food!.servingSize!.name
-            if ending != Constants.grams || ending !=  Constants.ml{
-                ending = " " + ending
+            switch ending {
+            case Constants.grams:
+                ending = " g"
+            case Constants.ml:
+                ending = " ml"
+            default:
+                print("default")
+                break
+            
             }
             
-            let q = ServingSize.getQuantity((foodItem.food?.servingSize)!)
-            let quantity = roundToPlaces(q, decimalPlaces: 2)
             
-            label2?.attributedText = NSAttributedString(string: (foodItem.numberServing * quantity).description + ending , attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
+            
+            
+            
+            label2?.attributedText = NSAttributedString(string: (foodItem.numberServing * servingQuantityAsNumber).description + ending, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
             
             let label3 =  cell.viewWithTag(101) as? UILabel
             label3?.attributedText = NSAttributedString(string: Int(foodItem.getTotalCal()).description, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])

@@ -11,6 +11,8 @@ class Week: Object {
     dynamic var calorieAllowance : Int = 0
     dynamic var TDEE : Int = 0
     
+    
+    
     /*
     Decision: Keep calorieAllowance and TDEE to Week level
     The calorie allowance and TDEE could be put at a daily level as the user could theortecially change this

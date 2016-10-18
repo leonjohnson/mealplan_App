@@ -45,6 +45,7 @@ extension DataStructure {
             }
             
             //Load nutritional information for these foods.
+            print("foods count : \(foods.count)")
             for  food in foods{
                 DataHandler.createFood(food);
             }
@@ -54,6 +55,7 @@ extension DataStructure {
             
             //createMeal();
             Config.setBoolValue("isCreated", status: true);
+            print("Got it created!")
             
         }
         
@@ -76,6 +78,7 @@ extension DataStructure {
     static func addFoodPairingsToDatabase (foods:[Food], json:NSArray)
     {
         
+        print("foods count: \(foods.count) json count: \(json.count)")
         let realm = try! Realm()
         for (index, food) in foods.enumerate() {
             

@@ -195,8 +195,8 @@ class Connect: NSObject {
             }, withFailureHandler: { (op:AFHTTPRequestOperation!, err:NSError!) -> Void in
                 
                 var items = [Food]();
-                items = importDataFromJSON() as! [Food]
-                let itemsAvail : NSArray = NSArray()
+                items = importDataFromJSON().foodArray as! [Food]
+                let itemsAvail : NSArray = importDataFromJSON().JSON
                 onResponse(items: items, json: itemsAvail, status: true)
                 
             }, withLoadingViewOn: view);
@@ -209,21 +209,27 @@ class Connect: NSObject {
      * parmeters: nil
      * return   : [Food] array
      */
-    static func importDataFromJSON() -> NSArray  {
-         var items = [Food]();
-        if let path = NSBundle.mainBundle().pathForResource("initalLoad3", ofType: "json") {
-            do {
-                let jsonData = try NSData(contentsOfFile: path, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-                do {
-                    let jsonResult: AnyObject! = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) 
-                        if let itemsAvailable = jsonResult as? NSArray{
-                        items = createFoods(itemsAvailable);
-                       return items
-                    }
-                   
-                } catch {}
-            } catch {}
+    static func importDataFromJSON() -> (foodArray:NSArray, JSON:NSArray)  {
+        var items = [Food]();
+        guard let path = NSBundle.mainBundle().pathForResource("initialLoad3", ofType: "json") else {
+            print("Error retriving any local objects")
+            UIControl().sendAction(#selector(NSURLSessionTask.suspend), to: UIApplication.sharedApplication(), forEvent: nil)
+            return (NSArray(), NSArray())
         }
-        return items
+        print("We got the path to the json file.")
+        do {
+            let jsonData = try NSData(contentsOfFile: path, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+            print("Converted it to json data.")
+            do {
+                let jsonResult: AnyObject! = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) 
+                    if let rawJSON = jsonResult as? NSArray{
+                    items = createFoods(rawJSON);
+                    print("Serialised it into NSArrays")
+                   return (items, rawJSON)
+                }
+               
+            } catch {print("Error 1")}
+        } catch {print("Error 2")}
+        return (items, NSArray())
     }
 }
