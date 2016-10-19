@@ -147,4 +147,6 @@ struct Constants {
     
     //MINIMUM NUMBER OF GRAMS TO IGNORE IF DEFICIT
     static let maximumNumberOfGramsToIgnore = 3.0
+    
+    static let vegetablesAsPercentageOfCarbs = 0.1
 }
