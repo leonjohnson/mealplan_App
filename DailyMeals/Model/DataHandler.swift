@@ -632,7 +632,6 @@ class DataHandler: NSObject {
         let x = realm.objects(FoodType)
         for each in x {
             if each.name == ft{
-                print("FTs : Condiment")
                 return each
             }
         }

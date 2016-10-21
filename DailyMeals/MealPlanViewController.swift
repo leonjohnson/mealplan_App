@@ -57,7 +57,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //enableLocalNotification()
         //DataStructure.createMealPlans(thisWeek)
         
-        DataHandler.macrosCorrect()
+        //DataHandler.macrosCorrect()
         
     }
     
@@ -298,20 +298,20 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             var ending = foodItem.food!.servingSize!.name
             switch ending {
             case Constants.grams:
-                ending = " g"
+                ending = "g"
             case Constants.ml:
-                ending = " ml"
+                ending = "ml"
             default:
-                print("default")
-                break
+                ending = " " + ending
             
             }
             
+            let amount = roundToPlaces((foodItem.numberServing * servingQuantityAsNumber), decimalPlaces: 0)
             
             
             
             
-            label2?.attributedText = NSAttributedString(string: (foodItem.numberServing * servingQuantityAsNumber).description + ending, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
+            label2?.attributedText = NSAttributedString(string: amount.description + ending, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
             
             let label3 =  cell.viewWithTag(101) as? UILabel
             label3?.attributedText = NSAttributedString(string: Int(foodItem.getTotalCal()).description, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])

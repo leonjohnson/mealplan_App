@@ -1,4 +1,3 @@
-
 import Foundation
 import RealmSwift
 
@@ -30,7 +29,7 @@ class ServingSize: Object {
     }
     //func minMax(array: [Int]) -> (min: Int, max: Int) {
     static func getServingQuantityAsNumber(serving:ServingSize) -> Double {
-        if serving.name == "grams" || serving.name == "ml" {
+        if serving.name == Constants.grams || serving.name == Constants.ml {
             
             return 100
         } else{
