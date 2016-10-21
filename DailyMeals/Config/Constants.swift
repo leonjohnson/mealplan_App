@@ -117,7 +117,7 @@ struct Constants {
     static let tablet = "tablet"
     static let heaped_teaspoon = "heaped teaspoon"
     static let pinch = "pinch"
-    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100g", "100ml"] //portion up everything before 100g and 100ml
+    static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"] //portion up everything before 100ml and 100g. Ml comes before g because liquids like drinks are more likely to have rules around them.
     
     //Calender
     struct Calendar {
@@ -148,5 +148,5 @@ struct Constants {
     //MINIMUM NUMBER OF GRAMS TO IGNORE IF DEFICIT
     static let maximumNumberOfGramsToIgnore = 3.0
     
-    static let vegetablesAsPercentageOfCarbs = 0.1
+    static let vegetablesAsPercentageOfCarbs = 0.15
 }

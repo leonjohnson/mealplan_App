@@ -325,7 +325,7 @@ class DataStructure : NSObject{
                     
                     print("Picking : \(foodSelected.name) \n")
                     
-                    foodBasket[carbIndex].append(foodSelected)
+                    foodBasket[carbIndex].insert(foodSelected, atIndex: 0)// if this is a condiment or something difficult to divide then we want to handle that first in the allocation process below.
                     
                     foodSelectedBreak: if foodSelected.alwaysEatenWithOneOf.count > 0{
                         randomNumber = arc4random_uniform(UInt32(foodSelected.alwaysEatenWithOneOf.count))
@@ -546,10 +546,6 @@ class DataStructure : NSObject{
                                 macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
                                 macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
                                 macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
-                                
-                                print("After PROTEINS: \(macrosAllocatedToday[Constants.PROTEINS])")
-                                print("After CARBOHYDRATES: \(macrosAllocatedToday[Constants.CARBOHYDRATES])")
-                                print("After FATS: \(macrosAllocatedToday[Constants.FATS])")
                             }
                         }
                         
@@ -561,28 +557,33 @@ class DataStructure : NSObject{
                     }
                     if key == Constants.vegetableFoodType{
                         let desiredAmount = eatNoMoreThanC * Constants.vegetablesAsPercentageOfCarbs
- 
-                        let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false)
-                        sortedFoodItemBasket.append(results)
                         
-                        for fooditem in results{
+                        if desiredAmount > 2 {
+                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false)
+                            sortedFoodItemBasket.append(results)
                             
-                            let ka = (fooditem.food?.calories)! * fooditem.numberServing
-                            let ca = (fooditem.food?.carbohydrates)! * fooditem.numberServing
-                            let pr = (fooditem.food?.proteins)! * fooditem.numberServing
-                            let fa = (fooditem.food?.fats)! * fooditem.numberServing
+                            for fooditem in results{
+                                
+                                let ka = (fooditem.food?.calories)! * fooditem.numberServing
+                                let ca = (fooditem.food?.carbohydrates)! * fooditem.numberServing
+                                let pr = (fooditem.food?.proteins)! * fooditem.numberServing
+                                let fa = (fooditem.food?.fats)! * fooditem.numberServing
+                                
+                                leftOverForThisMeal[0] = (leftOverForThisMeal[0] - pr)
+                                leftOverForThisMeal[1] = (leftOverForThisMeal[1] - ca)
+                                leftOverForThisMeal[2] = (leftOverForThisMeal[2] - fa)
+                                
+                                macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
+                                macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
+                                macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
+                                macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
+                            }
                             
-                            leftOverForThisMeal[0] = (leftOverForThisMeal[0] - pr)
-                            leftOverForThisMeal[1] = (leftOverForThisMeal[1] - ca)
-                            leftOverForThisMeal[2] = (leftOverForThisMeal[2] - fa)
+                            print("leftOverForThisMeal: \(leftOverForThisMeal)")
                             
-                            macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
-                            macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
-                            macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
-                            macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
                         }
+ 
                         
-                        print("leftOverForThisMeal: \(leftOverForThisMeal)")
                     }
     
                     loop+=1
@@ -893,7 +894,7 @@ class DataStructure : NSObject{
                         for fo in extraFatFoods{
                             if fo.alwaysEatenWithOneOf.count == 0 && [Constants.ml, Constants.grams].contains((fo.servingSize?.name)!){
                                 food = fo //TODO - THIS IS NOT A RANDOM SELECTION
-                                print("LESS than 20g of FAT and not already selected. \n")
+                                print("LESS than 20g of FAT. \n")
                                 break
                             }
                         }
@@ -1346,8 +1347,11 @@ class DataStructure : NSObject{
             let fats = food.fats
             var index = [protein, carbs, fats]
             
+            
             print("TEST 1: \(fooditem.numberServing) * \(index[indices[0]]/Double(foods.count))  > \(leftOverForThisMeal[indices[0]]) ?")
             print("TEST 2: \(fooditem.numberServing) * \(index[indices[1]]/Double(foods.count))  > \(leftOverForThisMeal[indices[1]]) ?")
+            
+            
             
             //if we have negative values, making it one means pure substances such as oil can still work.
             if index[indices[0]] < 0 {
@@ -1358,13 +1362,12 @@ class DataStructure : NSObject{
             }
             
             
-            print("Last meal flag is : \(lastMealFlag.description)")
+            print("Last meal flag is : \(lastMealFlag.description)\n")
             if lastMealFlag == true {
                 leftOverForThisMeal[indices[0]] = leftOverForThisMeal[indices[0]] + 5.0  // give it some extra leeway of 5gs as it's not far off from giving back something (more than 0.15)
                 leftOverForThisMeal[indices[1]] = leftOverForThisMeal[indices[1]] + 5.0
             }
             
-            print("leftOverForThisMeal : \(leftOverForThisMeal[indices[0]]) and \(leftOverForThisMeal[indices[1]])")
             if ((0.15 * index[indices[0]])  <= (leftOverForThisMeal[indices[0]]/Double(foods.count))) && ((0.15 * index[indices[1]])  <= leftOverForThisMeal[indices[1]]/Double(foods.count)) {
                 print("Reducing the portion size for \(fooditem.food?.name)")
                 
@@ -1405,13 +1408,35 @@ class DataStructure : NSObject{
                         fooditem.numberServing = ceil(fooditem.numberServing)
                         
                     case Constants.CARBOHYDRATES:
-                        if lastMealFlag == true {
+                        let roundedDown = floor(fooditem.numberServing) * (fooditem.food?.carbohydrates)!
+                        let roundedUp = ceil(fooditem.numberServing) * (fooditem.food?.carbohydrates)!
+                        let roundedMidway = (floor(fooditem.numberServing)+0.5) * (fooditem.food?.carbohydrates)!
+                        let nums = [roundedDown, roundedUp, roundedMidway]
+                        
+                        var distances : [Double] = []
+                        for number in nums {
+                            let absoluteNumber = Double(abs(Int32(number - leftOverForThisMeal[1])))
+                            distances.append(absoluteNumber)
+                        }
+
+                        let index = min(distances[0], distances[1], distances[2])// shortest distance from leftOverForThisMeal[0]
+                        let o = distances.indexOf(index)!
+                        
+                        switch o {
+                        case 0:
                             fooditem.numberServing = floor(fooditem.numberServing)
-                        } else {
-                            fooditem.numberServing = floor(fooditem.numberServing)
+                            print("rounded carb down\n")
+                        case 1:
+                            fooditem.numberServing = ceil(fooditem.numberServing)
+                            print("rounded carb up\n")
+                        case 2:
+                            fooditem.numberServing = floor(fooditem.numberServing)+0.5
+                            print("rounded carb middway\n")
+                        default:
+                            print("Error in rounding found")
                         }
                         
-                        
+                        print("Just add \(fooditem.numberServing) of \(fooditem.food!.name)")
                     case Constants.FATS:
                         fooditem.numberServing = ceil(fooditem.numberServing)
                         
