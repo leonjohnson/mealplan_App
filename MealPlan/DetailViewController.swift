@@ -73,10 +73,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         var label:String = ""
         if detailItem.food?.servingSize!.name == Constants.grams || detailItem.food?.servingSize!.name == Constants.ml{
-            label = String(roundToPlaces((detailItem.numberServing), decimalPlaces: 2))
+            label = String(Int(roundToPlaces((detailItem.numberServing), decimalPlaces: 2)))
             print("label in 1: \(label)")
         } else {
-            label = String(detailItem.numberServing)
+            label = String(Int(detailItem.numberServing))
             print("label in 2: \(label)")
             
         }
@@ -85,7 +85,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         valServingSize.attributedText = NSAttributedString(string: label, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
         //The number of serving
-        valServingType.attributedText = NSAttributedString(string: (detailItem.food?.servingSize?.name)!.capitalizedString , attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        valServingType.attributedText = NSAttributedString(string: (detailItem.food?.servingSize!.name)!.capitalizedString , attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
 
         //presentTransparentNavigationBar();

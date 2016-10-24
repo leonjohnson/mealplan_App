@@ -333,12 +333,20 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                 ending = "g"
             case Constants.ml:
                 ending = "ml"
+            case Constants.slice:
+                if foodItem.numberServing > 1{
+                    ending = " slices"
+                } else {
+                    ending = " slice"
+                }
+            case Constants.item:
+                ending = " " + (foodItem.food?.name)! + "s"
             default:
                 ending = " " + ending
             
             }
             
-            let amount = roundToPlaces((foodItem.numberServing * servingQuantityAsNumber), decimalPlaces: 0)
+            let amount = Int(roundToPlaces((foodItem.numberServing * servingQuantityAsNumber), decimalPlaces: 0))
             
             
             

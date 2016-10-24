@@ -3,7 +3,7 @@
 # Uncomment this line if you're using Swift
 use_frameworks!
 
-target 'DailyMeals' do
+target 'MealPlan' do
     pod 'AFNetworking', '~> 2.0'
     pod 'UnderKeyboard', '~> 4.0'
     pod 'MBProgressHUD', '~> 1.0.0'
