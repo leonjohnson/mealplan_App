@@ -28,7 +28,8 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     
     private func createPageViewController() {
         
-        let pvController = self.storyboard!.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let pvController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
         pvController.dataSource = self
         
         if contentImages.count > 0 {
@@ -85,7 +86,8 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     private func getItemController(itemIndex: Int) -> PageItemController? {
         
         if itemIndex < contentImages.count {
-            let insertedPage = self.storyboard!.instantiateViewControllerWithIdentifier("insertedPage") as! PageItemController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let insertedPage = storyboard.instantiateViewControllerWithIdentifier("insertedPage") as! PageItemController
             insertedPage.itemIndex = itemIndex
             //insertedPage.imageName = contentImages[itemIndex]
             return insertedPage

@@ -21,7 +21,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var backDateButton: UIButton!
     @IBOutlet weak var nextDateButton: UIButton!
     
-
+    var alertController : UIAlertController?
+    
+    
     
     var dragger:DragToTable?
     var meals :[Meal] = [Meal]()
@@ -58,6 +60,36 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //DataStructure.createMealPlans(thisWeek)
         
         //DataHandler.macrosCorrect()
+        /*
+        alertController = UIAlertController(title: "Title",
+                                            message: "Message",
+                                            preferredStyle: .ActionSheet)
+        
+        let tooEarlyAction : UIAlertAction = UIAlertAction(title: "Too early for this",
+                                       style: .Default,
+                                       handler: {
+                                        (paramAction:UIAlertAction!) in
+                                        /* do stuff */
+        })
+        
+        let dislikeAction : UIAlertAction = UIAlertAction(title: "Dislike this",
+                                       style: .Default,
+                                       handler: {
+                                        (paramAction:UIAlertAction!) in
+                                        /* do stuff */
+        })
+        
+        let cancelAction : UIAlertAction = UIAlertAction(title: "Dislike this",
+                                                          style: .Cancel,
+                                                          handler: {
+                                                            (paramAction:UIAlertAction!) in
+                                                            /* do stuff */
+        })
+        
+        alertController?.addAction(tooEarlyAction)
+        alertController?.addAction(dislikeAction)
+        */
+        
         
     }
     
@@ -338,7 +370,13 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
             DataHandler.removeFoodItem(fitem);
             
-            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            /*
+            self.presentViewController(alertController!, animated: true, completion: {
+                
+            })
+            */
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             tableView.reloadData();
             
         } else if editingStyle == .Insert {
@@ -462,6 +500,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let divisor = pow(10.0, Double(decimalPlaces))
         return round(value * divisor) / divisor
     }
+    
+    
     
     
 }

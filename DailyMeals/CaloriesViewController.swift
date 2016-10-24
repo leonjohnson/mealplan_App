@@ -199,10 +199,8 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         switch segmentedControl.selectedSegmentIndex
         {
         case 0: // month
-            print("changed to %")
             showPercentOnly = true
         case 1: // calender quarter
-            print("changed to grams")
             showPercentOnly = false
         default:
             break;
