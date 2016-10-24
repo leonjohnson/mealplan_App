@@ -14,10 +14,10 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-DailyMeals.xcscheme</key>
+		<key>Pods-MealPlan.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
 		</dict>
 		<key>Reachability.xcscheme</key>
 		<dict>

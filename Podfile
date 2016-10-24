@@ -9,4 +9,6 @@ target 'DailyMeals' do
     pod 'MBProgressHUD', '~> 1.0.0'
     pod 'Reachability'
     pod 'RealmSwift', '~> 2.0.1'
+    pod 'Fabric'
+    pod 'Crashlytics'
 end

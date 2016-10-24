@@ -158,16 +158,16 @@
 		9636EC871D05548200D822E1 /* initalLoad.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = initalLoad.json; sourceTree = "<group>"; };
 		963B7FCF1CF7024100E3523A /* settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = settings.swift; sourceTree = "<group>"; };
 		9641C7261CB2544B004A01C0 /* AKPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AKPickerView.swift; path = Picker/AKPickerView.swift; sourceTree = "<group>"; };
-		965A5F0C1BFC48D00055ACA4 /* DailyMeals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyMeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		965A5F0C1BFC48D00055ACA4 /* MealPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MealPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		965A5F0F1BFC48D00055ACA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		965A5F131BFC48D00055ACA4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		965A5F161BFC48D00055ACA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		965A5F181BFC48D00055ACA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		965A5F1B1BFC48D00055ACA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		965A5F1D1BFC48D00055ACA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		965A5F221BFC48D00055ACA4 /* DailyMealsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyMealsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		965A5F221BFC48D00055ACA4 /* MealPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MealPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		965A5F281BFC48D00055ACA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		965A5F2D1BFC48D00055ACA4 /* DailyMealsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DailyMealsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		965A5F2D1BFC48D00055ACA4 /* MealPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MealPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		965A5F311BFC48D00055ACA4 /* DailyMealsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMealsUITests.swift; sourceTree = "<group>"; };
 		965A5F331BFC48D00055ACA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		965A5F3F1BFC49ED0055ACA4 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -364,9 +364,9 @@
 		965A5F0D1BFC48D00055ACA4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				965A5F0C1BFC48D00055ACA4 /* DailyMeals.app */,
-				965A5F221BFC48D00055ACA4 /* DailyMealsTests.xctest */,
-				965A5F2D1BFC48D00055ACA4 /* DailyMealsUITests.xctest */,
+				965A5F0C1BFC48D00055ACA4 /* MealPlan.app */,
+				965A5F221BFC48D00055ACA4 /* MealPlanTests.xctest */,
+				965A5F2D1BFC48D00055ACA4 /* MealPlanTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -514,9 +514,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		965A5F0B1BFC48D00055ACA4 /* DailyMeals */ = {
+		965A5F0B1BFC48D00055ACA4 /* MealPlan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 965A5F361BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "DailyMeals" */;
+			buildConfigurationList = 965A5F361BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "MealPlan" */;
 			buildPhases = (
 				81EA1B8EB40CEC8CFF9FD74A /* [CP] Check Pods Manifest.lock */,
 				965A5F081BFC48D00055ACA4 /* Sources */,
@@ -524,19 +524,20 @@
 				965A5F0A1BFC48D00055ACA4 /* Resources */,
 				F396C75EAE284DEAD7624BB3 /* [CP] Embed Pods Frameworks */,
 				1E54BFD686195CEAC9B0046C /* [CP] Copy Pods Resources */,
+				F723B4271DBE646100CD2E31 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = DailyMeals;
+			name = MealPlan;
 			productName = DailyMeals;
-			productReference = 965A5F0C1BFC48D00055ACA4 /* DailyMeals.app */;
+			productReference = 965A5F0C1BFC48D00055ACA4 /* MealPlan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		965A5F211BFC48D00055ACA4 /* DailyMealsTests */ = {
+		965A5F211BFC48D00055ACA4 /* MealPlanTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 965A5F391BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "DailyMealsTests" */;
+			buildConfigurationList = 965A5F391BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "MealPlanTests" */;
 			buildPhases = (
 				965A5F1E1BFC48D00055ACA4 /* Sources */,
 				965A5F1F1BFC48D00055ACA4 /* Frameworks */,
@@ -547,14 +548,14 @@
 			dependencies = (
 				965A5F241BFC48D00055ACA4 /* PBXTargetDependency */,
 			);
-			name = DailyMealsTests;
+			name = MealPlanTests;
 			productName = DailyMealsTests;
-			productReference = 965A5F221BFC48D00055ACA4 /* DailyMealsTests.xctest */;
+			productReference = 965A5F221BFC48D00055ACA4 /* MealPlanTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		965A5F2C1BFC48D00055ACA4 /* DailyMealsUITests */ = {
+		965A5F2C1BFC48D00055ACA4 /* MealPlanUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 965A5F3C1BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "DailyMealsUITests" */;
+			buildConfigurationList = 965A5F3C1BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "MealPlanUITests" */;
 			buildPhases = (
 				965A5F291BFC48D00055ACA4 /* Sources */,
 				965A5F2A1BFC48D00055ACA4 /* Frameworks */,
@@ -565,9 +566,9 @@
 			dependencies = (
 				965A5F2F1BFC48D00055ACA4 /* PBXTargetDependency */,
 			);
-			name = DailyMealsUITests;
+			name = MealPlanUITests;
 			productName = DailyMealsUITests;
-			productReference = 965A5F2D1BFC48D00055ACA4 /* DailyMealsUITests.xctest */;
+			productReference = 965A5F2D1BFC48D00055ACA4 /* MealPlanTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -582,7 +583,7 @@
 				TargetAttributes = {
 					965A5F0B1BFC48D00055ACA4 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = JL2267KC6K;
+						DevelopmentTeam = 644582FWFB;
 					};
 					965A5F211BFC48D00055ACA4 = {
 						CreatedOnToolsVersion = 7.1;
@@ -594,7 +595,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 965A5F071BFC48CF0055ACA4 /* Build configuration list for PBXProject "DailyMeals" */;
+			buildConfigurationList = 965A5F071BFC48CF0055ACA4 /* Build configuration list for PBXProject "MealPlan" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -607,9 +608,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				965A5F0B1BFC48D00055ACA4 /* DailyMeals */,
-				965A5F211BFC48D00055ACA4 /* DailyMealsTests */,
-				965A5F2C1BFC48D00055ACA4 /* DailyMealsUITests */,
+				965A5F0B1BFC48D00055ACA4 /* MealPlan */,
+				965A5F211BFC48D00055ACA4 /* MealPlanTests */,
+				965A5F2C1BFC48D00055ACA4 /* MealPlanUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -693,6 +694,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DailyMeals/Pods-DailyMeals-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F723B4271DBE646100CD2E31 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" f5eff2c24a75618116596e42978ae0c39ea3162d e724006178a93171d9374badfa4ab915ef565e22c9aded2e3b678dd967fc2688";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -828,12 +842,12 @@
 /* Begin PBXTargetDependency section */
 		965A5F241BFC48D00055ACA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 965A5F0B1BFC48D00055ACA4 /* DailyMeals */;
+			target = 965A5F0B1BFC48D00055ACA4 /* MealPlan */;
 			targetProxy = 965A5F231BFC48D00055ACA4 /* PBXContainerItemProxy */;
 		};
 		965A5F2F1BFC48D00055ACA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 965A5F0B1BFC48D00055ACA4 /* DailyMeals */;
+			target = 965A5F0B1BFC48D00055ACA4 /* MealPlan */;
 			targetProxy = 965A5F2E1BFC48D00055ACA4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -960,7 +974,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DailyMeals/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMeals2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -980,7 +994,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DailyMeals/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMeals2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -998,9 +1012,9 @@
 				INFOPLIST_FILE = DailyMealsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMealsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MealPlanTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "DailyMeals-Bridging-Header.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DailyMeals.app/DailyMeals";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MealPlan.app/MealPlan";
 			};
 			name = Debug;
 		};
@@ -1012,9 +1026,9 @@
 				INFOPLIST_FILE = DailyMealsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMealsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MealPlanTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "DailyMeals-Bridging-Header.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DailyMeals.app/DailyMeals";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MealPlan.app/MealPlan";
 			};
 			name = Release;
 		};
@@ -1024,7 +1038,7 @@
 				INFOPLIST_FILE = DailyMealsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMealsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MealPlanTests;
 				TEST_TARGET_NAME = DailyMeals;
 				USES_XCTRUNNER = YES;
 			};
@@ -1036,7 +1050,7 @@
 				INFOPLIST_FILE = DailyMealsUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMealsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MealPlanTests;
 				TEST_TARGET_NAME = DailyMeals;
 				USES_XCTRUNNER = YES;
 			};
@@ -1045,7 +1059,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		965A5F071BFC48CF0055ACA4 /* Build configuration list for PBXProject "DailyMeals" */ = {
+		965A5F071BFC48CF0055ACA4 /* Build configuration list for PBXProject "MealPlan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				965A5F341BFC48D00055ACA4 /* Debug */,
@@ -1054,7 +1068,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		965A5F361BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "DailyMeals" */ = {
+		965A5F361BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "MealPlan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				965A5F371BFC48D00055ACA4 /* Debug */,
@@ -1063,7 +1077,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		965A5F391BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "DailyMealsTests" */ = {
+		965A5F391BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "MealPlanTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				965A5F3A1BFC48D00055ACA4 /* Debug */,
@@ -1072,7 +1086,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		965A5F3C1BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "DailyMealsUITests" */ = {
+		965A5F3C1BFC48D00055ACA4 /* Build configuration list for PBXNativeTarget "MealPlanUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				965A5F3D1BFC48D00055ACA4 /* Debug */,

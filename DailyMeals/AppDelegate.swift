@@ -1,4 +1,7 @@
 import UIKit
+import Fabric
+import Crashlytics
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     
@@ -37,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             }
             */
         }
-        
+        Fabric.with([Crashlytics.self])
         return true
     }
     
