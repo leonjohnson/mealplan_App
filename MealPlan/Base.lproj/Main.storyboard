@@ -27,7 +27,7 @@
         <!--Settings-->
         <scene sceneID="z4c-6C-vgI">
             <objects>
-                <viewController title="Settings" id="WXE-ow-lMH" userLabel="Settings" customClass="settings" customModule="DailyMeals" sceneMemberID="viewController">
+                <viewController title="Settings" id="WXE-ow-lMH" userLabel="Settings" customClass="settings" customModule="MealPlan" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2SX-4Q-wpP"/>
                         <viewControllerLayoutGuide type="bottom" id="6Ti-y9-0m2"/>
@@ -182,7 +182,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="hZK-0t-Qxq">
             <objects>
-                <tabBarController storyboardIdentifier="loggedinTabBar" id="MZc-Ay-wOx" customClass="TabBarController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="loggedinTabBar" id="MZc-Ay-wOx" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="cTM-KS-FhX"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="9Pt-Y3-uq8">
@@ -221,12 +221,12 @@
         <!--Detail-->
         <scene sceneID="yUG-lL-AsK">
             <objects>
-                <viewController storyboardIdentifier="servingDetails" title="Detail" id="JEX-9P-axG" customClass="DetailViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="servingDetails" title="Detail" id="JEX-9P-axG" customClass="DetailViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SYR-Wa-9uf"/>
                         <viewControllerLayoutGuide type="bottom" id="GAO-Cl-Wes"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="svH-Pt-448" customClass="bkgrd" customModule="DailyMeals" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="svH-Pt-448" customClass="bkgrd" customModule="MealPlan" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -717,7 +717,7 @@
         <!--List View Controller-->
         <scene sceneID="wTK-Vm-FKp">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="ugy-Ir-I1B" customClass="ListViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="ugy-Ir-I1B" customClass="ListViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="w9a-ax-Icw"/>
                         <viewControllerLayoutGuide type="bottom" id="LYu-aV-blB"/>
@@ -859,7 +859,7 @@
         <!--Page Item Controller-->
         <scene sceneID="ttX-Mx-xyc">
             <objects>
-                <viewController storyboardIdentifier="insertedPage" id="OH8-fY-3fN" customClass="PageItemController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="insertedPage" id="OH8-fY-3fN" customClass="PageItemController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="izZ-UX-Wfd"/>
                         <viewControllerLayoutGuide type="bottom" id="zv9-B8-HgO"/>
@@ -1048,7 +1048,7 @@
         <!--Contact Us View Controller-->
         <scene sceneID="qEy-tt-4NG">
             <objects>
-                <viewController storyboardIdentifier="contactUsStoryBoardID" id="S2i-YJ-4O7" customClass="ContactUsViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="contactUsStoryBoardID" id="S2i-YJ-4O7" customClass="ContactUsViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a5m-Fw-MlD"/>
                         <viewControllerLayoutGuide type="bottom" id="5Uh-oT-vSl"/>
@@ -1311,7 +1311,7 @@
         <!--About Us View Controller-->
         <scene sceneID="VQj-dO-J2C">
             <objects>
-                <viewController storyboardIdentifier="aboutUsStoryBoardID" id="udR-Sg-ruE" customClass="AboutUsViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="aboutUsStoryBoardID" id="udR-Sg-ruE" customClass="AboutUsViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oc4-LT-MIJ"/>
                         <viewControllerLayoutGuide type="bottom" id="cMS-bk-wRz"/>
@@ -1444,7 +1444,7 @@
         <!--Macros-->
         <scene sceneID="0B5-og-06M">
             <objects>
-                <viewController storyboardIdentifier="CaloriesStoryBoardID" title="Macros" id="Uzn-qb-mC4" customClass="CaloriesViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CaloriesStoryBoardID" title="Macros" id="Uzn-qb-mC4" customClass="CaloriesViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="scj-f2-cuH"/>
                         <viewControllerLayoutGuide type="bottom" id="TvG-Z0-iDY"/>
@@ -1773,7 +1773,7 @@
         <!--Premium Plan View Controller-->
         <scene sceneID="kby-Og-4xt">
             <objects>
-                <viewController id="TO3-1S-RXM" customClass="PremiumPlanViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TO3-1S-RXM" customClass="PremiumPlanViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0M7-q4-krm"/>
                         <viewControllerLayoutGuide type="bottom" id="NqQ-kg-cg2"/>
@@ -1886,7 +1886,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageCellIdentifier" rowHeight="96" id="DZO-JI-Yzw" customClass="PayemtControllerImageTableViewCell" customModule="DailyMeals" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageCellIdentifier" rowHeight="96" id="DZO-JI-Yzw" customClass="PayemtControllerImageTableViewCell" customModule="MealPlan" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DZO-JI-Yzw" id="0uN-HJ-KHX">
@@ -1998,7 +1998,7 @@
                                                     <outlet property="imageHeaderLabel" destination="Bai-b3-Red" id="v0K-Yx-SpM"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addsCellIdentifier" id="Ynz-KN-0dC" customClass="PayemtAddsTableViewCell" customModule="DailyMeals" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addsCellIdentifier" id="Ynz-KN-0dC" customClass="PayemtAddsTableViewCell" customModule="MealPlan" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ynz-KN-0dC" id="Ocb-Cz-d7i">
@@ -2576,7 +2576,7 @@
         <!--Step1 View Controller-->
         <scene sceneID="1ph-QJ-gno">
             <objects>
-                <viewController storyboardIdentifier="step1StoryBoardID" id="MwY-fb-Nk2" customClass="Step1ViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="step1StoryBoardID" id="MwY-fb-Nk2" customClass="Step1ViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pb1-TD-uwj"/>
                         <viewControllerLayoutGuide type="bottom" id="dEA-oX-wyB"/>
@@ -3684,7 +3684,7 @@
         <!--Step2 View Controller-->
         <scene sceneID="vda-Wj-5or">
             <objects>
-                <viewController storyboardIdentifier="step2StoryBoardID" id="u76-B3-ceO" customClass="Step2ViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="step2StoryBoardID" id="u76-B3-ceO" customClass="Step2ViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6uW-yf-udS"/>
                         <viewControllerLayoutGuide type="bottom" id="cOJ-9l-eF6"/>
@@ -3851,7 +3851,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OoA-zf-sYD" customClass="mpButton" customModule="DailyMeals" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OoA-zf-sYD" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -4053,7 +4053,7 @@
         <!--Activity Level View Controller-->
         <scene sceneID="uax-zf-4Na">
             <objects>
-                <viewController id="rEt-vx-djH" customClass="ActivityLevelViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rEt-vx-djH" customClass="ActivityLevelViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vjp-Vj-SgS"/>
                         <viewControllerLayoutGuide type="bottom" id="RDj-61-ohz"/>
@@ -4295,7 +4295,7 @@
                                                             <outlet property="delegate" destination="rEt-vx-djH" id="0pY-If-sYD"/>
                                                         </connections>
                                                     </pickerView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OfZ-F8-zyN" customClass="mpButton" customModule="DailyMeals" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OfZ-F8-zyN" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
                                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -4584,7 +4584,7 @@
         <!--Height Weight List View Controller-->
         <scene sceneID="yFG-P1-NBU">
             <objects>
-                <viewController id="1UX-cq-B85" customClass="Height_WeightListViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1UX-cq-B85" customClass="Height_WeightListViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vtI-T7-pyY"/>
                         <viewControllerLayoutGuide type="bottom" id="65C-az-Kz2"/>
@@ -4712,7 +4712,7 @@
                                                             </mask>
                                                         </variation>
                                                     </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znT-1C-JjT" userLabel="Picker View1" customClass="AKPickerView" customModule="DailyMeals" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znT-1C-JjT" userLabel="Picker View1" customClass="AKPickerView" customModule="MealPlan" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up arrow" translatesAutoresizingMaskIntoConstraints="NO" id="zgI-kB-lvZ">
@@ -4840,7 +4840,7 @@
                                                             </mask>
                                                         </variation>
                                                     </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8r8-HK-NTc" userLabel="Picker View2" customClass="AKPickerView" customModule="DailyMeals" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8r8-HK-NTc" userLabel="Picker View2" customClass="AKPickerView" customModule="MealPlan" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Njt-fV-bEn">
@@ -4905,7 +4905,7 @@
                                                             </mask>
                                                         </variation>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOU-51-buK" customClass="mpButton" customModule="DailyMeals" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOU-51-buK" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
                                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                         <color key="backgroundColor" red="0.05735957782" green="0.68782888419999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -5200,7 +5200,7 @@
         <!--Last Week View Controller-->
         <scene sceneID="N0f-O7-1iZ">
             <objects>
-                <viewController storyboardIdentifier="feedback" id="HiW-U4-pVi" customClass="LastWeekViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="feedback" id="HiW-U4-pVi" customClass="LastWeekViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mab-2h-DI9"/>
                         <viewControllerLayoutGuide type="bottom" id="UC9-Tw-wHs"/>
@@ -5329,7 +5329,7 @@
                                                             </mask>
                                                         </variation>
                                                     </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AfD-9x-vDE" userLabel="WightView" customClass="AKPickerView" customModule="DailyMeals" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AfD-9x-vDE" userLabel="WightView" customClass="AKPickerView" customModule="MealPlan" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up arrow" translatesAutoresizingMaskIntoConstraints="NO" id="AUB-wi-vv0">
@@ -6077,12 +6077,12 @@
         <!--Meal Plan-->
         <scene sceneID="gee-Tx-8Oz">
             <objects>
-                <viewController storyboardIdentifier="mealPlanIdentifier" title="Meal Plan" id="dlY-ev-RGF" userLabel="Meal Plan" customClass="MealPlanViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mealPlanIdentifier" title="Meal Plan" id="dlY-ev-RGF" userLabel="Meal Plan" customClass="MealPlanViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="C6C-EH-gCp"/>
                         <viewControllerLayoutGuide type="bottom" id="UZV-o4-Rm3"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2nF-bd-fA8" customClass="bkgrd" customModule="DailyMeals" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="2nF-bd-fA8" customClass="bkgrd" customModule="MealPlan" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -6094,7 +6094,7 @@
                                     <constraint firstAttribute="height" constant="315" id="NRT-90-eEf"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="gNJ-91-wcJ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="gNJ-91-wcJ" customClass="MPTableViewCell" customModule="MealPlan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gNJ-91-wcJ" id="ik8-mg-tZv">
@@ -6484,7 +6484,7 @@
         <!--Food Search View Controller-->
         <scene sceneID="cV0-qw-nGZ">
             <objects>
-                <viewController storyboardIdentifier="foodSearchList" id="Vea-YX-7bD" customClass="FoodSearchViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="foodSearchList" id="Vea-YX-7bD" customClass="FoodSearchViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HDh-UV-7Hp"/>
                         <viewControllerLayoutGuide type="bottom" id="8z6-Cc-tPi"/>
@@ -6546,7 +6546,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="foodListCellIdentifier" rowHeight="29" id="DFm-Ts-T7B" customClass="FoodListTableViewCell" customModule="DailyMeals" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="foodListCellIdentifier" rowHeight="29" id="DFm-Ts-T7B" customClass="FoodListTableViewCell" customModule="MealPlan" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DFm-Ts-T7B" id="Sew-iR-Say">
@@ -6673,7 +6673,7 @@
         <!--Step3 View Controller-->
         <scene sceneID="hAY-75-aLO">
             <objects>
-                <viewController storyboardIdentifier="step3StoryBoardID" id="ToE-ta-dql" customClass="Step3ViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="step3StoryBoardID" id="ToE-ta-dql" customClass="Step3ViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uwx-5G-EXy"/>
                         <viewControllerLayoutGuide type="bottom" id="Tfi-e3-acx"/>
@@ -6761,7 +6761,7 @@
                                             </connections>
                                         </searchBar>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="step3CellIdentifier" id="VYN-qv-fK4" customClass="Step3TableViewCell" customModule="DailyMeals" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="step3CellIdentifier" id="VYN-qv-fK4" customClass="Step3TableViewCell" customModule="MealPlan" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VYN-qv-fK4" id="XuW-ET-GQa">
@@ -6775,7 +6775,7 @@
                                             <outlet property="delegate" destination="ToE-ta-dql" id="s2N-sc-q80"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6W-PC-edf" customClass="mpButton" customModule="DailyMeals" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6W-PC-edf" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -6983,7 +6983,7 @@
         <!--Step4 View Controller-->
         <scene sceneID="mpF-1s-ayb">
             <objects>
-                <viewController storyboardIdentifier="step4StoryBoardID" id="cDr-t1-rY9" customClass="Step4ViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="step4StoryBoardID" id="cDr-t1-rY9" customClass="Step4ViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qcq-Un-mTe"/>
                         <viewControllerLayoutGuide type="bottom" id="jE3-Ty-Qg9"/>
@@ -7071,7 +7071,7 @@
                                             </connections>
                                         </searchBar>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="step4CellIdentifier" id="5HX-kK-CdH" customClass="Step4TableViewCell" customModule="DailyMeals" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="step4CellIdentifier" id="5HX-kK-CdH" customClass="Step4TableViewCell" customModule="MealPlan" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5HX-kK-CdH" id="lOW-Q1-ZSH">
@@ -7085,7 +7085,7 @@
                                             <outlet property="delegate" destination="cDr-t1-rY9" id="huP-Uw-F2d"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9G-VJ-SXJ" customClass="mpButton" customModule="DailyMeals" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9G-VJ-SXJ" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>

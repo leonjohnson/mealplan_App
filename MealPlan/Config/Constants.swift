@@ -42,10 +42,11 @@ struct Constants {
     static let MEAL_PLAN_SERVINGSIZE_LABEL = UIFont.systemFontOfSize(9, weight: UIFontWeightRegular)
     static let DETAIL_PAGE_FOOD_NAME_LABEL = UIFont.systemFontOfSize(17, weight: UIFontWeightBold)
     
-    //Table Row height
+    //TableView constants
     static let TABLE_ROW_HEIGHT = CGFloat(55)
-    
     static let MACRO_LABEL = UIFont(name: "HelveticaNeue", size: 12)!
+    static let DELETE = "Delete"
+    static let EDIT = "Edit"
     
     //Colours:
     static let FOOD_LABEL_COLOR =  UIColor (red: 0/225, green: 141/225, blue: 198/225, alpha: 1)
@@ -94,12 +95,15 @@ struct Constants {
     static let onlyBreakfastFoodType = "Breakfast only"
     static let eatenAtBreakfastFoodType = "Eaten At Breakfast"
     static let vegetableFoodType = "Vegetable"
+    static let fruitFoodType = "Fruit"
     static let drinkFoodType = "Drink"
     static let condiment = "Condiment"
     static let glutenFree = "Gluten free"
     static let Vegan = "Vegan"
     static let vegetarian = "Vegetarian"
     static let lactoseFree = "Lactose free"
+    static let fish = "Fish"
+    static let fizzy = "Fizzy"
 
     
     

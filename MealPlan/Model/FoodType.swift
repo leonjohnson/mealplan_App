@@ -17,28 +17,28 @@ class FoodType: Object {
     static func addFoodTypes(){
         
         let foodType1 = FoodType();
-        foodType1.name = "Eaten At Breakfast"
+        foodType1.name = Constants.eatenAtBreakfastFoodType
         
         let foodType2 = FoodType();
-        foodType2.name = "Breakfast only"
+        foodType2.name = Constants.onlyBreakfastFoodType
         
         let foodType3 = FoodType();
-        foodType3.name = "White fish"
+        foodType3.name = Constants.fish
         
         let foodType4 = FoodType();
-        foodType4.name = "Vegetable"
+        foodType4.name = Constants.vegetableFoodType
         
         let foodType5 = FoodType();
-        foodType5.name = "Fruit"
+        foodType5.name = Constants.fruitFoodType
         
         let foodType6 = FoodType();
-        foodType6.name = "Fizzy"
+        foodType6.name = Constants.fizzy
         
         let foodType7 = FoodType();
-        foodType7.name = "Drink"
+        foodType7.name = Constants.drinkFoodType
         
         let foodType8 = FoodType();
-        foodType8.name = "Condiment"
+        foodType8.name = Constants.condiment
         
         
         

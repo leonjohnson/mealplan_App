@@ -8,7 +8,6 @@
         <!--Navigation Controller-->
         <scene sceneID="AJi-Ls-ol1">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0mZ-KL-jos" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController navigationBarHidden="YES" id="Gpy-uJ-Mu4" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tCP-zd-dIQ">
@@ -19,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0mZ-KL-jos" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-5307" y="451"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="SNI-1w-tw7">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DBo-eB-VFM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="1WN-fu-fSq" customClass="ViewController" customModule="DailyMeals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1WN-fu-fSq" customClass="ViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OKd-JD-nqf"/>
                         <viewControllerLayoutGuide type="bottom" id="ksU-zw-fNi"/>
@@ -39,13 +38,13 @@
                     <navigationItem key="navigationItem" id="MuM-uh-krR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DBo-eB-VFM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4704" y="451"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="G61-PK-a9G">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EzX-fa-WDw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController navigationBarHidden="YES" id="KPd-wL-AhE" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="th8-Wc-O2y">
@@ -59,6 +58,7 @@
                         <segue destination="1WN-fu-fSq" kind="relationship" relationship="rootViewController" id="fOz-mE-k5O"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EzX-fa-WDw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-5307" y="451"/>
         </scene>

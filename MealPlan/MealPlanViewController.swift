@@ -7,7 +7,7 @@
 import UIKit
 import RealmSwift
 
-class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPTableViewCellDelegate {
     
     //For SettingsTab bar
     var settingsControl : Bool?
@@ -23,6 +23,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var alertController : UIAlertController?
     
+    var deleteSheetIndexSelected : Int = -1
+    
     
     
     var dragger:DragToTable?
@@ -34,6 +36,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(true)
+        
         
         thisWeek = DataHandler.getFutureWeeks()[0]
         
@@ -60,35 +63,37 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //DataStructure.createMealPlans(thisWeek)
         
         //DataHandler.macrosCorrect()
-        /*
+        
         alertController = UIAlertController(title: "Title",
                                             message: "Message",
                                             preferredStyle: .ActionSheet)
         
         let tooEarlyAction : UIAlertAction = UIAlertAction(title: "Too early for this",
-                                       style: .Default,
+                                       style: .Destructive,
                                        handler: {
-                                        (paramAction:UIAlertAction!) in
-                                        /* do stuff */
+                                       (paramAction:UIAlertAction!) in
+                                        self.deleteSheetIndexSelected = 0
         })
         
         let dislikeAction : UIAlertAction = UIAlertAction(title: "Dislike this",
-                                       style: .Default,
+                                       style: .Destructive,
                                        handler: {
                                         (paramAction:UIAlertAction!) in
-                                        /* do stuff */
+                                        self.deleteSheetIndexSelected = 1
         })
         
-        let cancelAction : UIAlertAction = UIAlertAction(title: "Dislike this",
+        let cancelAction : UIAlertAction = UIAlertAction(title: "Cancel",
                                                           style: .Cancel,
                                                           handler: {
                                                             (paramAction:UIAlertAction!) in
-                                                            /* do stuff */
+                                                            self.alertController?.dismissViewControllerAnimated(true, completion: nil)
         })
         
         alertController?.addAction(tooEarlyAction)
         alertController?.addAction(dislikeAction)
-        */
+        alertController?.addAction(cancelAction)
+        
+
         
         
     }
@@ -232,6 +237,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         
         
+        
         //Code commented for Tempraory time based on client request.[code for view to drag to each meal plans header]
         //        dragger = DragToTable.activate(workOutIcon, table: mealPlanListTable, view: self.view, listen: { (indexPath) -> Void in
         //
@@ -300,7 +306,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MPTableViewCell
         
         let foodItem : FoodItem = meals[indexPath.section].foodItems[indexPath.row]
         let label =  cell.viewWithTag(102) as? UILabel
@@ -356,12 +362,19 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             let label3 =  cell.viewWithTag(101) as? UILabel
             label3?.attributedText = NSAttributedString(string: Int(foodItem.getTotalCal()).description, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
             
+            cell.delegate = self
+            cell.foodItemIndexPath = indexPath
+            
+            print("fooditem eaten: \(foodItem.eaten.description)")
+            
         }
         
         //cell seprator line programztically:
         let sep = UIView(frame:CGRectMake(0, 1, cell.frame.size.width, 0.5) )
         sep.backgroundColor = UIColor.whiteColor()
         cell.addSubview(sep)
+        
+        
         
         return cell
     }
@@ -510,6 +523,46 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
+    
+    
+    // cell delegate
+    func editFoodItemAtIndexPath(indexPath: NSIndexPath, editType: String) {
+        //meals[indexPath.section].foodItems[indexPath.row]
+        //let index = self.mealPlanListTable
+        //let index = (toDoItems as NSArray).indexOfObject(toDoItem)
+        //if index == NSNotFound { return }
+        
+
+        
+        switch editType {
+        case Constants.DELETE:
+            self.presentViewController(alertController!, animated: true, completion: nil)
+            DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
+            mealPlanListTable.reloadData()
+            if deleteSheetIndexSelected == 0 {
+                // TODO: insert a Deletion record
+                print("")
+            } else if deleteSheetIndexSelected == 1 {
+                // TODO: insert a Deletion record
+                print("")
+            }
+         case Constants.EDIT:
+            let fi = meals[indexPath.section].foodItems[indexPath.row]
+            DataHandler.updateFoodItem(fi, eaten: true)
+            
+        default:
+            break
+        }
+        
+        //let indexPathForRow = NSIndexPath(forRow: index, inSection: 0)
+        //tableView.deleteRowsAtIndexPaths([indexPathForRow], withRowAnimation: .Fade)
+        
+    }
+    
+    
+    func displayDeleteSheet(reason: String) {
+        self.presentViewController(alertController!, animated: true, completion: nil)
+    }
     
     
 }

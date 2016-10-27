@@ -178,7 +178,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func mealPalnButtonClick(sender: AnyObject){
         
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let destination = storyboard.instantiateViewControllerWithIdentifier("loggedinTabBar") as! TabBarController
+        let destination = storyboard.instantiateViewControllerWithIdentifier("loggedinTabBar") as! UITabBarController
         navigationController?.pushViewController(destination, animated: true)
     
     }

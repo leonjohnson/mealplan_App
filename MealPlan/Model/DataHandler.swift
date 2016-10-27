@@ -230,6 +230,15 @@ class DataHandler: NSObject {
         }
         
     }
+    
+    static func updateFoodItem(foodItem:FoodItem,eaten:Bool){
+        let realm = try! Realm()
+        try! realm.write {
+            foodItem.eaten = eaten
+            // print("updating FoodItem \(foodItem.food!.name )")
+        }
+        
+    }
     //MARK: Data Handler For Profile
     static func getFood(pk:Int)->Food?{
         let realm = try! Realm()
@@ -638,6 +647,12 @@ class DataHandler: NSObject {
         print("RETURNING THE WRONG FOODTYPE !!")
         return x.first!
     }
+    
+    
+    
+
+    
+    
     
     /** INTERNAL TESTING */
     
