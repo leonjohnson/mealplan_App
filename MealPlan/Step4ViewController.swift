@@ -27,7 +27,7 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         
         //To hide close button when app. loads normaly from Profile view.
-        closeButton.hidden = true
+        closeButton.isHidden = true
         
         disLikeFoodListTable.delegate = self       
         filterdData = localData
@@ -37,17 +37,17 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             
             //Close Button whn app. loads from settings view.
-            closeButton.hidden = false
+            closeButton.isHidden = false
     
         let arrayOfObjects = Array(DataHandler.getDisLikedFoods().foods);
         let arrayOfLikedObjects = Array(DataHandler.getLikeFoods().foods);
     
             for item in arrayOfObjects {
-            dislikeFoodValue.addObject(item)
+            dislikeFoodValue.add(item)
             print("added object....")
             }
             print("count in arrayOfLikedObjects: %f", arrayOfLikedObjects.count)
-            dislikeFoodValue.removeObjectsInArray(arrayOfLikedObjects)
+            dislikeFoodValue.removeObjects(in: arrayOfLikedObjects)
         }
         
         filterdData = localData
@@ -62,7 +62,7 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
         let attrsB =  [NSFontAttributeName: Constants.FOOD_LABEL_FONT_BOLD, NSForegroundColorAttributeName: Constants.FOOD_LABEL_COLOR]
         let b = NSAttributedString(string:Constants.DISLIKE_STRING, attributes:attrsB)
         
-        a.appendAttributedString(b)
+        a.append(b)
         //disLikeFoodLabel.attributedText = a
         
         
@@ -71,8 +71,8 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func closeAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func closeAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
 
     
@@ -94,7 +94,7 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //MealPlanListTable Delegate Methods
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         
         //if(self.resultSearchController.active) {
             //return filterdData!.count
@@ -102,46 +102,46 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
         return filterdData!.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("step4CellIdentifier", forIndexPath: indexPath) as! Step4TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "step4CellIdentifier", for: indexPath) as! Step4TableViewCell
         cell.textLabel?.text = filterdData![indexPath.row].name
         cell.textLabel?.font = Constants.STANDARD_FONT
         
-        if(dislikeFoodValue.containsObject(filterdData![indexPath.row])){
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        if(dislikeFoodValue.contains(filterdData![indexPath.row])){
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.accessoryType = UITableViewCellAccessoryType.none
         }
         return cell
     }
     
     //Selecting Multiple Cells
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         cell!.textLabel?.font = Constants.STANDARD_FONT
         
-        if( dislikeFoodValue.containsObject(filterdData![indexPath.row])){
-            dislikeFoodValue.removeObject(filterdData![indexPath.row])
-            cell!.accessoryType = UITableViewCellAccessoryType.None
+        if( dislikeFoodValue.contains(filterdData![indexPath.row])){
+            dislikeFoodValue.remove(filterdData![indexPath.row])
+            cell!.accessoryType = UITableViewCellAccessoryType.none
         }else{
-            dislikeFoodValue.addObject(filterdData![indexPath.row])
-            cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+            dislikeFoodValue.add(filterdData![indexPath.row])
+            cell!.accessoryType = UITableViewCellAccessoryType.checkmark
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         disLikeSearchBar.resignFirstResponder()
     }
     
     //DeSelecting Multiple Cells
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
         disLikeSearchBar.resignFirstResponder()
     }
     
     
     //SearchBar Delegates
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if(searchText == ""){
             filterdData = localData
@@ -150,7 +150,7 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
          }else{
             filterdData = localData.filter({
                 
-                if($0.name.lowercaseString.containsString(searchText.lowercaseString)){
+                if($0.name.lowercased().contains(searchText.lowercased())){
                     return true
                 }
                 return false
@@ -161,24 +161,24 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //IBAction for NextButton Clicked in Step4 VC. Saving all datas into an ProfileClass.
-    @IBAction func step4FinishClicked (sender : AnyObject){
+    @IBAction func step4FinishClicked (_ sender : AnyObject){
       
         
         DataHandler.updateDisLikeFoods(dislikeFoodValue)
        
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }else{
 
-        self.performSegueWithIdentifier("step4Identifier", sender: nil)
+        self.performSegue(withIdentifier: "step4Identifier", sender: nil)
         }
 
 
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if segue.identifier == "step4Identifier"{
-            let vc = segue.destinationViewController as! CaloriesViewController
+            let vc = segue.destination as! CaloriesViewController
             vc.fromController = "step4Identifier"
         }
     }
@@ -186,8 +186,8 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func BackAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func BackAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

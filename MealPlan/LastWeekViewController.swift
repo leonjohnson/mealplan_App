@@ -44,27 +44,27 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
         super.viewDidLoad()
         
         //For adding Border color & Width
-        hungryView?.layer.borderColor = UIColor .lightGrayColor().CGColor
+        hungryView?.layer.borderColor = UIColor.lightGray.cgColor
         hungryView?.layer.borderWidth = 1
         
         //For adding Border color & Width
-        BloatedView?.layer.borderColor = UIColor .lightGrayColor().CGColor
+        BloatedView?.layer.borderColor = UIColor.lightGray.cgColor
         BloatedView?.layer.borderWidth = 1
         
         //For adding Border color & Width
-        weekFeelView?.layer.borderColor = UIColor .lightGrayColor().CGColor
+        weekFeelView?.layer.borderColor = UIColor.lightGray.cgColor
         weekFeelView?.layer.borderWidth = 1
         
         //For adding Border color & Width
-        WeekPlanView?.layer.borderColor = UIColor .lightGrayColor().CGColor
+        WeekPlanView?.layer.borderColor = UIColor.lightGray.cgColor
         WeekPlanView?.layer.borderWidth = 1
         
         
         //Done button on KeyBoard for with Dismissing KeyBoard action:
-        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: notes, action: #selector(UIResponder.resignFirstResponder))
+        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: notes, action: #selector(UIResponder.resignFirstResponder))
         //let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: notes, action: "resignFirstResponder")
-        barButton.tintColor = UIColor.blackColor()
-        let toolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+        barButton.tintColor = UIColor.black
+        let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
         toolbar.items = [barButton]
         notes.inputAccessoryView = toolbar
 
@@ -96,7 +96,7 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
     */
     
     //Table Delegate Methods
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (tableView == hungryLevelTable){
             return hungryLevelArray.count
@@ -107,24 +107,24 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (tableView == hungryLevelTable){
           
             let item = hungryLevelArray[indexPath.row];
-            let cell = tableView.dequeueReusableCellWithIdentifier("hungryCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "hungryCell", for: indexPath)
             cell.textLabel?.text = item;
             
             
             if (selcetedHungryLevel == indexPath.row){
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }else{
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             return cell
         }else if (tableView == bolatedLevelTable){
             
             let item = bolatedArray[indexPath.row];
-            let cell = tableView.dequeueReusableCellWithIdentifier("bolatedCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "bolatedCell", for: indexPath)
             if item
             {
             cell.textLabel?.text = Constants.BOOL_YES
@@ -134,15 +134,15 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
             cell.textLabel?.text = Constants.BOOL_NO            }
             
             if (selectedBolatedValue == indexPath.row){
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }else{
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             return cell
 
         }else{
             let item = helpLevelValue[indexPath.row];
-            let cell = tableView.dequeueReusableCellWithIdentifier("helpCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "helpCell", for: indexPath)
             if item
             {
             cell.textLabel?.text = Constants.BOOL_YES
@@ -154,16 +154,16 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
             
             
             if (selectedHelpValue == indexPath.row){
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }else{
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             return cell
 
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if (tableView == hungryLevelTable){
            
@@ -184,66 +184,66 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
     
     
     
-    @IBAction func closeClicked (sender : AnyObject){
+    @IBAction func closeClicked (_ sender : AnyObject){
        //From Settings View:
         if ((settingsControl) != nil){
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
-        self.dismissViewControllerAnimated(true) { () -> Void in
+        self.dismiss(animated: true) { () -> Void in
         }
     }
     
     
-    @IBAction func doneClicked (sender : AnyObject){
+    @IBAction func doneClicked (_ sender : AnyObject){
         let feedBack = FeedBack();
         
         if (selcetedHungryLevel == 4){
-            let alert = UIAlertController(title: "", message: "Please select hungerlevels", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Please select hungerlevels", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }else{
             feedBack.hungerLevels = hungryLevelArray[selcetedHungryLevel];
         }
         
         if (selectedBolatedValue == 2 ){
-            let alert = UIAlertController(title: "", message: "Please select bloating value", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Please select bloating value", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }else{
             feedBack.bloating = bolatedArray[selectedBolatedValue];
         }
                 
         if (selectedHelpValue == 2 ){
-            let alert = UIAlertController(title: "", message: "Please select meal plan status for this week", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Please select meal plan status for this week", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }else{
             feedBack.didItHelped = helpLevelValue[selectedHelpValue];
         }
         
         if (notes.text == ""){
-            let alert = UIAlertController(title: "", message: "Please add feedback note", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Please add feedback note", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }else{
             feedBack.notes = notes.text;
@@ -254,18 +254,18 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
         
         
         // @todo save it to the last week meel
-        self.dismissViewControllerAnimated(true) { () -> Void in
+        self.dismiss(animated: true) { () -> Void in
         }
         
         //From Settings View:
         if ((settingsControl) != nil){
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
     
     //Segment Control Click functionalities
-    @IBAction func valueChanged(sender: UISegmentedControl) {
+    @IBAction func valueChanged(_ sender: UISegmentedControl) {
         updateWeightMode ()
     }
     
@@ -296,7 +296,7 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
 
     
     //PickerView Delegate
-    func pickerView(pickerView: AKPickerView, didSelectItem item: Int){
+    func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int){
         var label = weightValue;
         var lastdigit = ""
             setWeight(item)
@@ -307,13 +307,13 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
                 lastdigit = "pd"
             }
             //label = weightValue;
-        label.text = (pickerView.getValue1(item)).description + pickerView.seperator + (pickerView.getValue2(item)).description + pickerView.endIcon + lastdigit
+        label?.text = (pickerView.getValue1(item)).description + pickerView.seperator + (pickerView.getValue2(item)).description + pickerView.endIcon + lastdigit
         
     }
     
  
     //Method to Convert KG to Pounds and to save value to a variable
-    func setWeight(index:Int){
+    func setWeight(_ index:Int){
         
         //IN KG
         weightVal = Double(weightPickerValue.getValue1(index))

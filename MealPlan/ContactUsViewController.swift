@@ -23,21 +23,21 @@ class ContactUsViewController: UIViewController {
         super.viewDidLoad()
         
         //Done button View for Serving Size Text Field keyboard
-        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: feedBackText, action: #selector(UIResponder.resignFirstResponder))
+        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: feedBackText, action: #selector(UIResponder.resignFirstResponder))
         //let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: valServing, action: "resignFirstResponder")
-        barButton.tintColor = UIColor.blackColor()
-        let toolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+        barButton.tintColor = UIColor.black
+        let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
         toolbar.items = [barButton]
         feedBackText.inputAccessoryView = toolbar
 
         
         //Adding Border color & Width
-        textviewborder?.layer.borderColor = UIColor .lightGrayColor().CGColor
+        textviewborder?.layer.borderColor = UIColor.lightGray.cgColor
         textviewborder?.layer.borderWidth = 1
         
         //KeyBoard action for: move view up when keyboard appears
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactUsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactUsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactUsViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactUsViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
 
 
@@ -45,9 +45,9 @@ class ContactUsViewController: UIViewController {
     }
     
     //KeyBoard Method for: move view up when keyboard appears
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             self.textviewborder.frame.size.height -= keyboardSize.height
             self.titleDistanceConstraint.constant = 270
 
@@ -56,8 +56,8 @@ class ContactUsViewController: UIViewController {
     }
     
     //KeyBoard Method for: move view down when keyboard appears
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+    func keyboardWillHide(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             self.textviewborder.frame.size.height += keyboardSize.height
             self.titleDistanceConstraint.constant = 2
             
@@ -65,7 +65,7 @@ class ContactUsViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         //To display Regestered Users name on Meal Plan's page
         nameLabel.text = DataHandler.getActiveUser().name + ",we'd love to hear from you."
 
@@ -77,8 +77,8 @@ class ContactUsViewController: UIViewController {
     }
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func closeAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func closeAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
 
     

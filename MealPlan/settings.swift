@@ -23,11 +23,11 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     //TABLEVIEW DELEGATE & DATASOURCE
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if (section == 0){
             return 6;
         }else{
@@ -36,21 +36,21 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.TABLE_ROW_HEIGHT
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
         if (indexPath.section == 0){
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("profileCellIdentifier", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "profileCellIdentifier", for: indexPath)
 
             //ImageSet from variable for each case:
             let imageName = UIImage(named: settingstableImages[indexPath.row])
             //Text value alligned to left
-            cell.textLabel?.textAlignment = NSTextAlignment.Left
+            cell.textLabel?.textAlignment = NSTextAlignment.left
 
             switch indexPath.row {
             case 0:
@@ -78,48 +78,48 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         else{
            
-            let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath)
-            cell.textLabel?.textAlignment = NSTextAlignment.Center
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
+            cell.textLabel?.textAlignment = NSTextAlignment.center
             cell.textLabel?.text = "How is your meal plan going?"
             return cell
         }
     }
     
     //Navigation to specific ViewControllers based on Cell Click.
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
        
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         if (indexPath.section == 0){
             
         switch indexPath.row {
         case 0:
-            let destination = storyboard.instantiateViewControllerWithIdentifier("step1StoryBoardID") as! Step1ViewController
+            let destination = storyboard.instantiateViewController(withIdentifier: "step1StoryBoardID") as! Step1ViewController
             destination.settingsControl = true
             //destination.fromController = "step1Settings"
             navigationController?.pushViewController(destination, animated: true)
         case 1:
-            let destination = storyboard.instantiateViewControllerWithIdentifier("step2StoryBoardID") as! Step2ViewController
+            let destination = storyboard.instantiateViewController(withIdentifier: "step2StoryBoardID") as! Step2ViewController
             destination.settingsControl = true
             //destination.fromController = "step2Settings"
             navigationController?.pushViewController(destination, animated: true)
         case 2:
-            let destination = storyboard.instantiateViewControllerWithIdentifier("step3StoryBoardID") as! Step3ViewController
+            let destination = storyboard.instantiateViewController(withIdentifier: "step3StoryBoardID") as! Step3ViewController
             destination.settingsControl = true
             //destination.fromController = "step3Settings"
             navigationController?.pushViewController(destination, animated: true)
         case 3:
-            let destination = storyboard.instantiateViewControllerWithIdentifier("step4StoryBoardID") as! Step4ViewController
+            let destination = storyboard.instantiateViewController(withIdentifier: "step4StoryBoardID") as! Step4ViewController
             destination.settingsControl = true
             //destination.fromController = "step4Settings"
             navigationController?.pushViewController(destination, animated: true)
         case 4:
-            let destination = storyboard.instantiateViewControllerWithIdentifier("aboutUsStoryBoardID") as! AboutUsViewController
+            let destination = storyboard.instantiateViewController(withIdentifier: "aboutUsStoryBoardID") as! AboutUsViewController
             destination.settingsControl = true
             //destination.fromController = "step1Settings"
             navigationController?.pushViewController(destination, animated: true)
         case 5:
-            let destination = storyboard.instantiateViewControllerWithIdentifier("contactUsStoryBoardID") as! ContactUsViewController
+            let destination = storyboard.instantiateViewController(withIdentifier: "contactUsStoryBoardID") as! ContactUsViewController
             destination.settingsControl = true
             //destination.fromController = "step1Settings"
             navigationController?.pushViewController(destination, animated: true)
@@ -128,13 +128,13 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         }
         else{
-            let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let destination = storyboard.instantiateViewControllerWithIdentifier("feedback") as! LastWeekViewController
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let destination = storyboard.instantiateViewController(withIdentifier: "feedback") as! LastWeekViewController
             destination.settingsControl = true
             navigationController?.pushViewController(destination, animated: true)
 
         }
-        self.settingsTable.deselectRowAtIndexPath(indexPath, animated: true)
+        self.settingsTable.deselectRow(at: indexPath, animated: true)
 
 
     }

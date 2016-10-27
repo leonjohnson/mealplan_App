@@ -48,7 +48,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
         heightPickerValue.delegate = self;
         //wesitPickerValue.delegate = self;
         
-        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height)
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
         scrollView.setContentOffset(CGPoint(x: 0, y: 100), animated: true)
         
         //Assiginig values to variable
@@ -58,7 +58,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
             heightValActual = parentView?.bio.heightMeasurement
             
             let unit = parentView?.bio.weightUnit;
-            if(unit!.containsString("kg")){
+            if(unit!.contains("kg")){
                 weightSegment.selectedSegmentIndex  = 0;
             }else{
                 weightSegment.selectedSegmentIndex  = 1;
@@ -66,7 +66,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
             
             let unitheight = parentView?.bio.heightUnit;
             
-            if(unitheight!.containsString("inch")){
+            if(unitheight!.contains("inch")){
                 heightSegment.selectedSegmentIndex  = 0;
             }else{
                 heightSegment.selectedSegmentIndex  = 1;
@@ -92,7 +92,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
         // Do any additional setup after loading the view.
     }
     //Segment Control Click functionalities
-    @IBAction func valueChanged(sender: UISegmentedControl) {
+    @IBAction func valueChanged(_ sender: UISegmentedControl) {
         switch (sender){
         case weightSegment:
             updateWeightMode ()
@@ -192,7 +192,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
     
     
     //PickerView Delegate
-    func pickerView(pickerView: AKPickerView, didSelectItem item: Int){
+    func pickerView(_ pickerView: AKPickerView, didSelectItem item: Int){
         var label = weightValue;
         var lastdigit = ""
         switch (pickerView){
@@ -228,7 +228,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
             //label = weightValue;
             break;
         }
-        label.text = (pickerView.getValue1(item)).description + pickerView.seperator + (pickerView.getValue2(item)).description + pickerView.endIcon + lastdigit
+        label?.text = (pickerView.getValue1(item)).description + pickerView.seperator + (pickerView.getValue2(item)).description + pickerView.endIcon + lastdigit
         
     }
     
@@ -245,7 +245,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
     
     
     //Method to Convert KG to Pounds and to save value to a variable
-    func setWeight(index:Int){
+    func setWeight(_ index:Int){
         
         //IN KG
         weightVal = Double(weightPickerValue.getValue1(index))
@@ -258,7 +258,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
     }
     
     //Method to Convert CM to Inches and to save value to a variable
-    func setHeight(index:Int){
+    func setHeight(_ index:Int){
         
         //IN CM
         heightVal = Double(heightPickerValue.getValue1(index))
@@ -298,7 +298,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
     //    }
     
     //Method for adding values and Providing Alerts
-    @IBAction func doneButtonClicked(sender : AnyObject) {
+    @IBAction func doneButtonClicked(_ sender : AnyObject) {
         
         parentView?.bio.weightMeasurement  = weightValActual!
         parentView?.bio.weightUnit   =  (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs");
@@ -307,13 +307,13 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
         
         //parentView?.bio.waistMeasurement   = waistVal!
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func BackAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func BackAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     

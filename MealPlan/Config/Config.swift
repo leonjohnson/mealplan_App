@@ -13,25 +13,25 @@ class Config: NSObject {
     
     
     // GET A STRING VALUE
-    static func getStringValue(key:String ,withDefault :String)->NSString{
-        if let value = NSUserDefaults.standardUserDefaults().stringForKey(key) {
-            return value
+    static func getStringValue(_ key:String ,withDefault :String)->NSString{
+        if let value = UserDefaults.standard.string(forKey: key) {
+            return value as NSString
         }
-        return withDefault
+        return withDefault as NSString
     }
     // GET A BOOL VALUE
-    static func getBoolValue(key:String )->Bool{
-        return  NSUserDefaults.standardUserDefaults().boolForKey(key)
+    static func getBoolValue(_ key:String )->Bool{
+        return  UserDefaults.standard.bool(forKey: key)
     }
     // SET A BOOL VALUE
-    static func setBoolValue(key:String ,status :Bool ){
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setBool(status, forKey: key)
+    static func setBoolValue(_ key:String ,status :Bool ){
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(status, forKey: key)
         userDefaults.synchronize()
     }
     // SET A STRING VALUE
-    static func setStringValue(key:String ,status :String ){
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+    static func setStringValue(_ key:String ,status :String ){
+        let userDefaults = UserDefaults.standard
         userDefaults.setValue(status, forKey: key)
         userDefaults.synchronize()
     }
@@ -40,7 +40,7 @@ class Config: NSObject {
         return Constants.KEY_EMPTY;
     }
     //SHOW AN ALERT
-    static func showAlert( title:String?,message:String){
+    static func showAlert( _ title:String?,message:String){
         hideAlert()
         if(title == nil){
         }

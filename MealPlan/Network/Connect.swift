@@ -4,9 +4,9 @@ import AFNetworking
 class Connect: NSObject {
     
     //Method for Converting all Values to Double Format.
-    static func getDoubleValueForKey(key:String, pdt:NSDictionary)-> Double{
+    static func getDoubleValueForKey(_ key:String, pdt:NSDictionary)-> Double{
         
-        if let value :NSString = (pdt.valueForKey(key) as? NSString){
+        if let value :NSString = (pdt.value(forKey: key) as? NSString){
             if let answer:Double = value.doubleValue{
                 return answer;
             }
@@ -14,10 +14,10 @@ class Connect: NSObject {
                 return Double(answer);
             }
         }
-        if let value :Double = (pdt.valueForKey(key) as? Double){
+        if let value :Double = (pdt.value(forKey: key) as? Double){
             return value
         }
-        if let value :Int = (pdt.valueForKey(key) as? Int){
+        if let value :Int = (pdt.value(forKey: key) as? Int){
             return Double(value)
         }
         
@@ -25,7 +25,7 @@ class Connect: NSObject {
     }
     
     
-    static func fetchFoodItems(key:String , limit:Int , offset:Int,view:UIView, onResponse:(items:[Food]!,status:Bool) -> Void)->Void{
+    static func fetchFoodItems(_ key:String , limit:Int , offset:Int,view:UIView, onResponse:@escaping (_ items:[Food]?,_ status:Bool) -> Void)->Void{
         
         let url = Constants.API_URL + key + Constants.API_SEPERATOR + limit.description +  Constants.API_SEPERATOR + offset.description
         
@@ -38,14 +38,14 @@ class Connect: NSObject {
                     
                     items = createFoods(itemsAvailable);
                 }
-                onResponse(items: items,status: true)
+                onResponse(items,true)
                 
             }else{
-                onResponse(items: items,status: false)
+                onResponse(items,false)
             }
             
-            }, withFailureHandler: { (op:AFHTTPRequestOperation!, err:NSError!) -> Void in
-                  onResponse(items: nil,status: false)
+            } as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void , withFailureHandler: { (op:AFHTTPRequestOperation?, err:NSError?) -> Void in
+                  onResponse(nil,false)
             }, withLoadingViewOn: view);
     }
     
@@ -56,7 +56,7 @@ class Connect: NSObject {
     /*
      Receives an NSArray from the json file, locally or remotely, and turns each node into an NSDictionary which is then read and turned into a food object for the database.
     */
-    static func  createFoods(itemsAvailable: NSArray)->[Food]
+    static func  createFoods(_ itemsAvailable: NSArray)->[Food]
     {
         var items = [Food]();
         for item in itemsAvailable {
@@ -80,13 +80,13 @@ class Connect: NSObject {
      
      
      */
-     static func createFood(pdt: NSDictionary!)->Food{
+     static func createFood(_ pdt: NSDictionary!)->Food{
         let itemFood = Food();
         
          //TO DO CHECK NULL STRING
-        itemFood.name = (pdt!.valueForKey("name") as! String?)!
+        itemFood.name = (pdt!.value(forKey: "name") as! String?)!
         
-        if let value : Int = (pdt!.valueForKey("pk") as! Int?)!{
+        if let value : Int = (pdt!.value(forKey: "pk") as! Int?)!{
             itemFood.pk = value
         }
         
@@ -131,7 +131,7 @@ class Connect: NSObject {
             itemFood.fibre = RealmOptional<Double>(value)
         }
         
-        if let value = (pdt!.valueForKey("dietSuitablity") as! NSArray?){
+        if let value = (pdt!.value(forKey: "dietSuitablity") as! NSArray?){
             let realm = try! Realm()
             let ds = realm.objects(DietSuitability).filter("name IN %@", value)
             for each in ds {
@@ -139,7 +139,7 @@ class Connect: NSObject {
             }
         }
         
-        if let value = (pdt!.valueForKey("foodType") as! NSArray?){
+        if let value = (pdt!.value(forKey: "foodType") as! NSArray?){
             let realm = try! Realm()
             let ft = realm.objects(FoodType).filter("name IN %@", value)
             for each in ft {
@@ -147,9 +147,9 @@ class Connect: NSObject {
             }
         }
         
-        if (pdt!.valueForKey("readyToEat") as! Bool?)! == true{
+        if (pdt!.value(forKey: "readyToEat") as! Bool?)! == true{
             itemFood.readyToEat = true
-        } else if (pdt!.valueForKey("readyToEat") as! Bool?)! == false {
+        } else if (pdt!.value(forKey: "readyToEat") as! Bool?)! == false {
             itemFood.readyToEat = false
         }
         
@@ -164,7 +164,7 @@ class Connect: NSObject {
     }
     
     
-    static func fetchInitialFoods(view:UIView?, onResponse:(items:[Food]!, json:NSArray, status:Bool) -> Void)->Void{
+    static func fetchInitialFoods(_ view:UIView?, onResponse:@escaping (_ items:[Food]?, _ json:NSArray, _ status:Bool) -> Void)->Void{
         
         /**
          This method returns an array of of foods that have been created, called 'items'
@@ -173,10 +173,10 @@ class Connect: NSObject {
         
         let url = Constants.API_URL + Constants.API_KEY_ALL
         
-        Network.executeGETWithUrl( url, andParameters: NSMutableDictionary(), andHeaders: nil, withSuccessHandler: { (operation:AFHTTPRequestOperation!,response:AnyObject!, status:Bool) -> Void in
+        Network.executeGETWithUrl( url, andParameters: NSMutableDictionary(), andHeaders: nil, withSuccessHandler: { (operation:AFHTTPRequestOperation?,response:AnyObject?, status:Bool) -> Void in
             var foods = [Food]();
             var itemsAvailable : NSArray = NSArray()
-            if(response.count > 0){
+            if((response?.count)! > 0){
                 
                 
                 if let jsonDataAsArray = response as? NSArray{
@@ -185,21 +185,21 @@ class Connect: NSObject {
                     itemsAvailable = jsonDataAsArray
                     
                 }
-                onResponse(items: foods, json: itemsAvailable, status: true)
+                onResponse(foods, itemsAvailable, true)
                 
             }else{
-                onResponse(items: foods, json: [], status: false)
+                onResponse(foods, [], false)
                 
             }
         
-            }, withFailureHandler: { (op:AFHTTPRequestOperation!, err:NSError!) -> Void in
+        }, withFailureHandler: { (op:AFHTTPRequestOperation?, err:NSError?) -> Void in
                 
                 var items = [Food]();
                 items = importDataFromJSON().foodArray as! [Food]
                 let itemsAvail : NSArray = importDataFromJSON().JSON
-                onResponse(items: items, json: itemsAvail, status: true)
+                onResponse(items, itemsAvail, true)
                 
-            }, withLoadingViewOn: view);
+            } , withLoadingViewOn: view);
         
         
     }
@@ -211,25 +211,25 @@ class Connect: NSObject {
      */
     static func importDataFromJSON() -> (foodArray:NSArray, JSON:NSArray)  {
         var items = [Food]();
-        guard let path = NSBundle.mainBundle().pathForResource("initialLoad3", ofType: "json") else {
+        guard let path = Bundle.main.path(forResource: "initialLoad3", ofType: "json") else {
             print("Error retriving any local objects")
-            UIControl().sendAction(#selector(NSURLSessionTask.suspend), to: UIApplication.sharedApplication(), forEvent: nil)
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
             return (NSArray(), NSArray())
         }
         print("We got the path to the json file.")
         do {
-            let jsonData = try NSData(contentsOfFile: path, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+            let jsonData = try Data(contentsOf: URL(fileURLWithPath: path), options: NSData.ReadingOptions.mappedIfSafe)
             print("Converted it to json data.")
             do {
-                let jsonResult: AnyObject! = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) 
+                let jsonResult: AnyObject! = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                     if let rawJSON = jsonResult as? NSArray{
                     items = createFoods(rawJSON);
                     print("Serialised it into NSArrays")
-                   return (items, rawJSON)
+                   return (items as NSArray, rawJSON)
                 }
                
             } catch {print("Error 1")}
         } catch {print("Error 2")}
-        return (items, NSArray())
+        return (items as NSArray, NSArray())
     }
 }

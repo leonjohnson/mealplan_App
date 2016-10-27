@@ -39,7 +39,7 @@ class DailyMealPlan: Object {
         return totalFat
     }
     
-    func containsFood(food:Food)->Bool{
+    func containsFood(_ food:Food)->Bool{
         for meal in meals{
             for fi in meal.foodItems{
                 if fi.food == food{

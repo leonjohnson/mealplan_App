@@ -17,15 +17,13 @@ class Util
      - returns: sringForCheck.
      
      */
-    class func checkNullString(key:String, pdt:NSDictionary) -> String{
-        let value = pdt.objectForKey(key)
-        if ( value != nil && !(value?.isKindOfClass(NSNull))! )
-        {
-            return    ((pdt.objectForKey(key)!) as? String)!
-        }
-        else{
+    class func checkNullString(_ key:String, pdt:NSDictionary) -> String{
+        let value = pdt.object(forKey: key)
+        
+        if (value != nil) && !(value is NSNull) {
+            return    ((pdt.object(forKey: key)!) as? String)!
+        }else{
             return ""
         }
     }
-    
-    }
+}

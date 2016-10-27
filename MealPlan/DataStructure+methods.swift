@@ -10,14 +10,14 @@ extension DataStructure {
     }
     
     
-    static func calculateTotalCalories( items :[Meal])->Double{
+    static func calculateTotalCalories( _ items :[Meal])->Double{
         var count = 0.0;
         for food in items{
             count +=  getcalory(food.foodItems)
         }
         return count;
     }
-    static func getcalory(items :List<FoodItem>)->Double{
+    static func getcalory(_ items :List<FoodItem>)->Double{
         var count = 0.0;
         for food in items{
             count +=  food.food!.calories * food.numberServing
@@ -45,13 +45,13 @@ extension DataStructure {
             }
             
             //Load nutritional information for these foods.
-            print("foods count : \(foods.count)")
-            for  food in foods{
+            print("foods count : \(foods?.count)")
+            for  food in foods!{
                 DataHandler.createFood(food);
             }
             
             //Add the food pairings
-            addFoodPairingsToDatabase(foods,json: json)
+            addFoodPairingsToDatabase(foods!,json: json)
             
             //createMeal();
             Config.setBoolValue("isCreated", status: true);
@@ -75,16 +75,16 @@ extension DataStructure {
      
      
      */
-    static func addFoodPairingsToDatabase (foods:[Food], json:NSArray)
+    static func addFoodPairingsToDatabase (_ foods:[Food], json:NSArray)
     {
         
         print("foods count: \(foods.count) json count: \(json.count)")
         let realm = try! Realm()
-        for (index, food) in foods.enumerate() {
+        for (index, food) in foods.enumerated() {
             
-            let foodInJsonArray : NSDictionary = (json.objectAtIndex(index) as? NSDictionary)!
-            let oftenEatenWith : NSArray = foodInJsonArray.objectForKey("oftenEatenWith") as! NSArray
-            let alwaysEatenWithOneOf : NSArray = foodInJsonArray.objectForKey("alwaysEatenWithOneOf") as! NSArray
+            let foodInJsonArray : NSDictionary = (json.object(at: index) as? NSDictionary)!
+            let oftenEatenWith : NSArray = foodInJsonArray.object(forKey: "oftenEatenWith") as! NSArray
+            let alwaysEatenWithOneOf : NSArray = foodInJsonArray.object(forKey: "alwaysEatenWithOneOf") as! NSArray
             
             let foodToEdit = realm.objects(Food).filter("name == %@", food.name)
             

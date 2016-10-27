@@ -7,6 +7,7 @@
 //
 //TO DO COMMENDTS (Add proper comments for all method)
 import UIKit
+import RealmSwift
 
 
 class ListViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource,UISplitViewControllerDelegate {
@@ -17,7 +18,7 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
     var detailViewController: DetailViewController? = nil
     var objects = DataStructure.getMeal()
     
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }
     
@@ -30,7 +31,7 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
         updateCalCount();
          //CAHNGE DEPRECATION WARNING
         //let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ListViewController.insertNewObject(_:)))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ListViewController.insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -38,17 +39,17 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
         }
     }
     func presentTransparentNavigationBar() {
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics:UIBarMetrics.Default)
-        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for:UIBarMetrics.default)
+        self.navigationController!.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.setNavigationBarHidden(false, animated:true)
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if(self.tableView.indexPathForSelectedRow != nil){
-            self.tableView.deselectRowAtIndexPath(self.tableView.indexPathForSelectedRow! , animated: true)
+            self.tableView.deselectRow(at: self.tableView.indexPathForSelectedRow! , animated: true)
         }
         
     }
@@ -58,7 +59,7 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-    func insertNewObject(sender: AnyObject) {
+    func insertNewObject(_ sender: AnyObject) {
         
         // Here goes the add button
         
@@ -66,14 +67,14 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
     
     // MARK: - Segues
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 let object = objects[indexPath.section].foodItems[indexPath.row]
-                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.masterView = self
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 // self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
@@ -82,16 +83,16 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
     
     // MARK: - Table View
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return objects.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (objects[section].foodItems).count;
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         let food = objects[indexPath.section].foodItems[indexPath.row]
         
@@ -107,26 +108,26 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            objects[indexPath.section].foodItems.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //objects[indexPath.section].foodItems.removeAtIndex(indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             updateCalCount();
-        } else if editingStyle == .Insert {
+        } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let vheadView = UIView()
-        vheadView.backgroundColor = UIColor.whiteColor()
+        vheadView.backgroundColor = UIColor.white
         let  headerCell = UILabel()
-        headerCell.frame=CGRectMake(15, 10, 200, 20)
+        headerCell.frame=CGRect(x: 15, y: 10, width: 200, height: 20)
         vheadView.addSubview(headerCell)
         
         headerCell.text = objects[section].name;

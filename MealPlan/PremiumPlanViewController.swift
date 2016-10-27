@@ -19,7 +19,7 @@ class PremiumPlanViewController: UIViewController, UITableViewDataSource, UITabl
         //planFeatuersTable.delegate = self
         
 //      Seprator lines None for TableView cells
-        planFeatuersTable.separatorStyle = UITableViewCellSeparatorStyle.None
+        planFeatuersTable.separatorStyle = UITableViewCellSeparatorStyle.none
 
 
         // Do any additional setup after loading the view.
@@ -43,16 +43,16 @@ class PremiumPlanViewController: UIViewController, UITableViewDataSource, UITabl
     
     //TABLEVIEW DELEGATE & DATASOURCE
    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         
         return 2
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     
         if (indexPath.section == 0){
             return 250
@@ -62,16 +62,16 @@ class PremiumPlanViewController: UIViewController, UITableViewDataSource, UITabl
     }
    
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0){
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("imageCellIdentifier") as? PayemtControllerImageTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "imageCellIdentifier") as? PayemtControllerImageTableViewCell
             cell?.imageCell.image = UIImage(named: "Intro2")
             return cell!
         }
         else{
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("addsCellIdentifier") as? PayemtAddsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "addsCellIdentifier") as? PayemtAddsTableViewCell
             cell?.addsImage.image = UIImage(named: "addsImage")
             return cell!
         }
@@ -81,26 +81,26 @@ class PremiumPlanViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     //      Border for TableView cells
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        cell.contentView.backgroundColor = UIColor.clearColor()
+        cell.contentView.backgroundColor = UIColor.clear
         
-        let whiteRoundedView : UIView = UIView(frame: CGRectMake(0, 10, self.view.frame.size.width, self.view.frame.size.height))
+        let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: 10, width: self.view.frame.size.width, height: self.view.frame.size.height))
         
-        whiteRoundedView.layer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 1.0, 1.0, 1.0])
+        whiteRoundedView.layer.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1.0, 1.0, 1.0, 1.0])
         whiteRoundedView.layer.masksToBounds = false
         whiteRoundedView.layer.cornerRadius = 5.0
-        whiteRoundedView.layer.shadowOffset = CGSizeMake(-1, 1)
+        whiteRoundedView.layer.shadowOffset = CGSize(width: -1, height: 1)
         whiteRoundedView.layer.shadowOpacity = 0.2
         
         cell.contentView.addSubview(whiteRoundedView)
-        cell.contentView.sendSubviewToBack(whiteRoundedView)
+        cell.contentView.sendSubview(toBack: whiteRoundedView)
     }
 
     
     
-    @IBAction func backAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
 
 

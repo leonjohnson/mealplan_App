@@ -38,18 +38,18 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         
         //To hide close button when app. loads normaly from Profile view.
-        closeButton.hidden = true
+        closeButton.isHidden = true
         
         
         if (settingsControl != nil){
             
             //Close Button whn app. loads from settings view.
-            closeButton.hidden = false
+            closeButton.isHidden = false
             
             let arrayOfObjects = Array(DataHandler.getLikeFoods().foods);
             
             for item in arrayOfObjects{
-                likeFoodValue.addObject(item)
+                likeFoodValue.add(item)
             }
           
             
@@ -68,7 +68,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
         let attrsB =  [NSFontAttributeName: Constants.FOOD_LABEL_FONT_BOLD, NSForegroundColorAttributeName: Constants.FOOD_LABEL_COLOR]
         let b = NSAttributedString(string:Constants.LIKE_STRING, attributes:attrsB)
         
-        a.appendAttributedString(b)
+        a.append(b)
         //likeFoodLabel.attributedText = a
         
         
@@ -78,8 +78,8 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func closeAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func closeAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
 
     
@@ -101,45 +101,45 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     */
     
     //MealPlanListTable Delegate Methods
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         
         return filterdData!.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("step3CellIdentifier", forIndexPath: indexPath) as! Step3TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "step3CellIdentifier", for: indexPath) as! Step3TableViewCell
         cell.textLabel?.text = filterdData![indexPath.row].name
         cell.textLabel?.font = Constants.STANDARD_FONT
         
-        if(likeFoodValue.containsObject(filterdData![indexPath.row])){
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        if(likeFoodValue.contains(filterdData![indexPath.row])){
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.accessoryType = UITableViewCellAccessoryType.none
         }  
         return cell
     }
     
     //Selecting Multiple Cells
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         
-        if(likeFoodValue.containsObject(filterdData![indexPath.row])){
-            likeFoodValue.removeObject(filterdData![indexPath.row])
-            cell!.accessoryType = UITableViewCellAccessoryType.None
+        if(likeFoodValue.contains(filterdData![indexPath.row])){
+            likeFoodValue.remove(filterdData![indexPath.row])
+            cell!.accessoryType = UITableViewCellAccessoryType.none
         }else{
-            likeFoodValue.addObject(filterdData![indexPath.row])
-            cell!.accessoryType = UITableViewCellAccessoryType.Checkmark
+            likeFoodValue.add(filterdData![indexPath.row])
+            cell!.accessoryType = UITableViewCellAccessoryType.checkmark
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         likeSearchBar.resignFirstResponder()
 
     }
     
     //DeSelecting Multiple Cells
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
         likeSearchBar.resignFirstResponder()
     }
     
@@ -147,14 +147,14 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //SearchBar Delegates
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if(searchText == ""){
             filterdData = localData
             likeSearchBar.resignFirstResponder()
         }else{
             filterdData = localData.filter({
                 
-                if($0.name.lowercaseString.containsString(searchText.lowercaseString)){
+                if($0.name.lowercased().contains(searchText.lowercased())){
                     return true
                 }
                 return false
@@ -164,7 +164,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
         self.likeSearchBar.endEditing(true)
     }
@@ -173,7 +173,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //IBAction for NextButton Clicked in Step3 VC. Saving all datas into an ProfileClass.
-    @IBAction func step3NextButtonClicked (sender : AnyObject){
+    @IBAction func step3NextButtonClicked (_ sender : AnyObject){
         //Saving Values to the Varible Declared for ProfileStep3 constant class.
         // create the alert
 //        if (likeFoodValue.count == 0){
@@ -192,9 +192,9 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }else{
-        self.performSegueWithIdentifier("step3Identifier", sender: nil)
+        self.performSegue(withIdentifier: "step3Identifier", sender: nil)
         }
 
 
@@ -202,8 +202,8 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func BackAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func BackAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     

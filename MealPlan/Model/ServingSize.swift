@@ -12,7 +12,7 @@ class ServingSize: Object {
     //    return []
     //  }
     
-    static func get(name:String)->ServingSize{
+    static func get(_ name:String)->ServingSize{
         
         let realm = try! Realm()
         let obj = realm.objects(ServingSize).filter("name = '" + name + "' ").first
@@ -28,7 +28,7 @@ class ServingSize: Object {
         }
     }
     //func minMax(array: [Int]) -> (min: Int, max: Int) {
-    static func getServingQuantityAsNumber(serving:ServingSize) -> Double {
+    static func getServingQuantityAsNumber(_ serving:ServingSize) -> Double {
         if serving.name == Constants.grams || serving.name == Constants.ml {
             
             return 100

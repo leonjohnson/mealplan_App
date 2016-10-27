@@ -4,16 +4,16 @@ import UIKit
 class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     // MARK: - Variables
-    private var pageViewController: UIPageViewController!
+    fileprivate var pageViewController: UIPageViewController!
     
     // Initialize it right away here
-    private let contentImages = ["Intro1.png",
+    fileprivate let contentImages = ["Intro1.png",
         "Intro2.png",
         "Intro3.png",
         "Intro4.png"];
     
     //DELETE THIS...
-    private let introMessages = ["We create customised meal plans to help you lose weight and gain muscle.",
+    fileprivate let introMessages = ["We create customised meal plans to help you lose weight and gain muscle.",
                                  "This works because what you eat is the biggest contributor to what your body looks like.",
                                  "This is what a meal plan looks like",
                                  "Tell us a little bit about yourself so we can create your personalised meal plan"]
@@ -26,34 +26,34 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         setupPageControl()
     }
     
-    private func createPageViewController() {
+    fileprivate func createPageViewController() {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let pvController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
+        let pvController = storyboard.instantiateViewController(withIdentifier: "PageViewController") as! UIPageViewController
         pvController.dataSource = self
         
         if contentImages.count > 0 {
             let firstController = getItemController(0)!
             let startingViewControllers: NSArray = [firstController]
-            pvController.setViewControllers(startingViewControllers as? [UIViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+            pvController.setViewControllers(startingViewControllers as? [UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
         }
         
         pageViewController = pvController
         addChildViewController(pageViewController!)
         self.view.addSubview(pageViewController!.view)
-        pageViewController!.didMoveToParentViewController(self)
+        pageViewController!.didMove(toParentViewController: self)
         
     }
     
-    private func setupPageControl() {
+    fileprivate func setupPageControl() {
         
-        let pageControlDots = UIPageControl(frame: CGRectMake(0, 0, self.view.frame.size.width,44))
+        let pageControlDots = UIPageControl(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width,height: 44))
         self.view.addSubview(pageControlDots)
         
         let appearance = UIPageControl.appearance()
-        appearance.pageIndicatorTintColor = UIColor.grayColor()
-        appearance.currentPageIndicatorTintColor = UIColor.whiteColor()
-        appearance.backgroundColor = UIColor.clearColor()
+        appearance.pageIndicatorTintColor = UIColor.gray
+        appearance.currentPageIndicatorTintColor = UIColor.white
+        appearance.backgroundColor = UIColor.clear
         
     }
     
@@ -61,7 +61,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     
     // MARK: - UIPageViewControllerDataSource
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         let itemController = viewController as! PageItemController
         
@@ -72,7 +72,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         return nil
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         let itemController = viewController as! PageItemController
         
@@ -83,11 +83,11 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         return nil
     }
     
-    private func getItemController(itemIndex: Int) -> PageItemController? {
+    fileprivate func getItemController(_ itemIndex: Int) -> PageItemController? {
         
         if itemIndex < contentImages.count {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let insertedPage = storyboard.instantiateViewControllerWithIdentifier("insertedPage") as! PageItemController
+            let insertedPage = storyboard.instantiateViewController(withIdentifier: "insertedPage") as! PageItemController
             insertedPage.itemIndex = itemIndex
             //insertedPage.imageName = contentImages[itemIndex]
             return insertedPage
@@ -101,16 +101,16 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     
     // MARK: - Page Indicator
     
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return contentImages.count
     }
     
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return 0
     }
     
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }

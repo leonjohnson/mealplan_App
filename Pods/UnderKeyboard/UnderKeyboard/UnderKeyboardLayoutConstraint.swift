@@ -6,14 +6,14 @@ import UIKit
 Adjusts the length (constant value) of the bottom layout constraint when keyboard shows and hides.
 
 */
-@objc public class UnderKeyboardLayoutConstraint: NSObject {
-  private weak var bottomLayoutConstraint: NSLayoutConstraint?
-  private weak var bottomLayoutGuide: UILayoutSupport?
-  private var keyboardObserver = UnderKeyboardObserver()
-  private var initialConstraintConstant: CGFloat = 0
-  private var minMargin: CGFloat = 10
+@objc open class UnderKeyboardLayoutConstraint: NSObject {
+  fileprivate weak var bottomLayoutConstraint: NSLayoutConstraint?
+  fileprivate weak var bottomLayoutGuide: UILayoutSupport?
+  fileprivate var keyboardObserver = UnderKeyboardObserver()
+  fileprivate var initialConstraintConstant: CGFloat = 0
+  fileprivate var minMargin: CGFloat = 10
   
-  private var viewToAnimate: UIView?
+  fileprivate var viewToAnimate: UIView?
   
   public override init() {
     super.init()
@@ -28,7 +28,7 @@ Adjusts the length (constant value) of the bottom layout constraint when keyboar
   }
   
   /// Stop listening for keyboard notifications.
-  public func stop() {
+  open func stop() {
     keyboardObserver.stop()
   }
   
@@ -45,7 +45,7 @@ Adjusts the length (constant value) of the bottom layout constraint when keyboar
   - parameter bottomLayoutGuide: Supply an optional bottom layout guide (like a tab bar) that will be taken into account during height calculations.
   
   */
-  public func setup(bottomLayoutConstraint: NSLayoutConstraint,
+  open func setup(_ bottomLayoutConstraint: NSLayoutConstraint,
     view: UIView, minMargin: CGFloat = 10,
     bottomLayoutGuide: UILayoutSupport? = nil) {
       
@@ -56,14 +56,13 @@ Adjusts the length (constant value) of the bottom layout constraint when keyboar
     self.viewToAnimate = view
       
     // Keyboard is already open when setup is called
-    if let currentKeyboardHeight = keyboardObserver.currentKeyboardHeight
-      where currentKeyboardHeight > 0 {
+    if let currentKeyboardHeight = keyboardObserver.currentKeyboardHeight, currentKeyboardHeight > 0 {
         
       keyboardWillAnimate(currentKeyboardHeight)
     }
   }
   
-  func keyboardWillAnimate(height: CGFloat) {
+  func keyboardWillAnimate(_ height: CGFloat) {
     guard let bottomLayoutConstraint = bottomLayoutConstraint else { return }
     
     let layoutGuideHeight = bottomLayoutGuide?.length ?? 0
@@ -87,7 +86,7 @@ Adjusts the length (constant value) of the bottom layout constraint when keyboar
     }
   }
   
-  func animateKeyboard(height: CGFloat) {
+  func animateKeyboard(_ height: CGFloat) {
     viewToAnimate?.layoutIfNeeded()
   }
 }

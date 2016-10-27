@@ -26,7 +26,7 @@ class Network {
     static let METHOD_PUT         = "PUT"
     static let METHOD_DELETE         = "DELETE"
      //TO DO COMMENDTS
-    static func addApiKey(parameters:NSMutableDictionary){
+    static func addApiKey(_ parameters:NSMutableDictionary){
         let apiKey = Config.getApiKey()
         if(apiKey != Constants.KEY_EMPTY){
             parameters.setValue(apiKey, forKey: Constants.REQ_API_KEY)
@@ -34,12 +34,12 @@ class Network {
     }
      //TO DO COMMENDTS
     static func isDataConnectionAvailable() -> Bool {
-        return Reachability.reachabilityForInternetConnection().currentReachabilityStatus() != NetworkStatus.NotReachable
+        return Reachability.forInternetConnection().currentReachabilityStatus() != NetworkStatus.NotReachable
     }
     
     
      //TO DO COMMENDTS
-    static func executeGETWithUrl( url: String, andParameters parameters: NSMutableDictionary , andHeaders headers: [NSObject : AnyObject]?, withSuccessHandler success: (AFHTTPRequestOperation!,AnyObject!,Bool) -> Void, withFailureHandler failure: (AFHTTPRequestOperation!,NSError!) -> Void, withLoadingViewOn parentView: UIView?) {
+    static func executeGETWithUrl( _ url: String, andParameters parameters: NSMutableDictionary , andHeaders headers: [AnyHashable: Any]?, withSuccessHandler success: @escaping (AFHTTPRequestOperation?,AnyObject?,Bool) -> Void, withFailureHandler failure: @escaping (AFHTTPRequestOperation?,NSError?) -> Void, withLoadingViewOn parentView: UIView?) {
         addApiKey(parameters)
         if (!Network.isDataConnectionAvailable()) {
             
@@ -60,26 +60,26 @@ class Network {
         let manager: AFHTTPRequestOperationManager = AFHTTPRequestOperationManager()
         manager.requestSerializer.setValue(KEY_FORM, forHTTPHeaderField: KEY_CONTENT_TYPE)
         
-        manager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments) as AFJSONResponseSerializer
+        manager.responseSerializer = AFJSONResponseSerializer(readingOptions: JSONSerialization.ReadingOptions.allowFragments) as AFJSONResponseSerializer
         manager.responseSerializer.acceptableContentTypes = NSSet(objects:KEY_APPJSON, KEY_TEXTHTML, KEY_TEXTPLAIN, KEY_TEXTJSON, KEY_TEXTJS, KEY_AUDIOWAV) as Set<NSObject>
         // manager.requestSerializer.setValue(token, forHTTPHeaderField: "Authorization")
         
         if (parentView != nil) {
-            MBProgressHUD.showHUDAddedTo(parentView!, animated: true)
+            MBProgressHUD.showAdded(to: parentView!, animated: true)
         }
         print(METHOD_GET+url)
-        manager.GET(url, parameters: parameters, success: { (operation:AFHTTPRequestOperation, responseObject:AnyObject) -> Void in
+        manager.get(url, parameters: parameters, success: { (operation:AFHTTPRequestOperation, responseObject:Any) -> Void in
             if (parentView != nil) {
                 //MBProgressHUD.hideAllHUDsForView(parentView!, animated: true)
             }
-            if (operation.cancelled) {
+            if (operation.isCancelled) {
                 return
             }
             let apiSuccess: Bool = true
-            success(operation, responseObject, apiSuccess)
+            success(operation, responseObject as AnyObject?, apiSuccess)
             
             
-            }) { (operation: AFHTTPRequestOperation?, error:NSError) -> Void in
+            }) { (operation: AFHTTPRequestOperation?, error:Error) -> Void in
                 
                 if (parentView != nil) {
                     //MBProgressHUD.hideAllHUDsForView(parentView!, animated: true)

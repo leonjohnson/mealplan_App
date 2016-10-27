@@ -77,7 +77,7 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 100), animated: true)
     }
     
@@ -88,14 +88,14 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         setUpDefaltView();
         
         if(parentView?.bio.activityLevelAtWork != nil && Constants.activityLevelsAtWork.contains((parentView?.bio.activityLevelAtWork)!)){
-            selectedWorkValue = Constants.activityLevelsAtWork.indexOf((parentView?.bio.activityLevelAtWork)!)!;
+            selectedWorkValue = Constants.activityLevelsAtWork.index(of: (parentView?.bio.activityLevelAtWork)!)!;
         }
     }
     
     //For loading selected values on picker:
     func setUpDefaltView(){
-        traningPicker.selectRow(traningpickerData.indexOf(traningSessionsValue!)!, inComponent: 0, animated: true)
-        cardioPicker.selectRow(cardioPickerData.indexOf(cardioSessionValue!)!, inComponent: 0, animated: true)
+        traningPicker.selectRow(traningpickerData.index(of: traningSessionsValue!)!, inComponent: 0, animated: true)
+        cardioPicker.selectRow(cardioPickerData.index(of: cardioSessionValue!)!, inComponent: 0, animated: true)
     }
     
     
@@ -106,35 +106,35 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
     
     
     //WorkActive Table Delagates.
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Constants.activityLevelsAtWork.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = Constants.activityLevelsAtWork[indexPath.row];
         let item1 = activeWorkEgValues[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.font = Constants.STANDARD_FONT
         cell.textLabel?.text = item;
         cell.detailTextLabel?.text = item1
         if (selectedWorkValue == indexPath.row){
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.accessoryType = UITableViewCellAccessoryType.none
         }
         return cell
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedWorkValue = indexPath.row;
         tableView.reloadData();
     }
  
     
     //UIPickerView Delegates and DataSource Methods
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if(pickerView == traningPicker){
             return traningpickerData.count
         }else{
@@ -142,7 +142,7 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if (pickerView == traningPicker){
             return traningpickerData[row].description
         }else {
@@ -150,7 +150,7 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if (pickerView == traningPicker){
             
@@ -162,7 +162,7 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
     }
     
     //Method for Saving Values to Profile Class.
-    @IBAction func doneButtonClicked (sender : AnyObject){
+    @IBAction func doneButtonClicked (_ sender : AnyObject){
         
         //Adding values to constant Class
         parentView?.bio.numberOfResistanceSessionsEachWeek = traningSessionsValue!
@@ -171,13 +171,13 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         //Alert for Work Active
         if(selectedWorkValue == 4){
             // create the alert
-            let alert = UIAlertController(title: "", message: "Select work active value", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Select work active value", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }else{
             
             //Adding values to constant Class
@@ -186,13 +186,13 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         }
         
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
         
     }
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func BackAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func BackAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     

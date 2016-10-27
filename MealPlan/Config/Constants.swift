@@ -23,24 +23,24 @@ struct Constants {
     static let WEEK_RESULT_STRING  =   "*We recommend 8-20 for best results "
     
     //Fonts
-    static let STANDARD_FONT = UIFont.systemFontOfSize(13, weight: UIFontWeightRegular)
-    static let GENERAL_LABEL = UIFont.systemFontOfSize(14, weight: UIFontWeightBold)
-    static let MEAL_PLAN_TITLE = UIFont.systemFontOfSize(16, weight: UIFontWeightBold)
-    static let MEAL_PLAN_SUBTITLE = UIFont.systemFontOfSize(13, weight: UIFontWeightBold)
-    static let MEAL_PLAN_DATE = UIFont.systemFontOfSize(13, weight: UIFontWeightLight)
+    static let STANDARD_FONT = UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular)
+    static let GENERAL_LABEL = UIFont.systemFont(ofSize: 14, weight: UIFontWeightBold)
+    static let MEAL_PLAN_TITLE = UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold)
+    static let MEAL_PLAN_SUBTITLE = UIFont.systemFont(ofSize: 13, weight: UIFontWeightBold)
+    static let MEAL_PLAN_DATE = UIFont.systemFont(ofSize: 13, weight: UIFontWeightLight)
     
     static let FOOD_LABEL_FONT = UIFont(name: "Helvetica",size: 17.0)!
     static let FOOD_LABEL_FONT_BOLD = UIFont(name: "Helvetica-Bold",size: 17.0)!
     static let DEFAULT_LABEL_FONT_BOLD = UIFont(name: "Helvetica-Bold",size: 15.0)!
     static let WEEKS_LABEL_FONT = UIFont(name: "Helvetica",size: 16.0)!
-    static let BLACK_COLOR = UIColor.blackColor()
+    static let BLACK_COLOR = UIColor.black
     static let WEEKS_LABEL_FONT_BOLD = UIFont(name: "Helvetica-Bold",size: 10.0)!
     
     static let INTRO_TEXT_LABEL = UIFont(name: "HelveticaNeue-Light", size: 14.0)!
     
-    static let MEAL_PLAN_FOODITEM_LABEL = UIFont.systemFontOfSize(13, weight: UIFontWeightRegular)
-    static let MEAL_PLAN_SERVINGSIZE_LABEL = UIFont.systemFontOfSize(9, weight: UIFontWeightRegular)
-    static let DETAIL_PAGE_FOOD_NAME_LABEL = UIFont.systemFontOfSize(17, weight: UIFontWeightBold)
+    static let MEAL_PLAN_FOODITEM_LABEL = UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular)
+    static let MEAL_PLAN_SERVINGSIZE_LABEL = UIFont.systemFont(ofSize: 9, weight: UIFontWeightRegular)
+    static let DETAIL_PAGE_FOOD_NAME_LABEL = UIFont.systemFont(ofSize: 17, weight: UIFontWeightBold)
     
     //TableView constants
     static let TABLE_ROW_HEIGHT = CGFloat(55)
@@ -54,9 +54,9 @@ struct Constants {
     static let MP_BLUE = UIColor(red: 0.176, green: 0.376, blue: 0.796, alpha: 0.88)
     static let MP_GREEN = UIColor(red: 0.494, green: 0.827, blue: 0.129, alpha: 1.000)
     static let MP_BEIGE = UIColor(red: 0.776, green: 0.796, blue: 0.176, alpha: 0.05)
-    static let MP_WHITE = UIColor.whiteColor()
-    static let MP_GREY = UIColor.lightGrayColor()
-    static let MP_BLACK = UIColor.blackColor()
+    static let MP_WHITE = UIColor.white
+    static let MP_GREY = UIColor.lightGray
+    static let MP_BLACK = UIColor.black
     
     //REE formula constants
     static let femaleConstant = 655.0
@@ -125,24 +125,24 @@ struct Constants {
     
     //Calender
     struct Calendar {
-        static let usersCalendar = NSCalendar.currentCalendar()
+        static let usersCalendar = Foundation.Calendar.current
     }
-    static var START_OF_WEEK: NSDate {
-        let tommorrow = NSDate(timeInterval: 60 * 60 * 24, sinceDate: NSDate())
-        return Calendar.usersCalendar.dateFromComponents(Calendar.usersCalendar.components([.YearForWeekOfYear, .WeekOfYear ], fromDate: tommorrow))!
+    static var START_OF_WEEK: Date {
+        let tommorrow = Date(timeInterval: 60 * 60 * 24, since: Date())
+        return Calendar.usersCalendar.date(from: (Calendar.usersCalendar as NSCalendar).components([.yearForWeekOfYear, .weekOfYear ], from: tommorrow))!
     }
     
     static var DAYS_SINCE_START_OF_THIS_WEEK: Int {
-        let calendar: NSCalendar = NSCalendar.currentCalendar()
+        let calendar: Foundation.Calendar = Foundation.Calendar.current
         
         // Replace the hour (time) of both dates with 00:00
         let startOfTheWeek = START_OF_WEEK
-        let tommorrow = NSDate(timeInterval: 60 * 60 * 24, sinceDate: NSDate())
+        let tommorrow = Date(timeInterval: 60 * 60 * 24, since: Date())
         
-        let flags = NSCalendarUnit.Day
-        let components = calendar.components(flags, fromDate: startOfTheWeek, toDate: tommorrow, options: [])
+        let flags = NSCalendar.Unit.day
+        let components = (calendar as NSCalendar).components(flags, from: startOfTheWeek, to: tommorrow, options: [])
         
-        return components.day
+        return components.day!
     }
     
     

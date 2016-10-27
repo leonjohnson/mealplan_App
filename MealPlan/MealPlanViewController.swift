@@ -6,6 +6,30 @@
 
 import UIKit
 import RealmSwift
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPTableViewCellDelegate {
     
@@ -33,20 +57,20 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     var nextWeek: Week = Week()
     
     var dateCount:Int = 0
-    override func viewDidAppear(animated: Bool)
+    override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(true)
         
         
         thisWeek = DataHandler.getFutureWeeks()[0]
         
-        let calendar: NSCalendar = NSCalendar.currentCalendar()
-        let date1 = calendar.startOfDayForDate(thisWeek.start_date)
-        let date2 = calendar.startOfDayForDate(NSDate())
-        let flags = NSCalendarUnit.Day
-        let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
+        let calendar: Calendar = Calendar.current
+        let date1 = calendar.startOfDay(for: thisWeek.start_date as Date)
+        let date2 = calendar.startOfDay(for: Date())
+        let flags = NSCalendar.Unit.day
+        let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: [])
         
-        dateCount = components.day
+        dateCount = components.day!
         
         let dateForthisMealPlan = setDate()
         //meals = Array(data.meals)
@@ -66,27 +90,27 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         alertController = UIAlertController(title: "Title",
                                             message: "Message",
-                                            preferredStyle: .ActionSheet)
+                                            preferredStyle: .actionSheet)
         
         let tooEarlyAction : UIAlertAction = UIAlertAction(title: "Too early for this",
-                                       style: .Destructive,
+                                       style: .destructive,
                                        handler: {
                                        (paramAction:UIAlertAction!) in
                                         self.deleteSheetIndexSelected = 0
         })
         
         let dislikeAction : UIAlertAction = UIAlertAction(title: "Dislike this",
-                                       style: .Destructive,
+                                       style: .destructive,
                                        handler: {
                                         (paramAction:UIAlertAction!) in
                                         self.deleteSheetIndexSelected = 1
         })
         
         let cancelAction : UIAlertAction = UIAlertAction(title: "Cancel",
-                                                          style: .Cancel,
+                                                          style: .cancel,
                                                           handler: {
                                                             (paramAction:UIAlertAction!) in
-                                                            self.alertController?.dismissViewControllerAnimated(true, completion: nil)
+                                                            self.alertController?.dismiss(animated: true, completion: nil)
         })
         
         alertController?.addAction(tooEarlyAction)
@@ -109,7 +133,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //let difference = components.day  // This will return the number of day(s) between dates, so I can get today's meal
         */
         
-        let components = NSDateComponents()
+        let components = DateComponents()
         
         var index : Int = 0
         if dateCount > 6 && dateCount < 15 {
@@ -117,20 +141,20 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             index = dateCount
         }
-        components.setValue(index, forComponent: NSCalendarUnit.Day);
+        (components as NSDateComponents).setValue(index, forComponent: NSCalendar.Unit.day);
         
         
-        let dateForthisMealPlan = NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: thisWeek.start_date, options: NSCalendarOptions(rawValue: 0))
+        let dateForthisMealPlan = (Calendar.current as NSCalendar).date(byAdding: components, to: thisWeek.start_date as Date, options: NSCalendar.Options(rawValue: 0))
         
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = .FullStyle
-        formatter.timeStyle = .NoStyle
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.timeStyle = .none
         //mealPlanDate.text = formatter.stringFromDate(dateForthisMealPlan!) // Monday June 30, 2014 10:42:21am PS
         
-        return formatter.stringFromDate(dateForthisMealPlan!)
+        return formatter.string(from: dateForthisMealPlan!)
     }
     
-    @IBAction func changeMealPlanDisplayed(sender: UIButton){
+    @IBAction func changeMealPlanDisplayed(_ sender: UIButton){
         var index : Int?
         dateCount = dateCount + sender.tag
         
@@ -155,23 +179,23 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //Update the buttons
         if dateCount == 0 {
-            backDateButton.userInteractionEnabled = false
+            backDateButton.isUserInteractionEnabled = false
             backDateButton.alpha = 0.5
         } else {
-            backDateButton.userInteractionEnabled = true
+            backDateButton.isUserInteractionEnabled = true
             backDateButton.alpha = 1.0
         }
         
         if (dateCount == 13) && (thisWeek == DataHandler.getFutureWeeks()[1]){
-            nextDateButton.userInteractionEnabled = false
+            nextDateButton.isUserInteractionEnabled = false
             nextDateButton.alpha = 0.5
         } else {
-            nextDateButton.userInteractionEnabled = true
+            nextDateButton.isUserInteractionEnabled = true
             nextDateButton.alpha = 1.0
         }
         
         if dateCount < 0{
-            backDateButton.userInteractionEnabled = false
+            backDateButton.isUserInteractionEnabled = false
             backDateButton.alpha = 0.5
             return
         }
@@ -191,7 +215,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func handleNotification()
     {
-        let notifications =  UIApplication.sharedApplication().scheduledLocalNotifications
+        let notifications =  UIApplication.shared.scheduledLocalNotifications
         if(notifications?.count > 0)
         {
             // Cancel existing one
@@ -205,19 +229,19 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     //For local Notification Alert:
     func enableLocalNotification()
     {
-        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge , .Sound], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        let settings = UIUserNotificationSettings(types: [.alert, .badge , .sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
     }
     
     
     func fireNotification(){
         let localNotification = UILocalNotification();
-        localNotification.fireDate = NSDate(timeIntervalSinceNow: 60*60*24*7 );
+        localNotification.fireDate = Date(timeIntervalSinceNow: 60*60*24*7 );
         localNotification.alertTitle = "Share How "
         
         localNotification.alertBody = "Wow its a week again ";
-        localNotification.timeZone = NSTimeZone.defaultTimeZone();
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification);
+        localNotification.timeZone = TimeZone.current;
+        UIApplication.shared.scheduleLocalNotification(localNotification);
     }
     
     
@@ -259,13 +283,13 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         //Constants.LOCALISATION_NEEDED
         
         var stringWithName = DataHandler.getActiveUser().name
         
-        if stringWithName.uppercaseString.characters.last == "S"{
+        if stringWithName.uppercased().characters.last == "S"{
             stringWithName = stringWithName + "' meal plan"
         } else{
             stringWithName = stringWithName + "'s meal plan"
@@ -277,14 +301,14 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         return 70
     }
     
     //MealPlanListTable Delegate Methods
     
-    func insertNewObject(sender: AnyObject) {
+    func insertNewObject(_ sender: AnyObject) {
         
         // Here goes the add button
         
@@ -293,20 +317,20 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - Table View
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return meals.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (meals[section].foodItems).count;
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.TABLE_ROW_HEIGHT
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MPTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MPTableViewCell
         
         let foodItem : FoodItem = meals[indexPath.section].foodItems[indexPath.row]
         let label =  cell.viewWithTag(102) as? UILabel
@@ -327,7 +351,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             label3?.text =  ""
             
         } else {
-            cell.backgroundColor = UIColor.clearColor();
+            cell.backgroundColor = UIColor.clear;
             let label2 =  cell.viewWithTag(103) as? UILabel
             
             let q = ServingSize.getServingQuantityAsNumber((foodItem.food?.servingSize)!)
@@ -370,8 +394,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         //cell seprator line programztically:
-        let sep = UIView(frame:CGRectMake(0, 1, cell.frame.size.width, 0.5) )
-        sep.backgroundColor = UIColor.whiteColor()
+        let sep = UIView(frame:CGRect(x: 0, y: 1, width: cell.frame.size.width, height: 0.5) )
+        sep.backgroundColor = UIColor.white
         cell.addSubview(sep)
         
         
@@ -379,17 +403,17 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             
-            let fitem = meals[indexPath.section].foodItems[indexPath.row];
-            DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
-            DataHandler.removeFoodItem(fitem);
+            //let fitem = meals[indexPath.section].foodItems[indexPath.row];
+            //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
+            //DataHandler.removeFoodItem(fitem);
             
             /*
             self.presentViewController(alertController!, animated: true, completion: {
@@ -397,21 +421,21 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             })
             */
             
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            tableView.reloadData();
+            //tableView.deleteRows(at: [indexPath], with: .fade)
+            //tableView.reloadData();
             
-        } else if editingStyle == .Insert {
+        } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let vheadView = UIView()
         
-        vheadView.backgroundColor = UIColor.clearColor()
+        vheadView.backgroundColor = UIColor.clear
         
         let  headerCell = UILabel()
-        headerCell.frame=CGRectMake(10, 10, tableView.frame.width-30, 20)
+        headerCell.frame=CGRect(x: 10, y: 10, width: tableView.frame.width-30, height: 20)
         vheadView.addSubview(headerCell)
         headerCell.attributedText = NSAttributedString(string: meals[section].name, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
@@ -420,10 +444,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //create label inside header view
         let calorieCountLabel = UILabel()
         
-        calorieCountLabel.frame = CGRectMake(10, 10, tableView.frame.width-30, 20)
-        calorieCountLabel.textAlignment = NSTextAlignment.Right
-        calorieCountLabel.textColor = UIColor.whiteColor()
-        calorieCountLabel.font = UIFont.systemFontOfSize(17)
+        calorieCountLabel.frame = CGRect(x: 10, y: 10, width: tableView.frame.width-30, height: 20)
+        calorieCountLabel.textAlignment = NSTextAlignment.right
+        calorieCountLabel.textColor = UIColor.white
+        calorieCountLabel.font = UIFont.systemFont(ofSize: 17)
         var totalCaloriesString = ""
         if meals[section].totalCalories() > 0 {
             totalCaloriesString = String(Int(meals[section].totalCalories()))
@@ -439,17 +463,17 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //create button inside header view
         let addItemButton = UIButton()
-        addItemButton.frame = CGRectMake(10, 25, self.view.frame.size.width - 100, 35)
+        addItemButton.frame = CGRect(x: 10, y: 25, width: self.view.frame.size.width - 100, height: 35)
         //addItemButton.setTitle("Add item + ", forState: UIControlState.Normal)
-        addItemButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        addItemButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
         
-        addItemButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, NSForegroundColorAttributeName:Constants.MP_WHITE]), forState: UIControlState.Normal)
+        addItemButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, NSForegroundColorAttributeName:Constants.MP_WHITE]), for: UIControlState())
         
         
-        addItemButton.titleLabel?.textColor = UIColor.whiteColor()
-        addItemButton.titleLabel?.textAlignment = NSTextAlignment.Left
+        addItemButton.titleLabel?.textColor = UIColor.white
+        addItemButton.titleLabel?.textAlignment = NSTextAlignment.left
         vheadView.addSubview(addItemButton)
-        addItemButton.addTarget(self, action: #selector(MealPlanViewController.findFoodSearchAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        addItemButton.addTarget(self, action: #selector(MealPlanViewController.findFoodSearchAction(_:)), for: UIControlEvents.touchUpInside)
         //addItemButton.addTarget(self, action: "findFoodSearchAction:", forControlEvents: UIControlEvents.TouchUpInside)
         addItemButton.tag = section
         
@@ -460,7 +484,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return vheadView
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 44
     }
     
@@ -468,27 +492,27 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //IBAction for AddItemButton on Header view
     
-    func findFoodSearchAction(sender: UIButton){
+    func findFoodSearchAction(_ sender: UIButton){
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let scene = storyboard.instantiateViewControllerWithIdentifier("foodSearchList") as! FoodSearchViewController
+        let scene = storyboard.instantiateViewController(withIdentifier: "foodSearchList") as! FoodSearchViewController
         scene.meal = meals[sender.tag]
         
         if((self.navigationController) != nil){
             self.navigationController?.pushViewController(scene, animated: true);
         }else{
-            self.presentViewController(scene, animated: true, completion: nil)
+            self.present(scene, animated: true, completion: nil)
         }
         
     }
     // MARK: - Segues
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let indexPath = self.mealPlanListTable.indexPathForSelectedRow {
             
             let object =   meals[indexPath.section].foodItems[indexPath.row]
             if(object.food!.pk == 0){
-                self.mealPlanListTable.deselectRowAtIndexPath(indexPath, animated: true)
+                self.mealPlanListTable.deselectRow(at: indexPath, animated: true)
                 return false
             }
         }
@@ -497,19 +521,19 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - Segues
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.mealPlanListTable.indexPathForSelectedRow {
-                self.mealPlanListTable.deselectRowAtIndexPath(indexPath, animated: true)
+                self.mealPlanListTable.deselectRow(at: indexPath, animated: true)
                 let object =   meals[indexPath.section].foodItems[indexPath.row]
                 
                 
-                let controller = segue.destinationViewController as! DetailViewController
+                let controller = segue.destination as! DetailViewController
                 controller.meal = meals[indexPath.section]
                 controller.detailItem = object
                 //controller.hideAddButton = true
                 //   controller.masterView = self
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 // self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
@@ -517,7 +541,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
-    func roundToPlaces(value: Double, decimalPlaces: Int) -> Double {
+    func roundToPlaces(_ value: Double, decimalPlaces: Int) -> Double {
         let divisor = pow(10.0, Double(decimalPlaces))
         return round(value * divisor) / divisor
     }
@@ -526,7 +550,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     // cell delegate
-    func editFoodItemAtIndexPath(indexPath: NSIndexPath, editType: String) {
+    func editFoodItemAtIndexPath(_ indexPath: IndexPath, editType: String) {
         //meals[indexPath.section].foodItems[indexPath.row]
         //let index = self.mealPlanListTable
         //let index = (toDoItems as NSArray).indexOfObject(toDoItem)
@@ -536,8 +560,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         switch editType {
         case Constants.DELETE:
-            self.presentViewController(alertController!, animated: true, completion: nil)
-            DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
+            self.present(alertController!, animated: true, completion: nil)
+            let foodItem = meals[indexPath.section].foodItems[indexPath.row]
+            DataHandler.removeFoodItem(foodItem)
+            //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
             mealPlanListTable.reloadData()
             if deleteSheetIndexSelected == 0 {
                 // TODO: insert a Deletion record
@@ -560,8 +586,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
-    func displayDeleteSheet(reason: String) {
-        self.presentViewController(alertController!, animated: true, completion: nil)
+    func displayDeleteSheet(_ reason: String) {
+        self.present(alertController!, animated: true, completion: nil)
     }
     
     

@@ -39,17 +39,17 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
         super.viewDidLoad()
         
         //To hide close button when app. loads normaly from Profile view.
-        closeButton.hidden = true
+        closeButton.isHidden = true
 
         //Setup Default value when loading from settings Page:
         //For Diet:
         if (settingsControl != nil) {
             
             //Close Button whn app. loads from settings view.
-            closeButton.hidden = false
+            closeButton.isHidden = false
             
         activeDietValue = DataHandler.getActiveBiographical().dietaryRequirement!
-        selectedPath = types.indexOf(activeDietValue)!
+        selectedPath = types.index(of: activeDietValue)!
         }
 
         areYouLabel.font = Constants.GENERAL_LABEL
@@ -63,28 +63,28 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func closeAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func closeAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
 
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return types.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = types[indexPath.row];
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item;
         cell.textLabel?.font = Constants.STANDARD_FONT
         if (selectedPath == indexPath.row){
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.accessoryType = UITableViewCellAccessoryType.none
         }
         return cell
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedPath = indexPath.row;
         tableView.reloadData();
     }
@@ -98,16 +98,16 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     
     //IBAction for NextButton Clicked in Step2 VC. Saving all datas into an ProfileClass.
-    @IBAction func step2NextButtonClicked (sender : AnyObject){
+    @IBAction func step2NextButtonClicked (_ sender : AnyObject){
         //Saving Values to the Varible Declared for ProfileStep2 constant class.
         if (selectedPath == 4){
-            let alert = UIAlertController(title: "", message: "Select your dietary needs", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Select your dietary needs", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
             
         }
@@ -116,10 +116,10 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
         else{
-        self.performSegueWithIdentifier("step2Identifier", sender: nil)
+        self.performSegue(withIdentifier: "step2Identifier", sender: nil)
         }
 
         
@@ -127,7 +127,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func BackAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func BackAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

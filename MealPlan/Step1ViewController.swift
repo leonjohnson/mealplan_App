@@ -9,9 +9,33 @@
 import UIKit
 import UnderKeyboard
 import RealmSwift
-extension NSDate {
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+extension Date {
     var age: Int {
-        return NSCalendar.currentCalendar().components(.Year, fromDate: self, toDate: NSDate(), options: []).year + 1
+        return (Calendar.current as NSCalendar).components(.year, from: self, to: Date(), options: []).year! + 1
     }
 }
 
@@ -98,7 +122,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         whatIsYourLabel.font = Constants.GENERAL_LABEL
         
         ageText.font = Constants.STANDARD_FONT
-        ageText.textColor = UIColor.blackColor()
+        ageText.textColor = UIColor.black
         
         let nameAtString = NSAttributedString(string: "Name", attributes: [NSFontAttributeName: Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.BLACK_COLOR])
         
@@ -114,20 +138,20 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         prefill()
         
         //To hide close button when app. loads normaly from Profile view.
-        closeButton.hidden = true
+        closeButton.isHidden = true
         
         //To set values on load from Settings Page Controller.
         if (settingsControl != nil) {
             
             //Close Button whn app. loads from settings view.
-            closeButton.hidden = false
+            closeButton.isHidden = false
             
             //For Name:
             nameText.text! = profileDBVal.name
             
             //For Gender:
             activeGenderValue = profileDBVal.gender
-            selcetedGender = genderValue.indexOf(activeGenderValue)!
+            selcetedGender = genderValue.index(of: activeGenderValue)!
             
             
             //For eatTime & WeekTime Values
@@ -137,13 +161,13 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             setUpDefaltValues()
             
             if((pickerDBVal.looseFat.value) == true){
-                selectedGoal.addObject(goalsValues[0])
+                selectedGoal.add(goalsValues[0])
             }
             if(pickerDBVal.gainMuscle.value == true){
-                selectedGoal.addObject(goalsValues[1])
+                selectedGoal.add(goalsValues[1])
             }
             if(pickerDBVal.addMoreDefinition.value == true){
-                selectedGoal.addObject(goalsValues[2])
+                selectedGoal.add(goalsValues[2])
             }
             
             ageText.text = profileDBVal.birthdate.age.description;
@@ -161,10 +185,10 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         
         //Done button View for NumberPad KeyBoard
-        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: ageText, action: #selector(UIResponder.resignFirstResponder))
+        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: ageText, action: #selector(UIResponder.resignFirstResponder))
         //let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: ageText, action: "resignFirstResponder")
-        barButton.tintColor = UIColor.blackColor()
-        let toolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+        barButton.tintColor = UIColor.black
+        let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
         toolbar.items = [barButton]
         ageText.inputAccessoryView = toolbar
         //For making Keyboard with specific type.
@@ -193,7 +217,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //goalsView?.layer.borderWidth = 1
         //To set Border color for Acitivity Level Button.
         activeTable.layer.masksToBounds = true
-        activeTable.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5).CGColor
+        activeTable.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
         activeTable.layer.borderWidth = 1.0
         //To set Border color for ageNameView
         //ageNameView?.layer.borderColor = UIColor .lightGrayColor().CGColor
@@ -206,7 +230,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         let attrsB =  [NSFontAttributeName: Constants.WEEKS_LABEL_FONT_BOLD, NSForegroundColorAttributeName: Constants.MP_GREY]
         let b = NSAttributedString(string:Constants.WEEK_RESULT_STRING, attributes:attrsB)
         
-        a.appendAttributedString(b)
+        a.append(b)
         //weeksLabel.attributedText = a
         
         
@@ -235,19 +259,19 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func BackAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func BackAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     //Method for showing values on load from settings page.
     func setUpDefaltValues(){
         if(eatTimes.contains(eatTimeValue!)){
-        let index  = eatTimes.indexOf(eatTimeValue!)!;
+        let index  = eatTimes.index(of: eatTimeValue!)!;
         eatTimePicker.selectRow(index, inComponent: 0, animated: true)
         }
         
         if (numberOfweeks.contains(weekTimeValue!)){
-            let index1 = numberOfweeks.indexOf(weekTimeValue!)!;
+            let index1 = numberOfweeks.index(of: weekTimeValue!)!;
             weeksPickerView.selectRow(index1, inComponent: 0, animated: true)
         }
 
@@ -261,7 +285,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     
     //GenderTable Delegate Methods
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (tableView == genderTable){
             return genderValue.count
@@ -272,42 +296,42 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (tableView == genderTable){
         let item = genderValue[indexPath.row];
-        let cell = tableView.dequeueReusableCellWithIdentifier("genderCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "genderCell", for: indexPath)
         cell.textLabel?.text = item;
         cell.textLabel?.font = Constants.STANDARD_FONT
         genderTable.contentInset = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
         
         
         if (selcetedGender == indexPath.row){
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
         }else{
-            cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.accessoryType = UITableViewCellAccessoryType.none
         }
         return cell
         }else if (tableView == goalsTable){
             let item = goalsValues[indexPath.row];
-            let cell = tableView.dequeueReusableCellWithIdentifier("goalsCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "goalsCell", for: indexPath)
             cell.textLabel?.text = item;
             cell.textLabel?.font = Constants.STANDARD_FONT
             
-            if(selectedGoal.containsObject(item)){
-                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            if(selectedGoal.contains(item)){
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
             }else{
-                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.accessoryType = UITableViewCellAccessoryType.none
             }
             return cell
 
         }else if (tableView == activeTable){
-            let cell = tableView.dequeueReusableCellWithIdentifier("activityCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath)
             cell.textLabel?.text = "Activity levels"
             cell.textLabel?.font = Constants.STANDARD_FONT
             return cell
         }else{
             tableView.contentInset = UIEdgeInsetsMake(0, -10, 0, 0);
-            let cell = tableView.dequeueReusableCellWithIdentifier("heightWeightCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "heightWeightCell", for: indexPath)
                 cell.textLabel?.text = "Height and weight"
             cell.textLabel?.font = Constants.STANDARD_FONT
                 return cell
@@ -317,21 +341,21 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     
     //DeSelecting Multiple Cells
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
     }
 
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if (tableView == genderTable){
             selcetedGender = indexPath.row;
         }else{
              let item = goalsValues[indexPath.row];
-            if(selectedGoal.containsObject(item)){
-                selectedGoal.removeObject(item)
+            if(selectedGoal.contains(item)){
+                selectedGoal.remove(item)
             }else{
-                selectedGoal.addObject(item)
+                selectedGoal.add(item)
             }
         }
         
@@ -339,11 +363,11 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     }
         
     //UIPickerView Delegates and DataSource Methods
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if(pickerView == eatTimePicker){
             return eatTimes.count
         }else{
@@ -351,7 +375,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if (pickerView == eatTimePicker){
             return eatTimes[row].description
         }else {
@@ -359,7 +383,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if (pickerView == eatTimePicker){
             
@@ -375,54 +399,54 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     
     //TextField Delegates
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     
     //IBAction for NextButton Clicked in Step1 VC. Saving all datas into an ProfileClass.
-    @IBAction func nextButtonClicked (sender : AnyObject){
+    @IBAction func nextButtonClicked (_ sender : AnyObject){
         
       let age =   Double(ageText.text!)
         if(age > 0){
             
             let  years : Double = age! * 365 * 24 * 60 * 60;
-            user.birthdate   = NSDate(timeIntervalSinceNow: Double(years * -1));
+            user.birthdate   = Date(timeIntervalSinceNow: Double(years * -1));
             
         }
         user.name  = nameText.text!
         
-        let trimmed =  user.name.stringByTrimmingCharactersInSet(
-            NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let trimmed =  user.name.trimmingCharacters(
+            in: CharacterSet.whitespacesAndNewlines)
     
         
        
         //Alert for Name if char. length is less than 2 or empty.
         if (trimmed.characters.count < 2 || nameText.text == ""){
             // create the alert
-            let alert = UIAlertController(title: "", message: "Name is not valid", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Name is not valid", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         //Alert for Name if having special chara. expect listed below.
-            let regex = try! NSRegularExpression(pattern: ".*[^A-Za-z0-9. ].*", options: NSRegularExpressionOptions())
-            if regex.firstMatchInString(trimmed, options: NSMatchingOptions(), range:NSMakeRange(0, trimmed.characters.count)) != nil {
+            let regex = try! NSRegularExpression(pattern: ".*[^A-Za-z0-9. ].*", options: NSRegularExpression.Options())
+            if regex.firstMatch(in: trimmed, options: NSRegularExpression.MatchingOptions(), range:NSMakeRange(0, trimmed.characters.count)) != nil {
                // print("could not handle special characters")
                 
             // create the alert
-            let alert = UIAlertController(title: "", message: "Name is not valid", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Name is not valid", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -434,13 +458,13 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             //No need to for age as the user has just pressed the button that is besides the age field
             
             // create the alert
-            let alert = UIAlertController(title: "", message: "Age should not be empty or zero", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Age should not be empty or zero", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -452,13 +476,13 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             
             // create the alert
             scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            let alert = UIAlertController(title: "", message: "Select gender value", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Select gender value", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }else{
             user.gender = genderValue[selcetedGender]
@@ -472,34 +496,34 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             scrollView.setContentOffset(CGPoint(x: 0, y: 463), animated: true)
             
             // create the alert
-            let alert = UIAlertController(title: "", message: "Select work active value", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Select work active value", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
         //Alert for weight Value
         if(bio.weightMeasurement == 0.0){
             // create the alert
-            let alert = UIAlertController(title: "", message: "Select Height&Weight values", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: "Select Height&Weight values", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
        
         //Saving to DB Class:
-        bio.looseFat.value   =  (selectedGoal.containsObject(goalsValues[0]))
-        bio.gainMuscle.value =   (selectedGoal.containsObject(goalsValues[1]))
-        bio.addMoreDefinition.value = (selectedGoal.containsObject(goalsValues[2]))
+        bio.looseFat.value   =  (selectedGoal.contains(goalsValues[0]))
+        bio.gainMuscle.value =   (selectedGoal.contains(goalsValues[1]))
+        bio.addMoreDefinition.value = (selectedGoal.contains(goalsValues[2]))
         
         bio.numberOfDailyMeals = eatTimeValue!
         bio.howLong = weekTimeValue!
@@ -510,9 +534,9 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }else{
-            self.performSegueWithIdentifier("step1Identifier", sender: nil)
+            self.performSegue(withIdentifier: "step1Identifier", sender: nil)
         }
 
     }
@@ -521,13 +545,13 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     
     //Method for Navigating to Step1 sub classes based on Segue Identifier.
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if( segue.identifier  == "ActivityLevelIdentifier" ){
-            let destination = segue.destinationViewController as? ActivityLevelViewController;
+            let destination = segue.destination as? ActivityLevelViewController;
             destination?.parentView = self;
         }
         else if (segue.identifier == "HeightClassIdentifier"){
-            let heightDestination = segue.destinationViewController as? Height_WeightListViewController
+            let heightDestination = segue.destination as? Height_WeightListViewController
             heightDestination?.parentView = self
         }
     }

@@ -9,24 +9,24 @@ import UIKit
 
 class DragToTable:NSObject {
     
-    private static let sharedInstance:DragToTable = DragToTable()
+    fileprivate static let sharedInstance:DragToTable = DragToTable()
     
     
     var movingV: UIView!
     var holderView: UIView!
     var tableView: UITableView!
     var longpress:UILongPressGestureRecognizer!
-    var listner:((indexPath:NSIndexPath)->Void)!
+    var listner:((_ indexPath:IndexPath)->Void)!
     
     
     
-    static func activate(movingView:UIView,table : UITableView, view:UIView,listen:(indexPath:NSIndexPath)->Void)->DragToTable{
+    static func activate(_ movingView:UIView,table : UITableView, view:UIView,listen:@escaping (_ indexPath:IndexPath)->Void)->DragToTable{
         let dragger  = DragToTable.sharedInstance
         dragger.activate(movingView, table: table, view: view,listen: listen);
         return dragger
     }
     
-    func activate(movingView:UIView,table : UITableView, view:UIView,listen:(indexPath:NSIndexPath)->Void){
+    func activate(_ movingView:UIView,table : UITableView, view:UIView,listen:@escaping (_ indexPath:IndexPath)->Void){
         movingV = movingView
         tableView = table
         holderView = view
@@ -42,14 +42,14 @@ class DragToTable:NSObject {
         }
         
     }
-    internal func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
+    internal func longPressGestureRecognized(_ gestureRecognizer: UIGestureRecognizer) {
         
         let longPress = gestureRecognizer as! UILongPressGestureRecognizer
         let state = longPress.state
-        let locationInView = longPress.locationInView(holderView)
-        let locationInTableView = longPress.locationInView(tableView)
+        let locationInView = longPress.location(in: holderView)
+        let locationInTableView = longPress.location(in: tableView)
         
-        let indexPath = tableView.indexPathForRowAtPoint(locationInTableView)
+        let indexPath = tableView.indexPathForRow(at: locationInTableView)
         
         struct My {
             static var cellSnapshot : UIView? = nil
@@ -57,13 +57,13 @@ class DragToTable:NSObject {
             static var cellNeedToShow : Bool = false
         }
         struct Path {
-            static var initialIndexPath : NSIndexPath? = nil
+            static var initialIndexPath : IndexPath? = nil
         }
         
         switch state {
             
-        case UIGestureRecognizerState.Began:
-            Path.initialIndexPath = NSIndexPath(forItem: 0, inSection: 0);
+        case UIGestureRecognizerState.began:
+            Path.initialIndexPath = IndexPath(item: 0, section: 0);
             if(indexPath != nil){
                 Path.initialIndexPath = indexPath
             }
@@ -73,11 +73,11 @@ class DragToTable:NSObject {
             My.cellSnapshot!.alpha = 0.0
             holderView.addSubview(My.cellSnapshot!)
             
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
                 center.y = locationInView.y
                 My.cellIsAnimating = true
                 My.cellSnapshot!.center = center
-                My.cellSnapshot!.transform = CGAffineTransformMakeScale(1.05, 1.05)
+                My.cellSnapshot!.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
                 My.cellSnapshot!.alpha = 0.98
                 // myview.alpha = 0.0
                 }, completion: { (finished) -> Void in
@@ -85,7 +85,7 @@ class DragToTable:NSObject {
                         My.cellIsAnimating = false
                         if My.cellNeedToShow {
                             My.cellNeedToShow = false
-                            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                            UIView.animate(withDuration: 0.25, animations: { () -> Void in
                                 //MOVED
                                 
                             })
@@ -96,7 +96,7 @@ class DragToTable:NSObject {
             })
             
             
-        case UIGestureRecognizerState.Changed:
+        case UIGestureRecognizerState.changed:
             if My.cellSnapshot != nil {
                 var center = My.cellSnapshot!.center
                 center.y = locationInView.y
@@ -117,14 +117,14 @@ class DragToTable:NSObject {
             }
             if (indexPath != nil) {
                 if((listner) != nil){
-                    listner(indexPath: indexPath!);
+                    //listner(indexPath: indexPath!);
                 }
                 //  itemsArray.insert("New Item", atIndex: indexPath!.row+1)
                 self.tableView.reloadData()
                 
             }
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
-                My.cellSnapshot!.transform = CGAffineTransformIdentity
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                My.cellSnapshot!.transform = CGAffineTransform.identity
                 My.cellSnapshot!.alpha = 0.00
                 
                 }, completion: { (finished) -> Void in
@@ -137,16 +137,16 @@ class DragToTable:NSObject {
         }
         
     }
-    func snapshotOfCell(inputView: UIView) -> UIView {
+    func snapshotOfCell(_ inputView: UIView) -> UIView {
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
-        inputView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext() as UIImage
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
         UIGraphicsEndImageContext()
         
         let cellSnapshot : UIView = UIImageView(image: image)
         cellSnapshot.layer.masksToBounds = false
         cellSnapshot.layer.cornerRadius = 0.0
-        cellSnapshot.layer.shadowOffset = CGSizeMake(-5.0, 0.0)
+        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
         cellSnapshot.layer.shadowRadius = 5.0
         cellSnapshot.layer.shadowOpacity = 0.4
         return cellSnapshot

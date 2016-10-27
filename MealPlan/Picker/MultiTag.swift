@@ -31,14 +31,14 @@ class MultiTag: UITableView,UITableViewDataSource,UITableViewDelegate {
         self.dataSource = self;
         self.allowsMultipleSelection = false
         self.allowsMultipleSelectionDuringEditing = false
-        registerClass(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
+        register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
         
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return addedItems.count + 1;
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell")
         var title:String = ""
         if(addedItems.count == 0){
             title = addFirstItem;
@@ -48,14 +48,14 @@ class MultiTag: UITableView,UITableViewDataSource,UITableViewDelegate {
             
         }
         else{
-            title = (addedItems.objectAtIndex(indexPath.row) as? String)!
+            title = (addedItems.object(at: indexPath.row) as? String)!
         }
         cell!.textLabel?.text = title
         return cell!;
     }
     // clicked on ac  cell
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        deselectRow(at: indexPath, animated: true)
         if(indexPath.row == addedItems.count ){
             //Show alert
             addMore()
@@ -68,20 +68,20 @@ class MultiTag: UITableView,UITableViewDataSource,UITableViewDelegate {
     // add more alert and handler
     
     func addMore() {
-        let alert = UIAlertController(title: addMoreItem, message:nil, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: cancelText, style: UIAlertActionStyle.Default, handler: nil))
-        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+        let alert = UIAlertController(title: addMoreItem, message:nil, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: cancelText, style: UIAlertActionStyle.default, handler: nil))
+        alert.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = self.addMoreItem
-            textField.secureTextEntry = false
+            textField.isSecureTextEntry = false
         })
-        alert.addAction(UIAlertAction(title: okText, style: .Default, handler:{ (alertAction:UIAlertAction!) in
+        alert.addAction(UIAlertAction(title: okText, style: .default, handler:{ (alertAction:UIAlertAction!) in
             let textSelected = (alert.textFields![0] as UITextField).text
-            self.addedItems.addObject(textSelected!)
+            self.addedItems.add(textSelected!)
             self.reloadData();
             
         }))
         if(parent != nil){
-            parent!.presentViewController(alert, animated: true, completion: nil)
+            parent!.present(alert, animated: true, completion: nil)
         }else{
            // print("Parent View Controller not connected")
         }
@@ -90,7 +90,7 @@ class MultiTag: UITableView,UITableViewDataSource,UITableViewDelegate {
     // Override to support conditional editing of the table view.
     // This only needs to be implemented if you are going to be returning NO
     // for some items. By default, all items are editable.
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return YES if you want the specified item to be editable.
         if(indexPath.row == addedItems.count ){
             return false
@@ -98,11 +98,11 @@ class MultiTag: UITableView,UITableViewDataSource,UITableViewDelegate {
         return self.allowDelete
     }
     // Override to support editing the table view.
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
             //add code here for when you hit delete
             if (addedItems.count > indexPath.row){
-                addedItems.removeObjectAtIndex(indexPath.row)
+                addedItems.removeObject(at: indexPath.row)
             }
             self.reloadData();
         }

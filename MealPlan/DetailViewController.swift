@@ -41,20 +41,20 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let list = DataHandler.getLikeFoods().foods
         
         for food in list {
-            likedFoods.addObject(food.name)
-            originalLikedFoods.addObject(food.name)
+            likedFoods.add(food.name)
+            originalLikedFoods.add(food.name)
         }
         
         
         // Set the like image
-        if likedFoods.containsObject((detailItem.food?.name)!)
+        if likedFoods.contains((detailItem.food?.name)!)
         {
-            likeButton.setImage(UIImage(named: "likeImage")!, forState: .Normal)
+            likeButton.setImage(UIImage(named: "likeImage")!, for: UIControlState())
             likeButton.tag = 0
         }
         else
         {
-            likeButton.setImage(UIImage(named: "UnlikeImage")!, forState: .Normal)
+            likeButton.setImage(UIImage(named: "UnlikeImage")!, for: UIControlState())
             likeButton.tag = 1
         }
         
@@ -63,13 +63,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //let arrayOfObjects = Array(DataHandler.getDisLikedFoods().food);
         
         //Done button View for Serving Size Text Field keyboard
-        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: valServingType, action: #selector(UIResponder.resignFirstResponder))
+        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: valServingType, action: #selector(UIResponder.resignFirstResponder))
         //let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: valServing, action: "resignFirstResponder")
-        barButton.tintColor = UIColor.blackColor()
-        let toolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+        barButton.tintColor = UIColor.black
+        let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
         toolbar.items = [barButton]
         valServingSize.inputAccessoryView = toolbar
-        valServingSize.borderStyle = .None
+        valServingSize.borderStyle = .none
         
         var label:String = ""
         if detailItem.food?.servingSize!.name == Constants.grams || detailItem.food?.servingSize!.name == Constants.ml{
@@ -85,7 +85,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         valServingSize.attributedText = NSAttributedString(string: label, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
         //The number of serving
-        valServingType.attributedText = NSAttributedString(string: (detailItem.food?.servingSize!.name)!.capitalizedString , attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        valServingType.attributedText = NSAttributedString(string: (detailItem.food?.servingSize!.name)! , attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
 
         //presentTransparentNavigationBar();
@@ -94,11 +94,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //self.configureView()
         
         //Like & Unlike Action & Default Image Setting & Button Tag.
-        likeButton.addTarget(self, action: #selector(DetailViewController.likeAction(_:)), forControlEvents: .TouchUpInside)
+        likeButton.addTarget(self, action: #selector(DetailViewController.likeAction(_:)), for: .touchUpInside)
         //likeButton.addTarget(self, action: "likeAction:", forControlEvents: .TouchUpInside)
         
-        weightHolder.hidden = false;
-        weightHolder.layer.borderColor = Constants.MP_GREY.CGColor
+        weightHolder.isHidden = false;
+        weightHolder.layer.borderColor = Constants.MP_GREY.cgColor
         weightHolder.layer.borderWidth = 0.5
         
         foodNameLabel.attributedText = NSAttributedString(string: (detailItem.food?.name)!, attributes: [NSFontAttributeName:Constants.DETAIL_PAGE_FOOD_NAME_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
@@ -118,7 +118,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-    @IBAction func onClickAdd(sender: AnyObject) {
+    @IBAction func onClickAdd(_ sender: AnyObject) {
         /*
         if(self.detailItem == nil)
         {
@@ -149,13 +149,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-    @IBAction func onBackClick(sender: AnyObject) {
+    @IBAction func onBackClick(_ sender: AnyObject) {
         
         if originalLikedFoods != likedFoods
         {
             DataHandler.updateLikeFoods(likedFoods)
         }
-        self.navigationController!.popToRootViewControllerAnimated(true);
+        self.navigationController!.popToRootViewController(animated: true);
     }
     
     
@@ -187,14 +187,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let vheadView = UIView()
         //vheadView.backgroundColor = UIColor.whiteColor()
         
         
         let  headerCell = UILabel()
-        headerCell.frame=CGRectMake(15, 10, tableView.frame.width-30, 20)
+        headerCell.frame=CGRect(x: 15, y: 10, width: tableView.frame.width-30, height: 20)
         vheadView.addSubview(headerCell)
         headerCell.attributedText = NSAttributedString(string: "Nutritional information", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         tableView.tableHeaderView = vheadView;
@@ -205,16 +205,16 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     
     //Button action for like and dislike image.
-    @IBAction func likeAction(sender: UIButton)
+    @IBAction func likeAction(_ sender: UIButton)
      {
         if sender.tag == 1 {
-            sender.setImage(UIImage(named: "likeImage")!, forState: .Normal)
+            sender.setImage(UIImage(named: "likeImage")!, for: UIControlState())
             sender.tag = 0
-            likedFoods.addObject((detailItem.food)!)
+            likedFoods.add((detailItem.food)!)
         } else {
-            sender.setImage(UIImage(named: "UnlikeImage")!, forState: .Normal)
+            sender.setImage(UIImage(named: "UnlikeImage")!, for: UIControlState())
             sender.tag = 1
-            likedFoods.removeObject((detailItem.food)!)
+            likedFoods.remove((detailItem.food)!)
         }
         
     }
@@ -225,8 +225,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     func presentTransparentNavigationBar() {
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics:UIBarMetrics.Default)
-        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for:UIBarMetrics.default)
+        self.navigationController!.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.setNavigationBarHidden(false, animated:true)
     }
@@ -234,21 +234,21 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     // UITableView methods
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return nutrientsToDisplay.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 34
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         let nutrientNameLabel =  cell.viewWithTag(110) as? UILabel
         let amountLabel =  cell.viewWithTag(111) as? UILabel
@@ -264,7 +264,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
-    func roundToPlaces(value: Double, decimalPlaces: Int) -> Double {
+    func roundToPlaces(_ value: Double, decimalPlaces: Int) -> Double {
         let divisor = pow(10.0, Double(decimalPlaces))
         return round(value * divisor) / divisor
     }

@@ -29,8 +29,8 @@ class AboutUsViewController: UIViewController {
     
     
     //Method for Navigating back to previous ViewController.
-    @IBAction func closeAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func closeAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
 
     

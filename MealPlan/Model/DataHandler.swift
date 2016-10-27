@@ -81,25 +81,25 @@ class DataHandler: NSObject {
     }
 
     
-    static func createUser(user:User){
+    static func createUser(_ user:User){
         let realm = try! Realm()
         try! realm.write {
             realm.add(user)
         }
     }
-    static func updateUser(newData:User){
+    static func updateUser(_ newData:User){
         let profile = getActiveUser()
         let realm = try! Realm()
         try! realm.write {
             
-            profile.name                = newData.name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-            profile.email               = newData.email.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            profile.name = newData.name.trimmingCharacters(in: NSCharacterSet.whitespaces)
+            profile.email               = newData.email.trimmingCharacters(in: NSCharacterSet.whitespaces)
             profile.gender              = newData.gender
             profile.birthdate           = newData.birthdate
             
         }
     }
-    static func updateStep1(bio:Biographical){
+    static func updateStep1(_ bio:Biographical){
         let profile = getActiveBiographical()
         let realm = try! Realm()
         try! realm.write {
@@ -123,7 +123,7 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateProfileDiet(newData:String){
+    static func updateProfileDiet(_ newData:String){
         let profile = getActiveBiographical()
         let realm = try! Realm()
         try! realm.write {
@@ -131,7 +131,7 @@ class DataHandler: NSObject {
             
         }
     }
-    static func updateLikeFoods(newData:NSMutableArray){
+    static func updateLikeFoods(_ newData:NSMutableArray){
         let profile = getLikeFoods()
         let realm = try! Realm()
         
@@ -146,7 +146,7 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateDisLikeFoods(newData:NSMutableArray){
+    static func updateDisLikeFoods(_ newData:NSMutableArray){
         let profile = getDisLikedFoods()
         let realm = try! Realm()
         try! realm.write {
@@ -163,7 +163,7 @@ class DataHandler: NSObject {
     //MARK:
     
     //MARK: Data Handler For Food
-    static func createMeal(meal:Meal){
+    static func createMeal(_ meal:Meal){
         let realm = try! Realm()
         try! realm.write {
             realm.add(meal)
@@ -171,7 +171,7 @@ class DataHandler: NSObject {
         }
     }
     
-    static func addFoodItemToMeal(meal:Meal,foodItem:FoodItem){
+    static func addFoodItemToMeal(_ meal:Meal,foodItem:FoodItem){
         print("addFoodItemToMeal called")
         
         // Check if meal contains food from foodItem
@@ -202,19 +202,21 @@ class DataHandler: NSObject {
     
     
     
-    static func removeFoodItem(foodItem:FoodItem){
+    static func removeFoodItem(_ foodItem:FoodItem){
         let realm = try! Realm()
         try! realm.write {
             realm.delete(foodItem)
         }
     }
-    static func removeFoodItemFromMeal(meal:Meal,index:Int){
+    /*
+    static func removeFoodItemFromMeal(_ meal:Meal,index:Int){
         let realm = try! Realm()
         try! realm.write {
             meal.foodItems.removeAtIndex(index)
         }
     }
-    static func createFoodItem(foodItem:FoodItem){
+ */
+    static func createFoodItem(_ foodItem:FoodItem){
         let realm = try! Realm()
         try! realm.write {
             realm.add(foodItem)
@@ -222,7 +224,7 @@ class DataHandler: NSObject {
         }
         
     }
-    static func updateFoodItem(foodItem:FoodItem,numberServing:Double){
+    static func updateFoodItem(_ foodItem:FoodItem,numberServing:Double){
         let realm = try! Realm()
         try! realm.write {
             foodItem.numberServing = numberServing
@@ -231,7 +233,7 @@ class DataHandler: NSObject {
         
     }
     
-    static func updateFoodItem(foodItem:FoodItem,eaten:Bool){
+    static func updateFoodItem(_ foodItem:FoodItem,eaten:Bool){
         let realm = try! Realm()
         try! realm.write {
             foodItem.eaten = eaten
@@ -240,7 +242,7 @@ class DataHandler: NSObject {
         
     }
     //MARK: Data Handler For Profile
-    static func getFood(pk:Int)->Food?{
+    static func getFood(_ pk:Int)->Food?{
         let realm = try! Realm()
         let object = realm.objects(Food).filter("pk = "+pk.description).first
         if((object) != nil){
@@ -249,7 +251,7 @@ class DataHandler: NSObject {
             return  nil;
         }
     }
-    static func getOrCreateFood(pk:Int)->Food{
+    static func getOrCreateFood(_ pk:Int)->Food{
         var food = getFood(pk);
         if(food == nil){
             food = Food();
@@ -259,7 +261,7 @@ class DataHandler: NSObject {
         return food!;
         
     }
-    static func createFood(food:Food)->Food{
+    static func createFood(_ food:Food)->Food{
         
         let getfood = getFood(food.pk);
         if(getfood != nil){
@@ -274,47 +276,47 @@ class DataHandler: NSObject {
         return food
         
     }
-    static func createDailyMeal(dailyMeal:DailyMealPlan){
+    static func createDailyMeal(_ dailyMeal:DailyMealPlan){
         let realm = try! Realm()
         try! realm.write {
             realm.add(dailyMeal)
         }
     }
-    static func createWeeklyMeal(week:Week){
+    static func createWeeklyMeal(_ week:Week){
         let realm = try! Realm()
         try! realm.write {
             realm.add(week)
         }
     }
-    static func addMealToDailyMeal(dailyMeal:DailyMealPlan, meal:Meal){
+    static func addMealToDailyMeal(_ dailyMeal:DailyMealPlan, meal:Meal){
         let realm = try! Realm()
         try! realm.write {
             dailyMeal.meals.append(meal);
         }
     }
-    static func readfoodData(productId:Int,success:((sucess:Food)->Void)){
-        dispatch_async(dispatch_queue_create("background", nil)) {
+    static func readfoodData(_ productId:Int,success:@escaping ((_ sucess:Food)->Void)){
+        DispatchQueue(label: "background", attributes: []).async {
             let realm = try! Realm()
             let items = realm.objects(Food).filter("pk = " + productId.description).first
             if((items) != nil){
-                success(sucess: items!);
+                success(items!);
             }
         }
     }
-    static func readFoodsData(name:String)->[Food]{
+    static func readFoodsData(_ name:String)->[Food]{
         let realm = try! Realm()
         let items = realm.objects(Food).filter("name contains '" + name + "' and pk != 0")
         return Array(items)
     }
     
-    static func getAllFoodsExceptLikedFoods(name:String)->[Food]{
+    static func getAllFoodsExceptLikedFoods(_ name:String)->[Food]{
         let realm = try! Realm()
         let foodsLiked = getLikeFoods().foods
         
         let namesOfFoodsLiked = NSMutableArray()
         for food in foodsLiked {
             
-            namesOfFoodsLiked.addObject(food.name)
+            namesOfFoodsLiked.add(food.name)
             print("added \(food.name)")
             
         }
@@ -333,34 +335,34 @@ class DataHandler: NSObject {
     }
     
     
-    static func readMealData(day:Int)->DailyMealPlan{
+    static func readMealData(_ day:Int)->DailyMealPlan{
         let realm = try! Realm()
-        let weekNumber = self.getWeek(NSDate())
+        let weekNumber = self.getWeek(Date())
         let items = realm.objects(Week).first
         return (items?.dailyMeals[weekNumber-1])!;
     }
     
-    static func createWeeks(weeksInTheFutureToCreate:[Int]) {
+    static func createWeeks(_ weeksInTheFutureToCreate:[Int]) {
         let kcal = calculateCalorieAllowance()
         let newKcal = Double(kcal) * 0.95
         
         let realm = try! Realm()
         let numWeeks = realm.objects(Week).count + 1
-        let calender = NSCalendar.currentCalendar()
+        let calender = Calendar.current
         
         
         for weekInTheFuture in weeksInTheFutureToCreate{
             let newWeek = Week()
             newWeek.name = String(numWeeks + weekInTheFuture)
-            let futureWeekStartDate = calender.dateByAddingUnit(.Day, value: (weekInTheFuture*7), toDate: calender.startOfDayForDate(NSDate()), options: [.MatchFirst])
+            let futureWeekStartDate = (calender as NSCalendar).date(byAdding: .day, value: (weekInTheFuture*7), to: calender.startOfDay(for: Date()), options: [.matchFirst])
             if (futureWeekStartDate != nil){
                 newWeek.start_date = futureWeekStartDate!
             }
-            newWeek.macroAllocation.appendContentsOf(macroAllocation())
+            newWeek.macroAllocation.append(objectsIn: macroAllocation())
             newWeek.calorieAllowance = kcal
             newWeek.TDEE = Int(newKcal)
             //newWeek.dailyMeals.appendContentsOf(DataStructure.createMeal())
-            newWeek.dailyMeals.appendContentsOf(DataStructure.createMealPlans(newWeek))
+            newWeek.dailyMeals.append(objectsIn: DataStructure.createMealPlans(newWeek))
             
             try! realm.write {
                 realm.add(newWeek)
@@ -376,10 +378,10 @@ class DataHandler: NSObject {
         
         print("createThisWeekAndNextWeek CALLED.")
         let realm = try! Realm()
-        let calender = NSCalendar.currentCalendar()
-        let aWeekAgo = calender.dateByAddingUnit(.Day, value: -6, toDate: calender.startOfDayForDate(NSDate()), options: [.MatchFirst])
-        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo!)
-        let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted("start_date", ascending: true).count
+        let calender = Calendar.current
+        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -6, to: calender.startOfDay(for: Date()), options: [.matchFirst])
+        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
+        let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true).count
         
         
         
@@ -424,30 +426,30 @@ class DataHandler: NSObject {
      */
     static func getFutureWeeks()-> Results<Week>
     {
-        let calender = NSCalendar.currentCalendar()
-        let aWeekAgo = calender.dateByAddingUnit(.Day, value: -6, toDate: calender.startOfDayForDate(NSDate()), options: [.MatchFirst])
+        let calender = Calendar.current
+        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -6, to: calender.startOfDay(for: Date()), options: [.matchFirst])
         
         let realm = try! Realm()
-        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo!)
+        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
         
-        let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted("start_date", ascending: true).count
+        let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true).count
         
         if weeks < 2 {
             createThisWeekAndNextWeek()
         }
         
-        return realm.objects(Week).filter(futureWeeksPredicate).sorted("start_date", ascending: true)  
+        return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)  
     }
 
     
-    static func startOfNextWeek() -> NSDate
+    static func startOfNextWeek() -> Date
     {
-        let calendar = NSCalendar.currentCalendar()
-        let dateComponets = calendar.components([.Weekday, .Hour], fromDate: NSDate())
-        dateComponets.setValue(9-dateComponets.weekday, forComponent: .Weekday)
+        let calendar = Calendar.current
+        let dateComponets = (calendar as NSCalendar).components([.weekday, .hour], from: Date())
+        (dateComponets as NSDateComponents).setValue(9-dateComponets.weekday!, forComponent: .weekday)
         
-        dateComponets.setValue(dateComponets.hour * -1 + 8, forComponent: .Hour)
-        let dateCustom = calendar.dateByAddingComponents(dateComponets, toDate: NSDate(), options: NSCalendarOptions(rawValue: 0))
+        (dateComponets as NSDateComponents).setValue(dateComponets.hour! * -1 + 8, forComponent: .hour)
+        let dateCustom = (calendar as NSCalendar).date(byAdding: dateComponets, to: Date(), options: NSCalendar.Options(rawValue: 0))
         
         return dateCustom!
     }
@@ -556,7 +558,7 @@ class DataHandler: NSObject {
         if sessionsCount > 7{
             sessionsCount = 7 //min 0, max 7
         }
-        let jobIntensity = Double(Constants.activityLevelsAtWork.indexOf(bio.activityLevelAtWork!)!) + 1.0 //min 1, max 4
+        let jobIntensity = Double(Constants.activityLevelsAtWork.index(of: bio.activityLevelAtWork!)!) + 1.0 //min 1, max 4
         let workOutIntensity = 3.0 //Upper end of between 1 and 4
         let n = Int(ceil((sessionsCount * workOutIntensity) + (jobIntensity))) //min 1, max 22
         
@@ -603,14 +605,14 @@ class DataHandler: NSObject {
     {
         let user = DataHandler.getActiveUser()
         
-        let now = NSDate()
-        let nowComponents =  NSCalendar.currentCalendar().componentsInTimeZone(NSTimeZone.localTimeZone(), fromDate: now)
+        let now = Date()
+        let nowComponents =  Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: now)
         let currentYear = nowComponents.year
         
-        let birthComponents = NSCalendar.currentCalendar().componentsInTimeZone(NSTimeZone.localTimeZone(), fromDate: user.birthdate)
+        let birthComponents = Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: user.birthdate as Date)
         let birthYear = birthComponents.year
         
-        return (currentYear - birthYear)
+        return (currentYear! - birthYear!)
     }
     
     /*
@@ -619,16 +621,16 @@ class DataHandler: NSObject {
      * parmeters: Current date
      * return   : Week integer value
      */
-    static func getWeek(today:NSDate)->Int {
-    let formatter = NSDateFormatter()
+    static func getWeek(_ today:Date)->Int {
+    let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
-    let myCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!
-    let myComponents = myCalendar.components(.Weekday, fromDate: today)
+    let myCalendar = Calendar(identifier: Calendar.Identifier.iso8601)
+    let myComponents = (myCalendar as NSCalendar).components(.weekday, from: today)
     let weekNumber = myComponents.weekday
-    return weekNumber
+    return weekNumber!
     }
     
-    static func createFoodItem(item:Food,numberServing:Double)->FoodItem{
+    static func createFoodItem(_ item:Food,numberServing:Double)->FoodItem{
         let foodItem = FoodItem()
         foodItem.food = createFood(item);
         foodItem.numberServing = numberServing;
@@ -636,7 +638,7 @@ class DataHandler: NSObject {
         return foodItem;
     }
     
-    static func getFoodType(ft:String)->FoodType{
+    static func getFoodType(_ ft:String)->FoodType{
         let realm = try! Realm()
         let x = realm.objects(FoodType)
         for each in x {

@@ -43,28 +43,30 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
 
          */
         
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        self.view.backgroundColor = UIColor.groupTableViewBackground
         caloriesListTable.delegate = self
         
         // For hiding back button if view loads from TabBar controller:
         if (fromController != "step4Identifier"){
-            showMealButton.hidden = true
-            closeButton.hidden = true
+            showMealButton.isHidden = true
+            closeButton.isHidden = true
         }
         
         let attributes = [NSFontAttributeName:Constants.STANDARD_FONT]
         let newAttributes = [NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]
-        percentToggle.setTitleTextAttributes(attributes, forState: .Normal)
-        percentToggle.setTitleTextAttributes(newAttributes, forState: .Selected)
+        percentToggle.setTitleTextAttributes(attributes, for: UIControlState())
+        percentToggle.setTitleTextAttributes(newAttributes, for: .selected)
         
         
         //Format the number:
-        let largeNumber = thisWeek?.calorieAllowance
-        let numberFormatter = NSNumberFormatter()
-        numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        let largeNumber = NSNumber(value: (thisWeek?.calorieAllowance)!) as NSNumber
+        let string = numberFormatter.string(from: largeNumber)
         
         
-        caloriesCountLabel.attributedText = NSMutableAttributedString(string:numberFormatter.stringFromNumber(largeNumber!)! + " calories", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
+        caloriesCountLabel.attributedText = NSMutableAttributedString(string:string! + " calories", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
         
         // To display Regestered Users name on Meal Plan's page
         // namelabel.text = DataHandler.getActiveUser().name + ", you need"
@@ -84,12 +86,12 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         caloriesListTable.reloadData()
         
         //To display Regestered Users name on Meal Plan's page
-        namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().name.capitalizedString + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
+        namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().name.capitalized + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
         
     }
     
@@ -105,13 +107,13 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     */
     
     //Table Delagte & DataSource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 3
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("CellIdentifier") as? CaloriesTableViewCell
+        var cell:UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as? CaloriesTableViewCell
         if(cell == nil)
         {
             /**
@@ -120,7 +122,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
              */
             let macroAttributes = [NSFontAttributeName: Constants.MACRO_LABEL, NSForegroundColorAttributeName:Constants.MP_BLACK]
             let numberAttributes = [NSFontAttributeName: Constants.MACRO_LABEL, NSForegroundColorAttributeName:Constants.MP_GREY]
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle,reuseIdentifier:"CellIdentifier")
+            cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier:"CellIdentifier")
             
             
             var macroName = ""
@@ -151,34 +153,34 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             //Dynamic descriptionLabel
             let  descriptionLabel = UILabel()
-            descriptionLabel.frame=CGRectMake(15, 18, tableView.frame.width-150, 20)
+            descriptionLabel.frame=CGRect(x: 15, y: 18, width: tableView.frame.width-150, height: 20)
             descriptionLabel.attributedText = NSMutableAttributedString(string:macroName, attributes:macroAttributes)
             cell.addSubview(descriptionLabel)
             
             //Dynamic gramValueLabel
             let gramValueLabel = UILabel()
-            gramValueLabel.frame=CGRectMake( tableView.frame.width-150, 18, 50, 20)
+            gramValueLabel.frame=CGRect( x: tableView.frame.width-150, y: 18, width: 50, height: 20)
             gramValueLabel.attributedText = NSMutableAttributedString(string:String(macroValue), attributes:numberAttributes)
             cell.addSubview(gramValueLabel)
-            gramValueLabel.hidden = showPercentOnly!
+            gramValueLabel.isHidden = showPercentOnly!
             
             //Dynamic percentageValueLabel
             let percentageValueLabel = UILabel()
             //percentageValueLabel.frame=CGRectMake(tableView.frame.width-75,18,50, 20)
-            percentageValueLabel.frame = CGRectMake( tableView.frame.width-150, 18, 50, 20)
+            percentageValueLabel.frame = CGRect( x: tableView.frame.width-150, y: 18, width: 50, height: 20)
             percentageValueLabel.attributedText = NSMutableAttributedString(string:String(macroPercent!)+"%", attributes:numberAttributes)
             cell.addSubview(percentageValueLabel)
-            percentageValueLabel.hidden = !(showPercentOnly!)
+            percentageValueLabel.isHidden = !(showPercentOnly!)
 
         }
         return cell
         
     }
     
-    @IBAction func mealPalnButtonClick(sender: AnyObject){
+    @IBAction func mealPalnButtonClick(_ sender: AnyObject){
         
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let destination = storyboard.instantiateViewControllerWithIdentifier("loggedinTabBar") as! UITabBarController
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
         navigationController?.pushViewController(destination, animated: true)
     
     }
@@ -188,13 +190,13 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
 //        self.navigationController?.popViewControllerAnimated(true)
 //    }
     
-    @IBAction func closeButtonAction (sender : AnyObject){
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func closeButtonAction (_ sender : AnyObject){
+        self.navigationController?.popViewController(animated: true)
 
     }
     
     
-    @IBAction func changeUnitOfMacroMeasurement(segmentedControl:UISegmentedControl)
+    @IBAction func changeUnitOfMacroMeasurement(_ segmentedControl:UISegmentedControl)
     {
         switch segmentedControl.selectedSegmentIndex
         {

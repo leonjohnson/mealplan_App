@@ -42,12 +42,12 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     */
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        filterText = searchText.lowercaseString
+        filterText = searchText.lowercased()
         filterdData = localData.filter({
             
-            if($0.name.lowercaseString.containsString(searchText.lowercaseString)){
+            if($0.name.lowercased().contains(searchText.lowercased())){
                 return true
             }
             return false
@@ -55,14 +55,14 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         foodListTable.reloadData();
         
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filterdData = localData;
         foodListTable.reloadData();
 
     }
     var searchTable:UITableView?
     //TABLEVIEW DELEGATE & DATASOURCE
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if(tableView == foodListTable ){
             return filterdData!.count
         }
@@ -70,12 +70,12 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         return filterdData!.count + 1
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("foodListCellIdentifier") as? FoodListTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "foodListCellIdentifier") as? FoodListTableViewCell
         if(cell == nil){
             cell = FoodListTableViewCell();
         }
@@ -90,11 +90,11 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    @IBAction func CloseAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func CloseAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(filterdData?.count == indexPath.row){
            // print( "Search online")
             searchOnline(filterText);
@@ -107,7 +107,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             }
            // self.navigationController?.popViewControllerAnimated(true)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let scene = storyboard.instantiateViewControllerWithIdentifier("servingDetails") as! DetailViewController
+            let scene = storyboard.instantiateViewController(withIdentifier: "servingDetails") as! DetailViewController
             scene.detailItem = item
             //scene.hideAddButton = false
             scene.meal = meal
@@ -116,10 +116,10 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    func searchOnline(text:String){
+    func searchOnline(_ text:String){
         //encode a URL string for accepting all special characters in search.
         let originalString = text
-        let escapedString = originalString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        let escapedString = originalString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         
         Connect.fetchFoodItems(escapedString!, limit: Constants.API_SEARCH_LIMIT, offset:Constants.API_SEARCH_OFSET, view: self.view) { (items, status) -> Void in
             if(status){
@@ -129,13 +129,13 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             }
             else{
                 // create the alert
-                let alert = UIAlertController(title: "", message: "No more data", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "", message: "No more data", preferredStyle: UIAlertControllerStyle.alert)
                 
                 // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 
                 // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 
                 
                 

@@ -4,7 +4,7 @@ import RealmSwift
 class Week: Object {
     
     dynamic var name = "" // 1,2,3 etc but this may include strings at a later date
-    dynamic var start_date = NSDate()
+    dynamic var start_date = Date()
     let dailyMeals = List<DailyMealPlan>()
     let macroAllocation = List<Macronutrient>()
     dynamic var feedback:FeedBack?

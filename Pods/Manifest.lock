@@ -38,7 +38,7 @@ DEPENDENCIES:
   - Fabric
   - MBProgressHUD (~> 1.0.0)
   - Reachability
-  - RealmSwift (~> 2.0.1)
+  - RealmSwift
   - UnderKeyboard (~> 4.0)
 
 SPEC CHECKSUMS:
@@ -51,6 +51,6 @@ SPEC CHECKSUMS:
   RealmSwift: 64e00af79bdcd7d2a7a23fdc1cb3faf22b80ae4c
   UnderKeyboard: 6ec3057822332c985806da7c36b8dd57647d54e9
 
-PODFILE CHECKSUM: f05a6967c5c409b59544c401f5b30eb5d17ba80c
+PODFILE CHECKSUM: 26542db5a85b15a22c04169c5d01ffaf504de60e
 
 COCOAPODS: 1.1.1

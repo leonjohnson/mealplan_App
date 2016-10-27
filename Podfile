@@ -8,7 +8,15 @@ target 'MealPlan' do
     pod 'UnderKeyboard', '~> 4.0'
     pod 'MBProgressHUD', '~> 1.0.0'
     pod 'Reachability'
-    pod 'RealmSwift', '~> 2.0.1'
+    pod 'RealmSwift' #'~> 2.0.1'
     pod 'Fabric'
     pod 'Crashlytics'
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['SWIFT_VERSION'] = '3.0'
+        end
+    end
 end
