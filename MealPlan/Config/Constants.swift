@@ -145,6 +145,10 @@ struct Constants {
         return components.day!
     }
     
+    static func roundToPlaces(_ value: Double, decimalPlaces: Int) -> Double {
+        let divisor = pow(10.0, Double(decimalPlaces))
+        return round(value * divisor) / divisor
+    }
     
     //Activity levels
     static let activityLevelsAtWork = ["Sedentary", "Lightly active", "Moderately active", "Very active"] // This array is used for display purposes

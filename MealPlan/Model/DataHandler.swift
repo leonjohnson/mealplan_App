@@ -228,7 +228,7 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             foodItem.numberServing = numberServing
-           // print("updating FoodItem \(foodItem.food!.name )")
+            print("updating FoodItem \(foodItem.food!.name )")
         }
         
     }
@@ -354,7 +354,7 @@ class DataHandler: NSObject {
         for weekInTheFuture in weeksInTheFutureToCreate{
             let newWeek = Week()
             newWeek.name = String(numWeeks + weekInTheFuture)
-            let futureWeekStartDate = (calender as NSCalendar).date(byAdding: .day, value: (weekInTheFuture*7), to: calender.startOfDay(for: Date()), options: [.matchFirst])
+            let futureWeekStartDate = (calender as NSCalendar).date(byAdding: .day, value: (weekInTheFuture*8), to: calender.startOfDay(for: Date()), options: [.matchFirst]) // 8 because if we use a calender the start of the 8th day is what we want
             if (futureWeekStartDate != nil){
                 newWeek.start_date = futureWeekStartDate!
             }
@@ -384,7 +384,7 @@ class DataHandler: NSObject {
         let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true).count
         
         
-        
+        /*
         var bangOn = 0
         var variance = 0.0
         let foods = realm.objects(Food)
@@ -398,7 +398,7 @@ class DataHandler: NSObject {
         
         print("Bang on: \((bangOn/foods.count)*100)%")
         print("The average variance is : \(variance/Double(foods.count))")
-        
+        */
         
         switch weeks {
         case 0:
@@ -438,7 +438,7 @@ class DataHandler: NSObject {
             createThisWeekAndNextWeek()
         }
         
-        return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)  
+        return realm.objects(Week).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)  
     }
 
     

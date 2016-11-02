@@ -26,7 +26,7 @@ class Deletion: Object {
         return ["reasonForDeletion"]
     }
 
-
+    //taken from: https://github.com/realm/realm-cocoa/issues/2318#issuecomment-126392191
     
 //  override static func ignoredProperties() -> [String] {
 //  // Specify properties to ignore (Realm won't persist these)

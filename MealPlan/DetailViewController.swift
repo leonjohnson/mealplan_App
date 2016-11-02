@@ -1,7 +1,7 @@
 import UIKit
 
 
-class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
 
     @IBOutlet var foodNameLabel: UILabel!
@@ -70,10 +70,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         toolbar.items = [barButton]
         valServingSize.inputAccessoryView = toolbar
         valServingSize.borderStyle = .none
+        valServingSize.keyboardType = UIKeyboardType.decimalPad
         
         var label:String = ""
         if detailItem.food?.servingSize!.name == Constants.grams || detailItem.food?.servingSize!.name == Constants.ml{
-            label = String(Int(roundToPlaces((detailItem.numberServing), decimalPlaces: 2)))
+            label = String(Int(Constants.roundToPlaces((detailItem.numberServing), decimalPlaces: 2)))
             print("label in 1: \(label)")
         } else {
             label = String(Int(detailItem.numberServing))
@@ -126,20 +127,24 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         */
-        
+        let numServing = Constants.roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2)
         if ((meal?.foodItems.contains(detailItem)) != nil) { // existing food
-            DataHandler.updateFoodItem(detailItem, numberServing:roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2) )
+            if(numServing > 0){
+                DataHandler.updateFoodItem(detailItem, numberServing: numServing)
+            } else {
+                print("Error: Please add a positive number")
+            }
         }
         else
         {
             // it's a new food item
-            let num = roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2)
-            if(num > 0){
+            if(numServing > 0){
                 
-                DataHandler.updateFoodItem(detailItem, numberServing: roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2))
+                DataHandler.updateFoodItem(detailItem, numberServing: numServing)
                 DataHandler.addFoodItemToMeal(meal!, foodItem:detailItem);
                 onBackClick(sender);
             }else{
+                print("Error: Please add a positive number")
                 //Invalid value entered in the serving field
                 return
             }
@@ -177,13 +182,17 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let pr = (detailItem.food?.proteins)! * (detailItem.numberServing)
         let salt = (detailItem.food?.salt)! * (detailItem.numberServing)
         
-        nutrientsToDisplay += [(name: "Fats", value: String(roundToPlaces(fa, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Saturated fats", value: String(roundToPlaces(sa, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Carbohydrates", value: String(roundToPlaces(ca, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Sugars", value: String(roundToPlaces(su, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Fibre", value: String(roundToPlaces(fi, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Proteins", value: String(roundToPlaces(pr, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Salt", value: String(roundToPlaces(salt, decimalPlaces: 2)) + " mg")]
+        nutrientsToDisplay += [(name: "Fats", value: String(Constants.roundToPlaces(fa, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Saturated fats", value: String(Constants.roundToPlaces(sa, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Carbohydrates", value: String(Constants.roundToPlaces(ca, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Sugars", value: String(Constants.roundToPlaces(su, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Fibre", value: String(Constants.roundToPlaces(fi, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Proteins", value: String(Constants.roundToPlaces(pr, decimalPlaces: 2)) + " g")]
+        nutrientsToDisplay += [(name: "Salt", value: String(Constants.roundToPlaces(salt, decimalPlaces: 2)) + " mg")]
+        
+        if valServingSize.text == String(detailItem.numberServing){
+            //addFoodButton.titleLabel?.text = "Save"
+        }
     }
     
     
@@ -264,12 +273,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
-    func roundToPlaces(_ value: Double, decimalPlaces: Int) -> Double {
-        let divisor = pow(10.0, Double(decimalPlaces))
-        return round(value * divisor) / divisor
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if valServingSize.text == String(detailItem.numberServing) || valServingSize.text == "" {
+           addFoodButton.isEnabled = false
+        }
     }
-
-    
     
 }
 

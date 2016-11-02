@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             }
             */
         }
-        Fabric.with([Crashlytics.self])
+        //Fabric.with([Crashlytics.self])
         return true
     }
     

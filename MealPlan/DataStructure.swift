@@ -695,7 +695,7 @@ class DataStructure : NSObject{
                         food.carbohydrates >= food.fats*(overflow[1]/overflow[2])*0.7  &&
                             food.carbohydrates <= food.fats*(overflow[1]/overflow[2])*1.3 &&
                             food.proteins >= food.fats*(overflow[0]/overflow[2])*0.7 &&
-                            food.proteins >= food.fats*(overflow[0]/overflow[2])*1.3
+                            food.proteins <= food.fats*(overflow[0]/overflow[2])*1.3
                     )
                 }
                 
@@ -980,7 +980,9 @@ class DataStructure : NSObject{
             
             print("DailyMeal Plan:\nCalories: \(dailyMealPlan.totalCalories())\nCarbs: \(dailyMealPlan.totalCarbohydrates()) \nProtein: \(dailyMealPlan.totalProteins()) \nFats: \(dailyMealPlan.totalFats()) \n\n")
             
-            // - PackageFoodsNicely - at the end - ensure no duplicates in meal, ensure ordering is nice
+            //dailyMealPlan = removeDuplicatesFromMeal(plan: dailyMealPlan)
+            
+            // - PackageFoodsNicely - at the end - ensure no duplicates in meal, and ensure the ordering is nice 👌
             
             /*
             for meal in dailyMealPlan.meals {
@@ -1063,8 +1065,48 @@ class DataStructure : NSObject{
     }
     
     
+    /**
+     This function checks the given meal plan for any duplicates within a meal. If duplicates are found the numberofServings are combined, the other item reduced to -1 and then removed via a filter.
+     
+     - parameter plan: The meal plan that we want to update.
+     
+     
+     */
+    static func removeDuplicatesFromMeal(plan:DailyMealPlan) ->DailyMealPlan{
+        print("started with \(plan.meals.count) meals.")
+        for meal in plan.meals{
+            for fi in meal.foodItems{
+                for (index, innerFi) in meal.foodItems.enumerated(){
+                    if fi != innerFi && fi.food == innerFi.food {
+                        meal.foodItems[index].numberServing += fi.numberServing
+                        fi.numberServing = -1
+                        print("CHECK: Just deleted a duplicate")
+                    }
+                }
+            }
+            
+        }
+        let lowCarbPredicate2 = NSPredicate(format: "numberServing != -1")
+        let filter = plan.meals.filter(lowCarbPredicate2)
+        plan.meals.removeAll()
+        plan.meals.append(objectsIn: filter)
+        
+        return plan
+    }
     
     
+    
+    
+    /**
+     This function attempts to assign the given food to the meal with the least amount of the stated macronutrient (e.g. it will attempt to allocate a fat food to the meal with the least amount of fat.
+     
+     
+     - parameter macro: The macro that we trying to allocate.
+     - parameter foodItem: The foodItem we are trying to place.
+     - parameter plan: The meal plan that we want to update.
+     
+     
+     */
     static func assignMealTo(_ macro:String, foodItem:FoodItem, plan:DailyMealPlan) ->DailyMealPlan{
     
         assert([Constants.PROTEINS, Constants.CARBOHYDRATES, Constants.FATS].contains(macro), "INVALID MACRO USED")
@@ -1257,6 +1299,7 @@ class DataStructure : NSObject{
                     fooditem.numberServing = 6
                 }
             default:
+                print("ERROR: This serving size has not been recognised.")
                 break
             }
             
@@ -1461,6 +1504,7 @@ class DataStructure : NSObject{
             
             if fooditem.numberServing > 0{
                 fooditem = constrainPortionSizeBasedOnFood(fooditem, highFatAllowedFlag: lastMealFlag)
+                fooditem.numberServing = Constants.roundToPlaces(fooditem.numberServing, decimalPlaces: 0) // rounding for customer use
                 foodItems.append(fooditem)
                 print("Just added: \(fooditem.food?.name)")
                 leftOverForThisMeal[0] = leftOverForThisMeal[0] - (fooditem.numberServing * food.proteins)

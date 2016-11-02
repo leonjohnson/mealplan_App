@@ -64,22 +64,30 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         thisWeek = DataHandler.getFutureWeeks()[0]
         
+        print("0 start date: \(DataHandler.getFutureWeeks()[0].start_date)")
+        print("1 start date: \(DataHandler.getFutureWeeks()[1].start_date)")
+        
         let calendar: Calendar = Calendar.current
         let date1 = calendar.startOfDay(for: thisWeek.start_date as Date)
         let date2 = calendar.startOfDay(for: Date())
         let flags = NSCalendar.Unit.day
         let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: [])
         
+        print("Dates : \(date1) and \(date2)")
+        
+        
         dateCount = components.day!
         
         let dateForthisMealPlan = setDate()
         //meals = Array(data.meals)
-        
+        print("Got this far. Datecount : \(dateCount)")
         meals = Array(thisWeek.dailyMeals[dateCount].meals)
+        print("Got this far 1")
         mealPlanListTable.reloadData();
+        print("Got this far 2")
         mealPlanDate.text = dateForthisMealPlan // Monday June 30, 2014 10:42:21am PS
         mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
-        
+        print("Got this far 3")
         
         // Setup the notifications
         //handleNotifivarion()
@@ -112,6 +120,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                                                             (paramAction:UIAlertAction!) in
                                                             self.alertController?.dismiss(animated: true, completion: nil)
         })
+        
+        print("Got this far 10")
         
         alertController?.addAction(tooEarlyAction)
         alertController?.addAction(dislikeAction)
