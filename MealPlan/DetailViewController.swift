@@ -1,9 +1,16 @@
 import UIKit
+/*
+private extension Selector {
+    static let hideKeyboard =
+        #selector(DetailViewController.hideKeyboard(_:))
+    //#selector(tap(_:))
+}
+ */
 
-
-class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-
+    
+    
     @IBOutlet var foodNameLabel: UILabel!
     @IBOutlet var weightHolder: UIView!
     @IBOutlet var valServingType: UILabel!
@@ -15,6 +22,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var originalLikedFoods = NSMutableArray()
     var likedFoods = NSMutableArray()
+    var revertToOriginal :Bool = true
+    var newItemMode :Bool = false
     
     //var hideAddButton: Bool? = nil
     
@@ -26,17 +35,35 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         didSet {
             
             // Update the view.
-            self.configureView()
+            self.configureDataView()
+            
         }
     }
+    var originalDetailItemNumberOfServing: Double = 0
     
     
     
-    
-
+    override func viewDidAppear(_ animated: Bool) {
+        valServingSize.text = String(detailItem.numberServing)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.nutritionTable.delegate = self
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self,
+                                       selector: #selector(DetailViewController.textFieldDidChange(sender:)),
+                                       name: NSNotification.Name.UITextFieldTextDidChange,
+                                       object: nil)
+    
+        /*
+         if(self.detailItem == nil)
+         {
+         onBackClick(sender);
+         return
+         }
+         */
+        originalDetailItemNumberOfServing = detailItem.numberServing
         
         let list = DataHandler.getLikeFoods().foods
         
@@ -63,10 +90,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //let arrayOfObjects = Array(DataHandler.getDisLikedFoods().food);
         
         //Done button View for Serving Size Text Field keyboard
-        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: valServingType, action: #selector(UIResponder.resignFirstResponder))
+        let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(DetailViewController.hideKeyboard(textfield:)))
+        //#selector(tap(gestureReconizer:)
+        //likeButton.addTarget(self, action: #selector(DetailViewController.likeAction(_:)), for: .touchUpInside)
+        
         //let barButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: valServing, action: "resignFirstResponder")
         barButton.tintColor = UIColor.black
+        
         let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 44))
+        
         toolbar.items = [barButton]
         valServingSize.inputAccessoryView = toolbar
         valServingSize.borderStyle = .none
@@ -111,24 +143,44 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         servingSizeTextLabel?.attributedText = NSAttributedString(string: "Serving size", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
         numberOfServingsTextLabel?.attributedText = NSAttributedString(string: "Number of servings", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
-        
-        print("self : \(detailItem.food?.oftenEatenWith.count)")
+                
+        if valServingSize.text == String(detailItem.numberServing){
+            //addFoodButton.titleLabel?.text = "Save"
+        }
 
         
     }
     
-    
-    
-    @IBAction func onClickAdd(_ sender: AnyObject) {
+    fileprivate func updateFoodItem(numOfServing:Double? = nil){
+        guard valServingSize.text != "" || valServingSize.text?.characters.last == "." else {
+            return
+        }
+        print("called with parameter of :\(numOfServing)")
+        
+        var numServing = 0.0
+        if numOfServing == nil {
+            numServing = Constants.roundToPlaces(Double(valServingSize.text!)!, decimalPlaces: 2)
+        } else {
+            numServing = originalDetailItemNumberOfServing
+        }
+        
+        let foodAlreadyInMeal = mealContainsFood(foodItem: detailItem)
+        
         /*
-        if(self.detailItem == nil)
-        {
-            onBackClick(sender);
+        if (newItemMode == true && foodAlreadyInMeal.0 == true){
+            // it's a new item but we already have it, so combine it
+            if(numServing > 0){
+                DataHandler.updateFoodItem(detailItem, numberServing: numServing + (foodAlreadyInMeal.1?.numberServing)!)
+                print("updated : \(numServing) and \((foodAlreadyInMeal.1?.numberServing)!)")
+            } else {
+                print("Error: Please add a positive number")
+            }
             return
         }
         */
-        let numServing = Constants.roundToPlaces(Double(valServingType.text!)!, decimalPlaces: 2)
-        if ((meal?.foodItems.contains(detailItem)) != nil) { // existing food
+        
+        
+        if (newItemMode == false) { // existing food
             if(numServing > 0){
                 DataHandler.updateFoodItem(detailItem, numberServing: numServing)
             } else {
@@ -137,18 +189,30 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         else
         {
-            // it's a new food item
+            // it's a new food item but not one that is in the meal already
             if(numServing > 0){
                 
                 DataHandler.updateFoodItem(detailItem, numberServing: numServing)
                 DataHandler.addFoodItemToMeal(meal!, foodItem:detailItem);
-                onBackClick(sender);
             }else{
                 print("Error: Please add a positive number")
                 //Invalid value entered in the serving field
                 return
             }
         }
+    
+    }
+
+    @IBAction func onClickAdd(_ sender: AnyObject) {
+        
+        revertToOriginal = false
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        
+        updateFoodItem()
+        onBackClick(sender);
+        
     }
     
     
@@ -156,10 +220,17 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func onBackClick(_ sender: AnyObject) {
         
-        if originalLikedFoods != likedFoods
-        {
+        if originalLikedFoods != likedFoods{
             DataHandler.updateLikeFoods(likedFoods)
         }
+        
+        if revertToOriginal == true{
+            print("original serving size: \(originalDetailItemNumberOfServing)")
+            updateFoodItem(numOfServing: originalDetailItemNumberOfServing)
+        }
+        
+        
+
         self.navigationController!.popToRootViewController(animated: true);
     }
     
@@ -169,10 +240,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-    func configureView()
+    func configureDataView()
     {
         // Update the user interface for the detail item.
-        
+        print("Print number of servings : \(detailItem.numberServing)")
+        nutrientsToDisplay = []
         nutrientsToDisplay += [(name: "Calories", value: (Int(((detailItem.food?.calories)! * (detailItem.numberServing))).description) + " kcal")]
         let fa = (detailItem.food?.fats)! * (detailItem.numberServing)
         let sa = (detailItem.food?.sat_fats.value)! * (detailItem.numberServing)
@@ -190,9 +262,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         nutrientsToDisplay += [(name: "Proteins", value: String(Constants.roundToPlaces(pr, decimalPlaces: 2)) + " g")]
         nutrientsToDisplay += [(name: "Salt", value: String(Constants.roundToPlaces(salt, decimalPlaces: 2)) + " mg")]
         
-        if valServingSize.text == String(detailItem.numberServing){
-            //addFoodButton.titleLabel?.text = "Save"
-        }
+        
+        
     }
     
     
@@ -273,11 +344,39 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    
+    
+    
+    func textFieldDidChange(sender : AnyObject) {
         if valServingSize.text == String(detailItem.numberServing) || valServingSize.text == "" {
-           addFoodButton.isEnabled = false
+            addFoodButton.isEnabled = false
+        } else {
+            addFoodButton.isEnabled = true
         }
+        updateFoodItem()
+        configureDataView()
+        self.nutritionTable.reloadData()
     }
     
+
+    func hideKeyboard(textfield:UITextField) {
+        valServingSize.resignFirstResponder()
+        
+        
+        
+        //valServingSize.resignFirstResponder()
+    }
+    
+    
+    func mealContainsFood(foodItem:FoodItem) -> (Bool, FoodItem?){
+        for fi in (meal?.foodItems)!{
+            if fi.food == foodItem.food {
+                return (true, fi)
+            }
+        }
+        return (false, nil)
+    }
+    
+        
 }
 

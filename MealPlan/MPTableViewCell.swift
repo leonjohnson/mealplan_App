@@ -23,6 +23,9 @@ class MPTableViewCell: UITableViewCell {
     var originalCenter = CGPoint()
     var deleteOnDragRelease = false
     var completeOnDragRelease = false
+    var tickLabel: UILabel!
+    var crossLabel: UILabel!
+
     
     var delegate: MPTableViewCellDelegate? // The object that acts as delegate for this cell.
     var foodItemIndexPath: IndexPath? // The item that this cell renders.
@@ -35,7 +38,27 @@ class MPTableViewCell: UITableViewCell {
         addGestureRecognizer(recognizer)
         print("Added gesture")
         
+        // tick and cross labels for context cues
+        tickLabel = createCueLabel()
+        tickLabel.text = "\u{2713}"
+        tickLabel.textAlignment = .right
+        addSubview(tickLabel)
+        crossLabel = createCueLabel()
+        crossLabel.text = "\u{2717}"
+        crossLabel.textAlignment = .left
+        addSubview(crossLabel)
+        
     }
+    
+    // utility method for creating the contextual cues
+    func createCueLabel() -> UILabel {
+        let label = UILabel(frame: CGRect.null)
+        label.textColor = UIColor.white
+        label.font = UIFont.boldSystemFont(ofSize: 32.0)
+        label.backgroundColor = UIColor.clear
+        return label
+    }
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

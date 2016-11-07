@@ -80,21 +80,13 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let dateForthisMealPlan = setDate()
         //meals = Array(data.meals)
-        print("Got this far. Datecount : \(dateCount)")
         meals = Array(thisWeek.dailyMeals[dateCount].meals)
-        print("Got this far 1")
+
         mealPlanListTable.reloadData();
-        print("Got this far 2")
+
         mealPlanDate.text = dateForthisMealPlan // Monday June 30, 2014 10:42:21am PS
         mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
-        print("Got this far 3")
-        
-        // Setup the notifications
-        //handleNotifivarion()
-        //enableLocalNotification()
-        //DataStructure.createMealPlans(thisWeek)
-        
-        //DataHandler.macrosCorrect()
+
         
         alertController = UIAlertController(title: "Title",
                                             message: "Message",
@@ -121,16 +113,17 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                                                             self.alertController?.dismiss(animated: true, completion: nil)
         })
         
-        print("Got this far 10")
         
         alertController?.addAction(tooEarlyAction)
         alertController?.addAction(dislikeAction)
         alertController?.addAction(cancelAction)
         
+        
 
-        
-        
     }
+    
+
+    
     
     func setDate() -> (String?) {
         

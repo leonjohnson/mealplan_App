@@ -259,6 +259,9 @@
                                         <exclude reference="yZT-A5-lH9"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="onClickAdd:" destination="JEX-9P-axG" eventType="touchUpInside" id="XiM-0C-pj7"/>
+                                </connections>
                             </button>
                             <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" text="Select any item to view details" lineBreakMode="wordWrap" numberOfLines="2" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
                                 <rect key="frame" x="20" y="72" width="335" height="22"/>
@@ -689,7 +692,7 @@
                         <outlet property="addFoodButton" destination="Pnq-sc-grh" id="ISO-Wd-5ug"/>
                         <outlet property="foodNameLabel" destination="0XM-y9-sOw" id="xCI-ZF-M4E"/>
                         <outlet property="likeButton" destination="ooH-3o-RRE" id="xDM-QM-bnE"/>
-                        <outlet property="nutritionTable" destination="Lrc-wv-oYS" id="ePe-SV-XOd"/>
+                        <outlet property="nutritionTable" destination="Lrc-wv-oYS" id="S67-JA-Pjg"/>
                         <outlet property="valServingSize" destination="Iw7-dn-WR7" id="k9H-Xh-zON"/>
                         <outlet property="valServingType" destination="eaF-Y0-KPd" id="jd4-Pa-j5J"/>
                         <outlet property="weightHolder" destination="CIo-gG-Ki0" id="Rnu-qg-8lO"/>

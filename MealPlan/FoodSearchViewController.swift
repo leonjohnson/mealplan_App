@@ -109,6 +109,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let scene = storyboard.instantiateViewController(withIdentifier: "servingDetails") as! DetailViewController
             scene.detailItem = item
+            scene.newItemMode = true
             //scene.hideAddButton = false
             scene.meal = meal
             self.navigationController?.pushViewController(scene, animated: true)

@@ -1473,6 +1473,7 @@ class DataStructure : NSObject{
                         }
 
                         let index = min(distances[0], distances[1], distances[2])// shortest distance from leftOverForThisMeal[0]
+                        print("Index has : \(index)")
                         let o = distances.index(of: index)!
                         
                         switch o {
@@ -1504,7 +1505,7 @@ class DataStructure : NSObject{
             
             if fooditem.numberServing > 0{
                 fooditem = constrainPortionSizeBasedOnFood(fooditem, highFatAllowedFlag: lastMealFlag)
-                fooditem.numberServing = Constants.roundToPlaces(fooditem.numberServing, decimalPlaces: 0) // rounding for customer use
+                //fooditem.numberServing = Constants.roundToPlaces(fooditem.numberServing, decimalPlaces: 0) // rounding for customer use
                 foodItems.append(fooditem)
                 print("Just added: \(fooditem.food?.name)")
                 leftOverForThisMeal[0] = leftOverForThisMeal[0] - (fooditem.numberServing * food.proteins)
