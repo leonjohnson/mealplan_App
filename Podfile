@@ -11,6 +11,7 @@ target 'MealPlan' do
     pod 'RealmSwift' #'~> 2.0.1'
     pod 'Fabric'
     pod 'Crashlytics'
+    pod 'JSQMessagesViewController'
 end
 
 post_install do |installer|

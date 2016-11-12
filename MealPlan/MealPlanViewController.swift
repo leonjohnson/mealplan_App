@@ -497,7 +497,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func findFoodSearchAction(_ sender: UIButton){
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "SearchForFood", bundle: nil)
         
         let scene = storyboard.instantiateViewController(withIdentifier: "foodSearchList") as! FoodSearchViewController
         scene.meal = meals[sender.tag]

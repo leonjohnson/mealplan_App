@@ -12,18 +12,33 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet var foodListTable : UITableView!
     @IBOutlet var closeButton : UIButton!
+    @IBOutlet var addNewFoodButton : UIButton!
     
     var localData = DataHandler.readFoodsData("");
     var filterdData:[Food]?
     var meal:Meal?
     var filterText:String = ""
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
     override  func viewDidLoad() {
         super.viewDidLoad()
         
         filterdData = localData;
         foodListTable.delegate = self
+        
         // Do any additional setup after loading the view.
+        //create button inside header view
+        //addItemButton.setTitle("Add item + ", forState: UIControlState.Normal)
+        
+        addNewFoodButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, NSForegroundColorAttributeName:Constants.MP_WHITE]), for: UIControlState())
+        
+        addNewFoodButton.backgroundColor = UIColor.lightGray
+        addNewFoodButton.titleLabel?.textColor = UIColor.blue
+        addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,6 +100,8 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         }else{
             cell!.textLabel?.text = filterdData![indexPath.row].name
         }
+        cell?.textLabel?.attributedText = NSAttributedString(string: (cell!.textLabel?.text)!, attributes: [NSFontAttributeName:Constants.STANDARD_FONT/*, NSForegroundColorAttributeName:Constants.MP_GREY*/])
+        
         return cell!
         
     }
@@ -117,6 +134,39 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let vheadView = UIView()
+        
+        vheadView.backgroundColor = UIColor.lightGray
+        
+        let  headerCell = UILabel()
+        headerCell.frame=CGRect(x: 10, y: 50, width: tableView.frame.width, height: 20)
+        vheadView.addSubview(headerCell)
+        headerCell.attributedText = NSAttributedString(string: "test", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        
+        
+        
+        //create label inside header view
+        let calorieCountLabel = UILabel()
+        
+        calorieCountLabel.frame = CGRect(x: 10, y: 10, width: tableView.frame.width-30, height: 20)
+        calorieCountLabel.textAlignment = NSTextAlignment.right
+        calorieCountLabel.textColor = UIColor.white
+        calorieCountLabel.font = Constants.STANDARD_FONT
+        
+        vheadView.addSubview(calorieCountLabel)
+        
+        
+        
+        
+        return vheadView
+    }
+    
+    
+    
+    
     func searchOnline(_ text:String){
         //encode a URL string for accepting all special characters in search.
         let originalString = text
@@ -136,13 +186,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 
                 // show the alert
-                self.present(alert, animated: true, completion: nil)
-                
-                
-                
-                
-                
-                
+                self.present(alert, animated: true, completion: nil)  
                 return
             }
 
@@ -150,6 +194,24 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         
     }
     
+    
+    func callBot(){
+        let storyboard = UIStoryboard(name: "Bot", bundle: nil)
+        let scene = storyboard.instantiateViewController(withIdentifier: "bot") as! BotController
+        scene.botType = .addNewFood
+        
+        if((self.navigationController) != nil){
+            scene.hidesBottomBarWhenPushed = true
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+            self.navigationController?.pushViewController(scene, animated: true);
+            
+            
+            //self.hidesBottomBarWhenPushed = false;
+        }else{
+            self.present(scene, animated: true, completion: nil)
+        }
+    }
+
     
     
 }

@@ -1,0 +1,311 @@
+import UIKit
+import RealmSwift
+import JSQMessagesViewController
+
+final class BotController: JSQMessagesViewController {
+    var messages:[JSQMessage] = [JSQMessage]();
+    lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
+    lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
+    var reasonForContact :String = String()
+    /*
+    var questions : [String] = ["Hi! My name is \(Constants.BOT_NAME). Please tell me your first name",
+                                "Are you a male or female?",
+                                "How many times a day do you want to eat? This includes snacks",
+                                "How many hours of sport or lifting weights do you do each week?",
+                                "",
+                                "What is your primary goal?\n 1.Loose weight \n 2.Gain muscle \n 3. A bit of both",
+                                "And how many weeks would you like to do this for? I recommend between 8 and 20 weeks are ",
+                                "How old are you?",]
+ */
+    static let NAME = "Hi! What is the full name of the food?"
+    var questions : [String] = [
+        Constants.BOT_QUESTION_NAME, Constants.BOT_QUESTION_PRODUCER, Constants.BOT_QUESTION_SERVING_TYPE, Constants.BOT_QUESTION_CALORIES, Constants.BOT_QUESTION_FAT, Constants.BOT_QUESTION_SATURATED_FAT, Constants.BOT_QUESTION_CARBOHYDRATES, Constants.BOT_QUESTION_SUGAR, Constants.BOT_QUESTION_FIBRE, Constants.BOT_QUESTION_PROTEIN, Constants.BOT_QUESTION_FOOD_TYPE, Constants.BOT_QUESTION_DONE]
+    
+
+    var answers : [String:String] = ["name":"crisps"]
+    
+    let keyboardType : [String:String] = [:]
+    var questionIndex : Int = 0
+    
+    enum botTypeEnum {
+        case addNewFood
+    }
+    var botType : botTypeEnum = .addNewFood
+    
+    var tapped = Int()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //self.navigationController?.hidesBottomBarWhenPushed = true
+        self.navigationController?.toolbar.isHidden = false
+        
+        
+    }
+    
+    
+    
+    
+    
+    override func viewWillDisappear(_ animated : Bool) {
+        super.viewWillDisappear(animated)
+        
+        if (self.isMovingFromParentViewController){
+            // Your code...
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
+    }
+    
+    
+    
+    
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        let user = DataHandler.getActiveUser()
+        self.senderId = user.name
+        self.senderDisplayName = user.name
+        self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+        self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
+        self.inputToolbar.contentView.leftBarButtonItem = nil
+        questions[0] = "Hey \(user.name)! What is the full name of the food?"
+        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+    }
+
+
+    
+
+    /*
+    // MARK: - DELEGATE METHODS
+    */
+    
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!)
+    {
+        if let message = JSQMessage(senderId: self.senderId, displayName: self.senderDisplayName, text: text) {
+            if validateAnswer() == true{
+                messages.append(message)
+            } else {
+                print("Not a valid answer")
+            }
+            
+            if message.text.localizedLowercase.contains("go back") && messages.count > 3{
+                addMessage(withId: "foo", name: Constants.BOT_NAME, text: "OK")
+                questionIndex -= 1
+                let nextQuestion = questions[questionIndex]
+                addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
+                self.finishSendingMessage(animated: true);
+                return
+            }
+        }
+        
+        questionIndex += 1
+        print("About to add question at index: \(questionIndex)")
+        let nextQuestion = questions[questionIndex]
+        addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
+        self.finishSendingMessage(animated: true);
+        
+        if questionIndex == (questions.count-1){
+            // just posted the last response
+            //takeUserBackToMealPlan()
+            createNewFoodFromConversation()
+            
+        }
+    }
+    
+    private func createNewFoodFromConversation(){
+        
+
+        let food = Food()
+        
+        //["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"]
+        
+        let foodNameIndex = 0
+        if let foodName : String = messages[foodNameIndex+1].text{
+            food.name = foodName
+        }
+        
+        let foodProducerIndex = questions.index(of: Constants.BOT_QUESTION_PRODUCER)
+        if let foodProducer = messages[(foodProducerIndex!*2)+1].text {
+            food.producer = foodProducer
+        }
+        
+        let servingTypeIndex = questions.index(of: Constants.BOT_QUESTION_SERVING_TYPE)
+        if let servingType = messages[(servingTypeIndex!*2)+1].text {
+            //food.servingSize
+        }
+        
+        let caloriesIndex = questions.index(of: Constants.BOT_QUESTION_CALORIES)
+        if let calories = Double(messages[(caloriesIndex!*2)+1].text) {
+            food.calories = calories
+        }
+        
+        let fatsIndex = questions.index(of: Constants.BOT_QUESTION_FAT)
+        if let fats = Double(messages[(fatsIndex!*2)+1].text) {
+            food.fats = fats
+        }
+        
+        let satFatsIndex = questions.index(of: Constants.BOT_QUESTION_SATURATED_FAT)
+        if let satFats = Double(messages[(satFatsIndex!*2)+1].text) {
+            food.sat_fats = RealmOptional<Double>(satFats)
+        }
+        
+        let carbIndex = questions.index(of: Constants.BOT_QUESTION_CARBOHYDRATES)
+        if let carbs = Double(messages[(carbIndex!*2)+1].text) {
+            food.carbohydrates = carbs
+        }
+        
+        let sugarIndex = questions.index(of: Constants.BOT_QUESTION_SUGAR)
+        if let sugar = Double(messages[(sugarIndex!*2)+1].text) {
+            food.sugars = RealmOptional<Double>(sugar)
+        }
+        
+        let fibreIndex = questions.index(of: Constants.BOT_QUESTION_FIBRE)
+        if let fibre = Double(messages[(fibreIndex!*2)+1].text) {
+            food.fibre = RealmOptional<Double>(fibre)
+        }
+        
+        let proteinIndex = questions.index(of: Constants.BOT_QUESTION_PROTEIN)
+        if let proteins = Double(messages[(proteinIndex!*2)+1].text) {
+            food.proteins = proteins
+        }
+        
+        let foodTypeIndex = questions.index(of: Constants.BOT_QUESTION_FOOD_TYPE)
+        if let foodType = messages[(foodTypeIndex!*2)+1].text {
+            var value = foodType.components(separatedBy: .init(charactersIn: ",.- "))
+            value = value.filter { $0 != "" }
+            
+            let realm = try! Realm()
+            let ft = realm.objects(FoodType).filter("name IN %@", value)
+            for each in ft {
+                itemFood.foodType.append(each)
+            }
+        }
+        
+        print("food name:  \(foodName), producer: \(foodProducer),  cals:\(calories), fatindex:\(fats), sat:\(satFats)")
+        
+        
+        
+        
+        if let value = (pdt!.value(forKey: "dietSuitablity") as! NSArray?){
+            let realm = try! Realm()
+            let ds = realm.objects(DietSuitability).filter("name IN %@", value)
+            for each in ds {
+                itemFood.dietSuitablity.append(each)
+            }
+        }
+        
+        if let value = (pdt!.value(forKey: "foodType") as! NSArray?){
+            let realm = try! Realm()
+            let ft = realm.objects(FoodType).filter("name IN %@", value)
+            for each in ft {
+                itemFood.foodType.append(each)
+            }
+        }
+        
+        if (pdt!.value(forKey: "readyToEat") as! Bool?)! == true{
+            itemFood.readyToEat = true
+        } else if (pdt!.value(forKey: "readyToEat") as! Bool?)! == false {
+            itemFood.readyToEat = false
+        }
+
+        
+
+    }
+    
+    
+    
+    
+    private func takeUserBackToMealPlan(){
+        
+        
+        let index = self.navigationController?.viewControllers.index(of: self)
+        let mealplanViewController = self.navigationController?.viewControllers[index!-2]
+        print("indices : \(index)")
+        self.navigationController?.popToViewController(mealplanViewController!, animated: true)
+        
+    }
+    
+    private func validateAnswer()->Bool{
+        return true
+    }
+    
+    private func addMessage(withId id: String, name: String, text: String) {
+        if let message = JSQMessage(senderId: id, displayName: name, text: text) {
+            
+            messages.append(message)
+        }
+    }
+    
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
+        return messages.count
+    }
+    
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
+        // This doesn't really do anything, but it's a good point for customization
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
+        //let message = self.messages[indexPath.item];
+        return cell
+    }
+    
+    
+    
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
+        return self.messages[indexPath.item];
+    }
+    
+    
+    
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource!
+    {
+        let message = messages[indexPath.item] // 1
+        if message.senderId == senderId {
+            return outgoingBubbleImageView
+        } else {
+            return incomingBubbleImageView
+        }
+    }
+    
+    
+    
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource!
+    {
+        return nil
+    }
+    
+    
+    
+    
+    
+    
+    private func setupOutgoingBubble() -> JSQMessagesBubbleImage {
+        let bubbleImageFactory = JSQMessagesBubbleImageFactory()
+        return bubbleImageFactory!.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
+    }
+    
+    private func setupIncomingBubble() -> JSQMessagesBubbleImage {
+        let bubbleImageFactory = JSQMessagesBubbleImageFactory()
+        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+    }
+    
+
+
+}
+    
+
