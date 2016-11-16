@@ -165,6 +165,70 @@ struct Constants {
     static let vegetablesAsPercentageOfCarbs = 0.15
     
     //BOT QUESTIONS
+    struct BOT_NEW_FOOD {
+        struct name {
+            static let question = "Hi! What is the full name of the food?"
+            static let tableViewList:[String] = []
+        }
+        
+        struct producer {
+            static let question = "Who makes this product?" // manufacter, don't know, blank, some other unuseful answer
+            static let tableViewList:[String] = []
+        }
+        
+        struct serving_type {
+            static let question = "For the nutritional information you're going to enter is it per:"
+            static let tableViewList = ["100g", "100ml", "Slice", "Item (such as per banana or per apple)?"]
+        }
+        
+        
+        struct calories {
+            static let question = "Thanks. How many calories are in it?"
+            static let tableViewList:[String] = []
+        }
+        
+        struct fat {
+            static let question = "grams of fat?" //per 100g or 100ml
+            static let tableViewList:[String] = []
+        }
+        
+        struct saturated_fat {
+            static let question = "BlueCellIdentifier"
+            static let tableViewList:[String] = []
+        }
+        
+        struct carbohydrates {
+            static let question = "and carbohydrates?"
+            static let tableViewList:[String] = []
+        }
+        
+        struct sugar {
+            static let question = "of which are sugar? (type n/a if it's not labelled)"
+            static let tableViewList:[String] = []
+        }
+        
+        struct fibre {
+            static let question = "and fibre? (type n/a if it's not labelled)"
+            static let tableViewList:[String] = []
+        }
+        
+        struct protein {
+            static let question = "how much protein does this item have?"
+            static let tableViewList:[String] = []
+        }
+        
+        struct food_type {
+            static let question = "Please help me categorise this item:"
+            static let tableViewList = ["1.It's a drink", "2. It's a fizzy drink", "3.It's a fruit", "4.It's a vegetable", "I would eat this at breakfast", "I would only eat this at breakfast", "This is a type of fish", "This is a condiment", "None of the above"]
+        }
+        
+        struct done {
+            static let question = "Thanks! You're all done now."
+            static let tableViewList:[String] = []
+        }
+
+    }
+    /*
     static let BOT_QUESTION_NAME = "Hi! What is the full name of the food?" //name
     static let BOT_QUESTION_PRODUCER = "Who makes this product?" // manufacter, don't know, blank, some other unuseful answer
     static let BOT_QUESTION_SERVING_TYPE = "For the nutritional information you're going to enter is it per:\n1.100g \n2.100ml\n3.Slice\n4.Item (such as per banana or per apple)? \nPlease enter the relevant number" //1,2,3 or 4
@@ -177,4 +241,16 @@ struct Constants {
     static let BOT_QUESTION_PROTEIN = "how much protein does this item have?"
     static let BOT_QUESTION_FOOD_TYPE = "Please help me categorise this item. \n\nWhich of the following numbers apply to this item? \n\n1.It's a drink 2. It's a fizzy drink\n3.It's a fruit \n4.It's a vegetable \n5.I would eat this at breakfast \n6.I would only eat this at breakfast \n7.This is a type of fish \n8.This is a condiment \n9.None of the above "
     static let BOT_QUESTION_DONE = "Thanks! You're all done now."
+    */
+    static let questionsThatRequireTableViews = [Constants.BOT_NEW_FOOD.serving_type.question, Constants.BOT_NEW_FOOD.food_type.question]
+    
+    struct CellIdentifiers {
+        static let Blue = "BlueCellIdentifier"
+        static let Large = "LargeCellIdentifier"
+        
+        struct hair {
+            static let Espa = "BlueCellIdentifier"
+            static let Desta = "LargeCellIdentifier"
+        }
+    }
 }

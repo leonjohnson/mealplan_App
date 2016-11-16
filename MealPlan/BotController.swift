@@ -7,19 +7,21 @@ final class BotController: JSQMessagesViewController {
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     var reasonForContact :String = String()
-    /*
-    var questions : [String] = ["Hi! My name is \(Constants.BOT_NAME). Please tell me your first name",
-                                "Are you a male or female?",
-                                "How many times a day do you want to eat? This includes snacks",
-                                "How many hours of sport or lifting weights do you do each week?",
-                                "",
-                                "What is your primary goal?\n 1.Loose weight \n 2.Gain muscle \n 3. A bit of both",
-                                "And how many weeks would you like to do this for? I recommend between 8 and 20 weeks are ",
-                                "How old are you?",]
- */
     static let NAME = "Hi! What is the full name of the food?"
     var questions : [String] = [
-        Constants.BOT_QUESTION_NAME, Constants.BOT_QUESTION_PRODUCER, Constants.BOT_QUESTION_SERVING_TYPE, Constants.BOT_QUESTION_CALORIES, Constants.BOT_QUESTION_FAT, Constants.BOT_QUESTION_SATURATED_FAT, Constants.BOT_QUESTION_CARBOHYDRATES, Constants.BOT_QUESTION_SUGAR, Constants.BOT_QUESTION_FIBRE, Constants.BOT_QUESTION_PROTEIN, Constants.BOT_QUESTION_FOOD_TYPE, Constants.BOT_QUESTION_DONE]
+        Constants.BOT_NEW_FOOD.name.question,
+        Constants.BOT_NEW_FOOD.producer.question,
+        Constants.BOT_NEW_FOOD.serving_type.question,
+        Constants.BOT_NEW_FOOD.calories.question,
+        Constants.BOT_NEW_FOOD.fat.question,
+        Constants.BOT_NEW_FOOD.saturated_fat.question,
+        Constants.BOT_NEW_FOOD.carbohydrates.question,
+        Constants.BOT_NEW_FOOD.sugar.question,
+        Constants.BOT_NEW_FOOD.fibre.question,
+        Constants.BOT_NEW_FOOD.protein.question,
+        Constants.BOT_NEW_FOOD.saturated_fat.question,
+        Constants.BOT_NEW_FOOD.done.question]
+    
     
 
     var answers : [String:String] = ["name":"crisps"]
@@ -45,6 +47,8 @@ final class BotController: JSQMessagesViewController {
     override func viewWillAppear(_ animated: Bool) {
         //self.navigationController?.hidesBottomBarWhenPushed = true
         self.navigationController?.toolbar.isHidden = false
+        
+        
         
     }
     
@@ -72,8 +76,8 @@ final class BotController: JSQMessagesViewController {
         super.viewDidLoad()
         
         self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
-        self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
         
+        self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
         //self.customOutgoingMediaCellIdentifier = outCells.mediaCellReuseIdentifier()
         
         
@@ -85,18 +89,14 @@ final class BotController: JSQMessagesViewController {
         self.inputToolbar.contentView.leftBarButtonItem = nil
         questions[0] = "Hey \(user.name)! What is the full name of the food?"
         addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+
         
-        //let offlineMedia = customBotMessage()
-        //let message = JSQMessage(senderId: "121", displayName: "Leon", media: offlineMedia)
-        //messages.append(message!)
-        
-        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
         /*
         let image = UIImage(named: "Intro1")
         let photo = JSQPhotoMediaItem(image: image)
         let message2 = JSQMessage(senderId: "121", displayName: "Leon", media: photo)
         messages.append(message2!)
- */
+         */
         
         self.finishSendingMessage(animated: true);
     }
@@ -113,7 +113,6 @@ final class BotController: JSQMessagesViewController {
         if let message = JSQMessage(senderId: self.senderId, displayName: self.senderDisplayName, text: text) {
             if validateAnswer() == true{
                 addMessage(withId: self.senderId, name: "t", text: text)
-                print("added my message")
             } else {
                 print("Not a valid answer")
             }
@@ -129,7 +128,6 @@ final class BotController: JSQMessagesViewController {
         }
         
         questionIndex += 1
-        print("About to add question at index: \(questionIndex)")
         let nextQuestion = questions[questionIndex]
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
         self.finishSendingMessage(animated: true);
@@ -147,121 +145,6 @@ final class BotController: JSQMessagesViewController {
         }
     }
     
-    private func createNewFoodFromConversation(){
-        
-
-        let food = Food()
-        if let pk = DataHandler.getNewPKForFood() {
-            food.pk = pk
-        }
-        
-        //["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"]
-        
-        let foodNameIndex = 0
-        if let foodName : String = messages[foodNameIndex+1].text{
-            food.name = foodName
-        }
-        
-        let foodProducerIndex = questions.index(of: Constants.BOT_QUESTION_PRODUCER)
-        if let foodProducer = messages[(foodProducerIndex!*2)+1].text {
-            food.producer = foodProducer
-        }
-        
-        let servingTypeIndex = questions.index(of: Constants.BOT_QUESTION_SERVING_TYPE)
-        if let servingType = messages[(servingTypeIndex!*2)+1].text {
-            /*
-             
-             for index in valuesEntered{
-             let ix = Constants.FOOD_TYPES[Int(index)!]
-             newValues.append(ix)
-             }
-             let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
- 
-            */
-        }
-        
-        let caloriesIndex = questions.index(of: Constants.BOT_QUESTION_CALORIES)
-        if let calories = Double(messages[(caloriesIndex!*2)+1].text) {
-            food.calories = calories
-        }
-        
-        let fatsIndex = questions.index(of: Constants.BOT_QUESTION_FAT)
-        if let fats = Double(messages[(fatsIndex!*2)+1].text) {
-            food.fats = fats
-        }
-        
-        let satFatsIndex = questions.index(of: Constants.BOT_QUESTION_SATURATED_FAT)
-        if let satFats = Double(messages[(satFatsIndex!*2)+1].text) {
-            food.sat_fats = RealmOptional<Double>(satFats)
-        }
-        
-        let carbIndex = questions.index(of: Constants.BOT_QUESTION_CARBOHYDRATES)
-        if let carbs = Double(messages[(carbIndex!*2)+1].text) {
-            food.carbohydrates = carbs
-        }
-        
-        let sugarIndex = questions.index(of: Constants.BOT_QUESTION_SUGAR)
-        if let sugar = Double(messages[(sugarIndex!*2)+1].text) {
-            food.sugars = RealmOptional<Double>(sugar)
-        }
-        
-        let fibreIndex = questions.index(of: Constants.BOT_QUESTION_FIBRE)
-        if let fibre = Double(messages[(fibreIndex!*2)+1].text) {
-            food.fibre = RealmOptional<Double>(fibre)
-        }
-        
-        let proteinIndex = questions.index(of: Constants.BOT_QUESTION_PROTEIN)
-        if let proteins = Double(messages[(proteinIndex!*2)+1].text) {
-            food.proteins = proteins
-        }
-        
-        let foodTypeIndex = questions.index(of: Constants.BOT_QUESTION_FOOD_TYPE)
-        if let foodType = messages[(foodTypeIndex!*2)+1].text {
-            var valuesEntered = foodType.components(separatedBy: .init(charactersIn: ",.- "))
-            valuesEntered = valuesEntered.filter { $0 != "" }
-            var newValues : String = String()
-            let realm = try! Realm()
-            for index in valuesEntered{
-                let ix = Constants.FOOD_TYPES[Int(index)!]
-                newValues.append(ix)
-            }
-            let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
-            for each in ft {
-                food.foodType.append(each)
-            }
-        }
-        
-        let created = DataHandler.createFood(food)
-        
-        
-        
-        /*
-        
-        if let value = (pdt!.value(forKey: "dietSuitablity") as! NSArray?){
-            let realm = try! Realm()
-            let ds = realm.objects(DietSuitability).filter("name IN %@", value)
-            for each in ds {
-                itemFood.dietSuitablity.append(each)
-            }
-        }
-        
-        if let value = (pdt!.value(forKey: "foodType") as! NSArray?){
-            let realm = try! Realm()
-            let ft = realm.objects(FoodType).filter("name IN %@", value)
-            for each in ft {
-                itemFood.foodType.append(each)
-            }
-        }
-        
-        if (pdt!.value(forKey: "readyToEat") as! Bool?)! == true{
-            itemFood.readyToEat = true
-        } else if (pdt!.value(forKey: "readyToEat") as! Bool?)! == false {
-            itemFood.readyToEat = false
-        }
- */
-        
-
-    }
     
     
     
@@ -305,27 +188,20 @@ final class BotController: JSQMessagesViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let message = messages[indexPath.item]
-        if message.senderId == self.senderId
-        {
-            print("Calling if statement")
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
+        
+        if Constants.questionsThatRequireTableViews.contains(message.text!) {
+            print("ever??")
             
-            //let cella = super.collectionView(collectionView, cellForItemAt: indexPath)
-            //let cella = outCells()
-            let cellB = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
+            let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
+            cellWithTableview.question = message.text
+            cellWithTableview.bringSubview(toFront: cellWithTableview.table)
             
-            cellB.timeLabel.text = message.text
-                        
+            return cellWithTableview
             
-            return cellB
-            //
             
             
         }
-        
-        // This doesn't really do anything, but it's a good point for customization
-        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
-        //let cell = CustomCollectionViewCell()
-        //let message = self.messages[indexPath.item];
         return cell
     }
     
@@ -372,6 +248,126 @@ final class BotController: JSQMessagesViewController {
         return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     }
     
+    
+    /*
+     // MARK: - CREATE NEW FOODS
+     */
+    private func createNewFoodFromConversation(){
+        
+        
+        let food = Food()
+        if let pk = DataHandler.getNewPKForFood() {
+            food.pk = pk
+        }
+        
+        //["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"]
+        
+        let foodNameIndex = 0
+        if let foodName : String = messages[foodNameIndex+1].text{
+            food.name = foodName
+        }
+        
+        let foodProducerIndex = questions.index(of: Constants.BOT_NEW_FOOD.producer.question)
+        if let foodProducer = messages[(foodProducerIndex!*2)+1].text {
+            food.producer = foodProducer
+        }
+        
+        let servingTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.serving_type.question)
+        if let servingType = messages[(servingTypeIndex!*2)+1].text {
+            /*
+             
+             for index in valuesEntered{
+             let ix = Constants.FOOD_TYPES[Int(index)!]
+             newValues.append(ix)
+             }
+             let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
+             
+             */
+        }
+        
+        let caloriesIndex = questions.index(of: Constants.BOT_NEW_FOOD.calories.question)
+        if let calories = Double(messages[(caloriesIndex!*2)+1].text) {
+            food.calories = calories
+        }
+        
+        let fatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question)
+        if let fats = Double(messages[(fatsIndex!*2)+1].text) {
+            food.fats = fats
+        }
+        
+        let satFatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.saturated_fat.question)
+        if let satFats = Double(messages[(satFatsIndex!*2)+1].text) {
+            food.sat_fats = RealmOptional<Double>(satFats)
+        }
+        
+        let carbIndex = questions.index(of: Constants.BOT_NEW_FOOD.carbohydrates.question)
+        if let carbs = Double(messages[(carbIndex!*2)+1].text) {
+            food.carbohydrates = carbs
+        }
+        
+        let sugarIndex = questions.index(of: Constants.BOT_NEW_FOOD.sugar.question)
+        if let sugar = Double(messages[(sugarIndex!*2)+1].text) {
+            food.sugars = RealmOptional<Double>(sugar)
+        }
+        
+        let fibreIndex = questions.index(of: Constants.BOT_NEW_FOOD.fibre.question)
+        if let fibre = Double(messages[(fibreIndex!*2)+1].text) {
+            food.fibre = RealmOptional<Double>(fibre)
+        }
+        
+        let proteinIndex = questions.index(of: Constants.BOT_NEW_FOOD.protein.question)
+        if let proteins = Double(messages[(proteinIndex!*2)+1].text) {
+            food.proteins = proteins
+        }
+        
+        let foodTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.food_type.question)
+        if let foodType = messages[(foodTypeIndex!*2)+1].text {
+            var valuesEntered = foodType.components(separatedBy: .init(charactersIn: ",.- "))
+            valuesEntered = valuesEntered.filter { $0 != "" }
+            var newValues : String = String()
+            let realm = try! Realm()
+            for index in valuesEntered{
+                let ix = Constants.FOOD_TYPES[Int(index)!]
+                newValues.append(ix)
+            }
+            let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
+            for each in ft {
+                food.foodType.append(each)
+            }
+        }
+        
+        let created = DataHandler.createFood(food)
+        
+        
+        
+        /*
+         
+         if let value = (pdt!.value(forKey: "dietSuitablity") as! NSArray?){
+         let realm = try! Realm()
+         let ds = realm.objects(DietSuitability).filter("name IN %@", value)
+         for each in ds {
+         itemFood.dietSuitablity.append(each)
+         }
+         }
+         
+         if let value = (pdt!.value(forKey: "foodType") as! NSArray?){
+         let realm = try! Realm()
+         let ft = realm.objects(FoodType).filter("name IN %@", value)
+         for each in ft {
+         itemFood.foodType.append(each)
+         }
+         }
+         
+         if (pdt!.value(forKey: "readyToEat") as! Bool?)! == true{
+         itemFood.readyToEat = true
+         } else if (pdt!.value(forKey: "readyToEat") as! Bool?)! == false {
+         itemFood.readyToEat = false
+         }
+         */
+        
+        
+    }
+
 
 
 }

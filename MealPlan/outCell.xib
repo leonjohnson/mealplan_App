@@ -41,26 +41,33 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7v-aX-aqT" userLabel="Bubble container">
                         <rect key="frame" x="40" y="40" width="244" height="400"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Df3-ij-CVF">
-                                <rect key="frame" x="0.0" y="0.0" width="244" height="212"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JOu-N7-Y2A">
-                                <rect key="frame" x="2" y="220" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JOu-N7-Y2A">
+                                <rect key="frame" x="0.0" y="141" width="244" height="237"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="-1" id="cuc-5q-B09"/>
                                     <outlet property="delegate" destination="-1" id="8kU-Yc-MqP"/>
                                 </connections>
                             </tableView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rKS-0k-cwr">
+                                <rect key="frame" x="0.0" y="31" width="244" height="88"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="88" id="v0L-ks-oCX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="244" id="51h-Gv-Ukw"/>
+                            <constraint firstItem="rKS-0k-cwr" firstAttribute="leading" secondItem="C7v-aX-aqT" secondAttribute="leading" id="8gW-yq-BDx"/>
+                            <constraint firstItem="rKS-0k-cwr" firstAttribute="leading" secondItem="JOu-N7-Y2A" secondAttribute="leading" id="Nff-f7-0IB"/>
+                            <constraint firstAttribute="bottom" secondItem="JOu-N7-Y2A" secondAttribute="bottom" constant="22" id="Qcm-oP-CWp"/>
+                            <constraint firstItem="JOu-N7-Y2A" firstAttribute="centerX" secondItem="C7v-aX-aqT" secondAttribute="centerX" id="eNZ-qX-6Lz"/>
+                            <constraint firstItem="rKS-0k-cwr" firstAttribute="centerX" secondItem="C7v-aX-aqT" secondAttribute="centerX" id="eeV-0L-zPt"/>
+                            <constraint firstItem="rKS-0k-cwr" firstAttribute="top" secondItem="C7v-aX-aqT" secondAttribute="top" constant="31" id="r2a-Vf-t0i"/>
+                            <constraint firstItem="JOu-N7-Y2A" firstAttribute="top" secondItem="rKS-0k-cwr" secondAttribute="bottom" constant="22" id="rcF-AP-Rr3"/>
                             <constraint firstAttribute="height" constant="400" id="w7N-5N-wdx"/>
                         </constraints>
                     </view>
@@ -84,8 +91,8 @@
                 <outlet property="messageBubbleContainerWidthConstraint" destination="51h-Gv-Ukw" id="mXv-5g-fai"/>
                 <outlet property="messageBubbleTopLabel" destination="WVu-vM-eZz" id="O9A-T4-jqE"/>
                 <outlet property="messageBubbleTopLabelHeightConstraint" destination="U9f-SY-0yK" id="3eJ-wY-iB5"/>
+                <outlet property="questionTextView" destination="rKS-0k-cwr" id="jk8-kt-OYc"/>
                 <outlet property="table" destination="JOu-N7-Y2A" id="g8U-Aw-egH"/>
-                <outlet property="timeLabel" destination="Df3-ij-CVF" id="tJb-Ma-gNq"/>
             </connections>
             <point key="canvasLocation" x="596" y="325.5"/>
         </collectionViewCell>

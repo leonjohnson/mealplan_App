@@ -86,6 +86,7 @@
 		F7E3C5551DDBC44300DA2696 /* miniTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */; };
 		F7E3C5561DDBC44300DA2696 /* miniTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */; };
 		F7E3C5581DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */; };
+		F7E3C55A1DDCED4700DA2696 /* BotTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5591DDCED4700DA2696 /* BotTableViewDelegate.swift */; };
 		F7FB35001DC95F0B00CAB6B7 /* UsersProgress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7FB34FF1DC95F0B00CAB6B7 /* UsersProgress.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -201,6 +202,7 @@
 		F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = miniTableViewCell.swift; sourceTree = "<group>"; };
 		F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = miniTableViewCell.xib; sourceTree = "<group>"; };
 		F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		F7E3C5591DDCED4700DA2696 /* BotTableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotTableViewDelegate.swift; sourceTree = "<group>"; };
 		F7FB34FF1DC95F0B00CAB6B7 /* UsersProgress.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UsersProgress.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -412,10 +414,11 @@
 				F78AB7011DBE6DA400BB40EA /* ListViewController.swift */,
 				F78AB7211DBE6DA400BB40EA /* PremiumPlanViewController.swift */,
 				F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */,
-				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
-				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
 				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
+				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
+				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
+				F7E3C5591DDCED4700DA2696 /* BotTableViewDelegate.swift */,
 				F7E3C5511DDB8FF700DA2696 /* outCell.xib */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
 				F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */,
@@ -679,6 +682,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7E3C55A1DDCED4700DA2696 /* BotTableViewDelegate.swift in Sources */,
 				F7E3C5501DDB897D00DA2696 /* outCells.swift in Sources */,
 				F78AB7611DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift in Sources */,
 				F78AB7581DBE6DA400BB40EA /* Profile.swift in Sources */,

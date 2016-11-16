@@ -3,8 +3,11 @@ import JSQMessagesViewController
 
 class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var timeLabel : UILabel!
+    @IBOutlet var questionTextView : UITextView!
     @IBOutlet var table : UITableView!
+    var question : String = String()
+    var theType : Constants.BOT_NEW_FOOD.Type = Constants.BOT_NEW_FOOD.self
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -15,20 +18,11 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         self.table.delegate = self
         self.messageBubbleTopLabel.textAlignment = .center
         //self.cellBottomLabel.textAlignment = .right
-        self.timeLabel.backgroundColor = UIColor.brown
-        self.timeLabel.textColor = UIColor.black
-        
-        table.backgroundColor = UIColor.yellow
-        //table.isHidden = true
-        
-        self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
-        
-        print("yooo")
+        self.questionTextView.backgroundColor = UIColor.purple
+        self.questionTextView.textColor = UIColor.white
         
         
-        
-        
-        
+        //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
         }
     
     override class func nib() -> UINib {
@@ -46,7 +40,7 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
+        //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
     }
     
     
@@ -56,18 +50,42 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        let q = Constants.BOT_NEW_FOOD.serving_type.question
+        let options = Constants.BOT_NEW_FOOD.serving_type.tableViewList
+        if question == q {
+            return options.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "test"
-        print("returning cell")
+        let q = Constants.BOT_NEW_FOOD.serving_type.question
+        let options = Constants.BOT_NEW_FOOD.serving_type.tableViewList
+        if question == q {
+            cell.textLabel?.text = options[indexPath.row]
+        }
+        
+        
+        //let currentMessage =
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0
     }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0
+    }
+    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("TOUCHED ROW")
+    }
+    
+
+    
+    
+}
     
     
     
