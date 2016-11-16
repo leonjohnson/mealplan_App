@@ -1541,7 +1541,7 @@
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="b6n-Mn-pzm">
-                                <rect key="frame" x="136.5" y="145" width="105" height="29"/>
+                                <rect key="frame" x="137" y="145" width="105" height="29"/>
                                 <segments>
                                     <segment title="%"/>
                                     <segment title="grams"/>
@@ -1551,7 +1551,7 @@
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3,330 calories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sv6-uw-7pZ">
-                                <rect key="frame" x="73" y="76" width="229.5" height="30"/>
+                                <rect key="frame" x="73" y="76" width="230" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="90c-3R-9xL">
                                         <variation key="widthClass=compact" constant="30"/>
@@ -2334,7 +2334,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CPJ-00-Iac">
-                                        <rect key="frame" x="0.0" y="188.5" width="375" height="290"/>
+                                        <rect key="frame" x="0.0" y="189" width="375" height="290"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to the team!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AED-c3-fOt">
                                                 <rect key="frame" x="25" y="10" width="325" height="75"/>
@@ -4702,7 +4702,7 @@
                                                         <rect key="frame" x="0.0" y="155" width="320" height="70"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up arrow" translatesAutoresizingMaskIntoConstraints="NO" id="zgI-kB-lvZ">
-                                                                <rect key="frame" x="142.5" y="70" width="35" height="35"/>
+                                                                <rect key="frame" x="143" y="70" width="35" height="35"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="35" id="Bkz-im-OZr"/>
                                                                     <constraint firstAttribute="height" constant="35" id="uX8-41-xvj"/>
@@ -4830,7 +4830,7 @@
                                                         <rect key="frame" x="0.0" y="401" width="320" height="70"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Njt-fV-bEn">
-                                                                <rect key="frame" x="142.5" y="70" width="35" height="35"/>
+                                                                <rect key="frame" x="143" y="70" width="35" height="35"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="35" id="IIx-nU-7Lq"/>
                                                                     <constraint firstAttribute="height" constant="35" id="zJ2-ao-r7x"/>
@@ -5329,7 +5329,7 @@
                                                         <rect key="frame" x="10" y="193" width="300" height="140"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up arrow" translatesAutoresizingMaskIntoConstraints="NO" id="AUB-wi-vv0">
-                                                                <rect key="frame" x="132.5" y="120" width="35" height="35"/>
+                                                                <rect key="frame" x="133" y="120" width="35" height="35"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="35" id="4A7-Qd-ktL"/>
                                                                     <constraint firstAttribute="height" constant="35" id="MEv-4T-xn3"/>

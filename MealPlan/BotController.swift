@@ -34,7 +34,7 @@ final class BotController: JSQMessagesViewController {
     
     var tapped = Int()
     
-    
+    var customOutgoingMediaCellIdentifier : String = ""
     
     
     
@@ -45,7 +45,6 @@ final class BotController: JSQMessagesViewController {
     override func viewWillAppear(_ animated: Bool) {
         //self.navigationController?.hidesBottomBarWhenPushed = true
         self.navigationController?.toolbar.isHidden = false
-        
         
     }
     
@@ -60,6 +59,8 @@ final class BotController: JSQMessagesViewController {
             // Your code...
             self.navigationController?.setNavigationBarHidden(false, animated: false)
         }
+        
+        
     }
     
     
@@ -70,6 +71,12 @@ final class BotController: JSQMessagesViewController {
     {
         super.viewDidLoad()
         
+        self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
+        self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
+        
+        //self.customOutgoingMediaCellIdentifier = outCells.mediaCellReuseIdentifier()
+        
+        
         let user = DataHandler.getActiveUser()
         self.senderId = user.name
         self.senderDisplayName = user.name
@@ -78,6 +85,20 @@ final class BotController: JSQMessagesViewController {
         self.inputToolbar.contentView.leftBarButtonItem = nil
         questions[0] = "Hey \(user.name)! What is the full name of the food?"
         addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+        
+        //let offlineMedia = customBotMessage()
+        //let message = JSQMessage(senderId: "121", displayName: "Leon", media: offlineMedia)
+        //messages.append(message!)
+        
+        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+        /*
+        let image = UIImage(named: "Intro1")
+        let photo = JSQPhotoMediaItem(image: image)
+        let message2 = JSQMessage(senderId: "121", displayName: "Leon", media: photo)
+        messages.append(message2!)
+ */
+        
+        self.finishSendingMessage(animated: true);
     }
 
 
@@ -91,7 +112,8 @@ final class BotController: JSQMessagesViewController {
     {
         if let message = JSQMessage(senderId: self.senderId, displayName: self.senderDisplayName, text: text) {
             if validateAnswer() == true{
-                messages.append(message)
+                addMessage(withId: self.senderId, name: "t", text: text)
+                print("added my message")
             } else {
                 print("Not a valid answer")
             }
@@ -111,6 +133,11 @@ final class BotController: JSQMessagesViewController {
         let nextQuestion = questions[questionIndex]
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
         self.finishSendingMessage(animated: true);
+        for message in messages {
+            //print("Text: \(message.text) \n Name: \(message.senderDisplayName)/n")
+            print("message: \(message)\n\n")
+        }
+        
         
         if questionIndex == (questions.count-1){
             // just posted the last response
@@ -124,6 +151,9 @@ final class BotController: JSQMessagesViewController {
         
 
         let food = Food()
+        if let pk = DataHandler.getNewPKForFood() {
+            food.pk = pk
+        }
         
         //["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"]
         
@@ -139,7 +169,15 @@ final class BotController: JSQMessagesViewController {
         
         let servingTypeIndex = questions.index(of: Constants.BOT_QUESTION_SERVING_TYPE)
         if let servingType = messages[(servingTypeIndex!*2)+1].text {
-            //food.servingSize
+            /*
+             
+             for index in valuesEntered{
+             let ix = Constants.FOOD_TYPES[Int(index)!]
+             newValues.append(ix)
+             }
+             let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
+ 
+            */
         }
         
         let caloriesIndex = questions.index(of: Constants.BOT_QUESTION_CALORIES)
@@ -179,20 +217,25 @@ final class BotController: JSQMessagesViewController {
         
         let foodTypeIndex = questions.index(of: Constants.BOT_QUESTION_FOOD_TYPE)
         if let foodType = messages[(foodTypeIndex!*2)+1].text {
-            var value = foodType.components(separatedBy: .init(charactersIn: ",.- "))
-            value = value.filter { $0 != "" }
-            
+            var valuesEntered = foodType.components(separatedBy: .init(charactersIn: ",.- "))
+            valuesEntered = valuesEntered.filter { $0 != "" }
+            var newValues : String = String()
             let realm = try! Realm()
-            let ft = realm.objects(FoodType).filter("name IN %@", value)
+            for index in valuesEntered{
+                let ix = Constants.FOOD_TYPES[Int(index)!]
+                newValues.append(ix)
+            }
+            let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
             for each in ft {
-                itemFood.foodType.append(each)
+                food.foodType.append(each)
             }
         }
         
-        print("food name:  \(foodName), producer: \(foodProducer),  cals:\(calories), fatindex:\(fats), sat:\(satFats)")
+        let created = DataHandler.createFood(food)
         
         
         
+        /*
         
         if let value = (pdt!.value(forKey: "dietSuitablity") as! NSArray?){
             let realm = try! Realm()
@@ -215,7 +258,7 @@ final class BotController: JSQMessagesViewController {
         } else if (pdt!.value(forKey: "readyToEat") as! Bool?)! == false {
             itemFood.readyToEat = false
         }
-
+ */
         
 
     }
@@ -239,12 +282,18 @@ final class BotController: JSQMessagesViewController {
     
     private func addMessage(withId id: String, name: String, text: String) {
         if let message = JSQMessage(senderId: id, displayName: name, text: text) {
-            
+            print("text in my special message: \(message)\n")
             messages.append(message)
         }
     }
     
+   private func addMessage(withId id: String, name: String, media: JSQMessageMediaData) {
+        if let message = JSQMessage(senderId: id, displayName: name, media: media) {
+            
+            messages.append(message)
+    }
     
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
@@ -255,8 +304,27 @@ final class BotController: JSQMessagesViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
+        let message = messages[indexPath.item]
+        if message.senderId == self.senderId
+        {
+            print("Calling if statement")
+            
+            //let cella = super.collectionView(collectionView, cellForItemAt: indexPath)
+            //let cella = outCells()
+            let cellB = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
+            
+            cellB.timeLabel.text = message.text
+                        
+            
+            return cellB
+            //
+            
+            
+        }
+        
         // This doesn't really do anything, but it's a good point for customization
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
+        //let cell = CustomCollectionViewCell()
         //let message = self.messages[indexPath.item];
         return cell
     }

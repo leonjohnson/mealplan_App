@@ -124,6 +124,11 @@ struct Constants {
     static let pinch = "pinch"
     static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"] //portion up everything before 100ml and 100g. Ml comes before g because liquids like drinks are more likely to have rules around them.
     
+    
+    //FoodTypes
+    static var FOOD_TYPES = [Constants.fruitFoodType, Constants.vegetableFoodType, Constants.drinkFoodType, Constants.fizzy, Constants.fish, Constants.eatenAtBreakfastFoodType, Constants.onlyBreakfastFoodType, Constants.condiment]
+    
+    
     //Calender
     struct Calendar {
         static let usersCalendar = Foundation.Calendar.current

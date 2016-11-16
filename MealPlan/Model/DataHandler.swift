@@ -276,6 +276,14 @@ class DataHandler: NSObject {
         return food
         
     }
+    
+    static func getNewPKForFood() -> Int?{
+        let realm = try! Realm()
+        let count = realm.objects(Food).count
+        return ((count + 1) * -1)
+    }
+    
+    
     static func createDailyMeal(_ dailyMeal:DailyMealPlan){
         let realm = try! Realm()
         try! realm.write {
