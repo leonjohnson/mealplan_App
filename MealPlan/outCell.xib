@@ -6,12 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="outCells" customModule="MealPlan"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="h56-Ba-gYQ" customClass="outCells" customModule="MealPlan" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" contentMode="center" reuseIdentifier="out" id="h56-Ba-gYQ" customClass="outCells" customModule="MealPlan" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="453"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -38,47 +40,23 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7v-aX-aqT" userLabel="Bubble container">
-                        <rect key="frame" x="40" y="40" width="244" height="400"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JOu-N7-Y2A">
-                                <rect key="frame" x="0.0" y="141" width="244" height="237"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="-1" id="cuc-5q-B09"/>
-                                    <outlet property="delegate" destination="-1" id="8kU-Yc-MqP"/>
-                                </connections>
-                            </tableView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rKS-0k-cwr">
-                                <rect key="frame" x="0.0" y="31" width="244" height="88"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="88" id="v0L-ks-oCX"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
+                    <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="JOu-N7-Y2A" customClass="tb" customModule="MealPlan" customModuleProvider="target">
+                        <rect key="frame" x="120" y="108" width="200" height="237"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="244" id="51h-Gv-Ukw"/>
-                            <constraint firstItem="rKS-0k-cwr" firstAttribute="leading" secondItem="C7v-aX-aqT" secondAttribute="leading" id="8gW-yq-BDx"/>
-                            <constraint firstItem="rKS-0k-cwr" firstAttribute="leading" secondItem="JOu-N7-Y2A" secondAttribute="leading" id="Nff-f7-0IB"/>
-                            <constraint firstAttribute="bottom" secondItem="JOu-N7-Y2A" secondAttribute="bottom" constant="22" id="Qcm-oP-CWp"/>
-                            <constraint firstItem="JOu-N7-Y2A" firstAttribute="centerX" secondItem="C7v-aX-aqT" secondAttribute="centerX" id="eNZ-qX-6Lz"/>
-                            <constraint firstItem="rKS-0k-cwr" firstAttribute="centerX" secondItem="C7v-aX-aqT" secondAttribute="centerX" id="eeV-0L-zPt"/>
-                            <constraint firstItem="rKS-0k-cwr" firstAttribute="top" secondItem="C7v-aX-aqT" secondAttribute="top" constant="31" id="r2a-Vf-t0i"/>
-                            <constraint firstItem="JOu-N7-Y2A" firstAttribute="top" secondItem="rKS-0k-cwr" secondAttribute="bottom" constant="22" id="rcF-AP-Rr3"/>
-                            <constraint firstAttribute="height" constant="400" id="w7N-5N-wdx"/>
+                            <constraint firstAttribute="width" secondItem="JOu-N7-Y2A" secondAttribute="height" multiplier="200:237" id="IMN-dg-fhp"/>
+                            <constraint firstAttribute="width" secondItem="JOu-N7-Y2A" secondAttribute="height" multiplier="244:237" constant="-44.000000000000028" id="avE-M2-EKC"/>
                         </constraints>
-                    </view>
+                    </tableView>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="JOu-N7-Y2A" firstAttribute="centerY" secondItem="h56-Ba-gYQ" secondAttribute="centerY" id="EiX-uJ-ckh"/>
                 <constraint firstItem="WVu-vM-eZz" firstAttribute="top" secondItem="ndo-sg-zot" secondAttribute="bottom" id="FE6-NP-voN"/>
+                <constraint firstItem="JOu-N7-Y2A" firstAttribute="trailing" secondItem="h56-Ba-gYQ" secondAttribute="trailingMargin" constant="8" id="MKv-P3-FUf"/>
                 <constraint firstItem="ndo-sg-zot" firstAttribute="top" secondItem="h56-Ba-gYQ" secondAttribute="top" id="Ofe-xb-Aux"/>
-                <constraint firstItem="C7v-aX-aqT" firstAttribute="top" secondItem="WVu-vM-eZz" secondAttribute="bottom" id="OgD-AQ-fla"/>
                 <constraint firstAttribute="trailing" secondItem="ndo-sg-zot" secondAttribute="trailing" id="cT8-rW-58u"/>
-                <constraint firstItem="C7v-aX-aqT" firstAttribute="leading" secondItem="h56-Ba-gYQ" secondAttribute="leading" constant="40" id="o4L-dp-7xV"/>
+                <constraint firstItem="JOu-N7-Y2A" firstAttribute="top" secondItem="WVu-vM-eZz" secondAttribute="bottom" constant="68" id="doE-Fv-DdD"/>
                 <constraint firstAttribute="trailing" secondItem="WVu-vM-eZz" secondAttribute="trailing" id="ua5-KO-ej0"/>
                 <constraint firstItem="ndo-sg-zot" firstAttribute="leading" secondItem="h56-Ba-gYQ" secondAttribute="leading" id="vRH-uu-tip"/>
                 <constraint firstItem="WVu-vM-eZz" firstAttribute="leading" secondItem="h56-Ba-gYQ" secondAttribute="leading" id="xQu-3p-t2i"/>
@@ -87,12 +65,9 @@
             <connections>
                 <outlet property="cellTopLabel" destination="ndo-sg-zot" id="zyF-Jv-T6V"/>
                 <outlet property="cellTopLabelHeightConstraint" destination="Sld-MC-aix" id="pId-oZ-uGV"/>
-                <outlet property="messageBubbleContainerView" destination="C7v-aX-aqT" id="HAo-HO-dg3"/>
-                <outlet property="messageBubbleContainerWidthConstraint" destination="51h-Gv-Ukw" id="mXv-5g-fai"/>
                 <outlet property="messageBubbleTopLabel" destination="WVu-vM-eZz" id="O9A-T4-jqE"/>
                 <outlet property="messageBubbleTopLabelHeightConstraint" destination="U9f-SY-0yK" id="3eJ-wY-iB5"/>
-                <outlet property="questionTextView" destination="rKS-0k-cwr" id="jk8-kt-OYc"/>
-                <outlet property="table" destination="JOu-N7-Y2A" id="g8U-Aw-egH"/>
+                <outlet property="table" destination="JOu-N7-Y2A" id="soc-Zb-LTo"/>
             </connections>
             <point key="canvasLocation" x="596" y="325.5"/>
         </collectionViewCell>

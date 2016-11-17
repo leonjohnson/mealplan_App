@@ -16,10 +16,36 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         
         self.table.dataSource = self
         self.table.delegate = self
+        self.table.allowsSelection = true
+        //self.isUserInteractionEnabled = true
+        self.table.isUserInteractionEnabled = true
+        
         self.messageBubbleTopLabel.textAlignment = .center
+        print("Size of outcell: \(frame)")
+        print("Size of table: \(self.table.frame)\n")
+        
+        
+        print("inside ??: \(frame.contains(self.table.frame))\n")
+        
+        
+        
+        let subviews = self.contentView.subviews
+        for (index, view) in subviews.enumerated() {
+            print("View \(index): \(view.isUserInteractionEnabled)")
+            if index == 2 {
+                view.becomeFirstResponder()
+                let ax = (view as! UITableView)
+                print("rows: \(ax.numberOfRows(inSection: 0))")
+                print("eeeeeh")
+            }
+        }
+        
+        
+        self.tapGestureRecognizer.cancelsTouchesInView = false
+        
         //self.cellBottomLabel.textAlignment = .right
-        self.questionTextView.backgroundColor = UIColor.purple
-        self.questionTextView.textColor = UIColor.white
+        //self.questionTextView.backgroundColor = UIColor.purple
+        //self.questionTextView.textColor = UIColor.white
         
         
         //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
@@ -36,12 +62,13 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
+        
     }
+    
     
     
     
@@ -52,6 +79,7 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let q = Constants.BOT_NEW_FOOD.serving_type.question
         let options = Constants.BOT_NEW_FOOD.serving_type.tableViewList
+        table.frame = CGRect(x:Int(table.frame.origin.x),y:Int(table.frame.origin.y),width:Int(table.frame.width), height:((options.count * 44)+5))//
         if question == q {
             return options.count
         }
@@ -65,9 +93,6 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         if question == q {
             cell.textLabel?.text = options[indexPath.row]
         }
-        
-        
-        //let currentMessage =
         return cell
     }
     
@@ -78,14 +103,46 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.0
     }
-    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("TOUCHED ROW")
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("TABLE SELECTED .")
     }
     
-
     
-    
+    /*
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        
+        let hitView = super.hitTest(point, with: event)
+        
+        let ip = table.indexPathForRow(at: point)
+        print("ip = \(ip)\n")
+        
+        if (hitView is JSQMessagesCollectionViewCellOutgoing) {
+            print("table view cell.... : \((hitView as! UITableViewCell).textLabel?.text)")
+            return nil
+        }
+        if (hitView is UITableView) {
+            print("table view getting hit")
+            return hitView
+        }
+        
+        if (hitView is UITableViewCell) {
+            print("table view CELL getting hit")
+            return hitView
+        }
+        
+        if (hitView is UILabel) {
+            print("text is: \((hitView as! UILabel).text)")
+            return hitView
+        }
+        
+        print("not self: \(hitView)")
+        return super.hitTest(point, with: event)
+    }
+    */
 }
+
+
     
     
     

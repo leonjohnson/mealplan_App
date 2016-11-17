@@ -12,7 +12,6 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
 
         if Constants.questionsThatRequireTableViews.contains(currentMessageText!){
             superSize.height = 400
-            print("returning 4000000")
             return superSize
         }
         

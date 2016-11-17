@@ -78,6 +78,13 @@ final class BotController: JSQMessagesViewController {
         self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
         
         self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
+        
+        self.collectionView.isUserInteractionEnabled = true
+        
+        
+        
+        
+
         //self.customOutgoingMediaCellIdentifier = outCells.mediaCellReuseIdentifier()
         
         
@@ -130,12 +137,7 @@ final class BotController: JSQMessagesViewController {
         questionIndex += 1
         let nextQuestion = questions[questionIndex]
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
-        self.finishSendingMessage(animated: true);
-        for message in messages {
-            //print("Text: \(message.text) \n Name: \(message.senderDisplayName)/n")
-            print("message: \(message)\n\n")
-        }
-        
+        self.finishSendingMessage(animated: true)
         
         if questionIndex == (questions.count-1){
             // just posted the last response
@@ -165,7 +167,6 @@ final class BotController: JSQMessagesViewController {
     
     private func addMessage(withId id: String, name: String, text: String) {
         if let message = JSQMessage(senderId: id, displayName: name, text: text) {
-            print("text in my special message: \(message)\n")
             messages.append(message)
         }
     }
@@ -187,16 +188,14 @@ final class BotController: JSQMessagesViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
+        //self.collectionView.collectionViewLayout.sizeForItem(at: <#T##IndexPath!#>)
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
-            print("ever??")
             
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
             cellWithTableview.question = message.text
-            cellWithTableview.bringSubview(toFront: cellWithTableview.table)
-            
             return cellWithTableview
             
             
@@ -367,6 +366,9 @@ final class BotController: JSQMessagesViewController {
         
         
     }
+    
+    
+    
 
 
 
