@@ -188,14 +188,14 @@ final class BotController: JSQMessagesViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
-        //self.collectionView.collectionViewLayout.sizeForItem(at: <#T##IndexPath!#>)
+        
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
-            cellWithTableview.question = message.text
+            cellWithTableview.questionTextView.text = message.text
             return cellWithTableview
             
             

@@ -12,40 +12,21 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.backgroundColor = UIColor.yellow
         table.register(UINib(nibName: "miniTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
-        
         self.table.dataSource = self
         self.table.delegate = self
         self.table.allowsSelection = true
-        //self.isUserInteractionEnabled = true
         self.table.isUserInteractionEnabled = true
-        
+
+
         self.messageBubbleTopLabel.textAlignment = .center
-        print("Size of outcell: \(frame)")
-        print("Size of table: \(self.table.frame)\n")
-        
-        
-        print("inside ??: \(frame.contains(self.table.frame))\n")
-        
-        
-        
-        let subviews = self.contentView.subviews
-        for (index, view) in subviews.enumerated() {
-            print("View \(index): \(view.isUserInteractionEnabled)")
-            if index == 2 {
-                view.becomeFirstResponder()
-                let ax = (view as! UITableView)
-                print("rows: \(ax.numberOfRows(inSection: 0))")
-                print("eeeeeh")
-            }
-        }
-        
-        
         self.tapGestureRecognizer.cancelsTouchesInView = false
+     
         
-        //self.cellBottomLabel.textAlignment = .right
-        //self.questionTextView.backgroundColor = UIColor.purple
-        //self.questionTextView.textColor = UIColor.white
+        self.cellBottomLabel.textAlignment = .right
+        self.questionTextView.backgroundColor = UIColor.purple
+        self.questionTextView.textColor = UIColor.white
         
         
         //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
