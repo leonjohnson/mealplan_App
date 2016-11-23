@@ -442,6 +442,8 @@ class DataHandler: NSObject {
         
         let weeks = realm.objects(Week).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true).count
         
+        print("weeks found : \(weeks)")
+        
         if weeks < 2 {
             createThisWeekAndNextWeek()
         }

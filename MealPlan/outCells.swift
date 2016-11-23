@@ -6,27 +6,30 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     @IBOutlet var questionTextView : UITextView!
     @IBOutlet var table : UITableView!
     var question : String = String()
-    var theType : Constants.BOT_NEW_FOOD.Type = Constants.BOT_NEW_FOOD.self
+    var data : (question:String, options:[String]) = ("",[])
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = UIColor.yellow
+        print("super.awakeFromNib() called")
+        
         table.register(UINib(nibName: "miniTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         self.table.dataSource = self
         self.table.delegate = self
         self.table.allowsSelection = true
         self.table.isUserInteractionEnabled = true
 
-
         self.messageBubbleTopLabel.textAlignment = .center
         self.tapGestureRecognizer.cancelsTouchesInView = false
      
         
         self.cellBottomLabel.textAlignment = .right
-        self.questionTextView.backgroundColor = UIColor.purple
-        self.questionTextView.textColor = UIColor.white
+        self.questionTextView.textColor = UIColor.black
+        self.questionTextView.sizeToFit()
+        
+        
+        //print("size of bubble is: \(self.messageBubbleImageView.image?.size)")
         
         
         //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
@@ -40,14 +43,13 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         return "CustomMessagesCollectionViewCellIncoming"
     }
     
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
-        
     }
     
     
@@ -69,11 +71,9 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let q = Constants.BOT_NEW_FOOD.serving_type.question
-        let options = Constants.BOT_NEW_FOOD.serving_type.tableViewList
-        if question == q {
-            cell.textLabel?.text = options[indexPath.row]
-        }
+        print("trying to place row number: \(indexPath.row)")
+        print("data.options: \(data.options)")
+        cell.textLabel?.text = data.options[indexPath.row]
         return cell
     }
     
@@ -87,6 +87,15 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("TABLE SELECTED .")
+        
+        let currentRowAccessory = table.cellForRow(at: indexPath)?.accessoryType
+        let newRowAccessory = (currentRowAccessory == UITableViewCellAccessoryType.checkmark) ? UITableViewCellAccessoryType.none : UITableViewCellAccessoryType.checkmark
+        tableView.cellForRow(at: indexPath)?.accessoryType = newRowAccessory
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 34
     }
     
     

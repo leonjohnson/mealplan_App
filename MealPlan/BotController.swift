@@ -3,11 +3,17 @@ import RealmSwift
 import JSQMessagesViewController
 
 final class BotController: JSQMessagesViewController {
+    
     var messages:[JSQMessage] = [JSQMessage]();
+    
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
+    
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
+    
     var reasonForContact :String = String()
+    
     static let NAME = "Hi! What is the full name of the food?"
+    
     var questions : [String] = [
         Constants.BOT_NEW_FOOD.name.question,
         Constants.BOT_NEW_FOOD.producer.question,
@@ -19,8 +25,22 @@ final class BotController: JSQMessagesViewController {
         Constants.BOT_NEW_FOOD.sugar.question,
         Constants.BOT_NEW_FOOD.fibre.question,
         Constants.BOT_NEW_FOOD.protein.question,
-        Constants.BOT_NEW_FOOD.saturated_fat.question,
+        Constants.BOT_NEW_FOOD.food_type.question,
         Constants.BOT_NEW_FOOD.done.question]
+
+    var options : [[String]] = [
+        Constants.BOT_NEW_FOOD.name.tableViewList,
+        Constants.BOT_NEW_FOOD.producer.tableViewList,
+        Constants.BOT_NEW_FOOD.serving_type.tableViewList,
+        Constants.BOT_NEW_FOOD.calories.tableViewList,
+        Constants.BOT_NEW_FOOD.fat.tableViewList,
+        Constants.BOT_NEW_FOOD.saturated_fat.tableViewList,
+        Constants.BOT_NEW_FOOD.carbohydrates.tableViewList,
+        Constants.BOT_NEW_FOOD.sugar.tableViewList,
+        Constants.BOT_NEW_FOOD.fibre.tableViewList,
+        Constants.BOT_NEW_FOOD.protein.tableViewList,
+        Constants.BOT_NEW_FOOD.food_type.tableViewList,
+        Constants.BOT_NEW_FOOD.done.tableViewList]
     
     
 
@@ -47,8 +67,7 @@ final class BotController: JSQMessagesViewController {
     override func viewWillAppear(_ animated: Bool) {
         //self.navigationController?.hidesBottomBarWhenPushed = true
         self.navigationController?.toolbar.isHidden = false
-        
-        
+        print("viewWillAppear got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)\n")
         
     }
     
@@ -75,17 +94,14 @@ final class BotController: JSQMessagesViewController {
     {
         super.viewDidLoad()
         
-        self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
+        print("viewDidLoad got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)\n")
         
         self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
-        
+        //self.outgoingCellIdentifier = outCells.cellReuseIdentifier()
+        self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
         self.collectionView.isUserInteractionEnabled = true
+        self.collectionView.collectionViewLayout.messageBubbleFont = UIFont(name: "Helvetica Neue", size: 13)
         
-        
-        
-        
-
-        //self.customOutgoingMediaCellIdentifier = outCells.mediaCellReuseIdentifier()
         
         
         let user = DataHandler.getActiveUser()
@@ -93,7 +109,7 @@ final class BotController: JSQMessagesViewController {
         self.senderDisplayName = user.name
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
-        self.inputToolbar.contentView.leftBarButtonItem = nil
+        //self.inputToolbar.contentView.leftBarButtonItem = nil
         questions[0] = "Hey \(user.name)! What is the full name of the food?"
         addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
 
@@ -148,7 +164,14 @@ final class BotController: JSQMessagesViewController {
     }
     
     
-    
+    override func didPressAccessoryButton(_ sender: UIButton!) {
+        let currentKeyboard = self.inputToolbar.contentView.textView.keyboardType
+        let newKeyboard = (currentKeyboard == .default) ? UIKeyboardType.decimalPad : UIKeyboardType.default
+        self.inputToolbar.contentView.textView.resignFirstResponder()
+        self.inputToolbar.contentView.textView.keyboardType = newKeyboard
+        self.inputToolbar.contentView.textView.becomeFirstResponder()
+        
+    }
     
     
     private func takeUserBackToMealPlan(){
@@ -156,7 +179,6 @@ final class BotController: JSQMessagesViewController {
         
         let index = self.navigationController?.viewControllers.index(of: self)
         let mealplanViewController = self.navigationController?.viewControllers[index!-2]
-        print("indices : \(index)")
         self.navigationController?.popToViewController(mealplanViewController!, animated: true)
         
     }
@@ -190,17 +212,26 @@ final class BotController: JSQMessagesViewController {
     {
         
         let message = messages[indexPath.item]
+        
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
+        
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
+            
+            let rowNum = Int(ceil(Double(indexPath.row/2)))
+            print("row num == \(rowNum)")
+            let tableViewRowData = options[rowNum]
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
+            cellWithTableview.question = message.text
             cellWithTableview.questionTextView.text = message.text
+            cellWithTableview.data.question = message.text
+            cellWithTableview.data.options = tableViewRowData
+            cellWithTableview.questionTextView.sizeToFit()
+            cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
             return cellWithTableview
-            
-            
-            
         }
+        
         return cell
     }
     
@@ -217,9 +248,12 @@ final class BotController: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource!
     {
         let message = messages[indexPath.item] // 1
-        if message.senderId == senderId {
+        if message.senderId == senderId
+        {
             return outgoingBubbleImageView
-        } else {
+        }
+        else {
+            print("\(outgoingBubbleImageView.messageBubbleImage)")
             return incomingBubbleImageView
         }
     }
@@ -232,6 +266,26 @@ final class BotController: JSQMessagesViewController {
         return nil
     }
     
+    override func scrollToBottom(animated: Bool) {
+        if self.collectionView.numberOfSections == 0{
+            return
+        }
+        let lastCell = IndexPath(item: self.collectionView.numberOfItems(inSection: 0)-1, section: 0)
+        self.scroll(to: lastCell as IndexPath!, animated: true)
+    }
+    
+    /*
+     - (void)scrollToBottomAnimated:(BOOL)animated
+     {
+     if ([self.collectionView numberOfSections] == 0) {
+     return;
+     }
+     
+     NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
+     [self scrollToIndexPath:lastCell animated:animated];
+
+ 
+    */
     
     
     
@@ -244,7 +298,7 @@ final class BotController: JSQMessagesViewController {
     
     private func setupIncomingBubble() -> JSQMessagesBubbleImage {
         let bubbleImageFactory = JSQMessagesBubbleImageFactory()
-        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
     }
     
     

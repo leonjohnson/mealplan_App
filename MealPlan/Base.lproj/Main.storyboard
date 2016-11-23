@@ -293,7 +293,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="121" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Servings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75C-Qp-ghE">
-                                        <rect key="frame" x="15" y="56" width="153" height="21"/>
+                                        <rect key="frame" x="15" y="57" width="153" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -305,7 +305,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Iw7-dn-WR7">
-                                        <rect key="frame" x="187" y="54" width="78" height="32"/>
+                                        <rect key="frame" x="187" y="54" width="78" height="33"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -458,7 +458,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Lrc-wv-oYS">
-                                <rect key="frame" x="21" y="290" width="338" height="307"/>
+                                <rect key="frame" x="21" y="291" width="338" height="306"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -3775,8 +3775,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vj1-ub-NJ4">
                                         <rect key="frame" x="10" y="140" width="300" height="175"/>
                                         <subviews>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bXC-If-7tp">
-                                                <rect key="frame" x="0.0" y="0.0" width="300" height="175"/>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bXC-If-7tp">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" textLabel="jvm-fc-b7c" style="IBUITableViewCellStyleDefault" id="tDg-cw-N0f">
@@ -3808,7 +3808,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="bXC-If-7tp" secondAttribute="trailing" id="3Uw-bd-ucC"/>
-                                            <constraint firstAttribute="bottom" secondItem="bXC-If-7tp" secondAttribute="bottom" id="MdZ-MV-Wf1"/>
+                                            <constraint firstAttribute="bottom" secondItem="bXC-If-7tp" secondAttribute="bottom" constant="-75" id="MdZ-MV-Wf1"/>
                                             <constraint firstAttribute="height" constant="175" id="XPZ-2x-jYM"/>
                                             <constraint firstItem="bXC-If-7tp" firstAttribute="leading" secondItem="vj1-ub-NJ4" secondAttribute="leading" id="ff7-h6-Vu3"/>
                                             <constraint firstItem="bXC-If-7tp" firstAttribute="top" secondItem="vj1-ub-NJ4" secondAttribute="top" id="xmV-tc-o0u"/>
@@ -4034,7 +4034,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0d-z6-3MC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3850.5" y="1567"/>
+            <point key="canvasLocation" x="-3851.1999999999998" y="1566.1169415292354"/>
         </scene>
         <!--Activity Level View Controller-->
         <scene sceneID="uax-zf-4Na">

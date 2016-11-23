@@ -87,6 +87,7 @@
 		F7E3C5561DDBC44300DA2696 /* miniTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */; };
 		F7E3C5581DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */; };
 		F7E3C55C1DDE4B7C00DA2696 /* tb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C55B1DDE4B7C00DA2696 /* tb.swift */; };
+		F7E3C55E1DE5F6EF00DA2696 /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C55D1DE5F6EF00DA2696 /* String+Size.swift */; };
 		F7FB35001DC95F0B00CAB6B7 /* UsersProgress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7FB34FF1DC95F0B00CAB6B7 /* UsersProgress.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -203,6 +204,7 @@
 		F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = miniTableViewCell.xib; sourceTree = "<group>"; };
 		F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		F7E3C55B1DDE4B7C00DA2696 /* tb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tb.swift; sourceTree = "<group>"; };
+		F7E3C55D1DE5F6EF00DA2696 /* String+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
 		F7FB34FF1DC95F0B00CAB6B7 /* UsersProgress.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UsersProgress.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -448,6 +450,7 @@
 				F78AB7701DBE74FC00BB40EA /* MealPlan-Bridging-Header.h */,
 				F7E3C5401DD2156200DA2696 /* JSQ-Bridging-Header.h */,
 				F78AB6E41DBE6DA400BB40EA /* ArrayExtension.swift */,
+				F7E3C55D1DE5F6EF00DA2696 /* String+Size.swift */,
 				F78AB72A1DBE6DA400BB40EA /* Util.swift */,
 			);
 			name = Extensions;
@@ -713,6 +716,7 @@
 				F78AB73B1DBE6DA400BB40EA /* createMealPlan.swift in Sources */,
 				F78AB75B1DBE6DA400BB40EA /* Week.swift in Sources */,
 				F78AB7381DBE6DA400BB40EA /* Config.swift in Sources */,
+				F7E3C55E1DE5F6EF00DA2696 /* String+Size.swift in Sources */,
 				F78AB73D1DBE6DA400BB40EA /* DataStructure.swift in Sources */,
 				F78AB72F1DBE6DA400BB40EA /* ArrayExtension.swift in Sources */,
 				F78AB7601DBE6DA400BB40EA /* PayemtAddsTableViewCell.swift in Sources */,

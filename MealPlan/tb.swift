@@ -19,7 +19,6 @@ class tb: UITableView {
     */
     
     override func awakeFromNib() {
-        print("awoken")
     }
   
 

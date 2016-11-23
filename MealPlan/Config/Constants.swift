@@ -102,9 +102,11 @@ struct Constants {
     static let glutenFree = "Gluten free"
     static let Vegan = "Vegan"
     static let vegetarian = "Vegetarian"
+    static let pescatarian = "Pescatarian"
     static let lactoseFree = "Lactose free"
     static let fish = "Fish"
     static let fizzy = "Fizzy"
+    static let dietTypes = [Constants.vegetarian, Constants.Vegan, /*Constants.pescatarian, Constants.lactoseFree,*/ Constants.glutenFree, "None of the above"]
 
     
     
@@ -165,6 +167,9 @@ struct Constants {
     static let vegetablesAsPercentageOfCarbs = 0.15
     
     //BOT QUESTIONS
+    
+        
+    
     struct BOT_NEW_FOOD {
         struct name {
             static let question = "Hi! What is the full name of the food?"
@@ -178,7 +183,10 @@ struct Constants {
         
         struct serving_type {
             static let question = "For the nutritional information you're going to enter is it per:"
-            static let tableViewList = ["100g", "100ml", "Slice", "Item (such as per banana or per apple)?"]
+            static let tableViewList = ["100g", 
+                                        "100ml", 
+                                        "Slice", 
+                                        "Item (such as per banana or per apple)?"]
         }
         
         
@@ -193,7 +201,7 @@ struct Constants {
         }
         
         struct saturated_fat {
-            static let question = "BlueCellIdentifier"
+            static let question = "saturated fat?"
             static let tableViewList:[String] = []
         }
         
@@ -219,7 +227,15 @@ struct Constants {
         
         struct food_type {
             static let question = "Please help me categorise this item:"
-            static let tableViewList = ["1.It's a drink", "2. It's a fizzy drink", "3.It's a fruit", "4.It's a vegetable", "I would eat this at breakfast", "I would only eat this at breakfast", "This is a type of fish", "This is a condiment", "None of the above"]
+            static let tableViewList = ["It's a drink",
+                                        "It's a fizzy drink",
+                                        "It's a fruit",
+                                        "It's a vegetable",
+                                        "I would eat this at breakfast", 
+                                        "I would only eat this at breakfast", 
+                                        "This is a type of fish", 
+                                        "This is a condiment", 
+                                        "None of the above"]
         }
         
         struct done {

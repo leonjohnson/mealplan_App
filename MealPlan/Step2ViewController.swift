@@ -21,7 +21,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     @IBOutlet var dietRequirementTable : UITableView!
     
     
-    let types = ["Vegetarian","Vegan","Pescatarian","None of the above"]
+    
     
     var selectedPath = 4;
     
@@ -49,11 +49,13 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
             closeButton.isHidden = false
             
         activeDietValue = DataHandler.getActiveBiographical().dietaryRequirement!
-        selectedPath = types.index(of: activeDietValue)!
+        selectedPath = Constants.dietTypes.index(of: activeDietValue)!
         }
 
         areYouLabel.font = Constants.GENERAL_LABEL
         dietRequirementTable.setContentOffset(CGPoint(x: 0, y: 5), animated: false)
+        dietRequirementTable.frame.size = CGSize(width: dietRequirementTable.frame.size.width, 
+                                                 height: CGFloat(34 * Constants.dietTypes.count))
         
         //To set Border color for GenderView
         //categoryView?.layer.borderColor = UIColor .lightGrayColor().CGColor
@@ -70,10 +72,10 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return types.count
+        return Constants.dietTypes.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = types[indexPath.row];
+        let item = Constants.dietTypes[indexPath.row];
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item;
         cell.textLabel?.font = Constants.STANDARD_FONT
@@ -112,7 +114,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
             
         }
         
-        DataHandler.updateProfileDiet(types[selectedPath])
+        DataHandler.updateProfileDiet(Constants.dietTypes[selectedPath])
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){

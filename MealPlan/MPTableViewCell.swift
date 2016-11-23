@@ -36,7 +36,6 @@ class MPTableViewCell: UITableViewCell {
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(MPTableViewCell.handlePan(_:)))
         recognizer.delegate = self
         addGestureRecognizer(recognizer)
-        print("Added gesture")
         
         // tick and cross labels for context cues
         tickLabel = createCueLabel()

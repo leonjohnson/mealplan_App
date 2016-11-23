@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Bot Controller-->
+        <!-- -->
         <scene sceneID="ZnL-4u-RR2">
             <objects>
                 <viewController storyboardIdentifier="bot" id="PDj-kD-Hw0" customClass="BotController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,7 +22,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dNT-sV-W9l"/>
+                    <navigationItem key="navigationItem" title=" " id="dNT-sV-W9l">
+                        <barButtonItem key="backBarButtonItem" title=" " id="6WT-dP-YRt"/>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g4D-8X-G0z" userLabel="First Responder" sceneMemberID="firstResponder"/>
