@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5D0D828B2EFCEEDCF9A6AA8D /* Pods_MealPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3AF48C698D6F7E38C608B2 /* Pods_MealPlan.framework */; };
 		965A5F321BFC48D00055ACA4 /* DailyMealsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965A5F311BFC48D00055ACA4 /* DailyMealsUITests.swift */; };
+		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
 		F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */; };
 		F78AB72C1DBE6DA400BB40EA /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */; };
 		F78AB72D1DBE6DA400BB40EA /* ActivityLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */; };
@@ -89,6 +90,7 @@
 		F7E3C55C1DDE4B7C00DA2696 /* tb.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C55B1DDE4B7C00DA2696 /* tb.swift */; };
 		F7E3C55E1DE5F6EF00DA2696 /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C55D1DE5F6EF00DA2696 /* String+Size.swift */; };
 		F7FB35001DC95F0B00CAB6B7 /* UsersProgress.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7FB34FF1DC95F0B00CAB6B7 /* UsersProgress.storyboard */; };
+		F7FE00151DE70CDE00F43BB7 /* OutgoingCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FE00141DE70CDE00F43BB7 /* OutgoingCellDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +124,7 @@
 		A32A5CC299F1EFF620522F7D /* Pods-MealPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MealPlan/Pods-MealPlan.debug.xcconfig"; sourceTree = "<group>"; };
 		ACFD24E8491873D32D6D5FC8 /* Pods_DailyMeals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyMeals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F73CB67F1DA1C3B700ACE506 /* DailMealTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailMealTests.swift; sourceTree = "<group>"; };
+		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
 		F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProgressMaster.swift; sourceTree = "<group>"; };
 		F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLevelViewController.swift; sourceTree = "<group>"; };
@@ -206,6 +209,7 @@
 		F7E3C55B1DDE4B7C00DA2696 /* tb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tb.swift; sourceTree = "<group>"; };
 		F7E3C55D1DE5F6EF00DA2696 /* String+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
 		F7FB34FF1DC95F0B00CAB6B7 /* UsersProgress.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UsersProgress.storyboard; sourceTree = "<group>"; };
+		F7FE00141DE70CDE00F43BB7 /* OutgoingCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCellDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,6 +422,8 @@
 				F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */,
 				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
 				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
+				F7FE00141DE70CDE00F43BB7 /* OutgoingCellDelegate.swift */,
+				F746AE471DE7609800076B53 /* BotDelegate.swift */,
 				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
 				F7E3C5511DDB8FF700DA2696 /* outCell.xib */,
@@ -701,6 +707,7 @@
 				F78AB7391DBE6DA400BB40EA /* Constants.swift in Sources */,
 				F78AB7561DBE6DA400BB40EA /* Macronutrient.swift in Sources */,
 				F78AB75E1DBE6DA400BB40EA /* Network.swift in Sources */,
+				F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */,
 				F7E3C54E1DDA3A7E00DA2696 /* customBotMessage.swift in Sources */,
 				F78AB7641DBE6DA400BB40EA /* MultiTag.swift in Sources */,
 				F78AB74D1DBE6DA400BB40EA /* DailyMealPlan.swift in Sources */,
@@ -719,6 +726,7 @@
 				F7E3C55E1DE5F6EF00DA2696 /* String+Size.swift in Sources */,
 				F78AB73D1DBE6DA400BB40EA /* DataStructure.swift in Sources */,
 				F78AB72F1DBE6DA400BB40EA /* ArrayExtension.swift in Sources */,
+				F7FE00151DE70CDE00F43BB7 /* OutgoingCellDelegate.swift in Sources */,
 				F78AB7601DBE6DA400BB40EA /* PayemtAddsTableViewCell.swift in Sources */,
 				F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */,
 				F78AB7531DBE6DA400BB40EA /* FoodsDisliked.swift in Sources */,

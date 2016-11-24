@@ -1,13 +1,14 @@
 import UIKit
 import JSQMessagesViewController
 
-class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITableViewDataSource {
+class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITableViewDataSource, OutgoingCellDelegate {
 
     @IBOutlet var questionTextView : UITextView!
     @IBOutlet var table : UITableView!
     var question : String = String()
     var data : (question:String, options:[String]) = ("",[])
     
+    var botDelegate: BotDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,6 +20,10 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         self.table.delegate = self
         self.table.allowsSelection = true
         self.table.isUserInteractionEnabled = true
+        self.table.allowsMultipleSelection = false
+        self.questionTextView.attributedText = NSAttributedString(string: "", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        
+        
 
         self.messageBubbleTopLabel.textAlignment = .center
         self.tapGestureRecognizer.cancelsTouchesInView = false
@@ -35,6 +40,9 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
         }
     
+
+    
+    
     override class func nib() -> UINib {
         return UINib(nibName: "outCell", bundle: nil)
     }
@@ -50,32 +58,38 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        print("init'ed")
     }
     
-    
-    
+    func rowSelected(labelValue: String, withQuestion: String) {
+        print("row selected in Outcell: \(labelValue)")
+        botDelegate?.originalrowSelected(labelValue: labelValue, withQuestion: withQuestion)
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let q = Constants.BOT_NEW_FOOD.serving_type.question
-        let options = Constants.BOT_NEW_FOOD.serving_type.tableViewList
-        table.frame = CGRect(x:Int(table.frame.origin.x),y:Int(table.frame.origin.y),width:Int(table.frame.width), height:((options.count * 44)+5))//
-        if question == q {
-            return options.count
-        }
-        return 0
+        return data.options.count
+        
+        //table.frame = CGRect(x:Int(table.frame.origin.x),y:Int(table.frame.origin.y),width:Int(table.frame.width), height:((data.options.count * 44)+5))//
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! miniTableViewCell
+        
         print("trying to place row number: \(indexPath.row)")
         print("data.options: \(data.options)")
-        cell.textLabel?.text = data.options[indexPath.row]
+        cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        cell.outgoingCellDelegate = self
+        
+        
+        
         return cell
     }
+    
+    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.0
@@ -88,9 +102,24 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("TABLE SELECTED .")
         
+        let currentCell = tableView.cellForRow(at: indexPath)
         let currentRowAccessory = table.cellForRow(at: indexPath)?.accessoryType
+        
         let newRowAccessory = (currentRowAccessory == UITableViewCellAccessoryType.checkmark) ? UITableViewCellAccessoryType.none : UITableViewCellAccessoryType.checkmark
+        
+        
+        for row in 0...data.options.count {
+                tableView.cellForRow(at: [indexPath.section, row])?.accessoryType = UITableViewCellAccessoryType.none
+        }
+        
         tableView.cellForRow(at: indexPath)?.accessoryType = newRowAccessory
+        (tableView.cellForRow(at: indexPath) as! miniTableViewCell).outgoingCellDelegate?.rowSelected(labelValue: (currentCell?.textLabel?.text)!, withQuestion: question)
+        
+        
+        
+        // if unselected, deselect everything else and select this row
+        //if selected, unselect it
+        
     }
     
     

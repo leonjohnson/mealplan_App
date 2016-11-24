@@ -10,10 +10,14 @@ import UIKit
 
 class miniTableViewCell: UITableViewCell {
 
+    var outgoingCellDelegate: OutgoingCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         //self.accessoryType = .checkmark
+        self.selectionStyle = .none
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -21,6 +25,9 @@ class miniTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
+    
     
     
     

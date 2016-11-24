@@ -183,9 +183,9 @@ struct Constants {
         
         struct serving_type {
             static let question = "For the nutritional information you're going to enter is it per:"
-            static let tableViewList = ["100g", 
-                                        "100ml", 
-                                        "Slice", 
+            static let tableViewList = [Constants.grams,
+                                        Constants.ml,
+                                        Constants.slice,
                                         "Item (such as per banana or per apple)?"]
         }
         

@@ -2,7 +2,7 @@ import UIKit
 import RealmSwift
 import JSQMessagesViewController
 
-final class BotController: JSQMessagesViewController {
+final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotDelegate, UITableViewDelegate {
     
     var messages:[JSQMessage] = [JSQMessage]();
     
@@ -44,7 +44,19 @@ final class BotController: JSQMessagesViewController {
     
     
 
-    var answers : [String:String] = ["name":"crisps"]
+    var answers : [String] = [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""]
     
     let keyboardType : [String:String] = [:]
     var questionIndex : Int = 0
@@ -58,9 +70,9 @@ final class BotController: JSQMessagesViewController {
     
     var customOutgoingMediaCellIdentifier : String = ""
     
+    var miniCellViewController = miniTableViewCell()
     
-    
-    
+    var outCellViewController = outCells()
     
     
     
@@ -70,6 +82,8 @@ final class BotController: JSQMessagesViewController {
         print("viewWillAppear got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)\n")
         
     }
+    
+    
     
     
     
@@ -96,6 +110,7 @@ final class BotController: JSQMessagesViewController {
         
         print("viewDidLoad got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)\n")
         
+        self.automaticallyScrollsToMostRecentMessage = true
         self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
         //self.outgoingCellIdentifier = outCells.cellReuseIdentifier()
         self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
@@ -121,10 +136,26 @@ final class BotController: JSQMessagesViewController {
         messages.append(message2!)
          */
         
+        miniCellViewController.outgoingCellDelegate = self
+        
+        outCellViewController.botDelegate = self
+        
+        
         self.finishSendingMessage(animated: true);
     }
 
-
+    func originalrowSelected(labelValue: String, withQuestion: String) {
+        
+        guard var indexForAnswer = questions.index(of: withQuestion) else {
+            print("WIRING ERROR")
+            return
+        }
+        indexForAnswer = questions.index(of: withQuestion)!
+        answers[indexForAnswer] = labelValue
+        
+    }
+    
+    
     
 
     /*
@@ -148,6 +179,8 @@ final class BotController: JSQMessagesViewController {
                 self.finishSendingMessage(animated: true);
                 return
             }
+            
+            answers[questionIndex] = text
         }
         
         questionIndex += 1
@@ -173,6 +206,10 @@ final class BotController: JSQMessagesViewController {
         
     }
     
+    func rowSelected(labelValue: String, withQuestion: String){
+        print("row \(labelValue) selected in the outGoing cell")
+        
+    }
     
     private func takeUserBackToMealPlan(){
         
@@ -212,23 +249,27 @@ final class BotController: JSQMessagesViewController {
     {
         
         let message = messages[indexPath.item]
-        
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
         
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
-            
-            let rowNum = Int(ceil(Double(indexPath.row/2)))
-            print("row num == \(rowNum)")
-            let tableViewRowData = options[rowNum]
+            //print("row num == \(indexPath)")
+            let tableViewRowData = options[indexPath.row/2]
+            //print("Question: \(message.text) and options: \(options[questionIndex])/n")
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
+            //cellWithTableview.table.delegate = self
+            
             cellWithTableview.question = message.text
-            cellWithTableview.questionTextView.text = message.text
+            cellWithTableview.questionTextView.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
             cellWithTableview.data.question = message.text
             cellWithTableview.data.options = tableViewRowData
+            cellWithTableview.table.reloadData()
             cellWithTableview.questionTextView.sizeToFit()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
+            
+            cellWithTableview.botDelegate = self
+            
             return cellWithTableview
         }
         
@@ -316,36 +357,34 @@ final class BotController: JSQMessagesViewController {
         //["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"]
         
         let foodNameIndex = 0
-        if let foodName : String = messages[foodNameIndex+1].text{
-            food.name = foodName
+        let foodName : String = answers[1]
+        food.name = foodName
+        
+        if let foodProducerIndex = questions.index(of: Constants.BOT_NEW_FOOD.producer.question) {
+            food.producer = answers[foodProducerIndex]
+        }
+
+        
+        if let servingTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.serving_type.question) {
+            var servingSizeName = answers[servingTypeIndex]
+            if servingSizeName.contains("Item"){
+                servingSizeName = Constants.item
+            }
+            food.servingSize = ServingSize.get(servingSizeName)
         }
         
-        let foodProducerIndex = questions.index(of: Constants.BOT_NEW_FOOD.producer.question)
-        if let foodProducer = messages[(foodProducerIndex!*2)+1].text {
-            food.producer = foodProducer
+        
+        if let caloriesIndex = questions.index(of: Constants.BOT_NEW_FOOD.calories.question) {
+            food.calories = Double(answers[caloriesIndex])!
         }
         
-        let servingTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.serving_type.question)
-        if let servingType = messages[(servingTypeIndex!*2)+1].text {
-            /*
-             
-             for index in valuesEntered{
-             let ix = Constants.FOOD_TYPES[Int(index)!]
-             newValues.append(ix)
-             }
-             let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
-             
-             */
+        
+        if let fatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question) {
+            food.fats = Double(answers[fatsIndex])!
         }
         
-        let caloriesIndex = questions.index(of: Constants.BOT_NEW_FOOD.calories.question)
-        if let calories = Double(messages[(caloriesIndex!*2)+1].text) {
-            food.calories = calories
-        }
-        
-        let fatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question)
-        if let fats = Double(messages[(fatsIndex!*2)+1].text) {
-            food.fats = fats
+        if let satFatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question) {
+            food.sat_fats = RealmOptional<Double>(answers[satFatsIndex])
         }
         
         let satFatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.saturated_fat.question)

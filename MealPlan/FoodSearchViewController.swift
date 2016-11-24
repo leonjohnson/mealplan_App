@@ -208,18 +208,6 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         if((self.navigationController) != nil){
             scene.hidesBottomBarWhenPushed = true
             self.navigationController?.setNavigationBarHidden(false, animated: false)
-            
-            let blankBar = UIBarButtonItem(title: " uu", style: .plain, target: nil, action: nil)
-            
-            print("Attempting to set title of : \(blankBar.title)")
-            print("Currently got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)")
-            self.navigationController?.navigationItem.backBarButtonItem = blankBar
-
-            
-            print("New title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)")
-            self.navigationController?.navigationBar.barTintColor = UIColor.green
-            
-            
             self.navigationController?.navigationBar.frame.size = CGSize(width: (self.navigationController?.navigationBar.frame.width)!, height: 35)
             
             self.navigationController?.pushViewController(scene, animated: true);

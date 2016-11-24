@@ -18,9 +18,9 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
 
         if Constants.questionsThatRequireTableViews.contains(currentMessageText!){
             
-            let rows = (4 * 45)// + (4*23)
+            let rows = (4 * 45) + (4*23)
             superSize.height = CGFloat(rows)
-            superSize.width = superSize.width + 10
+            //superSize.width = superSize.width
             return superSize
  
         }
