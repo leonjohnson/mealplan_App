@@ -44,19 +44,19 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     
 
-    var answers : [String] = [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""]
+    var answers : [[String]] = [
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()],
+        [String()]]
     
     let keyboardType : [String:String] = [:]
     var questionIndex : Int = 0
@@ -64,6 +64,9 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     enum botTypeEnum {
         case addNewFood
     }
+    
+    
+    
     var botType : botTypeEnum = .addNewFood
     
     var tapped = Int()
@@ -144,14 +147,26 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         self.finishSendingMessage(animated: true);
     }
 
-    func originalrowSelected(labelValue: String, withQuestion: String) {
+    func originalrowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType) {
         
         guard var indexForAnswer = questions.index(of: withQuestion) else {
             print("WIRING ERROR")
             return
         }
+        
         indexForAnswer = questions.index(of: withQuestion)!
-        answers[indexForAnswer] = labelValue
+        if addOrDelete == UITableViewCellAccessoryType.none{
+            answers[indexForAnswer].removeObject(labelValue)
+        }
+        if addOrDelete == UITableViewCellAccessoryType.checkmark{
+            answers[indexForAnswer].append(labelValue)
+        }
+        print("Operation = \(addOrDelete))")
+        
+        if questionIndex == indexForAnswer{
+            // we've tapped a row in a table that is the answer to the most progressed question yet
+            progressToNextQuestion()
+        }
         
     }
     
@@ -180,9 +195,13 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
                 return
             }
             
-            answers[questionIndex] = text
+            answers[questionIndex].append(text)
         }
+        progressToNextQuestion()
         
+    }
+    
+    func progressToNextQuestion(){
         questionIndex += 1
         let nextQuestion = questions[questionIndex]
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
@@ -196,7 +215,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         }
     }
     
-    
     override func didPressAccessoryButton(_ sender: UIButton!) {
         let currentKeyboard = self.inputToolbar.contentView.textView.keyboardType
         let newKeyboard = (currentKeyboard == .default) ? UIKeyboardType.decimalPad : UIKeyboardType.default
@@ -206,13 +224,12 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         
     }
     
-    func rowSelected(labelValue: String, withQuestion: String){
+    func rowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType){
         print("row \(labelValue) selected in the outGoing cell")
         
     }
     
     private func takeUserBackToMealPlan(){
-        
         
         let index = self.navigationController?.viewControllers.index(of: self)
         let mealplanViewController = self.navigationController?.viewControllers[index!-2]
@@ -254,8 +271,14 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
-            //print("row num == \(indexPath)")
-            let tableViewRowData = options[indexPath.row/2]
+            print("row num == \(indexPath)")
+            var row = indexPath.row
+
+            if (indexPath.row % 2) != 0{
+                row = indexPath.row + 1
+                print("NEW row num == \(row)")
+            }
+            let tableViewRowData = options[row/2]
             //print("Question: \(message.text) and options: \(options[questionIndex])/n")
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
             //cellWithTableview.table.delegate = self
@@ -357,16 +380,16 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         //["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"]
         
         let foodNameIndex = 0
-        let foodName : String = answers[1]
+        let foodName : String = answers[foodNameIndex].first!
         food.name = foodName
         
         if let foodProducerIndex = questions.index(of: Constants.BOT_NEW_FOOD.producer.question) {
-            food.producer = answers[foodProducerIndex]
+            food.producer = answers[foodProducerIndex].first!
         }
 
         
         if let servingTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.serving_type.question) {
-            var servingSizeName = answers[servingTypeIndex]
+            var servingSizeName = answers[servingTypeIndex].first!
             if servingSizeName.contains("Item"){
                 servingSizeName = Constants.item
             }
@@ -375,58 +398,58 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         
         
         if let caloriesIndex = questions.index(of: Constants.BOT_NEW_FOOD.calories.question) {
-            food.calories = Double(answers[caloriesIndex])!
+            print("\(answers[caloriesIndex])")
+            food.calories = Double(answers[caloriesIndex].first!)!
         }
         
         
         if let fatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question) {
-            food.fats = Double(answers[fatsIndex])!
+            food.fats = Double(answers[fatsIndex].first!)!
         }
+        
         
         if let satFatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question) {
-            food.sat_fats = RealmOptional<Double>(answers[satFatsIndex])
+            if let satFats = Double(answers[satFatsIndex].first!) {
+                food.sat_fats = RealmOptional<Double>(satFats)
+            }
         }
         
-        let satFatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.saturated_fat.question)
-        if let satFats = Double(messages[(satFatsIndex!*2)+1].text) {
-            food.sat_fats = RealmOptional<Double>(satFats)
+        
+        if let carbIndex = questions.index(of: Constants.BOT_NEW_FOOD.carbohydrates.question) {
+            food.carbohydrates = Double(answers[carbIndex].first!)!
         }
         
-        let carbIndex = questions.index(of: Constants.BOT_NEW_FOOD.carbohydrates.question)
-        if let carbs = Double(messages[(carbIndex!*2)+1].text) {
-            food.carbohydrates = carbs
+        
+        
+        if let sugarIndex = questions.index(of: Constants.BOT_NEW_FOOD.sugar.question) {
+            if let sugar = Double(answers[sugarIndex].first!) {
+                food.sugars = RealmOptional<Double>(sugar)
+            }
         }
         
-        let sugarIndex = questions.index(of: Constants.BOT_NEW_FOOD.sugar.question)
-        if let sugar = Double(messages[(sugarIndex!*2)+1].text) {
-            food.sugars = RealmOptional<Double>(sugar)
+        
+        if let fibreIndex = questions.index(of: Constants.BOT_NEW_FOOD.fibre.question){
+            if let fibre = Double(answers[fibreIndex].first!){
+                food.fibre = RealmOptional<Double>(fibre)
+            }
         }
         
-        let fibreIndex = questions.index(of: Constants.BOT_NEW_FOOD.fibre.question)
-        if let fibre = Double(messages[(fibreIndex!*2)+1].text) {
-            food.fibre = RealmOptional<Double>(fibre)
+        
+        if let proteinIndex = questions.index(of: Constants.BOT_NEW_FOOD.protein.question){
+            if let proteins = Double(answers[proteinIndex].first!){
+                food.proteins = proteins
+            }
         }
         
-        let proteinIndex = questions.index(of: Constants.BOT_NEW_FOOD.protein.question)
-        if let proteins = Double(messages[(proteinIndex!*2)+1].text) {
-            food.proteins = proteins
-        }
         
-        let foodTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.food_type.question)
-        if let foodType = messages[(foodTypeIndex!*2)+1].text {
-            var valuesEntered = foodType.components(separatedBy: .init(charactersIn: ",.- "))
-            valuesEntered = valuesEntered.filter { $0 != "" }
-            var newValues : String = String()
+        if let foodTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.food_type.question){
             let realm = try! Realm()
-            for index in valuesEntered{
-                let ix = Constants.FOOD_TYPES[Int(index)!]
-                newValues.append(ix)
-            }
-            let ft = realm.objects(FoodType).filter("name IN %@", valuesEntered)
-            for each in ft {
-                food.foodType.append(each)
-            }
+            let foodTypesSelected = answers[foodTypeIndex]
+            let foodTypesFound = realm.objects(FoodType).filter("name IN %@", foodTypesSelected)
+            food.foodType.append(contentsOf: foodTypesFound)
         }
+        
+        print("Food I want to create: \(food)")
         
         let created = DataHandler.createFood(food)
         
@@ -442,13 +465,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
          }
          }
          
-         if let value = (pdt!.value(forKey: "foodType") as! NSArray?){
-         let realm = try! Realm()
-         let ft = realm.objects(FoodType).filter("name IN %@", value)
-         for each in ft {
-         itemFood.foodType.append(each)
-         }
-         }
          
          if (pdt!.value(forKey: "readyToEat") as! Bool?)! == true{
          itemFood.readyToEat = true

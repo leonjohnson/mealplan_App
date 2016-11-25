@@ -9,5 +9,5 @@
 import Foundation
 
 protocol BotDelegate {
-    func originalrowSelected(labelValue: String, withQuestion: String)
+    func originalrowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType)
 }

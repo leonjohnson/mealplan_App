@@ -41,7 +41,9 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         }
     
 
-    
+    override func prepareForReuse() {
+        print("preparing for reuse")
+    }
     
     override class func nib() -> UINib {
         return UINib(nibName: "outCell", bundle: nil)
@@ -61,9 +63,9 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         print("init'ed")
     }
     
-    func rowSelected(labelValue: String, withQuestion: String) {
+    func rowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType) {
         print("row selected in Outcell: \(labelValue)")
-        botDelegate?.originalrowSelected(labelValue: labelValue, withQuestion: withQuestion)
+        botDelegate?.originalrowSelected(labelValue: labelValue, withQuestion: withQuestion, addOrDelete:addOrDelete)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -79,7 +81,6 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! miniTableViewCell
         
-        print("trying to place row number: \(indexPath.row)")
         print("data.options: \(data.options)")
         cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
         cell.outgoingCellDelegate = self
@@ -113,7 +114,7 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         }
         
         tableView.cellForRow(at: indexPath)?.accessoryType = newRowAccessory
-        (tableView.cellForRow(at: indexPath) as! miniTableViewCell).outgoingCellDelegate?.rowSelected(labelValue: (currentCell?.textLabel?.text)!, withQuestion: question)
+        (tableView.cellForRow(at: indexPath) as! miniTableViewCell).outgoingCellDelegate?.rowSelected(labelValue: (currentCell?.textLabel?.text)!, withQuestion: question, addOrDelete: newRowAccessory)
         
         
         

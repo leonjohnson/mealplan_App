@@ -128,7 +128,7 @@ struct Constants {
     
     
     //FoodTypes
-    static var FOOD_TYPES = [Constants.fruitFoodType, Constants.vegetableFoodType, Constants.drinkFoodType, Constants.fizzy, Constants.fish, Constants.eatenAtBreakfastFoodType, Constants.onlyBreakfastFoodType, Constants.condiment]
+    static var FOOD_TYPES = [Constants.drinkFoodType, Constants.fizzy, Constants.fruitFoodType, Constants.vegetableFoodType, Constants.eatenAtBreakfastFoodType, Constants.onlyBreakfastFoodType, Constants.fish, Constants.condiment]
     
     
     //Calender
@@ -238,6 +238,8 @@ struct Constants {
                                         "None of the above"]
         }
         
+        
+        
         struct done {
             static let question = "Thanks! You're all done now."
             static let tableViewList:[String] = []
@@ -269,4 +271,10 @@ struct Constants {
             static let Desta = "LargeCellIdentifier"
         }
     }
-}
+    
+    enum appendDeleteEnum {
+        case append
+        case delete
+    }
+    
+    }
