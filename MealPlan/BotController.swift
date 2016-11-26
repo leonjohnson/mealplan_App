@@ -58,24 +58,35 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         [String()],
         [String()]]
     
-    let keyboardType : [String:String] = [:]
+    let validationType  = [
+        Constants.BOT_NEW_FOOD.name.validation,
+        Constants.BOT_NEW_FOOD.producer.validation,
+        Constants.BOT_NEW_FOOD.serving_type.validation,
+        Constants.BOT_NEW_FOOD.calories.validation,
+        Constants.BOT_NEW_FOOD.fat.validation,
+        Constants.BOT_NEW_FOOD.saturated_fat.validation,
+        Constants.BOT_NEW_FOOD.carbohydrates.validation,
+        Constants.BOT_NEW_FOOD.sugar.validation,
+        Constants.BOT_NEW_FOOD.fibre.validation,
+        Constants.BOT_NEW_FOOD.protein.validation,
+        Constants.BOT_NEW_FOOD.food_type.validation,
+        Constants.BOT_NEW_FOOD.done.validation]
+    
     var questionIndex : Int = 0
     
-    enum botTypeEnum {
-        case addNewFood
-    }
-    
-    
-    
-    var botType : botTypeEnum = .addNewFood
-    
-    var tapped = Int()
     
     var customOutgoingMediaCellIdentifier : String = ""
     
     var miniCellViewController = miniTableViewCell()
     
     var outCellViewController = outCells()
+    
+    
+    // Used when creating Bot page to provide it with some context of task. Not currently used beyond info.
+    enum botTypeEnum {
+        case addNewFood
+    }
+    var botType : botTypeEnum = .addNewFood
     
     
     
@@ -144,6 +155,8 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         outCellViewController.botDelegate = self
         
         
+        
+        
         self.finishSendingMessage(animated: true);
     }
 
@@ -154,12 +167,20 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             return
         }
         
+        var entryValue = labelValue
         indexForAnswer = questions.index(of: withQuestion)!
         if addOrDelete == UITableViewCellAccessoryType.none{
             answers[indexForAnswer].removeObject(labelValue)
         }
         if addOrDelete == UITableViewCellAccessoryType.checkmark{
-            answers[indexForAnswer].append(labelValue)
+            
+            
+            if withQuestion == Constants.BOT_NEW_FOOD.food_type.question{
+                let indexOfSelectedOptionInFoodTypeList = Constants.BOT_NEW_FOOD.food_type.tableViewList.index(of: labelValue)
+                entryValue = Constants.FOOD_TYPES[indexOfSelectedOptionInFoodTypeList!]
+            }
+            answers[indexForAnswer].append(entryValue)
+            answers[indexForAnswer].removeFirst()
         }
         print("Operation = \(addOrDelete))")
         
@@ -196,6 +217,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             }
             
             answers[questionIndex].append(text)
+            answers[questionIndex].removeFirst()
         }
         progressToNextQuestion()
         
@@ -279,18 +301,21 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
                 print("NEW row num == \(row)")
             }
             let tableViewRowData = options[row/2]
-            //print("Question: \(message.text) and options: \(options[questionIndex])/n")
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
             //cellWithTableview.table.delegate = self
             
             cellWithTableview.question = message.text
             cellWithTableview.questionTextView.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
             cellWithTableview.data.question = message.text
+            /*
+            for rowIndex in 0...tableViewRowData.count{
+                cellWithTableview.table.cellForRow(at: [0,rowIndex])?.accessoryType = UITableViewCellAccessoryType.none
+                }
+             */
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
             cellWithTableview.questionTextView.sizeToFit()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
-            
             cellWithTableview.botDelegate = self
             
             return cellWithTableview
@@ -445,13 +470,15 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         if let foodTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.food_type.question){
             let realm = try! Realm()
             let foodTypesSelected = answers[foodTypeIndex]
+            print("foodTypesSelected: \(foodTypesSelected)")
             let foodTypesFound = realm.objects(FoodType).filter("name IN %@", foodTypesSelected)
+            print("realm objects found: \(foodTypesFound)")
             food.foodType.append(contentsOf: foodTypesFound)
         }
         
         print("Food I want to create: \(food)")
         
-        let created = DataHandler.createFood(food)
+        //let created = DataHandler.createFood(food)
         
         
         
@@ -478,6 +505,22 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     
     
+    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        print("letter tapped\n")
+        switch validationType[questionIndex] {
+        case  Constants.botValidationEntryType.text:
+            return text.isNumber() ? false : true
+            
+        case  Constants.botValidationEntryType.decimal:
+            return text.isNumber() ? true : false
+            
+        case  Constants.botValidationEntryType.none:
+            return text.isNumber() ? false : true // users should be allowed to type in 'go back' even though the keyboard will be minimised.
+
+        
+        }
+    }
+
 
 
 

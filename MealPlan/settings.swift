@@ -128,7 +128,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         }
         else{
-            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let storyboard = UIStoryboard(name: "Feedback", bundle: Bundle.main)
             let destination = storyboard.instantiateViewController(withIdentifier: "feedback") as! LastWeekViewController
             destination.settingsControl = true
             navigationController?.pushViewController(destination, animated: true)

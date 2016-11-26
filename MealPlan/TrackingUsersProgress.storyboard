@@ -12,7 +12,7 @@
         <!--Root View Controller-->
         <scene sceneID="hPQ-HC-lRk">
             <objects>
-                <tableViewController id="vzb-Hj-SXr" customClass="UsersProgressMaster" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="vzb-Hj-SXr" customClass="TrackingUsersProgress" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="g9x-vC-BxT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Za-Ye-7WM" id="B1n-P3-l2Q">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>

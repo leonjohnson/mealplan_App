@@ -100,12 +100,13 @@ class DataStructure : NSObject{
         
         
         
-        print(Realm.Configuration.defaultConfiguration.fileURL)
+        print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
 
         
         
         //let likedFoods = DataHandler.getLikeFoods() //TODO: SHOW USERS FOODS THAT HE LIKES
-        let dislikedFoods = DataHandler.getDisLikedFoods().foods
+        let dislikedFoods = DataHandler.getNamesOfDisLikedFoods()
+        //getNamesOfDisLikedFoods
         let onlyBreakfastFoods = DataHandler.getBreakfastOnlyFoods()
         
         

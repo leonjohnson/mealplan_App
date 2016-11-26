@@ -1,6 +1,6 @@
 import UIKit
 
-class UsersProgressMaster: UITableViewController {
+class TrackingUsersProgress: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

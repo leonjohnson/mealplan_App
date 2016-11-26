@@ -69,6 +69,17 @@ class DataHandler: NSObject {
         }
     }
     
+    static func getNamesOfDisLikedFoods()->[String]{
+        let realm = try! Realm()
+        let profile = realm.objects(FoodsDisliked).first
+        let results : [String] = (profile?.foods.map {$0.name})!
+        if((profile) != nil){
+            return results
+        }else{
+            return  [""];
+        }
+    }
+    
     static func getBreakfastOnlyFoods()->[Food]{
         let realm = try! Realm()
         let breakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.onlyBreakfastFoodType)
@@ -349,6 +360,27 @@ class DataHandler: NSObject {
         let items = realm.objects(Week).first
         return (items?.dailyMeals[weekNumber-1])!;
     }
+    
+    
+    static func doesMealPlanExistForThisWeek()->(yayNay:Bool,weeksAhead:Int) {
+        let realm = try! Realm()
+        let calender = Calendar.current
+        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -7, to: calender.startOfDay(for: Date()), options: [.matchFirst])
+        
+        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
+        
+        let weeksAhead = realm.objects(Week).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
+        
+        if weeksAhead.count == 0 {
+            return (false, 0)
+        }
+        
+        return (true, (weeksAhead.count - 1))
+    }
+    
+    
+    
+    
     
     static func createWeeks(_ weeksInTheFutureToCreate:[Int]) {
         let kcal = calculateCalorieAllowance()

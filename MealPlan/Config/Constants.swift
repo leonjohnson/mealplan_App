@@ -174,11 +174,13 @@ struct Constants {
         struct name {
             static let question = "Hi! What is the full name of the food?"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.text
         }
         
         struct producer {
             static let question = "Who makes this product?" // manufacter, don't know, blank, some other unuseful answer
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.text
         }
         
         struct serving_type {
@@ -187,42 +189,49 @@ struct Constants {
                                         Constants.ml,
                                         Constants.slice,
                                         "Item (such as per banana or per apple)?"]
+            static let validation = Constants.botValidationEntryType.none
         }
-        
         
         struct calories {
             static let question = "Thanks. How many calories are in it?"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
         }
         
         struct fat {
             static let question = "grams of fat?" //per 100g or 100ml
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
         }
         
         struct saturated_fat {
             static let question = "saturated fat?"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
         }
         
         struct carbohydrates {
             static let question = "and carbohydrates?"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
         }
         
         struct sugar {
             static let question = "of which are sugar? (type n/a if it's not labelled)"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
         }
         
         struct fibre {
             static let question = "and fibre? (type n/a if it's not labelled)"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
         }
         
         struct protein {
             static let question = "how much protein does this item have?"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
         }
         
         struct food_type {
@@ -236,13 +245,15 @@ struct Constants {
                                         "This is a type of fish", 
                                         "This is a condiment", 
                                         "None of the above"]
+            static let validation = Constants.botValidationEntryType.none
         }
         
         
         
         struct done {
-            static let question = "Thanks! You're all done now."
+            static let question = "Thanks! You're all done. 👍"
             static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.none
         }
 
     }
@@ -275,6 +286,12 @@ struct Constants {
     enum appendDeleteEnum {
         case append
         case delete
+    }
+    
+    enum botValidationEntryType {
+        case text
+        case decimal
+        case none
     }
     
     }

@@ -10,15 +10,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        if(Config.getBoolValue(Config.HAS_PROFILE)){
-            DataHandler.createThisWeekAndNextWeek()
-        }
+        
     }
     
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        // This method is called to let your app know that it moved from the inactive to active state. This can occur because your app was launched by the user or the system. Apps can also return to the active state if the user chooses to ignore an interruption (such as an incoming phone call or SMS message) that sent the app temporarily to the inactive state.
+        
         DataStructure.loadDatabaseWithData();
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        if(Config.getBoolValue(Config.HAS_PROFILE)){
+            let response = DataHandler.doesMealPlanExistForThisWeek()
+            let mealPlanExistsForThisWeek = response.yayNay
+            let numberOfWeeks = response.weeksAhead
+            
+            if mealPlanExistsForThisWeek == false{
+                // ask for new details
+                // generate new calorie requirements
+                // create meal plan
+            } else {
+                
+            }
+        }
+        
+        /*
+         Does a meal plan exist for this week:
+         No- ask for new details and run meal plan from today for the next two weeks(we're starting over)
+         
+         Yes-
+         How many weeks in the future does a meal plan exist for:
+         0-ask for new details, run a new meal plan for next week and the week after
+         1- if we're one day away from the week end, then ask for new details, delete next weeks plan, run a new meal plan for the next two weeks
+         2-exit
+         */
         
     }
     
