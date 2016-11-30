@@ -15,8 +15,8 @@ struct Constants {
     static let REQ_API_KEY = "API_KEY"
     static let ERROR_NETWORK = "Network error Foud please try later"
     static let API_KEY_ALL  = "all"
-    static let BOOL_YES  = "yes"
-    static let BOOL_NO  = "no"
+    static let BOOL_YES  = "Yes"
+    static let BOOL_NO  = "No"
     static let LIKE_STRING  = "LIKE"
     static let DISLIKE_STRING  = "DISLIKE"
     static let THE_FOODS_STRING  = "TAP THE FOODS YOU "
@@ -293,5 +293,22 @@ struct Constants {
         case decimal
         case none
     }
+    
+    enum dietEase: String {
+        case unstated = "unstated"
+        case easy = "easy"
+        case ok = "ok"
+        case hard = "hard"
+    }
+    
+    static let HAS_PROFILE = "hasProfile"
+    static let FIRST_CALORIE_CUT = "firstCalorieCut"
+    static let STANDARD_CALORIE_CUT = "standardCalorieCut"
+    static let standard_calorie_increase_for_muscle = 1.1
+    static let standard_calorie_reduction_for_weightloss = 0.96
+    static let small_calorie_reduction_for_weightloss = 0.98
+    
+    /// STORY BOARDS
+    static let MAIN_STORYBOARD = UIStoryboard(name: "Main", bundle: nil)
     
     }

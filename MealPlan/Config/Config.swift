@@ -9,8 +9,6 @@
 import UIKit
 
 class Config: NSObject {
-    static let HAS_PROFILE = "hasProfile"
-    
     
     // GET A STRING VALUE
     static func getStringValue(_ key:String ,withDefault :String)->NSString{

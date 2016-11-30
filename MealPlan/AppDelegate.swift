@@ -1,6 +1,7 @@
 import UIKit
 import Fabric
 import Crashlytics
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -10,26 +11,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        
     }
     
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // This method is called to let your app know that it moved from the inactive to active state. This can occur because your app was launched by the user or the system. Apps can also return to the active state if the user chooses to ignore an interruption (such as an incoming phone call or SMS message) that sent the app temporarily to the inactive state.
         
-        DataStructure.loadDatabaseWithData();
+        print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
+        SetUpMealPlan.loadDatabaseWithData();
         
-        if(Config.getBoolValue(Config.HAS_PROFILE)){
-            let response = DataHandler.doesMealPlanExistForThisWeek()
+        if(Config.getBoolValue(Constants.HAS_PROFILE)){
+            
+            let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
             let mealPlanExistsForThisWeek = response.yayNay
-            let numberOfWeeks = response.weeksAhead
+            
+
             
             if mealPlanExistsForThisWeek == false{
-                // ask for new details
-                // generate new calorie requirements
-                // create meal plan
-            } else {
+                askForNewDetails()
+                let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
+                SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
+                SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
+                //Eat TDEE plus what you want // create meal plan from today for the next two weeks (we're starting over)
+                sendToMealPlanViewController(shouldShowExplainerScreen: true)
                 
+            } else {
+                switch response.weeksAhead.count {
+                case 0:
+                    askForNewDetails()
+                    let currentWeek = Week().currentWeek()
+                    let daysUntilExpiry = currentWeek.daysUntilWeekExpires()
+                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry, calorieAllowance: currentWeek.calorieAllowance)
+                    SetUpMealPlan.createWeek(daysUntilCommencement: (daysUntilExpiry + 7), calorieAllowance: currentWeek.calorieAllowance)
+                    sendToMealPlanViewController(shouldShowExplainerScreen: true)
+                    // run a new meal plan for next week and the week after
+                    break
+                case 1:
+                    askForNewDetails()
+                    let calendar = Calendar.current
+                    let currentWeek = Week().currentWeek()
+                    let daysUntilExpiry = currentWeek.daysUntilWeekExpires()
+                    let startOfThisWeek = response.weeksAhead.first?.start_date
+                    let endOfThisWeek = (calendar as NSCalendar).date(byAdding: .day, value: 6, to: currentWeek.start_date, options: [.matchFirst])
+
+                    
+                    //TO-DO: Get next weeks plan and use the foods in those meal plans for generating the next mp
+                    DataHandler.deleteFutureMealPlans() // delete next weeks plan,
+                    var newCaloriesAllowance = 0
+                    
+                    if(Config.getBoolValue(Constants.STANDARD_CALORIE_CUT) == true){
+                        newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: currentWeek, userfoundDiet: (currentWeek.feedback?.easeOfFollowingDiet)!)
+                        
+                    } else {
+                        newCaloriesAllowance = SetUpMealPlan.initialCalorieCut(firstWeek: currentWeek) // run initialCalorieCut
+                        Config.setBoolValue(Constants.STANDARD_CALORIE_CUT,status: true)
+                    }
+
+                    // run a new meal plan based on this for next week and the week after.
+                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry, calorieAllowance: newCaloriesAllowance)
+                    sendToMealPlanViewController(shouldShowExplainerScreen: false)
+
+                    break
+                case 2:
+                    return //we're good so return to your meal plan
+                default:
+                    // this could be because the user is between the 8th day and 12th day of a meal plan.
+                    return
+                }
             }
         }
         
@@ -47,22 +95,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     
+    func askForNewDetails()  {
+        let storyBoard = Constants.MAIN_STORYBOARD
+        let feedbackVC = storyBoard.instantiateViewController(withIdentifier: "feedback");
+        self.window?.rootViewController = feedbackVC
+        self.window?.makeKeyAndVisible()
+    }
+    
+
+    func sendToMealPlanViewController(shouldShowExplainerScreen:Bool){
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
+        if shouldShowExplainerScreen == true{
+            (initialViewController.selectedViewController as! MealPlanViewController).showExplainerScreen = true
+        }
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+        UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+    }
+    
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
             
-        if(Config.getBoolValue(Config.HAS_PROFILE)){
-            DataHandler.createThisWeekAndNextWeek()
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController            
-            self.window?.rootViewController = initialViewController
-            self.window?.makeKeyAndVisible()
-            UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-            /*
-            let thisWeek = DataHandler.getFutureWeeks()[0]
-            for _ in 1...100{
-                DataStructure.createMealPlans(thisWeek)
-            }
-            */
+        if(Config.getBoolValue(Constants.HAS_PROFILE)){
+            sendToMealPlanViewController(shouldShowExplainerScreen: false)
         }
         //Fabric.with([Crashlytics.self])
         return true
@@ -71,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         
-        if(Config.getBoolValue(Config.HAS_PROFILE)){
+        if(Config.getBoolValue(Constants.HAS_PROFILE)){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let pvc = storyboard.instantiateViewController(withIdentifier: "feedback");
             self.window?.rootViewController?.present(pvc, animated: true, completion: { () -> Void in

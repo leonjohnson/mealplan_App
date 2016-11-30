@@ -16,7 +16,7 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
     @IBOutlet var nameLabel: UILabel!
     
     var detailViewController: DetailViewController? = nil
-    var objects = DataStructure.getMeal()
+    var objects = MealPlanAlgorithm.getMeal()
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
@@ -135,7 +135,7 @@ class ListViewController: UIViewController ,UITableViewDelegate, UITableViewData
         return vheadView
     }
     func updateCalCount(){
-        calLabel.text = (DataStructure.calculateTotalCalories(objects)).description + " kCal";
+        calLabel.text = (MealPlanAlgorithm.calculateTotalCalories(objects)).description + " kCal";
     }
     
     

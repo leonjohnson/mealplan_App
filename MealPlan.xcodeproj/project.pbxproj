@@ -27,8 +27,8 @@
 		F78AB7391DBE6DA400BB40EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F21DBE6DA400BB40EA /* Constants.swift */; };
 		F78AB73A1DBE6DA400BB40EA /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */; };
 		F78AB73B1DBE6DA400BB40EA /* createMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */; };
-		F78AB73C1DBE6DA400BB40EA /* DataStructure+methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F51DBE6DA400BB40EA /* DataStructure+methods.swift */; };
-		F78AB73D1DBE6DA400BB40EA /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F61DBE6DA400BB40EA /* DataStructure.swift */; };
+		F78AB73C1DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F51DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift */; };
+		F78AB73D1DBE6DA400BB40EA /* MealPlanAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F61DBE6DA400BB40EA /* MealPlanAlgorithm.swift */; };
 		F78AB73E1DBE6DA400BB40EA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */; };
 		F78AB73F1DBE6DA400BB40EA /* FoodListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F81DBE6DA400BB40EA /* FoodListTableViewCell.swift */; };
 		F78AB7401DBE6DA400BB40EA /* FoodSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F91DBE6DA400BB40EA /* FoodSearchViewController.swift */; };
@@ -77,6 +77,9 @@
 		F78AB76C1DBE6DA400BB40EA /* Step4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7281DBE6DA400BB40EA /* Step4ViewController.swift */; };
 		F78AB76E1DBE6DA400BB40EA /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB72A1DBE6DA400BB40EA /* Util.swift */; };
 		F78AB76F1DBE6DA400BB40EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB72B1DBE6DA400BB40EA /* ViewController.swift */; };
+		F78EDFDC1DEDCD3D00AC1AF7 /* HowTheMealPlanWillWork.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F78EDFDB1DEDCD3D00AC1AF7 /* HowTheMealPlanWillWork.storyboard */; };
+		F78EDFDE1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */; };
+		F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */; };
 		F7C480491DBFF37B00572706 /* Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C480481DBFF37B00572706 /* Deletion.swift */; };
 		F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4804A1DBFFB0000572706 /* RealmString.swift */; };
 		F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5411DD2225E00DA2696 /* BotController.swift */; };
@@ -144,8 +147,8 @@
 		F78AB6F21DBE6DA400BB40EA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = createMealPlan.swift; sourceTree = "<group>"; };
-		F78AB6F51DBE6DA400BB40EA /* DataStructure+methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataStructure+methods.swift"; sourceTree = "<group>"; };
-		F78AB6F61DBE6DA400BB40EA /* DataStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
+		F78AB6F51DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MealPlanAlgorithm+methods.swift"; sourceTree = "<group>"; };
+		F78AB6F61DBE6DA400BB40EA /* MealPlanAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealPlanAlgorithm.swift; sourceTree = "<group>"; };
 		F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F78AB6F81DBE6DA400BB40EA /* FoodListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListTableViewCell.swift; sourceTree = "<group>"; };
 		F78AB6F91DBE6DA400BB40EA /* FoodSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodSearchViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +199,9 @@
 		F78AB72A1DBE6DA400BB40EA /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		F78AB72B1DBE6DA400BB40EA /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F78AB7701DBE74FC00BB40EA /* MealPlan-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MealPlan-Bridging-Header.h"; sourceTree = "<group>"; };
+		F78EDFDB1DEDCD3D00AC1AF7 /* HowTheMealPlanWillWork.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HowTheMealPlanWillWork.storyboard; sourceTree = "<group>"; };
+		F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowTheMealPlanWillWork.swift; sourceTree = "<group>"; };
+		F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpMealPlan.swift; sourceTree = "<group>"; };
 		F7C480481DBFF37B00572706 /* Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deletion.swift; sourceTree = "<group>"; };
 		F7C4804A1DBFFB0000572706 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmString.swift; sourceTree = "<group>"; };
 		F7E3C5401DD2156200DA2696 /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -338,6 +344,8 @@
 		F78AB7051DBE6DA400BB40EA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F78EDFE11DEDE5DA00AC1AF7 /* Algorithm */,
+				F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */,
 				F78AB7081DBE6DA400BB40EA /* DataHandler.swift */,
 				F78AB7061DBE6DA400BB40EA /* Biographical.swift */,
 				F78AB7071DBE6DA400BB40EA /* DailyMealPlan.swift */,
@@ -379,6 +387,16 @@
 			path = Picker;
 			sourceTree = "<group>";
 		};
+		F78EDFE11DEDE5DA00AC1AF7 /* Algorithm */ = {
+			isa = PBXGroup;
+			children = (
+				F78AB6F51DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift */,
+				F78AB6F61DBE6DA400BB40EA /* MealPlanAlgorithm.swift */,
+			);
+			name = Algorithm;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		F7C4803E1DBF5FDF00572706 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,6 +416,7 @@
 				F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */,
 				F78AB6E91DBE6DA400BB40EA /* LaunchScreen.storyboard */,
 				F78AB6EB1DBE6DA400BB40EA /* Main.storyboard */,
+				F78EDFDB1DEDCD3D00AC1AF7 /* HowTheMealPlanWillWork.storyboard */,
 				F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */,
 				F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */,
 				F7FB34FF1DC95F0B00CAB6B7 /* TrackingUsersProgress.storyboard */,
@@ -413,10 +432,9 @@
 				F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */,
 				F78AB6EE1DBE6DA400BB40EA /* CaloriesTableViewCell.swift */,
 				F78AB6EF1DBE6DA400BB40EA /* CaloriesViewController.swift */,
+				F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */,
 				F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */,
 				F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */,
-				F78AB6F51DBE6DA400BB40EA /* DataStructure+methods.swift */,
-				F78AB6F61DBE6DA400BB40EA /* DataStructure.swift */,
 				F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */,
 				F78AB6F81DBE6DA400BB40EA /* FoodListTableViewCell.swift */,
 				F78AB6F91DBE6DA400BB40EA /* FoodSearchViewController.swift */,
@@ -599,6 +617,7 @@
 				F7E3C5521DDB8FF700DA2696 /* outCell.xib in Resources */,
 				F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */,
 				F78AB7341DBE6DA400BB40EA /* Main.storyboard in Resources */,
+				F78EDFDC1DEDCD3D00AC1AF7 /* HowTheMealPlanWillWork.storyboard in Resources */,
 				F78AB7331DBE6DA400BB40EA /* LaunchScreen.storyboard in Resources */,
 				F7E3C5561DDBC44300DA2696 /* miniTableViewCell.xib in Resources */,
 				F7E3C5441DD4AF0F00DA2696 /* Bot.storyboard in Resources */,
@@ -708,6 +727,7 @@
 				F78AB73A1DBE6DA400BB40EA /* ContactUsViewController.swift in Sources */,
 				F78AB76A1DBE6DA400BB40EA /* Step3ViewController.swift in Sources */,
 				F78AB72C1DBE6DA400BB40EA /* AboutUsViewController.swift in Sources */,
+				F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */,
 				F78AB7391DBE6DA400BB40EA /* Constants.swift in Sources */,
 				F78AB7561DBE6DA400BB40EA /* Macronutrient.swift in Sources */,
 				F78AB75E1DBE6DA400BB40EA /* Network.swift in Sources */,
@@ -715,7 +735,7 @@
 				F7E3C54E1DDA3A7E00DA2696 /* customBotMessage.swift in Sources */,
 				F78AB7641DBE6DA400BB40EA /* MultiTag.swift in Sources */,
 				F78AB74D1DBE6DA400BB40EA /* DailyMealPlan.swift in Sources */,
-				F78AB73C1DBE6DA400BB40EA /* DataStructure+methods.swift in Sources */,
+				F78AB73C1DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift in Sources */,
 				F78AB7621DBE6DA400BB40EA /* AKPickerView.swift in Sources */,
 				F78AB75A1DBE6DA400BB40EA /* User.swift in Sources */,
 				F78AB7521DBE6DA400BB40EA /* FoodItem.swift in Sources */,
@@ -728,7 +748,7 @@
 				F78AB75B1DBE6DA400BB40EA /* Week.swift in Sources */,
 				F78AB7381DBE6DA400BB40EA /* Config.swift in Sources */,
 				F7E3C55E1DE5F6EF00DA2696 /* String+Size.swift in Sources */,
-				F78AB73D1DBE6DA400BB40EA /* DataStructure.swift in Sources */,
+				F78AB73D1DBE6DA400BB40EA /* MealPlanAlgorithm.swift in Sources */,
 				F78AB72F1DBE6DA400BB40EA /* ArrayExtension.swift in Sources */,
 				F7FE00151DE70CDE00F43BB7 /* OutgoingCellDelegate.swift in Sources */,
 				F78AB7601DBE6DA400BB40EA /* PayemtAddsTableViewCell.swift in Sources */,
@@ -743,6 +763,7 @@
 				F78AB7501DBE6DA400BB40EA /* FeedBack.swift in Sources */,
 				F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */,
 				F78AB7371DBE6DA400BB40EA /* CaloriesViewController.swift in Sources */,
+				F78EDFDE1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift in Sources */,
 				F78AB7551DBE6DA400BB40EA /* FoodType.swift in Sources */,
 				F78AB74C1DBE6DA400BB40EA /* Biographical.swift in Sources */,
 				F78AB75C1DBE6DA400BB40EA /* mpButton.swift in Sources */,

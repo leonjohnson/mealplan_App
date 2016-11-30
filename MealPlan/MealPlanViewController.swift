@@ -33,8 +33,8 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPTableViewCellDelegate {
     
-    //For SettingsTab bar
-    var settingsControl : Bool?
+    var showExplainerScreen : Bool?
+    var settingsControl : Bool? //For SettingsTab bar
     
     //@IBOutlet var workOutIcon: UIView!
     @IBOutlet var mealPlanListTable : UITableView!
@@ -57,22 +57,69 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     var nextWeek: Week = Week()
     
     var dateCount:Int = 0
+    
+    
+    
+    
+    
+
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        //Constants.LOCALISATION_NEEDED
+        
+        var stringWithName = DataHandler.getActiveUser().name
+        
+        if stringWithName.uppercased().characters.last == "S"{
+            stringWithName = stringWithName + "' meal plan"
+        } else{
+            stringWithName = stringWithName + "'s meal plan"
+        }
+        nameLabel.attributedText? = NSAttributedString(string:stringWithName, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
+    }
+    
+    override func viewDidLoad() {
+        // ENABLE TO MOVE TO START PAGE
+        Config.setBoolValue(Constants.HAS_PROFILE,status: true)
+        
+        super.viewDidLoad()
+        mealPlanListTable.delegate = self
+        
+        //self.workOutIcon.hidden = true
+        
+        //Code commented for Tempraory time based on client request.[code for view to drag to each meal plans header]
+        //        dragger = DragToTable.activate(workOutIcon, table: mealPlanListTable, view: self.view, listen: { (indexPath) -> Void in
+        //
+        //            let item =  self.objects[indexPath.section]
+        //
+        //            if(item.foodItems.last?.food!.pk != 0){
+        //
+        //                let work = DataHandler.getOrCreateFood(0)
+        //
+        //                DataHandler.addFoodItemToMeal(item, foodItem:DataHandler.createFoodItem(work, numberServing: 1) )
+        //            }
+        //        })
+        // Do any additional setup after loading the view.
+    }
+
+    
+    
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(true)
         
         
-        thisWeek = DataHandler.getFutureWeeks()[0]
+        thisWeek = SetUpMealPlan.getThisWeekAndNext()[0]
         
-        print("0 start date: \(DataHandler.getFutureWeeks()[0].start_date)")
-        print("1 start date: \(DataHandler.getFutureWeeks()[1].start_date)")
+        print("0 start date: \(SetUpMealPlan.getThisWeekAndNext()[0].start_date)")
+        print("1 start date: \(SetUpMealPlan.getThisWeekAndNext()[1].start_date)")
         
         let calendar: Calendar = Calendar.current
         let date1 = calendar.startOfDay(for: thisWeek.start_date as Date)
         let date2 = calendar.startOfDay(for: Date())
         let flags = NSCalendar.Unit.day
         let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: [])
-        
         print("Dates : \(date1) and \(date2)")
         
         
@@ -83,7 +130,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         meals = Array(thisWeek.dailyMeals[dateCount].meals)
 
         mealPlanListTable.reloadData();
-
         mealPlanDate.text = dateForthisMealPlan // Monday June 30, 2014 10:42:21am PS
         mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
 
@@ -164,13 +210,13 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //Update the mealPlan selected
         if dateCount > 6 && dateCount < 15 {
             //this is week 2
-            thisWeek = DataHandler.getFutureWeeks()[1]
+            thisWeek = SetUpMealPlan.getThisWeekAndNext()[1]
             index = dateCount - 7
         }
         
         if (dateCount >= 0) && (dateCount <= 6) {
             //this is week 1
-            thisWeek = DataHandler.getFutureWeeks()[0]
+            thisWeek = SetUpMealPlan.getThisWeekAndNext()[0]
             index = dateCount
         }
         
@@ -189,7 +235,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             backDateButton.alpha = 1.0
         }
         
-        if (dateCount == 13) && (thisWeek == DataHandler.getFutureWeeks()[1]){
+        if (dateCount == 13) && (thisWeek == SetUpMealPlan.getThisWeekAndNext()[1]){
             nextDateButton.isUserInteractionEnabled = false
             nextDateButton.alpha = 0.5
         } else {
@@ -252,53 +298,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     
-    override func viewDidLoad() {
-        
-        // ENABLE TO MOVE TO START PAGE
-        Config.setBoolValue(Config.HAS_PROFILE,status: true)
-        
-        super.viewDidLoad()
-        mealPlanListTable.delegate = self
-        
-        //self.workOutIcon.hidden = true
-        
-        
-        
-        
-        //Code commented for Tempraory time based on client request.[code for view to drag to each meal plans header]
-        //        dragger = DragToTable.activate(workOutIcon, table: mealPlanListTable, view: self.view, listen: { (indexPath) -> Void in
-        //
-        //            let item =  self.objects[indexPath.section]
-        //
-        //            if(item.foodItems.last?.food!.pk != 0){
-        //
-        //                let work = DataHandler.getOrCreateFood(0)
-        //
-        //                DataHandler.addFoodItemToMeal(item, foodItem:DataHandler.createFoodItem(work, numberServing: 1) )
-        //            }
-        //        })
-        // Do any additional setup after loading the view.
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        //Constants.LOCALISATION_NEEDED
-        
-        var stringWithName = DataHandler.getActiveUser().name
-        
-        if stringWithName.uppercased().characters.last == "S"{
-            stringWithName = stringWithName + "' meal plan"
-        } else{
-            stringWithName = stringWithName + "'s meal plan"
-        }
-        nameLabel.attributedText? = NSAttributedString(string:stringWithName, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
-    }
+
     
     
     

@@ -29,7 +29,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let futureWeeks = DataHandler.getFutureWeeks()
+        let futureWeeks = SetUpMealPlan.getThisWeekAndNext()
         thisWeek = futureWeeks[0]
         assert(futureWeeks[1] != Week(), "Invalid futureWeek")
         nextWeek = futureWeeks[1]
@@ -92,7 +92,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //To display Regestered Users name on Meal Plan's page
         namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().name.capitalized + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
-        
+        super.viewWillAppear(true)
     }
     
     
@@ -179,9 +179,16 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func mealPalnButtonClick(_ sender: AnyObject){
         
+        /*
+        let storyboard = UIStoryboard(name: "HowTheMealPlanWillWork", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "explanation")
+        navigationController?.pushViewController(destination, animated: true)
+        */
+        
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let destination = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
         navigationController?.pushViewController(destination, animated: true)
+        
     
     }
     

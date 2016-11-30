@@ -4,14 +4,58 @@ import RealmSwift
 class Week: Object {
     
     dynamic var name = "" // 1,2,3 etc but this may include strings at a later date
-    dynamic var start_date = Date()
+    dynamic var start_date = Calendar.current.startOfDay(for: Date())
     let dailyMeals = List<DailyMealPlan>()
     let macroAllocation = List<Macronutrient>()
     dynamic var feedback:FeedBack?
-    dynamic var calorieAllowance : Int = 0
-    dynamic var TDEE : Int = 0
+    dynamic var TDEE : Int = 0 // What I need
+    dynamic var calorieAllowance:Int = 0 // Recommended for this stage in my journey
+    dynamic var calorieConsumption:Int = 0 // what I ate this week. Lets assume that I ate everything in my meal plan for now.
     
     
+    func calculateCalorieConsumption()->Int{
+        var totalCalories = 0
+        for mealplan in self.dailyMeals{
+            totalCalories = totalCalories + Int(mealplan.totalCalories())
+        }
+        return totalCalories
+    }
+    
+    func lastWeek()->Results<Week>{
+        let calendar = Constants.Calendar.usersCalendar
+        let aWeekAgo = (calendar as NSCalendar).date(byAdding: .day, value: -7, to: calendar.startOfDay(for: self.start_date), options: [.matchFirst])
+        let aWeekAgoPredicate = NSPredicate(format: "start_date == %@", aWeekAgo! as CVarArg)
+        
+        let realm = try! Realm()
+        let lastWeek = realm.objects(Week.self).filter(aWeekAgoPredicate).sorted(byProperty: "start_date", ascending: true)
+        return lastWeek
+    }
+    
+    func daysUntilWeekExpires()->Int{
+        let calendar = Constants.Calendar.usersCalendar
+        let endOfWeek = (calendar as NSCalendar).date(byAdding: .day, value: 7, to: self.start_date, options: [.matchFirst])
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: NSDate() as Date), to: endOfWeek!)
+        return days.day!
+    }
+    
+    
+    func end_date()->Date{
+        let calendar = NSCalendar.current
+        var components = DateComponents()
+        components.day = 7
+        components.hour = 12
+        let endDate = calendar.date(byAdding: .day, value: 7, to: self.start_date)
+        return endDate!
+    }
+    
+    func currentWeek()->Week{
+        let calendar = Constants.Calendar.usersCalendar
+        let aWeekAgo = (calendar as NSCalendar).date(byAdding: .day, value: -7, to: calendar.startOfDay(for: self.start_date), options: [.matchFirst])
+        let aWeekAgoPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
+        let realm = try! Realm()
+        let currentWeek = realm.objects(Week.self).filter(aWeekAgoPredicate).sorted(byProperty: "start_date", ascending: true).first
+        return currentWeek!
+    }
     
     /*
     Decision: Keep calorieAllowance and TDEE to Week level
