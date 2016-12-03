@@ -211,7 +211,7 @@ class Connect: NSObject {
      */
     static func importDataFromJSON() -> (foodArray:NSArray, JSON:NSArray)  {
         var items = [Food]();
-        guard let path = Bundle.main.path(forResource: "initialLoad3", ofType: "json") else {
+        guard let path = Bundle.main.path(forResource: "initialLoad4", ofType: "json") else {
             print("Error retriving any local objects")
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
             return (NSArray(), NSArray())

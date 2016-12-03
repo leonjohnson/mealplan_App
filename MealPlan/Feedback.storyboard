@@ -324,7 +324,7 @@
                                                                     <constraint firstAttribute="height" constant="100" id="15H-dg-oA4"/>
                                                                 </constraints>
                                                                 <prototypes>
-                                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bolatedCell" id="wTj-Tj-iXW">
+                                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dietEaseCell" id="wTj-Tj-iXW">
                                                                         <rect key="frame" x="0.0" y="28" width="300" height="50"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wTj-Tj-iXW" id="UIl-dd-Svh">
@@ -776,10 +776,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="1197"/>
                     <connections>
-                        <outlet property="BloatedView" destination="C7u-39-fRb" id="W7h-Bi-4dd"/>
                         <outlet property="WeekPlanView" destination="tck-b0-VXT" id="G3V-tr-bpd"/>
-                        <outlet property="bolatedLevelTable" destination="1ta-EM-s6l" id="krQ-WF-Und"/>
                         <outlet property="closeButton" destination="zkN-mW-Mwx" id="a8f-Pf-TYb"/>
+                        <outlet property="dietEaseTable" destination="1ta-EM-s6l" id="J9G-bh-zWS"/>
                         <outlet property="helpLevelTable" destination="46X-cj-hdM" id="Kc0-kH-drM"/>
                         <outlet property="hungryLevelTable" destination="hJz-Vx-TeM" id="EOe-Yg-HDy"/>
                         <outlet property="hungryView" destination="raM-vu-41q" id="Bxa-A3-KYx"/>

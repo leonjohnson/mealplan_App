@@ -119,11 +119,12 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let date1 = calendar.startOfDay(for: thisWeek.start_date as Date)
         let date2 = calendar.startOfDay(for: Date())
         let flags = NSCalendar.Unit.day
-        let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: [])
+        let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: []) // the difference in days
         print("Dates : \(date1) and \(date2)")
         
         
         dateCount = components.day!
+        print("The difference in days = \(dateCount)")
         
         let dateForthisMealPlan = setDate()
         //meals = Array(data.meals)
@@ -203,9 +204,14 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return formatter.string(from: dateForthisMealPlan!)
     }
     
+    
+    
+    
     @IBAction func changeMealPlanDisplayed(_ sender: UIButton){
         var index : Int?
         dateCount = dateCount + sender.tag
+        print("sender.tag = \(sender.tag)")
+        print("dateCount = \(dateCount)")
         
         //Update the mealPlan selected
         if dateCount > 6 && dateCount < 15 {
@@ -376,7 +382,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                 ending = " " + (foodItem.food?.name)! + "s"
             default:
                 ending = " " + ending
-            
             }
             
             let amount = Int(roundToPlaces((foodItem.numberServing * servingQuantityAsNumber), decimalPlaces: 0))

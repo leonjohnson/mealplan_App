@@ -171,7 +171,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" id="yZp-la-9AM" userLabel="Settings"/>
+                    <tabBarItem key="tabBarItem" title="More" id="yZp-la-9AM" userLabel="Settings"/>
                     <navigationItem key="navigationItem" id="A74-O0-15l"/>
                     <connections>
                         <outlet property="settingsLabel" destination="hlX-LJ-7DJ" id="Rhc-uQ-e44"/>
@@ -6197,7 +6197,7 @@
         <scene sceneID="0ZN-Cj-4bA">
             <objects>
                 <navigationController title="Settings" navigationBarHidden="YES" id="jLe-46-o4X" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="settings unfilled" selectedImage="settings filled" id="q1e-pZ-KME"/>
+                    <tabBarItem key="tabBarItem" title="More" image="More Filled" id="q1e-pZ-KME"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IEE-jf-ieS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -6214,6 +6214,7 @@
     <resources>
         <image name="Meal Filled-50" width="25" height="25"/>
         <image name="Meal-50" width="25" height="25"/>
+        <image name="More Filled" width="25" height="25"/>
         <image name="Pie Chart Filled-50" width="25" height="25"/>
         <image name="Pie Chart-50" width="25" height="25"/>
         <image name="back" width="22" height="22"/>
@@ -6221,8 +6222,6 @@
         <image name="backButton" width="24" height="24"/>
         <image name="burg1" width="640" height="360"/>
         <image name="next" width="22" height="22"/>
-        <image name="settings filled" width="25" height="25"/>
-        <image name="settings unfilled" width="25" height="25"/>
         <image name="up arrow" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>

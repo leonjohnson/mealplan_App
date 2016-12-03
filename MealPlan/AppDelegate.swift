@@ -25,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
             let mealPlanExistsForThisWeek = response.yayNay
             
-
+            let testCurrentWeek = Week().currentWeek()
+            print("TESTS: \n1. areThereWeeksAheads:\(response.yayNay) numberOfWeeksAhead:\(response.weeksAhead)")
+            print("TESTS: \n2. CurrentWeek:\(testCurrentWeek) days until it expires:\(testCurrentWeek?.daysUntilWeekExpires())")
             
             if mealPlanExistsForThisWeek == false{
                 askForNewDetails()
@@ -38,41 +40,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             } else {
                 switch response.weeksAhead.count {
                 case 0:
+                    print("Case 0")
                     askForNewDetails()
                     let currentWeek = Week().currentWeek()
-                    let daysUntilExpiry = currentWeek.daysUntilWeekExpires()
-                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry, calorieAllowance: currentWeek.calorieAllowance)
-                    SetUpMealPlan.createWeek(daysUntilCommencement: (daysUntilExpiry + 7), calorieAllowance: currentWeek.calorieAllowance)
+                    let daysUntilExpiry = currentWeek?.daysUntilWeekExpires()
+                    guard currentWeek != nil else {
+                        print("Error at 1")
+                        return
+                    }
+                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: (currentWeek?.calorieAllowance)!)
+                    SetUpMealPlan.createWeek(daysUntilCommencement: (daysUntilExpiry! + 7), calorieAllowance: (currentWeek?.calorieAllowance)!)
                     sendToMealPlanViewController(shouldShowExplainerScreen: true)
+                    
                     // run a new meal plan for next week and the week after
                     break
                 case 1:
+                    print("Case 1")
                     askForNewDetails()
                     let calendar = Calendar.current
                     let currentWeek = Week().currentWeek()
-                    let daysUntilExpiry = currentWeek.daysUntilWeekExpires()
+                    let daysUntilExpiry = currentWeek?.daysUntilWeekExpires()
                     let startOfThisWeek = response.weeksAhead.first?.start_date
-                    let endOfThisWeek = (calendar as NSCalendar).date(byAdding: .day, value: 6, to: currentWeek.start_date, options: [.matchFirst])
+                    let endOfThisWeek = (calendar as NSCalendar).date(byAdding: .day, value: 6, to: (currentWeek?.start_date)!, options: [.matchFirst])
 
                     
                     //TO-DO: Get next weeks plan and use the foods in those meal plans for generating the next mp
                     DataHandler.deleteFutureMealPlans() // delete next weeks plan,
                     var newCaloriesAllowance = 0
                     
+                    guard currentWeek != nil else {
+                        print("Error at 2")
+                        return
+                    }
                     if(Config.getBoolValue(Constants.STANDARD_CALORIE_CUT) == true){
-                        newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: currentWeek, userfoundDiet: (currentWeek.feedback?.easeOfFollowingDiet)!)
+                        newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: currentWeek!, userfoundDiet: (currentWeek?.feedback?.easeOfFollowingDiet)!)
                         
                     } else {
-                        newCaloriesAllowance = SetUpMealPlan.initialCalorieCut(firstWeek: currentWeek) // run initialCalorieCut
+                        newCaloriesAllowance = SetUpMealPlan.initialCalorieCut(firstWeek: currentWeek!) // run initialCalorieCut
                         Config.setBoolValue(Constants.STANDARD_CALORIE_CUT,status: true)
                     }
-
+                    
                     // run a new meal plan based on this for next week and the week after.
-                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry, calorieAllowance: newCaloriesAllowance)
+                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
                     sendToMealPlanViewController(shouldShowExplainerScreen: false)
 
                     break
                 case 2:
+                    print("Case 2")
                     return //we're good so return to your meal plan
                 default:
                     // this could be because the user is between the 8th day and 12th day of a meal plan.
@@ -96,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     
     func askForNewDetails()  {
-        let storyBoard = Constants.MAIN_STORYBOARD
+        let storyBoard = Constants.FEEDBACK_STORYBOARD
         let feedbackVC = storyBoard.instantiateViewController(withIdentifier: "feedback");
         self.window?.rootViewController = feedbackVC
         self.window?.makeKeyAndVisible()

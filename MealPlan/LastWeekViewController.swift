@@ -21,7 +21,6 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
     
     @IBOutlet var closeButton : UIButton!
     @IBOutlet var hungryView : UIView!
-    @IBOutlet var BloatedView : UIView!
     @IBOutlet var weekFeelView : UIView!
     @IBOutlet var WeekPlanView : UIView!
        
@@ -98,7 +97,7 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
             return cell
         }else if (tableView == dietEaseTable){
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "bolatedCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "dietEaseCell", for: indexPath)
             cell.textLabel?.text = dietEaseArray[indexPath.row].rawValue
             
             if (selectedDietEaseValue == indexPath.row){

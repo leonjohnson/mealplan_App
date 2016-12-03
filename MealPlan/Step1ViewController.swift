@@ -110,7 +110,6 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
    
     
     override func viewDidLoad() {
-        print("here 4")
         super.viewDidLoad()
         
         //Set Label fonts
@@ -129,7 +128,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         let ageAtString = NSAttributedString(string: "Age", attributes: [NSFontAttributeName: Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.BLACK_COLOR])
         
-        
+        nameText.autocorrectionType = .no
         nameText.attributedPlaceholder = nameAtString
         ageText.attributedPlaceholder = ageAtString
         

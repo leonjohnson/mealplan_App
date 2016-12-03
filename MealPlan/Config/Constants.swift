@@ -89,7 +89,7 @@ struct Constants {
     static let FATS = "Fats"
     static let CALORIES = "kCals"
     static let NUMBER_OF_NUTRIENTS_TO_DISPLAY = 8
-    static let MACRONUTRIENTS = ["Proteins", "Carbohydrates", "Fats", "Vegetable"]
+    static let MACRONUTRIENTS = [Constants.PROTEINS, Constants.CARBOHYDRATES, Constants.FATS, Constants.vegetableFoodType]
     
     
     //NSPredicate constants
@@ -310,5 +310,6 @@ struct Constants {
     
     /// STORY BOARDS
     static let MAIN_STORYBOARD = UIStoryboard(name: "Main", bundle: nil)
+    static let FEEDBACK_STORYBOARD = UIStoryboard(name: "Feedback", bundle: nil)
     
     }

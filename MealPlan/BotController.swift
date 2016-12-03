@@ -94,7 +94,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         //self.navigationController?.hidesBottomBarWhenPushed = true
         self.navigationController?.toolbar.isHidden = false
         print("viewWillAppear got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)\n")
-        
+        self.inputToolbar.contentView.textView.autocorrectionType = .no
     }
     
     

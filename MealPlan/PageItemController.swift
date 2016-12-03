@@ -69,7 +69,6 @@ class PageItemController: UIViewController {
     
     @IBAction func lestStartAction()
     {
-        print("button pressed")
         [performSegue(withIdentifier: "identifier", sender: nil)]
     }
     

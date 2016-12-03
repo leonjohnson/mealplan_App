@@ -59,7 +59,7 @@ class SetUpMealPlan: NSObject {
             let oftenEatenWith : NSArray = foodInJsonArray.object(forKey: "oftenEatenWith") as! NSArray
             let alwaysEatenWithOneOf : NSArray = foodInJsonArray.object(forKey: "alwaysEatenWithOneOf") as! NSArray
             
-            let foodToEdit = realm.objects(Food).filter("name == %@", food.name)
+            let foodToEdit = realm.objects(Food.self).filter("name == %@", food.name)
             
             let realm = try! Realm()
             try! realm.write {
@@ -67,13 +67,13 @@ class SetUpMealPlan: NSObject {
                 if oftenEatenWith.count > 0 {
                     //for each in
                     let foodPredicate = NSPredicate(format: "name IN %@", oftenEatenWith)
-                    let oew = realm.objects(Food).filter(foodPredicate)
+                    let oew = realm.objects(Food.self).filter(foodPredicate)
                     foodToEdit.first!.setValue(List(oew), forKey: "oftenEatenWith")
                 }
                 
                 if alwaysEatenWithOneOf.count > 0 {
                     let foodPredicate2 = NSPredicate(format: "name IN %@", alwaysEatenWithOneOf)
-                    let aew = realm.objects(Food).filter(foodPredicate2)
+                    let aew = realm.objects(Food.self).filter(foodPredicate2)
                     foodToEdit.first!.setValue(List(aew), forKey: "alwaysEatenWithOneOf")
                 }
                 
@@ -83,14 +83,16 @@ class SetUpMealPlan: NSObject {
     }
 
     
-    static func isLoosingWeight(thisWeek:Week)->Bool {
+    static func isLoosingWeight(thisWeek:Week)->Bool? {
         let thisWeeksWeight = thisWeek.feedback?.weekWeightMeasurement
         guard (thisWeek.lastWeek().first != nil) else {
-            return true
+            return nil
         }
         let lastWeeksWeight = thisWeek.lastWeek().first?.feedback?.weekWeightMeasurement
         return Int(thisWeeksWeight!) < Int(lastWeeksWeight!) ? true : false
     }
+    
+    
     
     static func cutCalories(fromWeek :Week, userfoundDiet: Constants.dietEase)->Int{
         switch userfoundDiet {
@@ -167,11 +169,14 @@ class SetUpMealPlan: NSObject {
         let realm = try! Realm()
         let calender = Calendar.current
         let today = calender.startOfDay(for: Date())
-        let todayPredicate = NSPredicate(format: "start_date ==", today as CVarArg)
+        
+        print("start date")
+        
+        let todayPredicate = NSPredicate(format: "start_date == %@", today as CVarArg)
         let mealPlanStartingToday = realm.objects(Week.self).filter(todayPredicate).first
         
         if mealPlanStartingToday != nil {
-            let futureWeeksPredicate = NSPredicate(format: "start_date > %@", today as CVarArg)
+            let futureWeeksPredicate = NSPredicate(format: "start_date >= %@", today as CVarArg)
             let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
             let weeksAheadArray : [Week] = weeksAhead.map {$0}
             return (true, weeksAheadArray)
