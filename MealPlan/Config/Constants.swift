@@ -162,7 +162,7 @@ struct Constants {
     static let activityLevelsAtWork = ["Sedentary", "Lightly active", "Moderately active", "Very active"] // This array is used for display purposes
     
     //MINIMUM NUMBER OF GRAMS TO IGNORE IF DEFICIT
-    static let maximumNumberOfGramsToIgnore = 3.0
+    static let maximumNumberOfGramsToIgnore = 2.0
     
     static let vegetablesAsPercentageOfCarbs = 0.15
     
@@ -304,7 +304,7 @@ struct Constants {
     static let HAS_PROFILE = "hasProfile"
     static let FIRST_CALORIE_CUT = "firstCalorieCut"
     static let STANDARD_CALORIE_CUT = "standardCalorieCut"
-    static let standard_calorie_increase_for_muscle = 1.1
+    static let standard_calorie_increase_for_muscle = 1.075
     static let standard_calorie_reduction_for_weightloss = 0.96
     static let small_calorie_reduction_for_weightloss = 0.98
     

@@ -1,8 +1,9 @@
 import UIKit
 import RealmSwift
 import JSQMessagesViewController
+import JSQSystemSoundPlayer
 
-final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotDelegate, UITableViewDelegate {
+final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     var messages:[JSQMessage] = [JSQMessage]();
     
@@ -132,6 +133,25 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         self.collectionView.collectionViewLayout.messageBubbleFont = UIFont(name: "Helvetica Neue", size: 13)
         
         
+        // MARK: ### SET SEND BUTTON AS IMAGE
+        let rightButton = UIButton(frame: CGRect.zero)
+        let sendImage = UIImage(named: "Sent")
+        rightButton.setImage(sendImage, for: UIControlState.normal)
+        self.inputToolbar.contentView?.rightBarButtonItemWidth = CGFloat(34.0)
+        self.inputToolbar.contentView?.rightBarButtonItem = rightButton
+        
+        
+        // MARK: ### DISABLE COPY/PASTE
+        // 1. add gesture recognizer to know when text view is tapped
+        // 2. add blocking view after 0.7 sec
+        // 3. all other methods like subclassing UITextView and using categories to not work
+        let tap = UITapGestureRecognizer(target: self, action:  #selector(BotController.handleTap))
+        
+        tap.delegate = self
+        self.inputToolbar.contentView?.textView?.addGestureRecognizer(tap)
+    
+ 
+        
         
         let user = DataHandler.getActiveUser()
         self.senderId = user.name
@@ -220,6 +240,12 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             answers[questionIndex].removeFirst()
         }
         progressToNextQuestion()
+        
+        // MARK: ### PLAY SOUND FOR SENT MESSAGE
+        // 1. add JSQSystemSoundPlayer pod
+        // 2. add JSQSystemSoundPlayer+JSQMessages.h category
+        // 3. add bridging header to use this category
+        JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
     }
     
@@ -362,6 +388,8 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         let lastCell = IndexPath(item: self.collectionView.numberOfItems(inSection: 0)-1, section: 0)
         self.scroll(to: lastCell as IndexPath!, animated: true)
     }
+    
+    
     
     /*
      - (void)scrollToBottomAnimated:(BOOL)animated
@@ -521,7 +549,23 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         }
     }
 
-
+    // MARK - UIGestureRecognizerDelegate
+    func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
+        return true
+    }
+    func handleTap(sender: UITapGestureRecognizer? = nil) {
+        print(#function)
+        self.perform(#selector(BotController.disableEditing), with: nil, afterDelay: 0.7)
+    }
+    
+    func disableEditing() {
+        let blockView = UIView(frame: CGRect(x: (self.inputToolbar.contentView?.textView?.frame.origin.x)!, y: (self.inputToolbar.contentView?.textView?.frame.origin.y)!, width: (self.inputToolbar.contentView?.textView?.frame.size.width)!, height: (self.inputToolbar.contentView?.textView?.frame.size.height)!))
+        blockView.backgroundColor = .clear
+        blockView.isUserInteractionEnabled = true
+        self.inputToolbar.contentView?.addSubview(blockView)
+    }
+    
+    
 
 
 }

@@ -230,8 +230,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         
-
-        self.navigationController!.popToRootViewController(animated: true);
+        self.navigationController?.popViewController(animated: true)
+        //self.navigationController!.popToRootViewController(animated: true);
     }
     
     

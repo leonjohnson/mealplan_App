@@ -336,7 +336,7 @@ class DataHandler: NSObject {
     }
     static func readFoodsData(_ name:String)->[Food]{
         let realm = try! Realm()
-        let items = realm.objects(Food).filter("name contains '" + name + "' and pk != 0")
+        let items = realm.objects(Food.self).filter("name contains '" + name + "' and pk != 0").sorted(byProperty: "name", ascending: true)
         return Array(items)
     }
     

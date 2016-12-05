@@ -198,8 +198,9 @@
 		F78AB7701DBE74FC00BB40EA /* MealPlan-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MealPlan-Bridging-Header.h"; sourceTree = "<group>"; };
 		F78EDFDB1DEDCD3D00AC1AF7 /* HowTheMealPlanWillWork.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HowTheMealPlanWillWork.storyboard; sourceTree = "<group>"; };
 		F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowTheMealPlanWillWork.swift; sourceTree = "<group>"; };
-		F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpMealPlan.swift; sourceTree = "<group>"; };
+		F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetUpMealPlan.swift; path = Model/SetUpMealPlan.swift; sourceTree = "<group>"; };
 		F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = initialLoad4.json; sourceTree = "<group>"; };
+		F78EDFE41DF328AE00AC1AF7 /* jsq_messages_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = jsq_messages_sample.m4a; path = Model/jsq_messages_sample.m4a; sourceTree = "<group>"; };
 		F7C480481DBFF37B00572706 /* Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deletion.swift; sourceTree = "<group>"; };
 		F7C4804A1DBFFB0000572706 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmString.swift; sourceTree = "<group>"; };
 		F7E3C5401DD2156200DA2696 /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -318,6 +319,7 @@
 				F78AB7171DBE6DA400BB40EA /* Network */,
 				F7C480441DBF61D100572706 /* Payment */,
 				F7C480451DBF61DF00572706 /* Settings */,
+				F78EDFE41DF328AE00AC1AF7 /* jsq_messages_sample.m4a */,
 				F78AB6E51DBE6DA400BB40EA /* Assets.xcassets */,
 				F78AB6FB1DBE6DA400BB40EA /* IconImages.xcassets */,
 				F78AB7041DBE6DA400BB40EA /* Media.xcassets */,
@@ -342,7 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				F78EDFE11DEDE5DA00AC1AF7 /* Algorithm */,
-				F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */,
 				F78AB7081DBE6DA400BB40EA /* DataHandler.swift */,
 				F78AB7061DBE6DA400BB40EA /* Biographical.swift */,
 				F78AB7071DBE6DA400BB40EA /* DailyMealPlan.swift */,
@@ -389,6 +390,7 @@
 			children = (
 				F78AB6F51DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift */,
 				F78AB6F61DBE6DA400BB40EA /* MealPlanAlgorithm.swift */,
+				F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */,
 			);
 			name = Algorithm;
 			path = ..;
@@ -432,10 +434,10 @@
 				F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */,
 				F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */,
 				F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */,
-				F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */,
 				F78AB6F81DBE6DA400BB40EA /* FoodListTableViewCell.swift */,
 				F78AB6F91DBE6DA400BB40EA /* FoodSearchViewController.swift */,
 				F78AB7021DBE6DA400BB40EA /* MealPlanViewController.swift */,
+				F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */,
 				F78AB7031DBE6DA400BB40EA /* MPTableViewCell.swift */,
 				F78AB6FA1DBE6DA400BB40EA /* Height&WeightListViewController.swift */,
 				F78AB7001DBE6DA400BB40EA /* LastWeekViewController.swift */,

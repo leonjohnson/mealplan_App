@@ -182,8 +182,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
         //let difference = components.day  // This will return the number of day(s) between dates, so I can get today's meal
         */
-        
-        let components = DateComponents()
+        print("dateCount : \(dateCount)")
+        var components = DateComponents()
         
         var index : Int = 0
         if dateCount > 6 && dateCount < 15 {
@@ -191,8 +191,12 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             index = dateCount
         }
-        (components as NSDateComponents).setValue(index, forComponent: NSCalendar.Unit.day);
         
+        print("index : \(index)")
+        components.day = index
+        
+        //(components as NSDateComponents).setValue(index, forComponent: NSCalendar.Unit.day);
+        print("component: \(components.day)")
         
         let dateForthisMealPlan = (Calendar.current as NSCalendar).date(byAdding: components, to: thisWeek.start_date as Date, options: NSCalendar.Options(rawValue: 0))
         
