@@ -23,7 +23,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     
     
-    var selectedPath = 4;
+    var selectedPath = 0;
     
     //variable created for constant class
     let profile = Biographical();
@@ -74,6 +74,8 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Constants.dietTypes.count
     }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = Constants.dietTypes[indexPath.row];
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -86,6 +88,9 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
         }
         return cell
     }
+    
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedPath = indexPath.row;
         tableView.reloadData();
@@ -102,7 +107,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     //IBAction for NextButton Clicked in Step2 VC. Saving all datas into an ProfileClass.
     @IBAction func step2NextButtonClicked (_ sender : AnyObject){
         //Saving Values to the Varible Declared for ProfileStep2 constant class.
-        if (selectedPath == 4){
+        if (selectedPath < 0){
             let alert = UIAlertController(title: "", message: "Select your dietary needs", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
@@ -113,8 +118,11 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
             return
             
         }
+        if Constants.dietTypes[selectedPath] != Constants.NONE_OF_THE_ABOVE{
+            DataHandler.updateProfileDiet([Constants.dietTypes[selectedPath]])
+        }
         
-        DataHandler.updateProfileDiet(Constants.dietTypes[selectedPath])
+        
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){

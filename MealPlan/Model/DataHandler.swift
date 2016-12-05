@@ -125,8 +125,8 @@ class DataHandler: NSObject {
             profile.addMoreDefinition.value = bio.addMoreDefinition.value
             profile.howLong           = bio.howLong
             
-            profile.heightMeasurement = bio.heightMeasurement;
-            profile.weightMeasurement = bio.weightMeasurement;
+            profile.heightMeasurement = bio.heightMeasurement
+            profile.weightMeasurement = bio.weightMeasurement
             
             profile.weightUnit = bio.weightUnit;
             profile.heightUnit = bio.heightUnit;
@@ -134,11 +134,17 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateProfileDiet(_ newData:String){
+    static func updateProfileDiet(_ dietsSelected:[String]){
         let profile = getActiveBiographical()
         let realm = try! Realm()
+        var dietsTypesUserSubscribesTo : [DietSuitability] = []
+        dietsSelected.map({
+            let dietSuitability = realm.objects(DietSuitability).filter("name = %@", $0)
+            dietsTypesUserSubscribesTo.append(diet.first)
+        })
+        
         try! realm.write {
-            profile.dietaryRequirement = newData
+            profile.dietaryRequirement.append(dietsTypesUserSubscribesTo)
             
         }
     }
@@ -433,9 +439,18 @@ class DataHandler: NSObject {
                 return each
             }
         }
-        print("RETURNING THE WRONG FOODTYPE !!")
+        print("Error.")
         return x.first!
     }
+    
+    
+    static func getCondimentFoodType()->FoodType{
+        let realm = try! Realm()
+        let condiment = realm.objects(FoodType.self).filter("name contains %@", Constants.condimentFoodType)
+        return condiment.first
+    }
+    
+    
     
     
     

@@ -3,13 +3,13 @@ import RealmSwift
 
 class Biographical: Object {
     
-    
     dynamic var numberOfDailyMeals: Int = 0
     dynamic var howLong: Int = 0
     
     dynamic var muscularity: String? = nil
-    dynamic var dietaryRequirement: String? = nil
     dynamic var activityLevelAtWork: String? = nil
+    
+    let dietaryRequirement = List<DietSuitability>()
     
     var looseFat = RealmOptional<Bool>()
     var gainMuscle = RealmOptional<Bool>()

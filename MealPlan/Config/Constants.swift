@@ -22,6 +22,7 @@ struct Constants {
     static let THE_FOODS_STRING  = "TAP THE FOODS YOU "
     static let WEEK_STRING  =  "How many weeks would you like to do this for? "
     static let WEEK_RESULT_STRING  =   "*We recommend 8-20 for best results "
+    static let NONE_OF_THE_ABOVE = "None of the above"
     
     //Fonts
     static let STANDARD_FONT = UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular)
@@ -98,7 +99,8 @@ struct Constants {
     static let vegetableFoodType = "Vegetable"
     static let fruitFoodType = "Fruit"
     static let drinkFoodType = "Drink"
-    static let condiment = "Condiment"
+    static let condimentFoodType = "Condiment"
+    static let mealFoodType = "Meat"
     static let glutenFree = "Gluten free"
     static let Vegan = "Vegan"
     static let vegetarian = "Vegetarian"
@@ -106,7 +108,7 @@ struct Constants {
     static let lactoseFree = "Lactose free"
     static let fish = "Fish"
     static let fizzy = "Fizzy"
-    static let dietTypes = [Constants.vegetarian, Constants.Vegan, /*Constants.pescatarian, Constants.lactoseFree,*/ Constants.glutenFree, "None of the above"]
+    static let dietTypes = [Constants.vegetarian, Constants.Vegan, /*Constants.pescatarian, Constants.lactoseFree,*/ Constants.glutenFree, Constants.NONE_OF_THE_ABOVE]
 
     
     
@@ -128,7 +130,7 @@ struct Constants {
     
     
     //FoodTypes
-    static var FOOD_TYPES = [Constants.drinkFoodType, Constants.fizzy, Constants.fruitFoodType, Constants.vegetableFoodType, Constants.eatenAtBreakfastFoodType, Constants.onlyBreakfastFoodType, Constants.fish, Constants.condiment]
+    static var FOOD_TYPES = [Constants.drinkFoodType, Constants.fizzy, Constants.fruitFoodType, Constants.vegetableFoodType, Constants.eatenAtBreakfastFoodType, Constants.onlyBreakfastFoodType, Constants.fish, Constants.condimentFoodType]
     
     
     //Calender
