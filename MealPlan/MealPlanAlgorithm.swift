@@ -472,7 +472,7 @@ class MealPlanAlgorithm : NSObject{
                 
                 
                 
-                //TODO: REFACTOR. We can ensure that the below is only used for debugging. Sorting should come at the end.
+                //MARK TODO: REFACTOR. We can ensure that the below is only used for debugging. Sorting should come at the end.
                 
                 for foodArray in foodBasket{
                     foodArrayEmpty: if foodArray.isEmpty{
@@ -730,7 +730,6 @@ class MealPlanAlgorithm : NSObject{
                     }
                     
                     if deficient < Constants.maximumNumberOfGramsToIgnore {
-                        print("Broke! \n")
                         break breakLabel
                     }
                     else if deficient >= 20{
@@ -751,7 +750,6 @@ class MealPlanAlgorithm : NSObject{
                     }
                     
                     if food.name == ""{
-                        print("Possibly at 0")
                         let randomInt = Int(arc4random_uniform(UInt32(lightProteins.count)))
                         foodOptions.append(lightProteins[randomInt])
                         //food = lightProteins[randomInt]
