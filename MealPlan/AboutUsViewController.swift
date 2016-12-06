@@ -10,17 +10,21 @@ import UIKit
 
 class AboutUsViewController: UIViewController {
     
+    @IBOutlet weak var webView: UIWebView!
     
     //For SettingsTab bar
     var settingsControl : Bool?
     var fromController = NSString()
 
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView.loadRequest(NSURLRequest(url: NSURL(string: Constants.ABOUT_US_URL)! as URL) as URLRequest)
 
         // Do any additional setup after loading the view.
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
