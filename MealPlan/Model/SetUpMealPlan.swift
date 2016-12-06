@@ -2,6 +2,38 @@ import UIKit
 import RealmSwift
 
 class SetUpMealPlan: NSObject {
+
+    static func loadDatInBackroundThread(){
+        DispatchQueue.global(qos: .background).async {
+            Connect.fetchInitialFoods(nil) { (foods, json, status) -> Void in
+
+                if(status == false){
+
+                    // @todo show an alert that we need a alert here
+                    print("STATUS : \(status)")
+                    return;
+                }
+
+                //Load nutritional information for these foods.
+                print("foods count : \(foods?.count)")
+                for  food in foods!{
+                    DataHandler.createFood(food);
+                }
+
+                //Add the food pairings
+                addFoodPairingsToDatabase(foods!,json: json)
+
+                //createMeal();
+                Config.setBoolValue("isCreated", status: true);
+                print("Got it created!")
+                
+            }
+
+            DispatchQueue.main.async {
+                print("back to main main queue after complete")
+            }
+        }
+    }
     
     static func loadDatabaseWithData(){
         
@@ -11,29 +43,7 @@ class SetUpMealPlan: NSObject {
         
         DietSuitability.addRowData();
         FoodType.addFoodTypes()
-        Connect.fetchInitialFoods(nil) { (foods, json, status) -> Void in
-            
-            if(status == false){
-                
-                // @todo show an alert that we need a alert here
-                print("STATUS : \(status)")
-                return;
-            }
-            
-            //Load nutritional information for these foods.
-            print("foods count : \(foods?.count)")
-            for  food in foods!{
-                DataHandler.createFood(food);
-            }
-            
-            //Add the food pairings
-            addFoodPairingsToDatabase(foods!,json: json)
-            
-            //createMeal();
-            Config.setBoolValue("isCreated", status: true);
-            print("Got it created!")
-            
-        }
+        loadDatInBackroundThread()
     }
     
     
@@ -167,7 +177,7 @@ class SetUpMealPlan: NSObject {
         let realm = try! Realm()
         let calender = Calendar.current
         let today = calender.startOfDay(for: Date())
-        let todayPredicate = NSPredicate(format: "start_date ==", today as CVarArg)
+        let todayPredicate = NSPredicate(format: "start_date == %@", today as CVarArg)
         let mealPlanStartingToday = realm.objects(Week.self).filter(todayPredicate).first
         
         if mealPlanStartingToday != nil {

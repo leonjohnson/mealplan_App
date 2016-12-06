@@ -1,13 +1,13 @@
 import UIKit
-
-class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
+import MessageUI
+class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFMailComposeViewControllerDelegate {
     
     
     @IBOutlet var settingsTable : UITableView!
     @IBOutlet var settingsLabel : UILabel!
     
     let bio  = Biographical()
-    let settingstableImages = ["Profile", "Diet", "LikeFood", "DislikeFood", "AboutUs", "ContactUs"]
+    let settingstableImages = ["AboutUs", "ContactUs"]
     
     
     override func viewDidLoad() {
@@ -29,7 +29,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if (section == 0){
-            return 6;
+            return 2;
         }else{
             return 1
         }
@@ -54,21 +54,9 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
             switch indexPath.row {
             case 0:
-                cell.textLabel?.text = "Your details"
-                cell.imageView?.image = imageName
-            case 1:
-                cell.textLabel?.text = "Your diet"
-                cell.imageView?.image = imageName
-            case 2:
-                cell.textLabel?.text = "Food you like"
-                cell.imageView?.image = imageName
-            case 3:
-                cell.textLabel?.text = "Food you dislike"
-                cell.imageView?.image = imageName
-            case 4:
                 cell.textLabel?.text = "About us"
                 cell.imageView?.image = imageName
-            case 5:
+            case 1:
                 cell.textLabel?.text = "Contact us"
                 cell.imageView?.image = imageName
             default:
@@ -94,42 +82,21 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
         switch indexPath.row {
         case 0:
-            let destination = storyboard.instantiateViewController(withIdentifier: "step1StoryBoardID") as! Step1ViewController
-            destination.settingsControl = true
-            //destination.fromController = "step1Settings"
-            navigationController?.pushViewController(destination, animated: true)
-        case 1:
-            let destination = storyboard.instantiateViewController(withIdentifier: "step2StoryBoardID") as! Step2ViewController
-            destination.settingsControl = true
-            //destination.fromController = "step2Settings"
-            navigationController?.pushViewController(destination, animated: true)
-        case 2:
-            let destination = storyboard.instantiateViewController(withIdentifier: "step3StoryBoardID") as! Step3ViewController
-            destination.settingsControl = true
-            //destination.fromController = "step3Settings"
-            navigationController?.pushViewController(destination, animated: true)
-        case 3:
-            let destination = storyboard.instantiateViewController(withIdentifier: "step4StoryBoardID") as! Step4ViewController
-            destination.settingsControl = true
-            //destination.fromController = "step4Settings"
-            navigationController?.pushViewController(destination, animated: true)
-        case 4:
             let destination = storyboard.instantiateViewController(withIdentifier: "aboutUsStoryBoardID") as! AboutUsViewController
             destination.settingsControl = true
             //destination.fromController = "step1Settings"
             navigationController?.pushViewController(destination, animated: true)
-        case 5:
-            let destination = storyboard.instantiateViewController(withIdentifier: "contactUsStoryBoardID") as! ContactUsViewController
-            destination.settingsControl = true
-            //destination.fromController = "step1Settings"
-            navigationController?.pushViewController(destination, animated: true)
+            break;
+        case 1:
+            sendMail()
+            break;
         default:
             break
-        }
+            }
         }
         else{
             let storyboard = UIStoryboard(name: "Feedback", bundle: Bundle.main)
-            let destination = storyboard.instantiateViewController(withIdentifier: "feedback") as! LastWeekViewController
+            let destination = storyboard.instantiateInitialViewController() as! LastWeekViewController
             destination.settingsControl = true
             navigationController?.pushViewController(destination, animated: true)
 
@@ -138,7 +105,27 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
 
     }
+    func sendMail(){
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            return
+        }else{
+            let composeVC = MFMailComposeViewController()
+            composeVC.mailComposeDelegate = self
+
+            // Configure the fields of the interface.
+            composeVC.setToRecipients(["address@example.com"])
+            composeVC.setSubject("Hello! Have look")
+            composeVC.setMessageBody("Hello from Meals Plan!", isHTML: false)
+
+            // Present the view controller modally.
+            self.present(composeVC, animated: true, completion: nil)
+        }
+    }
     
+
+    private func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        self.dismiss(animated: true, completion: nil)    }
 
 
 

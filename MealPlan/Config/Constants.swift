@@ -4,7 +4,12 @@ struct Constants {
     
     static let BOT_NAME = "BOT"
     static let LOCALISATION_NEEDED = "LOCALISATION_NEEDED"
-    
+
+    static let URL_VERSION_CHECK = "http://echo.jsontest.com/version/1.0.1/"
+    static let API_VERSION  = "version"
+    static let URL_UPDATE_URL = "itms://itunes.apple.com/de/app/mealsapp/id8001010"
+      static let ABOUT_US_URL = "https://www.google.com/intl/en/about/"
+
     static let API_URL  = BASE_URL + API_SEPERATOR + API_KEY + API_SEPERATOR
     static let BASE_URL = "http://mp0.herokuapp.com"
     static let API_SEARCH_LIMIT = 20

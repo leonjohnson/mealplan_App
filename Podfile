@@ -14,6 +14,11 @@ target 'MealPlan' do
     pod 'JSQMessagesViewController'
 end
 
+target 'MealPlanTests' do
+    pod 'RealmSwift' #'~> 2.0.1'
+    pod 'JSQMessagesViewController'
+end
+
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
