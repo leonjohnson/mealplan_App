@@ -205,13 +205,19 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
         
         
         
-        feedBack.weekWeightMeasurement  = weightVal!
-        feedBack.WeekWeightUnit   =  (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs");
+        feedBack.weightMeasurement  = weightVal!
+        feedBack.weightUnit   =  (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs");
         
         
-        // MARK: TODO save it to the last week meel
+        // MARK: TODO save it to the last week mealplan
         self.dismiss(animated: true) { () -> Void in
-            
+            if let weekJustFinished = Week().lastWeek().first{
+                weekJustFinished.feedback?.weightMeasurement = 0.0
+                
+                weekJustFinished.feedback?.weightUnit = Constants.KILOGRAMS
+                
+                weekJustFinished.feedback?.hungerLevels = ""
+            }
         }
         
         //From Settings View:

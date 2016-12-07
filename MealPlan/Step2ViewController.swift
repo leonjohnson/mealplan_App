@@ -23,7 +23,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     
     
-    var selectedPath = 0;
+    var selectedPath = -1;
     
     //variable created for constant class
     let profile = Biographical();
@@ -48,8 +48,10 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
             //Close Button whn app. loads from settings view.
             closeButton.isHidden = false
             
-        activeDietValue = DataHandler.getActiveBiographical().dietaryRequirement!
-        selectedPath = Constants.dietTypes.index(of: activeDietValue)!
+            if activeDietValue == (DataHandler.getActiveBiographical().dietaryRequirement.first?.name)!{
+                selectedPath = Constants.dietTypes.index(of: activeDietValue)!
+            }
+        
         }
 
         areYouLabel.font = Constants.GENERAL_LABEL

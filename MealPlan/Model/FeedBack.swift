@@ -8,8 +8,8 @@ class FeedBack: Object {
     dynamic var hungerLevels = ""
     dynamic var bloating = Bool()
     dynamic var didItHelped = Bool()
-    dynamic var weekWeightMeasurement = 0.0
-    dynamic var WeekWeightUnit = ""
+    dynamic var weightMeasurement = 0.0
+    dynamic var weightUnit = ""
     var easeOfFollowingDiet : Constants.dietEase = .unstated
 
 }

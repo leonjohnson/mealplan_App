@@ -80,15 +80,15 @@ class DataHandler: NSObject {
         }
     }
     
-    static func getBreakfastOnlyFoods()->[Food]{
+    static func getBreakfastOnlyFoods()->[String]{
         let realm = try! Realm()
         let breakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.onlyBreakfastFoodType)
         let breakfastFoods = realm.objects(Food.self).filter(breakfastPredicate)
-        var foods : [Food] = []
+        var foodNames : [String] = []
         for f in breakfastFoods{
-            foods.append(f)
+            foodNames.append(f.name)
         }
-        return foods
+        return foodNames
     }
 
     
@@ -138,13 +138,15 @@ class DataHandler: NSObject {
         let profile = getActiveBiographical()
         let realm = try! Realm()
         var dietsTypesUserSubscribesTo : [DietSuitability] = []
-        dietsSelected.map({
-            let dietSuitability = realm.objects(DietSuitability).filter("name = %@", $0)
-            dietsTypesUserSubscribesTo.append(diet.first)
+        dietsTypesUserSubscribesTo = dietsSelected.map({
+            realm.objects(DietSuitability.self).filter("name = %@", $0).first!
         })
         
+        
         try! realm.write {
-            profile.dietaryRequirement.append(dietsTypesUserSubscribesTo)
+            for each in dietsTypesUserSubscribesTo {
+                profile.dietaryRequirement.append(each)
+            }
             
         }
     }
@@ -358,7 +360,7 @@ class DataHandler: NSObject {
             
         }
         
-        let items = realm.objects(Food).filter("name contains '" + name + "' and pk != 0").filter("NOT name IN %@", namesOfFoodsLiked)
+        let items = realm.objects(Food.self).filter("name contains '" + name + "' and pk != 0").filter("NOT name IN %@", namesOfFoodsLiked)
         print("NEW items contain : \(items.count)")
         
         return Array(items)
@@ -384,7 +386,7 @@ class DataHandler: NSObject {
     {
         var order = Constants.SERVING_SIZE_ORDER
         let realm = try! Realm()
-        let sizes = realm.objects(ServingSize)
+        let sizes = realm.objects(ServingSize.self)
         for serving in sizes{
             if !order.contains(serving.name){
                 order.append(serving.name)
@@ -446,8 +448,9 @@ class DataHandler: NSObject {
     
     static func getCondimentFoodType()->FoodType{
         let realm = try! Realm()
-        let condiment = realm.objects(FoodType.self).filter("name contains %@", Constants.condimentFoodType)
-        return condiment.first
+        let predicate = NSPredicate(format: "name = %@", Constants.condimentFoodType)
+        let condiment = realm.objects(FoodType.self).filter(predicate)
+        return condiment.first!
     }
     
     

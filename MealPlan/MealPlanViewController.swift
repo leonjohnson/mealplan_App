@@ -44,6 +44,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var mealPlanDate: UILabel!
     @IBOutlet weak var backDateButton: UIButton!
     @IBOutlet weak var nextDateButton: UIButton!
+    @IBOutlet weak var mealPlanTally: MacrosTallyView!
     
     var alertController : UIAlertController?
     
@@ -129,14 +130,14 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let dateForthisMealPlan = setDate()
         //meals = Array(data.meals)
         meals = Array(thisWeek.dailyMeals[dateCount].meals)
-
+        
         mealPlanListTable.reloadData();
         mealPlanDate.text = dateForthisMealPlan // Monday June 30, 2014 10:42:21am PS
         mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
 
         
-        alertController = UIAlertController(title: "Title",
-                                            message: "Message",
+        alertController = UIAlertController(title: "Reason for removing this food?",
+                                            message: "",
                                             preferredStyle: .actionSheet)
         
         let tooEarlyAction : UIAlertAction = UIAlertAction(title: "Too early for this",
@@ -165,10 +166,38 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         alertController?.addAction(dislikeAction)
         alertController?.addAction(cancelAction)
         
+        updateMacroTally(forDay: dateCount)
+        
         
 
     }
     
+    func updateMacroTally(forDay:Int){
+        print("size of the imageview: \(mealPlanTally.imageView.frame)")
+        var longString = ""
+        let variance = thisWeek.dailyMeals[forDay].calculateMacroDiscrepancy(macros: thisWeek.macroAllocation)
+        if variance.yesOrNo == false{
+            mealPlanTally.headline.attributedText = NSAttributedString(string: "The macros in your meal plan are looking good today.", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            mealPlanTally.imageView.image = #imageLiteral(resourceName: "macroCheckMark")
+            
+        } else {
+            if variance.amount[Constants.PROTEINS] > 0 {
+                longString.append("\n\(Constants.roundToPlaces(variance.amount[Constants.PROTEINS]!, decimalPlaces: 1))g of protein")
+            }
+            if variance.amount[Constants.CARBOHYDRATES] > 0 {
+                longString.append("\n\(Constants.roundToPlaces(variance.amount[Constants.CARBOHYDRATES]!, decimalPlaces: 1))g of carbohyrdates")
+            }
+            if variance.amount[Constants.FATS] > 0 {
+                longString.append("\n\(Constants.roundToPlaces(variance.amount[Constants.FATS]!, decimalPlaces: 1))g of fat")
+            }
+            mealPlanTally.headline.attributedText = NSAttributedString(string: "You need an extra: \(longString) today.", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            mealPlanTally.imageView.image = #imageLiteral(resourceName: "CrossMark")
+            
+            //"Out by: \(variance.amount[Constants.PROTEINS]), \(variance.amount[Constants.CARBOHYDRATES]), \(variance.amount[Constants.FATS])"
+        }
+        print("mealPlanTally.headline: \(mealPlanTally.headline.text)")
+        print("size of the imageview IMAGE: \(mealPlanTally.imageView.image?.size)")
+    }
 
     
     
@@ -265,6 +294,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         meals = Array(thisWeek.dailyMeals[index!].meals)
         mealPlanListTable.reloadData();
+        updateMacroTally(forDay: index!)
+        
+        
     }
     
     
@@ -567,21 +599,26 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //let index = self.mealPlanListTable
         //let index = (toDoItems as NSArray).indexOfObject(toDoItem)
         //if index == NSNotFound { return }
-        
 
         
         switch editType {
         case Constants.DELETE:
             self.present(alertController!, animated: true, completion: nil)
             let foodItem = meals[indexPath.section].foodItems[indexPath.row]
-            DataHandler.removeFoodItem(foodItem)
             //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
             mealPlanListTable.reloadData()
-            if deleteSheetIndexSelected == 0 {
-                // TODO: insert a Deletion record
-                print("")
-            } else if deleteSheetIndexSelected == 1 {
-                // TODO: insert a Deletion record
+            
+            switch deleteSheetIndexSelected {
+            case 0:
+                print("sheet 0")
+            case 1:
+                print("sheet 1")
+            case 2:
+                print("sheet 2")
+            case 3:
+                print("sheet 2")
+                DataHandler.removeFoodItem(foodItem)
+            default:
                 print("")
             }
          case Constants.EDIT:
@@ -591,7 +628,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         default:
             break
         }
-        
         //let indexPathForRow = NSIndexPath(forRow: index, inSection: 0)
         //tableView.deleteRowsAtIndexPaths([indexPathForRow], withRowAnimation: .Fade)
         

@@ -39,6 +39,50 @@ class DailyMealPlan: Object {
         return totalFat
     }
     
+    func calculateMacroDiscrepancy(macros: List<Macronutrient>)->(yesOrNo:Bool,amount:[String:Double]){
+        
+        var overAcceptableLimitBy : [String: Double] = [String:Double]()
+        var totalProteins = 0.00
+        var totalCarbs = 0.00
+        var totalFats = 0.00
+        for meal in self.meals{
+            totalProteins = totalProteins + meal.totalProteins()
+            totalCarbs = totalCarbs + meal.totalCarbohydrates()
+            totalFats = totalFats + meal.totalFats()
+        }
+        
+        if abs((totalProteins) - (macros[0].value)) > 5.0{
+            overAcceptableLimitBy[Constants.PROTEINS] = abs((totalProteins) - (macros[0].value)) - 5.0
+        } else {
+            overAcceptableLimitBy[Constants.PROTEINS] = 0
+        }
+        
+        
+        if abs((totalCarbs) - (macros[1].value)) > 7.0{
+            overAcceptableLimitBy[Constants.CARBOHYDRATES] = abs((totalCarbs) - (macros[1].value)) - 7.0
+        } else {
+            overAcceptableLimitBy[Constants.CARBOHYDRATES] = 0
+        }
+        
+        
+        if abs((totalFats) - (macros[2].value)) > 3.0{
+            overAcceptableLimitBy[Constants.FATS] = abs((totalFats) - (macros[2].value)) - 3.0
+        } else {
+            overAcceptableLimitBy[Constants.FATS] = 0
+        }
+        
+        /*overAcceptableLimitBy = [Constants.PROTEINS: abs((totalProteins) - (macros[0].value)),
+                         Constants.CARBOHYDRATES: abs((totalCarbs) - (macros[1].value)),
+                         Constants.FATS: abs((totalFats) - (macros[2].value))]
+ */
+        print("over Acceptable Limit By: \(overAcceptableLimitBy)")
+        
+        let significantVariance = (overAcceptableLimitBy[Constants.CARBOHYDRATES]! > 0.0 || overAcceptableLimitBy[Constants.PROTEINS]! > 0.0 || overAcceptableLimitBy[Constants.FATS]! > 0.0) ? true : false
+        
+        print("returning with: \(significantVariance)")
+        return (significantVariance, overAcceptableLimitBy)
+    }
+    
     func containsFood(_ food:Food)->Bool{
         for meal in meals{
             for fi in meal.foodItems{

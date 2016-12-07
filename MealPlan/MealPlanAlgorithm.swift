@@ -16,6 +16,8 @@ class MealPlanAlgorithm : NSObject{
         if numberOfMealsRemaining == 0{
             remainingMeals = 1
         }
+        print("check numberOfMealsRemaining: \(numberOfMealsRemaining)")
+        
         
         overflowP = ((macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!)/Double(remainingMeals))
         overflowC = ((macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!)/Double(remainingMeals))
@@ -120,8 +122,8 @@ class MealPlanAlgorithm : NSObject{
         let readyToEatPredicate = NSPredicate(format: "readyToEat == %@", NSNumber(value: true as Bool))
         //http://stackoverflow.com/questions/6169121/how-to-write-a-bool-predicate-in-core-data
         let vegetarianPredicate = NSPredicate(format: "ANY SELF.dietSuitablity.name == [c] %@", Constants.vegetarian)
-        let dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitablity.name IN [c] %@", dietRequirements)
         
+        //let dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitablity IN [c] %@", dietRequirements)
         
         /*
         let noPretFood = NSPredicate(format: "NOT name CONTAINS[c] 'PRET'")
@@ -165,11 +167,11 @@ class MealPlanAlgorithm : NSObject{
         
         
         // CREATE PREDICATES
-        let compoundPredForCarbs = NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, carbTreatPredicate, dislikedFoodsPredicate, notCondiment, notOnlyBreakfastPredicate/*, readyToEatPredicate*/])
+        let compoundPredForCarbs = NSCompoundPredicate(andPredicateWithSubpredicates: [carbTreatPredicate, dislikedFoodsPredicate, notCondiment,  /* notOnlyBreakfastPredicate, readyToEatPredicate, dietaryRequirementPredicate*/])
         
-        let compoundPredForProteins = NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate,lightProteinTreat, dislikedFoodsPredicate, vegetarianPredicate, notCondiment, notOnlyBreakfastPredicate])
+        let compoundPredForProteins = NSCompoundPredicate(andPredicateWithSubpredicates: [lightProteinTreat, dislikedFoodsPredicate, vegetarianPredicate, notCondiment]) /*notOnlyBreakfastPredicate, dietaryRequirementPredicate*/
         
-        let compoundPredForHeavyProteins = NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, highProteinPredicate, dislikedFoodsPredicate, notCondiment, notOnlyBreakfastPredicate])
+        let compoundPredForHeavyProteins = NSCompoundPredicate(andPredicateWithSubpredicates: [highProteinPredicate, dislikedFoodsPredicate, notCondiment /*notOnlyBreakfastPredicate, dietaryRequirementPredicate*/])
         
         let extraCarbTreats = realm.objects(Food.self).filter(compoundPredForCarbs)
         var lightProteins = realm.objects(Food.self).filter(compoundPredForProteins)
@@ -197,7 +199,7 @@ class MealPlanAlgorithm : NSObject{
                 var sortedFoodItemBasket : [[FoodItem]] = [ [], [], [], [] ]
                 
                 listOfAndPredicates = []
-                listOfAndPredicates.append(contentsOf: [dietaryRequirementPredicate, dislikedFoodsPredicate, notCondiment, highProteinPredicate])
+                listOfAndPredicates.append(contentsOf: [/*dietaryRequirementPredicate,*/ dislikedFoodsPredicate, notCondiment, highProteinPredicate])
                 
                 if mealIndex == 1{
                     listOfAndPredicates.popLast()
@@ -224,7 +226,7 @@ class MealPlanAlgorithm : NSObject{
                 foodBasket[proteinIndex].append(p)
                 print("Protein selected is : \(p.name) ")
                 if p.alwaysEatenWithOneOf.count > 0{
-                    let aCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate, dietaryRequirementPredicate])
+                    let aCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate /*,dietaryRequirementPredicate*/])
                     let options = p.alwaysEatenWithOneOf.filter(aCompoundPredicate)
                     randomNumber = arc4random_uniform(UInt32(options.count))
                     //TODO: Place this AEWOO in the right basket
@@ -249,7 +251,6 @@ class MealPlanAlgorithm : NSObject{
                     }
                     newRandNum = arc4random_uniform(UInt32(lightProteins.count))
                     let newFood = lightProteins[Int(newRandNum)]
-                    print("Second protein selected under random_yay_nay : \(newFood.name) ")
                     
                     if foodBasket[proteinIndex].contains(newFood) == false {
                         foodBasket[proteinIndex].append(newFood)
@@ -299,7 +300,7 @@ class MealPlanAlgorithm : NSObject{
                 }
                 
                 //let carbsApportionatedSoFar = dailyMealPlan.totalCarbohydrates() + carbsSoFarFromFoodBasket
-                var carbPredicateList = [dietaryRequirementPredicate, dislikedFoodsPredicate, highCarbPredicate, notCondiment]
+                var carbPredicateList = [/*dietaryRequirementPredicate*/ dislikedFoodsPredicate, highCarbPredicate, notCondiment]
                 if mealIndex == 1{
                     carbPredicateList.append(eatenAtBreakfastPredicate)
                 }
@@ -347,8 +348,6 @@ class MealPlanAlgorithm : NSObject{
                     var newRandNum = arc4random_uniform(UInt32(extraCarbTreats.count))
                     let newFood = extraCarbTreats[Int(newRandNum)]
                     
-                    print("Second Carb selected under random_yay_nay : \(newFood.name) ")
-                    
                     if foodBasket[proteinIndex].contains(newFood) == false {
                         foodBasket[carbIndex].append(newFood)
                         
@@ -385,7 +384,7 @@ class MealPlanAlgorithm : NSObject{
 
                 
                 //fats if required FOR THIS MEAL!
-                var fatPredicateList = [dietaryRequirementPredicate, dislikedFoodsPredicate, highFatPredicate]
+                var fatPredicateList = [/*dietaryRequirementPredicate,*/ dislikedFoodsPredicate, highFatPredicate]
                 if mealIndex == 1{
                     fatPredicateList.append(eatenAtBreakfastPredicate)
                 }
@@ -405,7 +404,7 @@ class MealPlanAlgorithm : NSObject{
                 }
                 
                 let fatsApportionatedSoFar = dailyMealPlan.totalFats() + fatsSoFarFromFoodBasket
-                var fatOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: fatPredicateList))
+                var fatOptions = realm.objects(Food.self).filter(NSCompoundPredicate(andPredicateWithSubpredicates: fatPredicateList))
                 let OEWfatOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: fatPredicateList))
                 if (fatsNeededToday > 0) && (fatsApportionatedSoFar < Double(fatsRequiredSoFar)) && (fatOptions.count > 0) {
                     if OEWfatOptions.count > 0{
@@ -443,8 +442,8 @@ class MealPlanAlgorithm : NSObject{
                 
                 //vegetables or fruit
                 if mealIndex > 1{
-                    var vegetableOptions = realm.objects(Food).filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
-                    let OEWvegetableOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
+                    var vegetableOptions = realm.objects(Food.self).filter(NSCompoundPredicate(andPredicateWithSubpredicates: [/*dietaryRequirementPredicate,*/ dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
+                    let OEWvegetableOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: [/*dietaryRequirementPredicate,*/ dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
                     if OEWvegetableOptions.count > 0{
                         vegetableOptions = OEWvegetableOptions
                     }
@@ -509,7 +508,7 @@ class MealPlanAlgorithm : NSObject{
                     
                     let key = Constants.MACRONUTRIENTS[loop]
 
-                    print("\(key.capitalized) loop: \n leftOverForThisMeal: \(leftOverForThisMeal) \n\n")
+                    print("\(key.capitalized) loop: \n leftOverForThisMeal: \(leftOverForThisMeal) \n")
                     
                     if (foodArray.count > 0) && (key != Constants.vegetableFoodType) {
                         //Get the remaining amount left for today, for this macronutrient, and divide it amongst the remaining number of meals for today
@@ -521,7 +520,7 @@ class MealPlanAlgorithm : NSObject{
                         // Not negative and not tiny amounts
                         if desiredToday > 1 && leftOverForThisMeal[0] > -5 && leftOverForThisMeal[1] > -5 && leftOverForThisMeal[2] > -5{
                             //TO-DO: Consider a parameter for the split bewteen two proteins/carbs etc
-                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false, beforeComeBackFlag: true)
+                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false, beforeComeBackFlag: true, dietaryRequirements: dietRequirements)
                             sortedFoodItemBasket.append(results)
                             
                             for fi in results{
@@ -551,7 +550,7 @@ class MealPlanAlgorithm : NSObject{
                         let desiredAmount = eatNoMoreThanC * Constants.vegetablesAsPercentageOfCarbs
                         
                         if desiredAmount > 5 {
-                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false, beforeComeBackFlag: true)
+                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false, beforeComeBackFlag: true, dietaryRequirements: dietRequirements)
                             sortedFoodItemBasket.append(results)
                             
                             for fooditem in results{
@@ -601,6 +600,10 @@ class MealPlanAlgorithm : NSObject{
                     
                     
                     for foodItem in foodArray{
+                        
+                        print("Was: \(foodItem.numberServing)\n")
+                        foodItem.numberServing = Constants.roundToPlaces(foodItem.numberServing, decimalPlaces: 2) // rounding for customer use
+                        print("After rounding: \(foodItem.numberServing)\n")
                         
                         print("\(count):  \(foodItem.food!.name.capitalized), \n Serving size: \(foodItem.numberServing) \n Proteins: \(foodItem.food!.proteins*foodItem.numberServing), \n carbs: \(foodItem.food!.carbohydrates*foodItem.numberServing), \n fats: \(foodItem.food!.fats*foodItem.numberServing) \n kcal : \(foodItem.getTotalCal()) \n\n")
                     }
@@ -659,7 +662,7 @@ class MealPlanAlgorithm : NSObject{
                     break
                 }
                 deficient = macrosDesiredToday[macro]! - macrosAllocatedToday[macro]!
-                let allFoodCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, dislikedFoodsPredicate, notCondiment])
+                let allFoodCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates: [/*dietaryRequirementPredicate,*/ dislikedFoodsPredicate, notCondiment])
                 
                 let allFoods = realm.objects(Food.self).filter(allFoodCompoundPred).sorted(byProperty: macro.lowercased(), ascending: true)
                 var array = [Food]()
@@ -716,12 +719,15 @@ class MealPlanAlgorithm : NSObject{
                 for each in extraFoods{
                     print("Food found: \(each.name)")
                 }
-                
+                print("Got here 1")
                 //TO-DO: Need to sort foods using a custom sort function
                 
                 breakLabel: switch macro {
                 case Constants.PROTEINS: // TODO - DELETE as this should never be called.
+                    print("Got here 2")
                     deficient = macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!
+                    print("Got here : \(deficient)")
+                    
                     var food :Food = Food()
                     var foodOptions : [Food] = [Food]()
                     
@@ -733,8 +739,10 @@ class MealPlanAlgorithm : NSObject{
                         break breakLabel
                     }
                     else if deficient >= 20{
+                        print("")
                         proBreakLabel: for fo in highProteins{
                             if /*foodsAlreadySelected.contains(fo.name) == false && */fo.alwaysEatenWithOneOf.count == 0 && [Constants.ml, Constants.grams].contains((fo.servingSize?.name)!){
+                                print("Got here 3")
                                 foodOptions.append(fo)
                                 //food = fo
                             }
@@ -744,6 +752,7 @@ class MealPlanAlgorithm : NSObject{
                         proBreakLabel2: for fo in highProteins.reversed(){
                             if /*foodsAlreadySelected.contains(fo.name) == false &&*/ fo.alwaysEatenWithOneOf.count == 0 && [Constants.ml, Constants.grams].contains((fo.servingSize?.name)!){
                                 foodOptions.append(fo)
+                                print("Got here 4")
                                 //food = fo
                             }
                         }
@@ -752,6 +761,7 @@ class MealPlanAlgorithm : NSObject{
                     if food.name == ""{
                         let randomInt = Int(arc4random_uniform(UInt32(lightProteins.count)))
                         foodOptions.append(lightProteins[randomInt])
+                        print("Got here 5")
                         //food = lightProteins[randomInt]
                     }
                     //comeBackProteinFoodItem.food = food
@@ -786,7 +796,7 @@ class MealPlanAlgorithm : NSObject{
                     
                     
                     
-                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false)
+                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)
                     
                     
                     guard fi.count > 0  else {
@@ -877,7 +887,7 @@ class MealPlanAlgorithm : NSObject{
                         foodOptions = [foodOptions.first!] //if we need less than 20g, then only select one food to be the hero.
                     }
                     
-                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false)
+                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)
                     
                     
                     if fi.count == 0 {
@@ -906,9 +916,13 @@ class MealPlanAlgorithm : NSObject{
                 case Constants.FATS:
                     deficient = macrosDesiredToday[Constants.FATS]! - macrosAllocatedToday[Constants.FATS]!
                     
+                    //let highFatOilPredicate = NSPredicate(format: "fats > 80 AND ANY SELF.oftenEatenWith IN %@", dailyMealPlan.foods())
+                    
+                    // Find any foods that have a fat content above 80, any of its oew foods are in the list of todays meal plan
                     let highFatOilPredicate = NSPredicate(format: "fats > 80 AND ANY SELF.oftenEatenWith IN %@", dailyMealPlan.foods())
                     
-                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates:[highFatPredicate, highFatOilPredicate, notCondiment, dietaryRequirementPredicate])
+                    
+                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates:[highFatPredicate, highFatOilPredicate /*notCondiment dietaryRequirementPredicate,*/])
                     
                     let extraFatFoods = realm.objects(Food.self).filter(fPredicate).sorted(byProperty: Constants.FATS.lowercased(), ascending: true)
                     //TODO: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
@@ -972,10 +986,11 @@ class MealPlanAlgorithm : NSObject{
                     }
                     
                     if deficient < 20 {
-                        foodOptions = [foodOptions.first!] //if we need less than 20g, then only select one food to be the hero.
+                        let randomInt = Int(arc4random_uniform(UInt32(foodOptions.count)))
+                        foodOptions = [foodOptions[randomInt]] //if we need less than 20g, then only select one food to be the hero.
                     }
                     
-                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false)
+                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)
                     
                     if fi.count == 0 {
                         print("The food couldnn't be scaled so exiting the loop.")
@@ -1167,9 +1182,30 @@ class MealPlanAlgorithm : NSObject{
     static func assignMealTo(_ macro:String, foodItem:FoodItem, plan:DailyMealPlan) ->DailyMealPlan{
     
         assert([Constants.PROTEINS, Constants.CARBOHYDRATES, Constants.FATS].contains(macro), "INVALID MACRO USED")
+       
+        let eatenAtBreakfast = DataHandler.getFoodType(Constants.eatenAtBreakfastFoodType)
+        let eatenAtBreakfastFlag = (foodItem.food?.foodType.contains(eatenAtBreakfast))! ? true : false
+        let breakFastOnly = DataHandler.getFoodType(Constants.onlyBreakfastFoodType)
         var lowestMeal = plan.meals[0]
         
-        for meal in plan.meals{
+        
+        
+        if (foodItem.food?.foodType.contains(breakFastOnly))!{
+            lowestMeal.foodItems.append(foodItem)
+            print("Assigning: \(foodItem.food?.name), for \(macro), to meal number \(lowestMeal.name)")
+            return plan
+        }
+        
+        
+        
+        
+        for (index,meal) in plan.meals.enumerated(){
+            if eatenAtBreakfastFlag == false && index == 0{
+                print("in continue statement : \(index)")
+                lowestMeal = plan.meals[1] // the lowest meal is meal number 2, as we can't use breakfast for this food which is not eaten at breakfast.
+                continue
+            }
+            print("outside continue statement : \(index)")
             switch macro {
             case Constants.PROTEINS:
                 if meal.totalProteins() < lowestMeal.totalProteins(){
@@ -1293,12 +1329,11 @@ class MealPlanAlgorithm : NSObject{
     
     
     
-    static func constrainPortionSizeBasedOnFood(_ fi:FoodItem, highFatAllowedFlag:Bool) ->(FoodItem){
+    static func constrainPortionSizeBasedOnFood(_ fi:FoodItem, highFatAllowedFlag:Bool, dietaryRequirements: List<DietSuitability>) ->(FoodItem){
         // ensure that the fooditem returned contains a sensible serving size.
         
         var fooditem : FoodItem = fi
         print("About to constrain \(fooditem.food?.name)")
-        let realm = try! Realm()
         let condiment = DataHandler.getCondimentFoodType()
         
         if Constants.isFat.evaluate(with: fooditem.food) && highFatAllowedFlag == false {
@@ -1346,7 +1381,7 @@ class MealPlanAlgorithm : NSObject{
                 break
             }
             
-            if condiment.count > 0{
+            if condiment.name != "" {
                 if ((fooditem.food?.foodType.contains(condiment)) == true){
                     if fooditem.numberServing > 0.25{
                         fooditem.numberServing = 0.25
@@ -1356,8 +1391,13 @@ class MealPlanAlgorithm : NSObject{
             }
         
         //Constrain vegetable amounts
+        
+        
         let vegFoodType = DataHandler.getFoodType(Constants.vegetableFoodType)
-        if fooditem.food?.foodType.contains(vegFoodType) && fooditem.food?.carbohydrates < 10 {
+        let vegetarianVeganUser = (dietaryRequirements.first?.name == Constants.vegetarian || dietaryRequirements.first?.name == Constants.Vegan ) ? true : false
+        
+        //if vegetarian then do not restrict the amount of vegetables he or she can eat
+        if (fooditem.food?.foodType.contains(vegFoodType))! && (Double((fooditem.food?.carbohydrates)!) < 10.00) && vegetarianVeganUser == false {
             if fooditem.numberServing > 1{
                 fooditem.numberServing = 1
             }
@@ -1392,7 +1432,7 @@ class MealPlanAlgorithm : NSObject{
     
     
     */
-    static func apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(_ foods:[Food], attribute:String, desiredQuantity:Double, overflowAmounts:[Double], macrosAllocatedToday:[String:Double], lastMealFlag:Bool, beforeComeBackFlag:Bool)->[FoodItem]
+    static func apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(_ foods:[Food], attribute:String, desiredQuantity:Double, overflowAmounts:[Double], macrosAllocatedToday:[String:Double], lastMealFlag:Bool, beforeComeBackFlag:Bool, dietaryRequirements: List<DietSuitability>)->[FoodItem]
     {
         var leftOverForThisMeal = overflowAmounts
         var foodItems : [FoodItem] = []
@@ -1408,31 +1448,31 @@ class MealPlanAlgorithm : NSObject{
             case Constants.PROTEINS:
                 foodAttributeAmount = food.proteins
                 indices = [1,2]
-                requiredAmount = overflowAmounts[0]
+                requiredAmount = leftOverForThisMeal[0]
                 
             case Constants.CARBOHYDRATES:
                 foodAttributeAmount = food.carbohydrates
                 indices = [0,2]
-                requiredAmount = overflowAmounts[1]
+                requiredAmount = leftOverForThisMeal[1]
             
             case Constants.vegetableFoodType:
                 foodAttributeAmount = food.carbohydrates
                 indices = [0,2]
-                requiredAmount = overflowAmounts[1]
+                requiredAmount = leftOverForThisMeal[1]
                 
             case Constants.FATS:
                 foodAttributeAmount = food.fats
                 indices = [0,1]
-                requiredAmount = overflowAmounts[2]
+                requiredAmount = leftOverForThisMeal[2]
 
             default:
                 foodAttributeAmount = food.carbohydrates
                 print("ERROR IN apportionFoodToGetGivenAmountOfMacro")
             }
             
-            var leftOversForMacro0 = 0.0
-            var leftOversForMacro1 = 0.0
-            var proteinCushionForFats = 0.0
+            // TODO - if attribute is 0.0 then exit
+            
+            var cushionForFats = 0.0
             let loopsRemaining = Double(foods.count) - Double(loopCount)
             var index = [food.proteins, food.carbohydrates, food.fats]
             var fooditem = FoodItem()
@@ -1440,9 +1480,7 @@ class MealPlanAlgorithm : NSObject{
             
             let macro1ForFoodItem = (fooditem.numberServing * index[indices[0]])
             let macro2ForFoodItem = (fooditem.numberServing * index[indices[1]])
-            
-            var limitForMacro1 = leftOverForThisMeal[indices[0]]
-            var limitForMacro2 = leftOverForThisMeal[indices[1]]
+
             /*
              Whilst the protein or carb from this food is above the limit, reduce the item size a tiny amount and test again.
              */
@@ -1451,29 +1489,40 @@ class MealPlanAlgorithm : NSObject{
                 print("beforeComeBackFlag == true")
                 print("loop+1 == \(loopCount + 1)")
                 print("foods.count == \(foods.count)")
-                let amountToKeepLeftOver = foods.count * 5
-                limitForMacro1 = limitForMacro1 - Double(amountToKeepLeftOver)
-                limitForMacro2 = limitForMacro2 - Double(amountToKeepLeftOver)
-                requiredAmount = requiredAmount - Double(foods.count * 5)
+                requiredAmount = requiredAmount - Double(foods.count * 7)
             }
             
-            print("Calcu is: \(requiredAmount) / \(foods.count) then divided by \(foodAttributeAmount)" )
-            fooditem.numberServing = (requiredAmount/Double(foods.count))/foodAttributeAmount // so its divided amongst the # of foods for this macro
+            print("Calcu is: \(requiredAmount) / (\(foods.count) - \(loopCount)) then divided by \(foodAttributeAmount)" )
+            
+            guard foodAttributeAmount != 0.0 else {
+                print("Big error.")
+                //MARK: TODO - BETTER ERROR HANDLING HERE
+                return [FoodItem()]
+            }
+            let foodCountMinusLoop = Double(foods.count) - Double(loopCount)
+            fooditem.numberServing = (requiredAmount/foodCountMinusLoop)/foodAttributeAmount // so its divided amongst the # of foods for this macro
+            
+            print("what's going on: \(fooditem.numberServing)")
+            
             if attribute == Constants.PROTEINS {
                 
-                if leftOverForThisMeal[1] > Constants.maximumNumberOfGramsToIgnore && leftOverForThisMeal[2] > Constants.maximumNumberOfGramsToIgnore{
+                if leftOverForThisMeal[1] > Constants.maximumNumberOfGramsToIgnore && leftOverForThisMeal[2] > Constants.maximumNumberOfGramsToIgnore && lastMealFlag == false{
                     //proteinCushionForFats = 5
                     
                     // because everything has a little bit of protein and by the time I get to carbs, fats, and veg, it will up to 100% or more
-                    fooditem.numberServing = fooditem.numberServing * 0.875
-                    print("FI numberServing Was: \(fooditem.numberServing) now it's \(fooditem.numberServing * 0.875)")
+                    cushionForFats = 7.0
+                    //fooditem.numberServing = fooditem.numberServing * 0.875
+                    //print("FI numberServing Was: \(fooditem.numberServing) now it's \(fooditem.numberServing * 0.875)")
                 }
             }
             
             if attribute == Constants.CARBOHYDRATES {
-                if lastMealFlag == false {
+                if lastMealFlag == false || beforeComeBackFlag == true{
                     fooditem.numberServing = fooditem.numberServing * (1 - Constants.vegetablesAsPercentageOfCarbs) // 7% of carb allowance reserved for vegetables
                 } // else we want the full whack.
+                
+                
+                
                 
             }
             print("Starting point is a serving size of : \(fooditem.numberServing)")
@@ -1505,13 +1554,12 @@ class MealPlanAlgorithm : NSObject{
                 print("Reducing the portion size for \(fooditem.food?.name)")
 
                 
-                print("Adding leftOversForMacro0: \(leftOversForMacro0)\nleftOversForMacro1: \(leftOversForMacro0)")
                 
                 
-                while ((fooditem.numberServing * index[indices[0]])  > (leftOverForThisMeal[indices[0]]/loopsRemaining)+leftOversForMacro0) || ((fooditem.numberServing * index[indices[1]])  > (leftOverForThisMeal[indices[1]]/loopsRemaining)+leftOversForMacro1+proteinCushionForFats){
+                while ((fooditem.numberServing * index[indices[0]]) + cushionForFats  > (leftOverForThisMeal[indices[0]]/loopsRemaining)) || ((fooditem.numberServing * index[indices[1]]) + cushionForFats  > (leftOverForThisMeal[indices[1]]/loopsRemaining)){
+                    
                     fooditem.numberServing = (fooditem.numberServing - 0.01)
                     
-
                     if fooditem.numberServing < 0 {
                         fooditem.numberServing = 0
                         print("\(fooditem.food?.name) has a serving size below 0. The macro is: \(Constants.MACRONUTRIENTS[0]) of \(macro1ForFoodItem) and the leftOverForThisMeal is: \(leftOverForThisMeal[indices[0]]) \n")
@@ -1627,8 +1675,7 @@ class MealPlanAlgorithm : NSObject{
             //DataHandler.createFoodItem(fooditem)
             
             if fooditem.numberServing > 0{
-                fooditem = constrainPortionSizeBasedOnFood(fooditem, highFatAllowedFlag: lastMealFlag)
-                //fooditem.numberServing = Constants.roundToPlaces(fooditem.numberServing, decimalPlaces: 0) // rounding for customer use
+                fooditem = constrainPortionSizeBasedOnFood(fooditem, highFatAllowedFlag: lastMealFlag, dietaryRequirements: dietaryRequirements)
                 foodItems.append(fooditem)
                 print("Just added: \(fooditem.food?.name)\n")
                 leftOverForThisMeal[0] = leftOverForThisMeal[0] - (fooditem.numberServing * food.proteins)

@@ -79,6 +79,8 @@
 		F78EDFDE1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */; };
 		F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */; };
 		F78EDFE31DF212B500AC1AF7 /* initialLoad4.json in Resources */ = {isa = PBXBuildFile; fileRef = F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */; };
+		F78EDFE51DF5FCD100AC1AF7 /* JSQ-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5401DD2156200DA2696 /* JSQ-Bridging-Header.h */; };
+		F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */; };
 		F7C480491DBFF37B00572706 /* Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C480481DBFF37B00572706 /* Deletion.swift */; };
 		F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4804A1DBFFB0000572706 /* RealmString.swift */; };
 		F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5411DD2225E00DA2696 /* BotController.swift */; };
@@ -201,6 +203,7 @@
 		F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetUpMealPlan.swift; path = Model/SetUpMealPlan.swift; sourceTree = "<group>"; };
 		F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = initialLoad4.json; sourceTree = "<group>"; };
 		F78EDFE41DF328AE00AC1AF7 /* jsq_messages_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = jsq_messages_sample.m4a; path = Model/jsq_messages_sample.m4a; sourceTree = "<group>"; };
+		F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosTallyView.swift; sourceTree = "<group>"; };
 		F7C480481DBFF37B00572706 /* Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deletion.swift; sourceTree = "<group>"; };
 		F7C4804A1DBFFB0000572706 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmString.swift; sourceTree = "<group>"; };
 		F7E3C5401DD2156200DA2696 /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -409,8 +412,9 @@
 		F7C480401DBF602900572706 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F78AB6ED1DBE6DA400BB40EA /* bkgrd.swift */,
 				F78AB7161DBE6DA400BB40EA /* mpButton.swift */,
+				F78AB6ED1DBE6DA400BB40EA /* bkgrd.swift */,
+				F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */,
 				F78AB6E71DBE6DA400BB40EA /* Introduction.storyboard */,
 				F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */,
 				F78AB6E91DBE6DA400BB40EA /* LaunchScreen.storyboard */,
@@ -712,6 +716,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F78EDFE51DF5FCD100AC1AF7 /* JSQ-Bridging-Header.h in Sources */,
 				F7E3C5501DDB897D00DA2696 /* outCells.swift in Sources */,
 				F78AB7611DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift in Sources */,
 				F78AB7581DBE6DA400BB40EA /* Profile.swift in Sources */,
@@ -741,6 +746,7 @@
 				F78AB74F1DBE6DA400BB40EA /* DietSuitability.swift in Sources */,
 				F78AB7631DBE6DA400BB40EA /* DragToTable.swift in Sources */,
 				F78AB7571DBE6DA400BB40EA /* Meal.swift in Sources */,
+				F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */,
 				F7E3C55C1DDE4B7C00DA2696 /* tb.swift in Sources */,
 				F78AB73B1DBE6DA400BB40EA /* createMealPlan.swift in Sources */,
 				F78AB75B1DBE6DA400BB40EA /* Week.swift in Sources */,

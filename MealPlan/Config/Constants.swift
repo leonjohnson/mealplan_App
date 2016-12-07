@@ -83,6 +83,8 @@ struct Constants {
     static let INCH_TO_CM_CONSTANT = 2.54
     static let MAX_KWEIGHT = 200
     static let MAX_HEIGHT  = 300
+    static let KILOGRAMS = "kg"
+    static let POUNDS = "lbs"
 
     //Macronutriet names
     static let CARBOHYDRATES = "Carbohydrates"
@@ -100,7 +102,7 @@ struct Constants {
     static let fruitFoodType = "Fruit"
     static let drinkFoodType = "Drink"
     static let condimentFoodType = "Condiment"
-    static let mealFoodType = "Meat"
+    static let meatFoodType = "Meat"
     static let glutenFree = "Gluten free"
     static let Vegan = "Vegan"
     static let vegetarian = "Vegetarian"
@@ -301,6 +303,14 @@ struct Constants {
         case easy = "easy"
         case ok = "ok"
         case hard = "hard"
+    }
+    
+    enum hungerLevels: String {
+        case unstated = "unstated"
+        case veryHungry = "very hungry"
+        case littleHungry = "a little hungry"
+        case aboutRight = "about right"
+        case full = "full"
     }
     
     static let HAS_PROFILE = "hasProfile"
