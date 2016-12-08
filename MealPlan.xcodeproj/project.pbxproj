@@ -12,6 +12,7 @@
 		4ADE43481DF6874B00491005 /* MealPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE43471DF6874B00491005 /* MealPlanTests.swift */; };
 		5D0D828B2EFCEEDCF9A6AA8D /* Pods_MealPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3AF48C698D6F7E38C608B2 /* Pods_MealPlan.framework */; };
 		B93B729C44D3525F62D13B57 /* Pods_MealPlanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C566C2623EA159E5FA97288 /* Pods_MealPlanTests.framework */; };
+		F41E48A11DF9439300421CEC /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E48A01DF9439300421CEC /* ProfileTests.swift */; };
 		F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */; };
 		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
 		F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */; };
@@ -134,6 +135,7 @@
 		9C7F0F67D0C29C6F82F01118 /* Pods-MealPlanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealPlanTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MealPlanTests/Pods-MealPlanTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A32A5CC299F1EFF620522F7D /* Pods-MealPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MealPlan/Pods-MealPlan.debug.xcconfig"; sourceTree = "<group>"; };
 		ACFD24E8491873D32D6D5FC8 /* Pods_DailyMeals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyMeals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F41E48A01DF9439300421CEC /* ProfileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
 		F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
 		F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProgressMaster.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				4ADE43471DF6874B00491005 /* MealPlanTests.swift */,
+				F41E48A01DF9439300421CEC /* ProfileTests.swift */,
 				4ADE43491DF6874B00491005 /* Info.plist */,
 			);
 			path = MealPlanTests;
@@ -689,7 +692,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		81EA1B8EB40CEC8CFF9FD74A /* [CP] Check Pods Manifest.lock */ = {
@@ -704,7 +707,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9BF898B43B2EDD0A98545BD1 /* [CP] Embed Pods Frameworks */ = {
@@ -773,6 +776,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ADE43481DF6874B00491005 /* MealPlanTests.swift in Sources */,
+				F41E48A11DF9439300421CEC /* ProfileTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

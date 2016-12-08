@@ -159,7 +159,10 @@ class SetUpMealPlan: NSObject {
     
     
     static func calculateInitialCalorieAllowance()->Int{
-        let tdee = Double(calculateTDEE())
+        
+        let bio = DataHandler.getActiveBiographical()
+        let user = DataHandler.getActiveUser()
+        let tdee = Double(calculateTDEE(bio: bio, user: user))
         
         let aim = DataHandler.getActiveBiographical()
         if aim.gainMuscle.value == true {
@@ -220,7 +223,10 @@ class SetUpMealPlan: NSObject {
         }
         newWeek.macroAllocation.append(objectsIn: macroAllocation(calorieAllowance: calorieAllowance))
         newWeek.calorieAllowance = calorieAllowance
-        newWeek.TDEE = calculateTDEE()
+        let bio = DataHandler.getActiveBiographical()
+        let user = DataHandler.getActiveUser()
+        newWeek.TDEE = calculateTDEE(bio: bio, user: user)
+       
         newWeek.dailyMeals.append(objectsIn: MealPlanAlgorithm.createMealPlans(newWeek))
         try! realm.write {
             realm.add(newWeek)
@@ -343,11 +349,9 @@ class SetUpMealPlan: NSObject {
     }
     
     
-    static func calculateTDEE() -> Int {
+    static func calculateTDEE(bio:Biographical, user:User) -> Int {
         //"=66.5+(5*height in cm)+(13.75*weight in kg)-6.78*age in years"
-        let bio = DataHandler.getActiveBiographical()
-        let user = DataHandler.getActiveUser()
-        
+    
         let gender = user.gender
         var weightCoeffecient = 0.0
         var heightCoefficient = 0.0

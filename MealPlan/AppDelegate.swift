@@ -24,9 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             
             let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
             let mealPlanExistsForThisWeek = response.yayNay
-            
-
-            
             if mealPlanExistsForThisWeek == false{
                 askForNewDetails()
                 let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
