@@ -178,8 +178,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let variance = thisWeek.dailyMeals[forDay].calculateMacroDiscrepancy(macros: thisWeek.macroAllocation)
         if variance.yesOrNo == false{
             mealPlanTally.headline.attributedText = NSAttributedString(string: "The macros in your meal plan are looking good today.", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
-            mealPlanTally.imageView.image = #imageLiteral(resourceName: "macroCheckMark")
-            
+            if let checkMark = UIImage(named: "macroCheckMark") {
+                mealPlanTally.imageView.image = checkMark
+            }
         } else {
             if variance.amount[Constants.PROTEINS] > 0 {
                 longString.append("\n\(Constants.roundToPlaces(variance.amount[Constants.PROTEINS]!, decimalPlaces: 1))g of protein")

@@ -185,7 +185,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         navigationController?.pushViewController(destination, animated: true)
         */
         
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let storyboard = Constants.MAIN_STORYBOARD
         let destination = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
         navigationController?.pushViewController(destination, animated: true)
         

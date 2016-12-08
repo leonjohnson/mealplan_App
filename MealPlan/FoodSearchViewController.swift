@@ -202,7 +202,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     
     func callBot(){
-        let storyboard = UIStoryboard(name: "Bot", bundle: nil)
+        let storyboard = Constants.BOT_STORYBOARD
         let scene = storyboard.instantiateViewController(withIdentifier: "bot") as! BotController
         scene.botType = .addNewFood
         

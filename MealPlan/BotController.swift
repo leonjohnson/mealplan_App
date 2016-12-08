@@ -26,10 +26,10 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     
     
-    var questions = BotData.NEW_FOOD.questions
-    var options = BotData.NEW_FOOD.options
-    var answers = BotData.NEW_FOOD.answers
-    var validationType = BotData.NEW_FOOD.validationType
+    var questions : [String] = BotData.NEW_FOOD.questions
+    var options : [[String]] = BotData.NEW_FOOD.options
+    var answers : [[String]] = BotData.NEW_FOOD.answers
+    var validationType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.validationType
     
     
     
@@ -255,10 +255,17 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
         self.finishSendingMessage(animated: true)
         
-        if questionIndex == (questions.count-1) && botType == .addNewFood{
-            // just posted the last response
-            //takeUserBackToMealPlan()
-            createNewFoodFromConversation()
+        if questionIndex == (questions.count-1) {
+            switch botType {
+            case .addNewFood:
+                createNewFoodFromConversation()
+            case .feedback:
+                saveFeedbackForTheWeek()
+            case .unstated:
+                print("this bot type is unknown")
+                return
+            }
+            takeUserToMealPlan() // just posted the last response
         }
     }
     
@@ -273,13 +280,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     func rowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType){
         print("row \(labelValue) selected in the outGoing cell")
-    }
-    
-    private func takeUserBackToMealPlan(){
-        let index = self.navigationController?.viewControllers.index(of: self)
-        let mealplanViewController = self.navigationController?.viewControllers[index!-2]
-        self.navigationController?.popToViewController(mealplanViewController!, animated: true)
-        
     }
     
     private func validateAnswer()->Bool{
@@ -402,12 +402,23 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     private func setupIncomingBubble() -> JSQMessagesBubbleImage {
         let bubbleImageFactory = JSQMessagesBubbleImageFactory()
         return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
+        }
+    
+    
+    private func saveFeedbackForTheWeek(){
+        if let weekJustFinished = Week().lastWeek().first{
+            weekJustFinished.feedback?.weightMeasurement = 0.0
+            weekJustFinished.feedback?.weightUnit = Constants.KILOGRAMS
+            weekJustFinished.feedback?.hungerLevels = ""
+        }
+        takeUserToMealPlan()
     }
     
-    
-    /*
-     // MARK: - CREATE NEW FOODS
-     */
+    func takeUserToMealPlan(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
+    }
+        
     private func createNewFoodFromConversation(){
         
         
@@ -485,7 +496,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             let realm = try! Realm()
             let foodTypesSelected = answers[foodTypeIndex]
             print("foodTypesSelected: \(foodTypesSelected)")
-            let foodTypesFound = realm.objects(FoodType).filter("name IN %@", foodTypesSelected)
+            let foodTypesFound = realm.objects(FoodType.self).filter("name IN %@", foodTypesSelected)
             print("realm objects found: \(foodTypesFound)")
             food.foodType.append(contentsOf: foodTypesFound)
         }

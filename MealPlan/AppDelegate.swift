@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
                 SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
                 //Eat TDEE plus what you want // create meal plan from today for the next two weeks (we're starting over)
-                sendToMealPlanViewController(shouldShowExplainerScreen: true)
+                takeUserToMealPlan(shouldShowExplainerScreen: true)
                 
             } else {
                 switch response.weeksAhead.count {
@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     }
                     SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: (currentWeek?.calorieAllowance)!)
                     SetUpMealPlan.createWeek(daysUntilCommencement: (daysUntilExpiry! + 7), calorieAllowance: (currentWeek?.calorieAllowance)!)
-                    sendToMealPlanViewController(shouldShowExplainerScreen: true)
+                    takeUserToMealPlan(shouldShowExplainerScreen: true)
                     
                     // run a new meal plan for next week and the week after
                     break
@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     
                     // run a new meal plan based on this for next week and the week after.
                     SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
-                    sendToMealPlanViewController(shouldShowExplainerScreen: false)
+                    takeUserToMealPlan(shouldShowExplainerScreen: false)
 
                     break
                 case 2:
@@ -110,16 +110,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     
     func askForNewDetails()  {
-        let storyBoard = Constants.FEEDBACK_STORYBOARD
-        let feedbackVC = storyBoard.instantiateViewController(withIdentifier: "feedback");
+        let storyBoard = Constants.BOT_STORYBOARD
+        let feedbackVC = storyBoard.instantiateViewController(withIdentifier: "bot");
         self.window?.rootViewController = feedbackVC
         self.window?.makeKeyAndVisible()
     }
-    
 
-    func sendToMealPlanViewController(shouldShowExplainerScreen:Bool){
+    func takeUserToMealPlan(shouldShowExplainerScreen:Bool){
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = Constants.MAIN_STORYBOARD
         let initialViewController = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
         if shouldShowExplainerScreen == true{
             (initialViewController.selectedViewController as! MealPlanViewController).showExplainerScreen = true
@@ -134,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
             
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
-            sendToMealPlanViewController(shouldShowExplainerScreen: false)
+            takeUserToMealPlan(shouldShowExplainerScreen: false)
         }
         //Fabric.with([Crashlytics.self])
         return true

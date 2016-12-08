@@ -1,6 +1,17 @@
-import Foundation
+//import Foundation
+import UIKit
 
-struct BotData {
+
+class BotData: NSObject {
+    
+    var usersName : String?
+    var objective : Biographical?
+    
+    override init(){
+        usersName = DataHandler.getActiveUser().name
+        objective = DataHandler.getActiveBiographical()
+    }
+    
     
     //var questions = BotData.THE_QUESTIONS.questions
     //var options = BotData.THE_QUESTIONS.options
@@ -17,7 +28,7 @@ struct BotData {
     */
     
     struct NEW_FOOD {
-        static let questions = [
+        static let questions : [String] = [
             BotData.NEW_FOOD.name.question,
             BotData.NEW_FOOD.producer.question,
             BotData.NEW_FOOD.serving_type.question,
@@ -29,9 +40,9 @@ struct BotData {
             BotData.NEW_FOOD.fibre.question,
             BotData.NEW_FOOD.protein.question,
             BotData.NEW_FOOD.food_type.question,
-            BotData.NEW_FOOD.done.question]
+            BotData.NEW_FOOD.ending.question]
         
-        static let options  = [
+        static let options : [[String]]  = [
             BotData.NEW_FOOD.name.tableViewList,
             BotData.NEW_FOOD.producer.tableViewList,
             BotData.NEW_FOOD.serving_type.tableViewList,
@@ -43,11 +54,9 @@ struct BotData {
             BotData.NEW_FOOD.fibre.tableViewList,
             BotData.NEW_FOOD.protein.tableViewList,
             BotData.NEW_FOOD.food_type.tableViewList,
-            BotData.NEW_FOOD.done.tableViewList]
+            BotData.NEW_FOOD.ending.tableViewList]
         
-        
-        
-        static let answers = [
+        static let answers : [[String]] = [
             [String()],
             [String()],
             [String()],
@@ -61,7 +70,7 @@ struct BotData {
             [String()],
             [String()]]
         
-        static let validationType  = [
+        static let validationType : [Constants.botValidationEntryType]  = [
             BotData.NEW_FOOD.name.validation,
             BotData.NEW_FOOD.producer.validation,
             BotData.NEW_FOOD.serving_type.validation,
@@ -73,9 +82,9 @@ struct BotData {
             BotData.NEW_FOOD.fibre.validation,
             BotData.NEW_FOOD.protein.validation,
             BotData.NEW_FOOD.food_type.validation,
-            BotData.NEW_FOOD.done.validation]
+            BotData.NEW_FOOD.ending.validation]
         
-        struct name {
+            struct name {
                 static let question = "Hi! What is the full name of the food?"
                 static let tableViewList:[String] = []
                 static let validation = Constants.botValidationEntryType.text
@@ -154,7 +163,7 @@ struct BotData {
             
             
             
-            struct done {
+            struct ending {
                 static let question = "Thanks! You're all done. 👍"
                 static let tableViewList:[String] = []
                 static let validation = Constants.botValidationEntryType.none
@@ -162,21 +171,78 @@ struct BotData {
     }
     
     struct FEEDBACK {
-        static let questions = [
-            BotData.NEW_FOOD.name.question,
-            BotData.NEW_FOOD.producer.question]
+        static let questions : [String] = [
+            BotData.FEEDBACK.howWasLastWeek.question,
+            BotData.FEEDBACK.howHungryWereYou.question,
+            BotData.FEEDBACK.anyComments.question,
+            BotData.FEEDBACK.ending.question]
         
-        static let options  = [
-            BotData.NEW_FOOD.name.tableViewList,
-            BotData.NEW_FOOD.producer.tableViewList]
+        static let options : [[String]]  = [
+            BotData.FEEDBACK.howWasLastWeek.tableViewList,
+            BotData.FEEDBACK.howHungryWereYou.tableViewList,
+            BotData.FEEDBACK.anyComments.tableViewList,
+            BotData.FEEDBACK.ending.tableViewList]
  
-        static let answers = [
+        static let answers : [[String]] = [
+            [String()],
+            [String()],
             [String()],
             [String()]]
         
         static let validationType  = [
-            BotData.NEW_FOOD.name.validation,
-            BotData.NEW_FOOD.producer.validation]
+            BotData.FEEDBACK.howWasLastWeek.validation,
+            BotData.FEEDBACK.howHungryWereYou.validation,
+            BotData.FEEDBACK.anyComments.validation,
+            BotData.FEEDBACK.ending.validation]
+        
+        struct greeting {
+            
+            /*
+            var objectives = ""
+            if (objective.addMoreDefinition == true) {
+                objectives.append("adding more definition to your physique")
+            }
+            if objective.looseFat == true{
+                objectives.append("lose fat")
+            }
+            if objective.gainMuscle == true{
+                objectives.append("gain muscle")
+            }
+            if objective.looseFat == true && objective.gainMuscle == true{
+                objectives.append("lose fat and gain muscle")
+            }
+            */
+            let question = "Hey! It's meal plan check-in time! This won't take long and is done to ensure your meal plans are going accoridng to plan. I just need to know your weight and get a bit of feedback."
+            let tableViewList:[String] = []
+            let validation = Constants.botValidationEntryType.text
+        }
+        
+        struct howWasLastWeek {
+            static let question = "How much did you weigh this morning?"
+            static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.decimal
+        }
+        
+        struct howHungryWereYou {
+            static let question = "How hungry were you after following last weeks meal plans?"
+            static let tableViewList:[String] = [Constants.hungerLevels.veryHungry.rawValue,
+                                                 Constants.hungerLevels.littleHungry.rawValue,
+                                                 Constants.hungerLevels.aboutRight.rawValue,
+                                                 Constants.hungerLevels.full.rawValue]
+            static let validation = Constants.botValidationEntryType.none
+        }
+        
+        struct anyComments {
+            static let question = "Do you have any feedback on how I can make your future meal plans better for you?"
+            static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.text
+        }
+        
+        struct ending {
+            static let question = "Thanks for your input. I'll create a new meal plan for you now."
+            static let tableViewList:[String] = []
+            static let validation = Constants.botValidationEntryType.none
+        }
     }
 
         /*

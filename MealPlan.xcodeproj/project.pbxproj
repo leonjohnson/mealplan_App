@@ -132,7 +132,7 @@
 		F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		F73CB67F1DA1C3B700ACE506 /* DailMealTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailMealTests.swift; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
-		F74E3C791DF8FAA8004B0259 /* BotData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotData.swift; sourceTree = "<group>"; };
+		F74E3C791DF8FAA8004B0259 /* BotData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BotData.swift; path = ../BotData.swift; sourceTree = "<group>"; };
 		F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProgressMaster.swift; sourceTree = "<group>"; };
 		F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLevelViewController.swift; sourceTree = "<group>"; };
@@ -349,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				F78EDFE11DEDE5DA00AC1AF7 /* Algorithm */,
+				F74E3C791DF8FAA8004B0259 /* BotData.swift */,
 				F78AB7081DBE6DA400BB40EA /* DataHandler.swift */,
 				F78AB7061DBE6DA400BB40EA /* Biographical.swift */,
 				F78AB7071DBE6DA400BB40EA /* DailyMealPlan.swift */,
@@ -453,7 +454,6 @@
 				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
 				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
 				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
-				F74E3C791DF8FAA8004B0259 /* BotData.swift */,
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
@@ -896,6 +896,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/toobler/Projects/DailyMeals/DailyMeals-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -939,6 +940,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/toobler/Projects/DailyMeals/DailyMeals-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

@@ -109,44 +109,21 @@ class SetUpMealPlan: NSObject {
     }
     
     
-
-    
-    
     static func initialCalorieCut(firstWeek:Week)->Int{
-        // how many calories did you consume last week?
-        //let lastWeeksCalorieConsumption = firstWeek.calorieConsumption
         
-        // determine (TDEE + 25%) which is the upper cap
+        // 1. determine (TDEE + 25%) which is the upper cap
         let cap = Int(Double(firstWeek.TDEE) * 1.25)
         
-        // calculate 3 weeks out
-        let threeWeeksOut = firstWeek.TDEE * Int(pow(Constants.standard_calorie_reduction_for_weightloss, 3))
-        
-        // if my calories consumption last week is above 3 weeks out level, return the lower of 25% cap and what I ate last week. If same, then return either.
-        if firstWeek.calorieConsumption > threeWeeksOut{
-            return cap < firstWeek.calorieConsumption ? cap : Int(Double(firstWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
-            // the lower of the two, but if he was on that amount last week then cut it.
+         // 2. If you're eating significantly less than your TDEE then your starting point should (TDEE x a reasonable cut). We can't sanction silly values which can happen if we cut from a very low calorie Consumption level.
+        if Double(firstWeek.calorieConsumption) < Double(firstWeek.TDEE) * 0.8{
+            return Int(Double(firstWeek.TDEE) * 0.8)
+        } else {
+            // 3. if my calories consumption last week is above the cap, then start me off on the cap, otherwise start me off on last weeks kcals minus my first cut
+            let lastWeeksCaloriesMinusACut = Int(Double(firstWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
+            return firstWeek.calorieAllowance > cap ? cap : lastWeeksCaloriesMinusACut
         }
-        
-        // if my calories consumption last week is less than the 3 weeks out amount, but above tdee +-10 calories then cut by standard cut
-        if firstWeek.calorieConsumption < threeWeeksOut && firstWeek.calorieConsumption > firstWeek.TDEE{
-            return Int(Double(firstWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
-        }
-        
-        if firstWeek.calorieConsumption < firstWeek.TDEE{
-            return firstWeek.TDEE
-        }
-        
-        return 0
-        // if my calories consumption last week is below tdee +-10 calories, return tdee
     }
-    
-    /*
-     Find out how many calories are needed for 3 weeks before 'tdee +-10 calories' level is achieved, assuming a 4% cut each week.
-     a.       Or, if the user is between 3 weeks out and tdee +-10 calories then cut until we hit tdee +10%
-     b.      Or, If the user is on fewer than tdee+-10 calories, put the user on tdee +-10calories
-     
-     */
+
     
     
     
