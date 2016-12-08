@@ -84,11 +84,11 @@ class SetUpMealPlan: NSObject {
 
     
     static func isLoosingWeight(thisWeek:Week)->Bool? {
-        let thisWeeksWeight = thisWeek.feedback?.weekWeightMeasurement
+        let thisWeeksWeight = thisWeek.feedback?.weightMeasurement
         guard (thisWeek.lastWeek().first != nil) else {
             return nil
         }
-        let lastWeeksWeight = thisWeek.lastWeek().first?.feedback?.weekWeightMeasurement
+        let lastWeeksWeight = thisWeek.lastWeek().first?.feedback?.weightMeasurement
         return Int(thisWeeksWeight!) < Int(lastWeeksWeight!) ? true : false
     }
     

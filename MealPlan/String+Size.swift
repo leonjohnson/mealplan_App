@@ -32,13 +32,15 @@ extension String {
         
         return boundingBox.height
     }
+    
 }
 
 public extension String {
     
     func isNumber() -> Bool {
-        let numberCharacters = NSCharacterSet.decimalDigits.inverted
-        return !self.isEmpty && self.rangeOfCharacter(from: numberCharacters) == nil
+        //let numberCharacters = NSCharacterSet.decimalDigits.inverted
+        let decimalCharacters = NSCharacterSet.init(charactersIn: "0123456789.").inverted
+        return !self.isEmpty && self.rangeOfCharacter(from: decimalCharacters) == nil
     }
     
 }

@@ -6,15 +6,34 @@ import JSQSystemSoundPlayer
 final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     var messages:[JSQMessage] = [JSQMessage]();
-    
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
-    
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
-    var reasonForContact :String = String()
+    var customOutgoingMediaCellIdentifier : String = ""
+    var miniCellViewController = miniTableViewCell()
+    var outCellViewController = outCells()
     
-    static let NAME = "Hi! What is the full name of the food?"
+    var questionIndex : Int = 0
     
+    enum botTypeEnum {
+        case unstated
+        case addNewFood
+        case feedback // Used when creating Bot page to provide it with some context of task.
+    }
+    var botType : botTypeEnum = .unstated
+    
+    var epo = BotData.NEW_FOOD.questions
+    
+    
+    
+    var questions = BotData.NEW_FOOD.questions
+    var options = BotData.NEW_FOOD.options
+    var answers = BotData.NEW_FOOD.answers
+    var validationType = BotData.NEW_FOOD.validationType
+    
+    
+    
+    /*
     var questions : [String] = [
         Constants.BOT_NEW_FOOD.name.question,
         Constants.BOT_NEW_FOOD.producer.question,
@@ -72,58 +91,45 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         Constants.BOT_NEW_FOOD.protein.validation,
         Constants.BOT_NEW_FOOD.food_type.validation,
         Constants.BOT_NEW_FOOD.done.validation]
+    */
     
-    var questionIndex : Int = 0
-    
-    
-    var customOutgoingMediaCellIdentifier : String = ""
-    
-    var miniCellViewController = miniTableViewCell()
-    
-    var outCellViewController = outCells()
-    
-    
-    // Used when creating Bot page to provide it with some context of task. Not currently used beyond info.
-    enum botTypeEnum {
-        case addNewFood
-    }
-    var botType : botTypeEnum = .addNewFood
     
     
     
     override func viewWillAppear(_ animated: Bool) {
         //self.navigationController?.hidesBottomBarWhenPushed = true
         self.navigationController?.toolbar.isHidden = false
-        print("viewWillAppear got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)\n")
         self.inputToolbar.contentView.textView.autocorrectionType = .no
     }
     
-    
-    
-    
-    
-    
-    
     override func viewWillDisappear(_ animated : Bool) {
         super.viewWillDisappear(animated)
-        
         if (self.isMovingFromParentViewController){
             // Your code...
             self.navigationController?.setNavigationBarHidden(false, animated: false)
         }
-        
-        
     }
-    
-    
-    
-    
-    
-    override func viewDidLoad()
-    {
+
+    override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("viewDidLoad got title of : \(self.navigationController?.navigationItem.backBarButtonItem?.title)\n")
+        // Load the data
+        switch botType {
+        case .addNewFood:
+            questions = BotData.NEW_FOOD.questions
+            options = BotData.NEW_FOOD.options
+            answers = BotData.NEW_FOOD.answers
+            validationType = BotData.NEW_FOOD.validationType
+        case .feedback:
+            questions = BotData.FEEDBACK.questions
+            options = BotData.FEEDBACK.options
+            answers = BotData.FEEDBACK.answers
+            validationType = BotData.FEEDBACK.validationType
+        default:
+            print("no bot type sent")
+            return
+        }
+        
         
         self.automaticallyScrollsToMostRecentMessage = true
         self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
@@ -146,7 +152,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         // 2. add blocking view after 0.7 sec
         // 3. all other methods like subclassing UITextView and using categories to not work
         let tap = UITapGestureRecognizer(target: self, action:  #selector(BotController.handleTap))
-        
         tap.delegate = self
         self.inputToolbar.contentView?.textView?.addGestureRecognizer(tap)
     
@@ -159,23 +164,18 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         //self.inputToolbar.contentView.leftBarButtonItem = nil
-        questions[0] = "Hey \(user.name)! What is the full name of the food?"
-        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
-
-        
-        /*
-        let image = UIImage(named: "Intro1")
-        let photo = JSQPhotoMediaItem(image: image)
-        let message2 = JSQMessage(senderId: "121", displayName: "Leon", media: photo)
-        messages.append(message2!)
-         */
-        
         miniCellViewController.outgoingCellDelegate = self
-        
         outCellViewController.botDelegate = self
         
         
-        
+        questions[0] = "Hey \(user.name)! What is the full name of the food?"
+        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+        /*
+         let image = UIImage(named: "Intro1")
+         let photo = JSQPhotoMediaItem(image: image)
+         let message2 = JSQMessage(senderId: "121", displayName: "Leon", media: photo)
+         messages.append(message2!)
+         */
         
         self.finishSendingMessage(animated: true);
     }
@@ -195,8 +195,8 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         if addOrDelete == UITableViewCellAccessoryType.checkmark{
             
             
-            if withQuestion == Constants.BOT_NEW_FOOD.food_type.question{
-                let indexOfSelectedOptionInFoodTypeList = Constants.BOT_NEW_FOOD.food_type.tableViewList.index(of: labelValue)
+            if withQuestion == BotData.NEW_FOOD.food_type.question{
+                let indexOfSelectedOptionInFoodTypeList = BotData.NEW_FOOD.food_type.tableViewList.index(of: labelValue)
                 entryValue = Constants.FOOD_TYPES[indexOfSelectedOptionInFoodTypeList!]
             }
             answers[indexForAnswer].append(entryValue)
@@ -246,8 +246,8 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         // 2. add JSQSystemSoundPlayer+JSQMessages.h category
         // 3. add bridging header to use this category
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        
     }
+    
     
     func progressToNextQuestion(){
         questionIndex += 1
@@ -255,11 +255,10 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
         self.finishSendingMessage(animated: true)
         
-        if questionIndex == (questions.count-1){
+        if questionIndex == (questions.count-1) && botType == .addNewFood{
             // just posted the last response
             //takeUserBackToMealPlan()
             createNewFoodFromConversation()
-            
         }
     }
     
@@ -274,11 +273,9 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     func rowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType){
         print("row \(labelValue) selected in the outGoing cell")
-        
     }
     
     private func takeUserBackToMealPlan(){
-        
         let index = self.navigationController?.viewControllers.index(of: self)
         let mealplanViewController = self.navigationController?.viewControllers[index!-2]
         self.navigationController?.popToViewController(mealplanViewController!, animated: true)
@@ -297,21 +294,17 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
    private func addMessage(withId id: String, name: String, media: JSQMessageMediaData) {
         if let message = JSQMessage(senderId: id, displayName: name, media: media) {
-            
             messages.append(message)
+        }
     }
     
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-    {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return messages.count
     }
     
     
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
@@ -319,12 +312,10 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
-            print("row num == \(indexPath)")
             var row = indexPath.row
 
             if (indexPath.row % 2) != 0{
                 row = indexPath.row + 1
-                print("NEW row num == \(row)")
             }
             let tableViewRowData = options[row/2]
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
@@ -333,11 +324,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             cellWithTableview.question = message.text
             cellWithTableview.questionTextView.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
             cellWithTableview.data.question = message.text
-            /*
-            for rowIndex in 0...tableViewRowData.count{
-                cellWithTableview.table.cellForRow(at: [0,rowIndex])?.accessoryType = UITableViewCellAccessoryType.none
-                }
-             */
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
             cellWithTableview.questionTextView.sizeToFit()
@@ -436,12 +422,12 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         let foodName : String = answers[foodNameIndex].first!
         food.name = foodName
         
-        if let foodProducerIndex = questions.index(of: Constants.BOT_NEW_FOOD.producer.question) {
+        if let foodProducerIndex = questions.index(of: BotData.NEW_FOOD.producer.question) {
             food.producer = answers[foodProducerIndex].first!
         }
 
         
-        if let servingTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.serving_type.question) {
+        if let servingTypeIndex = questions.index(of: BotData.NEW_FOOD.serving_type.question) {
             var servingSizeName = answers[servingTypeIndex].first!
             if servingSizeName.contains("Item"){
                 servingSizeName = Constants.item
@@ -450,52 +436,52 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         }
         
         
-        if let caloriesIndex = questions.index(of: Constants.BOT_NEW_FOOD.calories.question) {
+        if let caloriesIndex = questions.index(of: BotData.NEW_FOOD.calories.question) {
             print("\(answers[caloriesIndex])")
             food.calories = Double(answers[caloriesIndex].first!)!
         }
         
         
-        if let fatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question) {
+        if let fatsIndex = questions.index(of: BotData.NEW_FOOD.fat.question) {
             food.fats = Double(answers[fatsIndex].first!)!
         }
         
         
-        if let satFatsIndex = questions.index(of: Constants.BOT_NEW_FOOD.fat.question) {
+        if let satFatsIndex = questions.index(of: BotData.NEW_FOOD.fat.question) {
             if let satFats = Double(answers[satFatsIndex].first!) {
                 food.sat_fats = RealmOptional<Double>(satFats)
             }
         }
         
         
-        if let carbIndex = questions.index(of: Constants.BOT_NEW_FOOD.carbohydrates.question) {
+        if let carbIndex = questions.index(of: BotData.NEW_FOOD.carbohydrates.question) {
             food.carbohydrates = Double(answers[carbIndex].first!)!
         }
         
         
         
-        if let sugarIndex = questions.index(of: Constants.BOT_NEW_FOOD.sugar.question) {
+        if let sugarIndex = questions.index(of: BotData.NEW_FOOD.sugar.question) {
             if let sugar = Double(answers[sugarIndex].first!) {
                 food.sugars = RealmOptional<Double>(sugar)
             }
         }
         
         
-        if let fibreIndex = questions.index(of: Constants.BOT_NEW_FOOD.fibre.question){
+        if let fibreIndex = questions.index(of: BotData.NEW_FOOD.fibre.question){
             if let fibre = Double(answers[fibreIndex].first!){
                 food.fibre = RealmOptional<Double>(fibre)
             }
         }
         
         
-        if let proteinIndex = questions.index(of: Constants.BOT_NEW_FOOD.protein.question){
+        if let proteinIndex = questions.index(of: BotData.NEW_FOOD.protein.question){
             if let proteins = Double(answers[proteinIndex].first!){
                 food.proteins = proteins
             }
         }
         
         
-        if let foodTypeIndex = questions.index(of: Constants.BOT_NEW_FOOD.food_type.question){
+        if let foodTypeIndex = questions.index(of: BotData.NEW_FOOD.food_type.question){
             let realm = try! Realm()
             let foodTypesSelected = answers[foodTypeIndex]
             print("foodTypesSelected: \(foodTypesSelected)")

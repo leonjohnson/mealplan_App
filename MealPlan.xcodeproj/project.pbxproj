@@ -11,6 +11,7 @@
 		965A5F321BFC48D00055ACA4 /* DailyMealsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965A5F311BFC48D00055ACA4 /* DailyMealsUITests.swift */; };
 		F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */; };
 		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
+		F74E3C7A1DF8FAA8004B0259 /* BotData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74E3C791DF8FAA8004B0259 /* BotData.swift */; };
 		F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */; };
 		F78AB72C1DBE6DA400BB40EA /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */; };
 		F78AB72D1DBE6DA400BB40EA /* ActivityLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */; };
@@ -131,6 +132,7 @@
 		F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		F73CB67F1DA1C3B700ACE506 /* DailMealTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailMealTests.swift; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
+		F74E3C791DF8FAA8004B0259 /* BotData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotData.swift; sourceTree = "<group>"; };
 		F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProgressMaster.swift; sourceTree = "<group>"; };
 		F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLevelViewController.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
 				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
 				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
+				F74E3C791DF8FAA8004B0259 /* BotData.swift */,
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
@@ -728,6 +731,7 @@
 				F78AB7691DBE6DA400BB40EA /* Step3TableViewCell.swift in Sources */,
 				F78AB7361DBE6DA400BB40EA /* CaloriesTableViewCell.swift in Sources */,
 				F78AB73A1DBE6DA400BB40EA /* ContactUsViewController.swift in Sources */,
+				F74E3C7A1DF8FAA8004B0259 /* BotData.swift in Sources */,
 				F78AB76A1DBE6DA400BB40EA /* Step3ViewController.swift in Sources */,
 				F78AB72C1DBE6DA400BB40EA /* AboutUsViewController.swift in Sources */,
 				F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */,
