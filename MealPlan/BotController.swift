@@ -99,6 +99,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     override func viewWillAppear(_ animated: Bool) {
         //self.navigationController?.hidesBottomBarWhenPushed = true
         self.navigationController?.toolbar.isHidden = false
+        self.navigationController?.toolbar.isUserInteractionEnabled = false
         self.inputToolbar.contentView.textView.autocorrectionType = .no
     }
     
@@ -503,7 +504,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         
         print("Food I want to create: \(food)")
         
-        //let created = DataHandler.createFood(food)
+        _ = DataHandler.createFood(food)
         
         
         
@@ -531,7 +532,12 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     
     override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        print("letter tapped\n")
+        print("letter tapped\n:\(textView.text) and: \(textView.text.characters)")
+        
+        if text.characters.count == 0 {
+            return true //if the delete key is pressed then length of the text variable is not increase so return true
+        }
+        
         switch validationType[questionIndex] {
         case  Constants.botValidationEntryType.text:
             return text.isNumber() ? false : true

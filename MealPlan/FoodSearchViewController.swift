@@ -14,7 +14,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet var closeButton : UIButton!
     @IBOutlet var addNewFoodButton : UIButton!
     
-    var localData = DataHandler.readFoodsData("");
+    var localData : [Food]?
     var filterdData:[Food]?
     var meal:Meal?
     var filterText:String = ""
@@ -22,6 +22,8 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        localData = DataHandler.readFoodsData("");
+        filterdData = localData;
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -31,7 +33,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     override  func viewDidLoad() {
         super.viewDidLoad()
         
-        filterdData = localData;
+        
         foodListTable.delegate = self
         
         // Do any additional setup after loading the view.
@@ -43,7 +45,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         addNewFoodButton.backgroundColor = UIColor.lightGray
         addNewFoodButton.titleLabel?.textColor = UIColor.blue
         
-        //addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
+        addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
         
     }
     
@@ -66,7 +68,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         filterText = searchText.lowercased()
-        filterdData = localData.filter({
+        filterdData = localData?.filter({
             
             if($0.name.lowercased().contains(searchText.lowercased())){
                 return true

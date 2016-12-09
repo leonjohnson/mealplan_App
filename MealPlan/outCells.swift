@@ -31,19 +31,45 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         
         self.cellBottomLabel.textAlignment = .right
         self.questionTextView.textColor = UIColor.black
+        self.questionTextView.backgroundColor = UIColor.lightGray
         self.questionTextView.sizeToFit()
         
         
-        //print("size of bubble is: \(self.messageBubbleImageView.image?.size)")
+        print("size of bubble is: \(self.self.messageBubbleContainerView.frame)")
         
+        print("height of text view: \(questionTextView.frame.height)")
+        textView.frame = CGRect(x: questionTextView.frame.origin.x,
+                                        y: questionTextView.frame.origin.y,
+                                        width: questionTextView.frame.size.width,
+                                        height: questionTextView.frame.size.height - 20)
+        print("NEW height of text view: \(questionTextView.frame.height)")
         
-        //self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, y: self.messageBubbleContainerView.frame.origin.y, width: self.messageBubbleContainerView.frame.width, height: 300)
         }
     
 
     override func prepareForReuse() {
         print("preparing for reuse")
+        super.prepareForReuse()
+        
+        self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, 
+                                                       y: self.messageBubbleContainerView.frame.origin.y, 
+                                                       width: self.messageBubbleContainerView.frame.width, 
+                                                       height: CGFloat(300 + (data.options.count * 34)))
+        
+        for row in 0...data.options.count {
+            self.table.cellForRow(at: [0, row])?.accessoryType = UITableViewCellAccessoryType.none
+        }
+        
+        print("height of text view: \(questionTextView.frame.height)")
+        questionTextView.frame = CGRect(x: questionTextView.frame.origin.x, 
+                                        y: questionTextView.frame.origin.y, 
+                                        width: questionTextView.frame.size.width,
+                                        height: questionTextView.frame.size.width - 20)
+        print("NEW height of text view: \(questionTextView.frame.height)")
+        print("Done resetting.")
     }
+    
+    
     
     override class func nib() -> UINib {
         return UINib(nibName: "outCell", bundle: nil)
