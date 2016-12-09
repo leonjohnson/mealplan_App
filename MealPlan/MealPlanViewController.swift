@@ -576,6 +576,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                 let controller = segue.destination as! DetailViewController
                 controller.meal = meals[indexPath.section]
                 controller.detailItem = object
+                controller.newItemMode = false
                 //controller.hideAddButton = true
                 //   controller.masterView = self
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem

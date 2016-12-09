@@ -21,11 +21,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         case feedback // Used when creating Bot page to provide it with some context of task.
     }
     var botType : botTypeEnum = .unstated
-    
-    var epo = BotData.NEW_FOOD.questions
-    
-    
-    
     var questions : [String] = BotData.NEW_FOOD.questions
     var options : [[String]] = BotData.NEW_FOOD.options
     var answers : [[String]] = BotData.NEW_FOOD.answers
@@ -537,20 +532,15 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         if text.characters.count == 0 {
             return true //if the delete key is pressed then length of the text variable is not increase so return true
         }
-        
-        
-        
         switch validationType[questionIndex] {
         case  Constants.botValidationEntryType.text:
-            return text.isNumber() ? false : true
+            return text.isDecimal() ? false : true
             
         case  Constants.botValidationEntryType.decimal:
-            return text.isNumber() ? true : false
+            return text.isDecimal() ? true : false
             
         case  Constants.botValidationEntryType.none:
-            return text.isNumber() ? false : true // users should be allowed to type in 'go back' even though the keyboard will be minimised.
-
-        
+            return text.isDecimal() ? false : true // users should be allowed to type in 'go back' even though the keyboard will be minimised.
         }
     }
 

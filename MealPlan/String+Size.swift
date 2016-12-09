@@ -37,7 +37,7 @@ extension String {
 
 public extension String {
     
-    func isNumber() -> Bool {
+    func isDecimal() -> Bool {
         //let numberCharacters = NSCharacterSet.decimalDigits.inverted
         let decimalCharacters = NSCharacterSet.init(charactersIn: "0123456789.").inverted
         return !self.isEmpty && self.rangeOfCharacter(from: decimalCharacters) == nil
