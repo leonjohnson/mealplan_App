@@ -3,7 +3,7 @@ import JSQMessagesViewController
 
 class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITableViewDataSource, OutgoingCellDelegate {
 
-    @IBOutlet var questionTextView : UITextView!
+    @IBOutlet var questionTextView : JSQMessagesCellTextView?
     @IBOutlet var table : UITableView!
     var question : String = String()
     var data : (question:String, options:[String]) = ("",[])
@@ -12,61 +12,34 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        print("super.awakeFromNib() called")
-        
         table.register(UINib(nibName: "miniTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         self.table.dataSource = self
         self.table.delegate = self
         self.table.allowsSelection = true
         self.table.isUserInteractionEnabled = true
         self.table.allowsMultipleSelection = false
-        self.questionTextView.attributedText = NSAttributedString(string: "", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
-        
-        
-
+        self.questionTextView?.attributedText = NSAttributedString(string: "", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
         self.messageBubbleTopLabel.textAlignment = .center
         self.tapGestureRecognizer.cancelsTouchesInView = false
-     
-        
         self.cellBottomLabel.textAlignment = .right
-        self.questionTextView.textColor = UIColor.black
-        self.questionTextView.backgroundColor = UIColor.lightGray
-        self.questionTextView.sizeToFit()
-        
-        
-        print("size of bubble is: \(self.self.messageBubbleContainerView.frame)")
-        
-        print("height of text view: \(questionTextView.frame.height)")
-        textView.frame = CGRect(x: questionTextView.frame.origin.x,
-                                        y: questionTextView.frame.origin.y,
-                                        width: questionTextView.frame.size.width,
-                                        height: questionTextView.frame.size.height - 20)
-        print("NEW height of text view: \(questionTextView.frame.height)")
-        
+
         }
     
 
     override func prepareForReuse() {
-        print("preparing for reuse")
         super.prepareForReuse()
         
         self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, 
                                                        y: self.messageBubbleContainerView.frame.origin.y, 
                                                        width: self.messageBubbleContainerView.frame.width, 
-                                                       height: CGFloat(300 + (data.options.count * 34)))
+                                                       height: CGFloat(300 + (data.options.count * Int(Constants.TABLE_ROW_HEIGHT_SMALL))))
         
         for row in 0...data.options.count {
             self.table.cellForRow(at: [0, row])?.accessoryType = UITableViewCellAccessoryType.none
         }
         
-        print("height of text view: \(questionTextView.frame.height)")
-        questionTextView.frame = CGRect(x: questionTextView.frame.origin.x, 
-                                        y: questionTextView.frame.origin.y, 
-                                        width: questionTextView.frame.size.width,
-                                        height: questionTextView.frame.size.width - 20)
-        print("NEW height of text view: \(questionTextView.frame.height)")
-        print("Done resetting.")
+        table.contentInset = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
+
     }
     
     
@@ -104,15 +77,12 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         //table.frame = CGRect(x:Int(table.frame.origin.x),y:Int(table.frame.origin.y),width:Int(table.frame.width), height:((data.options.count * 44)+5))//
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! miniTableViewCell
         
-        print("data.options: \(data.options)")
         cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
         cell.outgoingCellDelegate = self
-        
-        
-        
         return cell
     }
     
@@ -151,41 +121,9 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 34
+        return Constants.TABLE_ROW_HEIGHT_SMALL
     }
-    
-    
-    /*
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        
-        let hitView = super.hitTest(point, with: event)
-        
-        let ip = table.indexPathForRow(at: point)
-        print("ip = \(ip)\n")
-        
-        if (hitView is JSQMessagesCollectionViewCellOutgoing) {
-            print("table view cell.... : \((hitView as! UITableViewCell).textLabel?.text)")
-            return nil
-        }
-        if (hitView is UITableView) {
-            print("table view getting hit")
-            return hitView
-        }
-        
-        if (hitView is UITableViewCell) {
-            print("table view CELL getting hit")
-            return hitView
-        }
-        
-        if (hitView is UILabel) {
-            print("text is: \((hitView as! UILabel).text)")
-            return hitView
-        }
-        
-        print("not self: \(hitView)")
-        return super.hitTest(point, with: event)
-    }
-    */
+
 }
 
 

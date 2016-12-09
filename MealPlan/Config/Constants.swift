@@ -46,6 +46,7 @@ struct Constants {
     
     //TableView constants
     static let TABLE_ROW_HEIGHT = CGFloat(55)
+    static let TABLE_ROW_HEIGHT_SMALL = CGFloat(40)
     static let MACRO_LABEL = UIFont(name: "HelveticaNeue", size: 12)!
     static let DELETE = "Delete"
     static let EDIT = "Edit"

@@ -310,6 +310,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
         
+        print("size of CELL view: \(cell.frame.width), \(cell.frame.height)")
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
@@ -323,14 +324,12 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             //cellWithTableview.table.delegate = self
             
             cellWithTableview.question = message.text
-            cellWithTableview.questionTextView.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            cellWithTableview.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
             cellWithTableview.data.question = message.text
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
-            cellWithTableview.questionTextView.sizeToFit()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
             cellWithTableview.botDelegate = self
-            
             return cellWithTableview
         }
         
@@ -531,12 +530,15 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     
     
+    
     override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         print("letter tapped\n:\(textView.text) and: \(textView.text.characters)")
         
         if text.characters.count == 0 {
             return true //if the delete key is pressed then length of the text variable is not increase so return true
         }
+        
+        
         
         switch validationType[questionIndex] {
         case  Constants.botValidationEntryType.text:
