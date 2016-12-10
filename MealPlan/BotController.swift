@@ -304,9 +304,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
-        
-        print("size of CELL view: \(cell.frame.width), \(cell.frame.height)")
-        
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
             var row = indexPath.row

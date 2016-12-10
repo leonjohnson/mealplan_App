@@ -5215,7 +5215,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6Q-PG-m4U">
-                                                <rect key="frame" x="40" y="0.0" width="275" height="50"/>
+                                                <rect key="frame" x="35" y="0.0" width="303" height="50"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                                 </accessibility>
@@ -5230,18 +5230,20 @@
                                                 </attributedString>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1BL-rp-XcF">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1BL-rp-XcF">
                                                 <rect key="frame" x="0.0" y="15" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="fn9-sh-dZI"/>
+                                                </constraints>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="1BL-rp-XcF" firstAttribute="centerY" secondItem="FWa-Oq-oMd" secondAttribute="centerY" id="BHq-vV-s1j"/>
-                                            <constraint firstItem="L6Q-PG-m4U" firstAttribute="centerX" secondItem="FWa-Oq-oMd" secondAttribute="centerX" constant="6" id="F4N-Tq-BvX"/>
-                                            <constraint firstItem="L6Q-PG-m4U" firstAttribute="leading" secondItem="1BL-rp-XcF" secondAttribute="trailing" constant="20" id="Gdj-ah-k0S"/>
+                                            <constraint firstItem="L6Q-PG-m4U" firstAttribute="leading" secondItem="1BL-rp-XcF" secondAttribute="trailing" constant="15" id="Gdj-ah-k0S"/>
                                             <constraint firstItem="L6Q-PG-m4U" firstAttribute="centerY" secondItem="FWa-Oq-oMd" secondAttribute="centerY" id="MEz-X8-g17"/>
-                                            <constraint firstItem="1BL-rp-XcF" firstAttribute="top" relation="lessThanOrEqual" secondItem="FWa-Oq-oMd" secondAttribute="top" constant="15" placeholder="YES" id="SCM-IR-fXB"/>
-                                            <constraint firstAttribute="trailing" secondItem="L6Q-PG-m4U" secondAttribute="trailing" constant="28" id="YGp-vL-WUT"/>
+                                            <constraint firstItem="1BL-rp-XcF" firstAttribute="top" secondItem="FWa-Oq-oMd" secondAttribute="top" constant="15" placeholder="YES" id="SCM-IR-fXB"/>
+                                            <constraint firstAttribute="trailing" secondItem="L6Q-PG-m4U" secondAttribute="trailing" constant="5" id="YGp-vL-WUT"/>
                                             <constraint firstItem="1BL-rp-XcF" firstAttribute="centerY" secondItem="FWa-Oq-oMd" secondAttribute="centerY" id="gkG-nP-Wup"/>
                                             <constraint firstAttribute="height" constant="50" id="hrN-rE-Y0c"/>
                                             <constraint firstItem="1BL-rp-XcF" firstAttribute="centerY" secondItem="FWa-Oq-oMd" secondAttribute="centerY" id="lRV-Pe-bSh"/>
@@ -5298,8 +5300,8 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0g" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0do-a1-OGi">
-                                                    <rect key="frame" x="184" y="8" width="30" height="33"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0g" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0do-a1-OGi">
+                                                    <rect key="frame" x="234" y="8" width="30" height="33"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="126" id="Rb0-4q-Zhm">
                                                             <variation key="heightClass=regular-widthClass=compact" constant="30"/>
@@ -5365,7 +5367,7 @@
                                                 </constraint>
                                                 <constraint firstItem="WDS-Kf-5Oy" firstAttribute="top" secondItem="ik8-mg-tZv" secondAttribute="top" id="CWY-p6-3se"/>
                                                 <constraint firstItem="Eze-jr-ZGK" firstAttribute="top" secondItem="ik8-mg-tZv" secondAttribute="topMargin" constant="18" id="DN7-nf-dpN"/>
-                                                <constraint firstItem="0do-a1-OGi" firstAttribute="leading" secondItem="WDS-Kf-5Oy" secondAttribute="trailing" constant="17" id="GoJ-yx-Upd"/>
+                                                <constraint firstItem="0do-a1-OGi" firstAttribute="leading" secondItem="WDS-Kf-5Oy" secondAttribute="trailing" constant="67" id="GoJ-yx-Upd"/>
                                                 <constraint firstAttribute="trailing" secondItem="WDS-Kf-5Oy" secondAttribute="trailing" constant="63" id="HBM-Z4-Umt">
                                                     <variation key="widthClass=compact" constant="40"/>
                                                 </constraint>

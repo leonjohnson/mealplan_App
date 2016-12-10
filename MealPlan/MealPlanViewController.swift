@@ -47,7 +47,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var mealPlanTally: MacrosTallyView!
     
     var alertController : UIAlertController?
-    
     var deleteSheetIndexSelected : Int = -1
     
     
@@ -81,11 +80,12 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func viewDidLoad() {
-        // ENABLE TO MOVE TO START PAGE
-        Config.setBoolValue(Constants.HAS_PROFILE,status: true)
-        
         super.viewDidLoad()
         mealPlanListTable.delegate = self
+        backDateButton.isUserInteractionEnabled = false
+        backDateButton.alpha = 0.5
+        Config.setBoolValue(Constants.HAS_PROFILE,status: true) // ENABLE TO MOVE TO START PAGE
+        
         
         //self.workOutIcon.hidden = true
         
@@ -177,7 +177,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         var longString = ""
         let variance = thisWeek.dailyMeals[forDay].calculateMacroDiscrepancy(macros: thisWeek.macroAllocation)
         if variance.yesOrNo == false{
-            mealPlanTally.headline.attributedText = NSAttributedString(string: "The macros in your meal plan are looking good today.", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            mealPlanTally.headline.attributedText = NSAttributedString(string: "The macros in your meal plan are looking good today.", attributes:[NSFontAttributeName:Constants.SMALL_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
             if let checkMark = UIImage(named: "macroCheckMark") {
                 mealPlanTally.imageView.image = checkMark
             }
@@ -296,8 +296,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         meals = Array(thisWeek.dailyMeals[index!].meals)
         mealPlanListTable.reloadData();
         updateMacroTally(forDay: index!)
-        
-        
     }
     
     
@@ -477,6 +475,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let vheadView = UIView()
         
+        
         vheadView.backgroundColor = UIColor.clear
         
         let  headerCell = UILabel()
@@ -489,7 +488,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //create label inside header view
         let calorieCountLabel = UILabel()
         
-        calorieCountLabel.frame = CGRect(x: 10, y: 10, width: tableView.frame.width-30, height: 20)
+        calorieCountLabel.frame = CGRect(x: 10, y: 10, width: tableView.frame.width-25, height: 20)
         calorieCountLabel.textAlignment = NSTextAlignment.right
         calorieCountLabel.textColor = UIColor.white
         calorieCountLabel.font = UIFont.systemFont(ofSize: 17)
@@ -502,7 +501,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //totalCaloriesString = Int(meals[section].totalCalories())
         calorieCountLabel.attributedText = NSAttributedString(string: totalCaloriesString + " kcal", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
-        
         
         vheadView.addSubview(calorieCountLabel)
         

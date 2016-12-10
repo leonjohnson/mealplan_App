@@ -26,6 +26,7 @@ struct Constants {
     
     //Fonts
     static let STANDARD_FONT = UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular)
+    static let SMALL_FONT = UIFont.systemFont(ofSize: 11, weight: UIFontWeightRegular)
     static let GENERAL_LABEL = UIFont.systemFont(ofSize: 14, weight: UIFontWeightBold)
     static let MEAL_PLAN_TITLE = UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold)
     static let MEAL_PLAN_SUBTITLE = UIFont.systemFont(ofSize: 13, weight: UIFontWeightBold)
@@ -48,6 +49,7 @@ struct Constants {
     static let TABLE_ROW_HEIGHT = CGFloat(55)
     static let TABLE_ROW_HEIGHT_SMALL = CGFloat(40)
     static let TABLE_ROW_HEIGHT_TINY = CGFloat(34) // Only for Nutritional information page
+    static let TABLE_INSETS = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
     static let MACRO_LABEL = UIFont(name: "HelveticaNeue", size: 12)!
     static let DELETE = "Delete"
     static let EDIT = "Edit"

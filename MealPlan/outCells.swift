@@ -38,7 +38,7 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
             self.table.cellForRow(at: [0, row])?.accessoryType = UITableViewCellAccessoryType.none
         }
         
-        table.contentInset = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
+        table.contentInset = Constants.TABLE_INSETS
 
     }
     
