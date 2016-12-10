@@ -116,7 +116,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     
     @IBAction func CloseAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popToRootViewController(animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

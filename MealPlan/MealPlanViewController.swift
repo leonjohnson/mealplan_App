@@ -57,6 +57,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     var nextWeek: Week = Week()
     
     var dateCount:Int = 0
+    var lastDayVisitedBeforeLeavingPage:Int = 0
     
     
     
@@ -66,11 +67,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        //Constants.LOCALISATION_NEEDED
         
         var stringWithName = DataHandler.getActiveUser().name
-        
         if stringWithName.uppercased().characters.last == "S"{
             stringWithName = stringWithName + "' meal plan"
         } else{
@@ -79,12 +79,77 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         nameLabel.attributedText? = NSAttributedString(string:stringWithName, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        lastDayVisitedBeforeLeavingPage = dateCount
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mealPlanListTable.delegate = self
         backDateButton.isUserInteractionEnabled = false
         backDateButton.alpha = 0.5
+        
+        
+        
+        thisWeek = SetUpMealPlan.getThisWeekAndNext()[0]
+        
+        print("0 start date: \(SetUpMealPlan.getThisWeekAndNext()[0].start_date)")
+        print("1 start date: \(SetUpMealPlan.getThisWeekAndNext()[1].start_date)")
+        
+        let calendar: Calendar = Calendar.current
+        let date1 = calendar.startOfDay(for: thisWeek.start_date as Date)
+        let date2 = calendar.startOfDay(for: Date())
+        let flags = NSCalendar.Unit.day
+        let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: []) // the difference in days
+        print("Dates : \(date1) and \(date2)")
+        
+        
+        dateCount = components.day!
+        print("The difference in days = \(dateCount)")
+        
+        let dateForthisMealPlan = setDate()
+        //meals = Array(data.meals)
+        meals = Array(thisWeek.dailyMeals[dateCount].meals)
+        
+        mealPlanListTable.reloadData();
+        mealPlanDate.text = dateForthisMealPlan // Monday June 30, 2014 10:42:21am PS
+        mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        
+        
+        
+        
+        
+        
         Config.setBoolValue(Constants.HAS_PROFILE,status: true) // ENABLE TO MOVE TO START PAGE
+        alertController = UIAlertController(title: "Reason for removing this food?",
+                                            message: "",
+                                            preferredStyle: .actionSheet)
+        
+        let tooEarlyAction : UIAlertAction = UIAlertAction(title: "Too early for this",
+                                                           style: .destructive,
+                                                           handler: {
+                                                            (paramAction:UIAlertAction!) in
+                                                            self.deleteSheetIndexSelected = 0
+        })
+        
+        let dislikeAction : UIAlertAction = UIAlertAction(title: "Dislike this",
+                                                          style: .destructive,
+                                                          handler: {
+                                                            (paramAction:UIAlertAction!) in
+                                                            self.deleteSheetIndexSelected = 1
+        })
+        
+        let cancelAction : UIAlertAction = UIAlertAction(title: "Cancel",
+                                                         style: .cancel,
+                                                         handler: {
+                                                            (paramAction:UIAlertAction!) in
+                                                            self.alertController?.dismiss(animated: true, completion: nil)
+        })
+        
+        
+        alertController?.addAction(tooEarlyAction)
+        alertController?.addAction(dislikeAction)
+        alertController?.addAction(cancelAction)
         
         
         //self.workOutIcon.hidden = true
@@ -111,60 +176,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidAppear(true)
         
         
-        thisWeek = SetUpMealPlan.getThisWeekAndNext()[0]
         
-        print("0 start date: \(SetUpMealPlan.getThisWeekAndNext()[0].start_date)")
-        print("1 start date: \(SetUpMealPlan.getThisWeekAndNext()[1].start_date)")
-        
-        let calendar: Calendar = Calendar.current
-        let date1 = calendar.startOfDay(for: thisWeek.start_date as Date)
-        let date2 = calendar.startOfDay(for: Date())
-        let flags = NSCalendar.Unit.day
-        let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: []) // the difference in days
-        print("Dates : \(date1) and \(date2)")
-        
-        
-        dateCount = components.day!
-        print("The difference in days = \(dateCount)")
-        
-        let dateForthisMealPlan = setDate()
-        //meals = Array(data.meals)
-        meals = Array(thisWeek.dailyMeals[dateCount].meals)
-        
-        mealPlanListTable.reloadData();
-        mealPlanDate.text = dateForthisMealPlan // Monday June 30, 2014 10:42:21am PS
-        mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
 
+        changeMealPlanDisplayed(nil)
         
-        alertController = UIAlertController(title: "Reason for removing this food?",
-                                            message: "",
-                                            preferredStyle: .actionSheet)
-        
-        let tooEarlyAction : UIAlertAction = UIAlertAction(title: "Too early for this",
-                                       style: .destructive,
-                                       handler: {
-                                       (paramAction:UIAlertAction!) in
-                                        self.deleteSheetIndexSelected = 0
-        })
-        
-        let dislikeAction : UIAlertAction = UIAlertAction(title: "Dislike this",
-                                       style: .destructive,
-                                       handler: {
-                                        (paramAction:UIAlertAction!) in
-                                        self.deleteSheetIndexSelected = 1
-        })
-        
-        let cancelAction : UIAlertAction = UIAlertAction(title: "Cancel",
-                                                          style: .cancel,
-                                                          handler: {
-                                                            (paramAction:UIAlertAction!) in
-                                                            self.alertController?.dismiss(animated: true, completion: nil)
-        })
-        
-        
-        alertController?.addAction(tooEarlyAction)
-        alertController?.addAction(dislikeAction)
-        alertController?.addAction(cancelAction)
         
         updateMacroTally(forDay: dateCount)
         
@@ -196,57 +211,32 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             
             //"Out by: \(variance.amount[Constants.PROTEINS]), \(variance.amount[Constants.CARBOHYDRATES]), \(variance.amount[Constants.FATS])"
         }
-        print("mealPlanTally.headline: \(mealPlanTally.headline.text)")
-        print("size of the imageview IMAGE: \(mealPlanTally.imageView.image?.size)")
     }
 
     
     
     func setDate() -> (String?) {
-        
-        /*
-        let calendar: NSCalendar = NSCalendar.currentCalendar()
-        let date1 = calendar.startOfDayForDate(thisWeek.start_date)
-        let date2 = calendar.startOfDayForDate(NSDate())
-        let flags = NSCalendarUnit.Day
-        let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
-        //let difference = components.day  // This will return the number of day(s) between dates, so I can get today's meal
-        */
-        print("dateCount : \(dateCount)")
         var components = DateComponents()
-        
-        var index : Int = 0
-        if dateCount > 6 && dateCount < 15 {
-            index = dateCount - 7
-        } else {
-            index = dateCount
-        }
-        
-        print("index : \(index)")
+        let index : Int = (dateCount > 6 && dateCount < 15) ? dateCount - 7 : dateCount
         components.day = index
-        
-        //(components as NSDateComponents).setValue(index, forComponent: NSCalendar.Unit.day);
-        print("component: \(components.day)")
-        
         let dateForthisMealPlan = (Calendar.current as NSCalendar).date(byAdding: components, to: thisWeek.start_date as Date, options: NSCalendar.Options(rawValue: 0))
-        
         let formatter = DateFormatter()
         formatter.dateStyle = .full
         formatter.timeStyle = .none
         //mealPlanDate.text = formatter.stringFromDate(dateForthisMealPlan!) // Monday June 30, 2014 10:42:21am PS
-        
         return formatter.string(from: dateForthisMealPlan!)
     }
     
     
     
     
-    @IBAction func changeMealPlanDisplayed(_ sender: UIButton){
+    @IBAction func changeMealPlanDisplayed(_ sender: UIButton?){
         var index : Int?
-        dateCount = dateCount + sender.tag
-        print("sender.tag = \(sender.tag)")
-        print("dateCount = \(dateCount)")
+        if sender != nil{
+            dateCount = dateCount + (sender?.tag)!
+        }
         
+
         //Update the mealPlan selected
         if dateCount > 6 && dateCount < 15 {
             //this is week 2
@@ -261,11 +251,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         let dateForthisMealPlan = setDate()
-        print("dateForthisMealPlan = \(dateForthisMealPlan)")
-        print("dateCount = \(dateCount)")
-        
-        
-        
+
         //Update the buttons
         if dateCount == 0 {
             backDateButton.isUserInteractionEnabled = false
@@ -414,7 +400,12 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                     ending = " slice"
                 }
             case Constants.item:
-                ending = " " + (foodItem.food?.name)! + "s"
+                if (foodItem.food?.name.hasSuffix("bread"))!{
+                    ending = " " + ending
+                } else {
+                    ending = " " + (foodItem.food?.name)! + "s"
+                }
+                
             default:
                 ending = " " + ending
             }

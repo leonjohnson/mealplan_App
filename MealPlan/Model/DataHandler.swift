@@ -287,7 +287,7 @@ class DataHandler: NSObject {
         if(food == nil){
             food = Food();
             food!.pk = pk;
-            createFood(food!);
+            _ = createFood(food!);
         }
         return food!;
         
@@ -351,19 +351,24 @@ class DataHandler: NSObject {
     static func getAllFoodsExceptLikedFoods(_ name:String)->[Food]{
         let realm = try! Realm()
         let foodsLiked = getLikeFoods().foods
-        
+        let foodsIEat = getFoodsForYouDiet()
         let namesOfFoodsLiked = NSMutableArray()
         for food in foodsLiked {
-            
             namesOfFoodsLiked.add(food.name)
-            print("added \(food.name)")
+        }
+        let items = realm.objects(Food.self).filter("name contains '" + name + "' and pk != 0").filter("NOT name IN %@ AND IN %@", namesOfFoodsLiked, foodsIEat).sorted(byProperty: "name", ascending: true)
+        return Array(items)
+    }
+    
+    static func getFoodsForYouDiet() -> [Food]{
+        let realm = try! Realm()
+        let vegetarianPredicate = NSPredicate(format: "name = %@ OR name = %@", Constants.vegetarian, Constants.Vegan)
+        let myDiets = realm.objects(DietSuitability.self).filter(vegetarianPredicate)
+        if myDiets.count > 0{
+            return Array(realm.objects(Food.self).filter("dietSuitability contains %@", myDiets).sorted(byProperty: "name", ascending: true))
             
         }
-        
-        let items = realm.objects(Food.self).filter("name contains '" + name + "' and pk != 0").filter("NOT name IN %@", namesOfFoodsLiked)
-        print("NEW items contain : \(items.count)")
-        
-        return Array(items)
+        return Array(realm.objects(Food.self))
     }
     
     static func readMealData()->[Meal]{

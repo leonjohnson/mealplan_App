@@ -87,12 +87,16 @@ class BotData: NSObject {
             struct name {
                 static let question = "Hi! What is the full name of the food?"
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.text
             }
             
             struct producer {
                 static let question = "Who makes this product?" // manufacter, don't know, blank, some other unuseful answer
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.text
             }
             
@@ -102,48 +106,64 @@ class BotData: NSObject {
                                             Constants.ml,
                                             Constants.slice,
                                             "Item (such as per banana or per apple)?"]
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.none
             }
             
             struct calories {
                 static let question = "Thanks. How many calories are in it?"
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
             
             struct fat {
                 static let question = "grams of fat?" //per 100g or 100ml
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
             
             struct saturated_fat {
                 static let question = "saturated fat?"
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
             
             struct carbohydrates {
                 static let question = "and carbohydrates?"
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
             
             struct sugar {
-                static let question = "of which are sugar? (type n/a if it's not labelled)"
+                static let question = "of which are sugar?"
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
             
             struct fibre {
-                static let question = "and fibre? (type n/a if it's not labelled)"
+                static let question = "and fibre?"
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
             
             struct protein {
                 static let question = "how much protein does this item have?"
                 static let tableViewList:[String] = []
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
             
@@ -158,6 +178,8 @@ class BotData: NSObject {
                                             "This is a type of fish",
                                             "This is a condiment",
                                             "None of the above"]
+                static let buttonText : String = ""
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.none
             }
             
@@ -166,6 +188,8 @@ class BotData: NSObject {
             struct ending {
                 static let question = "Thanks! You're all done. 👍"
                 static let tableViewList:[String] = []
+                static let buttonText : String = "Show me my meal plan"
+                static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.none
             }
     }
@@ -220,6 +244,8 @@ class BotData: NSObject {
         struct howWasLastWeek {
             static let question = "How much did you weigh this morning?"
             static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
             static let validation = Constants.botValidationEntryType.decimal
         }
         
@@ -229,18 +255,32 @@ class BotData: NSObject {
                                                  Constants.hungerLevels.littleHungry.rawValue,
                                                  Constants.hungerLevels.aboutRight.rawValue,
                                                  Constants.hungerLevels.full.rawValue]
+            static let buttonText : String = ""
+            static let tips : String = ""
             static let validation = Constants.botValidationEntryType.none
         }
         
         struct anyComments {
             static let question = "Do you have any feedback on how I can make your future meal plans better for you?"
             static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
             static let validation = Constants.botValidationEntryType.text
         }
         
-        struct ending {
-            static let question = "Thanks for your input. I'll create a new meal plan for you now."
+        struct thankyou {
+            static let question = "Thanks for your input. I'll create a new meal plan for you now..."
             static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let validation = Constants.botValidationEntryType.none
+        }
+        
+        struct ending {
+            static let question = "All done!"
+            static let tableViewList:[String] = []
+            static let buttonText : String = "Show me my meal plan"
+            static let tips : String = ""
             static let validation = Constants.botValidationEntryType.none
         }
     }

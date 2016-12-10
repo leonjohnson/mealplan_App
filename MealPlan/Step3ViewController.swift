@@ -174,25 +174,10 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //IBAction for NextButton Clicked in Step3 VC. Saving all datas into an ProfileClass.
     @IBAction func step3NextButtonClicked (_ sender : AnyObject){
-        //Saving Values to the Varible Declared for ProfileStep3 constant class.
-        // create the alert
-//        if (likeFoodValue.count == 0){
-//            let alert = UIAlertController(title: "", message: "Select like foods", preferredStyle: UIAlertControllerStyle.Alert)
-//            
-//            // add an action (button)
-//            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-//            
-//            // show the alert
-//            self.presentViewController(alert, animated: true, completion: nil)
-//            return
-//
-//        }
-        
         DataHandler.updateLikeFoods(likeFoodValue)
-        
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }else{
         self.performSegue(withIdentifier: "step3Identifier", sender: nil)
         }
@@ -203,7 +188,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //Method for Navigating back to previous ViewController.
     @IBAction func BackAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     
