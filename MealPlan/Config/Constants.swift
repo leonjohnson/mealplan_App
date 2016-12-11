@@ -135,6 +135,9 @@ struct Constants {
     static var SERVING_SIZE_ORDER = ["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"] //portion up everything before 100ml and 100g. Ml comes before g because liquids like drinks are more likely to have rules around them.
     
     
+    //Food attributes
+    static let dietSuitability = "dietSuitability"
+    
     //FoodTypes
     static var FOOD_TYPES = [Constants.drinkFoodType, Constants.fizzy, Constants.fruitFoodType, Constants.vegetableFoodType, Constants.eatenAtBreakfastFoodType, Constants.onlyBreakfastFoodType, Constants.fish, Constants.condimentFoodType]
     

@@ -121,16 +121,16 @@ class MealPlanAlgorithm : NSObject{
         let notCondiment = NSPredicate(format: "NONE SELF.foodType.name == [c] %@", Constants.condimentFoodType)
         let readyToEatPredicate = NSPredicate(format: "readyToEat == %@", NSNumber(value: true as Bool))
         //http://stackoverflow.com/questions/6169121/how-to-write-a-bool-predicate-in-core-data
-        let vegetarianPredicate = NSPredicate(format: "ANY SELF.dietSuitablity.name == [c] %@", Constants.vegetarian)
+        let vegetarianPredicate = NSPredicate(format: "ANY SELF.dietSuitability.name == [c] %@", Constants.vegetarian)
         
-        //let dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitablity IN [c] %@", dietRequirements)
+        //let dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitability IN [c] %@", dietRequirements)
         
         /*
         let noPretFood = NSPredicate(format: "NOT name CONTAINS[c] 'PRET'")
         let pureFatsPredicate = NSPredicate(format: "(proteins < 5) AND (fats > 20) AND (carbohydrates < 5)")
         let pureCarbsPredicate = NSPredicate(format: "(proteins < 2) AND (fats < 2) AND (carbohydrates >= 10)")
         let drinkPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.drinkFoodType)
-        let dietaryNeedPredicate = NSPredicate(format: "self.dietSuitablity.name == %@", dietaryNeed!)
+        let dietaryNeedPredicate = NSPredicate(format: "self.dietSuitability.name == %@", dietaryNeed!)
         
         let likedFoodsPredicate = NSPredicate(format: "self.name in %@", likedFoods)
         */
@@ -724,11 +724,10 @@ class MealPlanAlgorithm : NSObject{
                 
                 breakLabel: switch macro {
                 case Constants.PROTEINS: // TODO - DELETE as this should never be called.
-                    print("Got here 2")
                     deficient = macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!
                     print("Got here : \(deficient)")
                     
-                    var food :Food = Food()
+                    let food :Food = Food()
                     var foodOptions : [Food] = [Food]()
                     
                     guard deficient > 0  else {
@@ -761,11 +760,13 @@ class MealPlanAlgorithm : NSObject{
                     if food.name == ""{
                         let randomInt = Int(arc4random_uniform(UInt32(lightProteins.count)))
                         foodOptions.append(lightProteins[randomInt])
-                        print("Got here 5")
+                        print("Got here 5 UH-OH \n")
                         //food = lightProteins[randomInt]
                     }
-                    //comeBackProteinFoodItem.food = food
-                    //comeBackProteinFoodItem.numberServing = (deficient/(food.proteins))
+                    
+                    foodOptions.sort(by: { x, y in
+                        return x.proteins < x.proteins
+                    })
                     
                     
                     let overflow = createOverFlowStructure(numberOfMealsRemaining, macrosAllocatedToday: macrosAllocatedToday, macrosDesiredToday: macrosDesiredToday)
@@ -774,26 +775,33 @@ class MealPlanAlgorithm : NSObject{
 
                     //  && (food.carbohydrates*(overflow[2]/overflow[1]) || food.fats <= food.carbohydrates*(overflow[2]/overflow[1])*0.7)
                     // Terminating app due to uncaught exception 'Invalid predicate', reason: 'Only support compound, comparison, and constant predicates'
-
                     
-                    if foodOptions.count > 2{
-                        //MARK - Preference for foods that already in the foodbasket
-                        foodOptions = [foodOptions.first!, foodOptions[1]] // if 0, 1, or 2
-                        
+                    
+                    /*
+                     if foodOptions contain foods that we already have in our meal plan then let's use those instead of making more food.
+                     If not, ensure no more than two foods are used in the foodOptions and if the deficit < 20 then use just one item
+                    */
+                    let sameFoodsFound = foodOptions.filter{ foodsAlreadySelected.contains($0.name)}
+                    
+                    if sameFoodsFound.count > 0{
+                        foodOptions = sameFoodsFound
+                    } else {
+                        if foodOptions.count > 2{
+                            //MARK - Preference for foods that already in the foodbasket
+                            foodOptions = [foodOptions.first!, foodOptions[1]] // if 0, 1, or 2
+                        }
+                        if deficient < 20 {
+                            foodOptions = [foodOptions.first!] //if we need less than 20g, then only select one food to be the hero.
+                        }
                     }
                     
-                    if deficient < 20 {
-                        foodOptions = [foodOptions.first!] //if we need less than 20g, then only select one food to be the hero.
-                    }
                     
-                    foodOptions.sort(by: { x, y in
-                        return x.proteins < x.proteins
-                    })
                     
-                    for foo in foodOptions{
-                        print("sorted proteins: \(foo.proteins)")
-                    }
                     
+                    
+                    
+                    
+                    _ = foodOptions.map({_ in print("sorted proteins: \(food.proteins)")})
                     
                     
                     let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)

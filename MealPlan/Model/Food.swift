@@ -19,7 +19,7 @@ class Food: Object {
     dynamic  var image          = ""
     dynamic  var servingSize : ServingSize? = nil
     dynamic var authoredBy: User? //Should this be a string or a User object. Users will be just you and us?
-    var dietSuitablity = List<DietSuitability>()
+    var dietSuitability = List<DietSuitability>()
     var foodType = List<FoodType>()
     dynamic var spicy = false
     dynamic var coreFood = false
@@ -45,7 +45,7 @@ class Food: Object {
     
     dynamic var external_note = ""
     
-    //var fields : Array = Array(arrayLiteral: "name", "producer", "salt", "calories", "fats", "sat_fats", "carbohydrates", "sugars", "fibre", "proteins", "salt", "dietSuitablity",  "vitaminB1", "vitaminB2", "vitaminB3", "vitaminB6", "calcium", "vitaminC", "vitaminD")
+    //var fields : Array = Array(arrayLiteral: "name", "producer", "salt", "calories", "fats", "sat_fats", "carbohydrates", "sugars", "fibre", "proteins", "salt", "dietSuitability",  "vitaminB1", "vitaminB2", "vitaminB3", "vitaminB6", "calcium", "vitaminC", "vitaminD")
 
     
     

@@ -171,11 +171,6 @@ class SetUpMealPlan: NSObject {
         return (true, weeksAheadArray)
     }
     
-    
-    
-    
-    
-    
     static func createWeek(daysUntilCommencement:Int, calorieAllowance:Int) {
         let realm = try! Realm()
         let numberOfWeeks = realm.objects(Week.self).count + 1 // be careful, what if the user stops and restarts
@@ -190,7 +185,7 @@ class SetUpMealPlan: NSObject {
         if (futureWeekStartDate != nil){
             newWeek.start_date = futureWeekStartDate!
         }
-        newWeek.macroAllocation.append(objectsIn: macroAllocation(calorieAllowance: calorieAllowance))
+        newWeek.macroAllocation.append(objectsIn: macroAllocation(calorieAllowance: calorieAllowance, weeksOnProgram: numberOfWeeks))
         newWeek.calorieAllowance = calorieAllowance
         newWeek.TDEE = calculateTDEE()
         newWeek.dailyMeals.append(objectsIn: MealPlanAlgorithm.createMealPlans(newWeek))
@@ -273,44 +268,38 @@ class SetUpMealPlan: NSObject {
     
     
     
-    static func macroAllocation(calorieAllowance:Int)-> List<Macronutrient>
-    {
+    static func macroAllocation(calorieAllowance:Int, weeksOnProgram:Int)-> List<Macronutrient>{
         let carb = Macronutrient()
         let protein = Macronutrient()
         let fats = Macronutrient()
         
         let aim = DataHandler.getActiveBiographical()
-        if aim.looseFat.value == true
-        {
-            // carbs:40, protein:40, fat:20
-            carb.name = Constants.CARBOHYDRATES
-            carb.value = ceil((Double(calorieAllowance)*0.4)/4) //grams
-            
-            protein.name = Constants.PROTEINS
-            protein.value = ceil((Double(calorieAllowance)*0.4)/4) //grams
-            
-            fats.name = Constants.FATS
-            fats.value = ceil((Double(calorieAllowance)*0.2)/9) //grams
-            
-        }
-        else
-        {
-            // carbs:30, protein:45, fat:25
-            carb.name = Constants.CARBOHYDRATES
-            carb.value = ceil((Double(calorieAllowance)*0.3)/4) //grams
-            
-            protein.name = Constants.PROTEINS
-            protein.value = ceil((Double(calorieAllowance)*0.45)/4) //grams
-            
-            fats.name = Constants.FATS
-            fats.value = ceil((Double(calorieAllowance)*0.25)/9) //grams
+        
+        //BMI
+        let upperLimitBMI : Double = 25.0
+        let proxyForFatFreeMassInkg = aim.heightMeasurement * aim.heightMeasurement * upperLimitBMI
+        
+        var proteinRequirement : Double = 0.0
+        if aim.looseFat.value == true{
+            proteinRequirement = weeksOnProgram < 3 ? (1.7 * proxyForFatFreeMassInkg) : (2.2 * proxyForFatFreeMassInkg)
+        } else {
+            proteinRequirement = weeksOnProgram < 3 ? (1.7 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
         }
         
+        protein.name = Constants.PROTEINS
+        protein.value = ceil(proteinRequirement) //grams
+        
+        fats.name = Constants.FATS
+        fats.value = ceil((Double(calorieAllowance)*0.25)/9) //grams
+        
+        carb.name = Constants.CARBOHYDRATES
+        let caloriesFromFats = (fats.value * 4.0)
+        let caloriesFromProteins = (protein.value * 4.0)
+        carb.value = ceil((Double(calorieAllowance) - caloriesFromFats - caloriesFromProteins)/4.0) //grams
         let list = List() as List<Macronutrient>
         list.append(protein)
         list.append(carb)
         list.append(fats)
-        
         return list
     }
     

@@ -131,11 +131,11 @@ class Connect: NSObject {
             itemFood.fibre = RealmOptional<Double>(value)
         }
         
-        if let value = (pdt!.value(forKey: "dietSuitablity") as! NSArray?){
+        if let value = (pdt!.value(forKey: Constants.dietSuitability) as! NSArray?){
             let realm = try! Realm()
-            let ds = realm.objects(DietSuitability).filter("name IN %@", value)
+            let ds = realm.objects(DietSuitability.self).filter("name IN %@", value)
             for each in ds {
-                itemFood.dietSuitablity.append(each)
+                itemFood.dietSuitability.append(each)
             }
         }
         
@@ -158,7 +158,7 @@ class Connect: NSObject {
         
         /*
 
-        "pk":1,"name":"Oomf! Protein Oats (banana flavour)","servingSize":"100g","calories":389,"carbohydrates":"56.60","sugars":"13.90","proteins":"27.70","fats":"4.40","sat_fats":"0.90","fibre":"6.20","salt":"0.40","dietSuitablity":["Vegetarian"],"oftenEatenWith":[],"alwaysEatenWithOneOf":[],"foodType":["Breakfast only"]},
+        "pk":1,"name":"Oomf! Protein Oats (banana flavour)","servingSize":"100g","calories":389,"carbohydrates":"56.60","sugars":"13.90","proteins":"27.70","fats":"4.40","sat_fats":"0.90","fibre":"6.20","salt":"0.40","dietSuitability":["Vegetarian"],"oftenEatenWith":[],"alwaysEatenWithOneOf":[],"foodType":["Breakfast only"]},
  
         */
     }

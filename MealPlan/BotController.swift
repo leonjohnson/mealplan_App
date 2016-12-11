@@ -501,11 +501,11 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         
         /*
          
-         if let value = (pdt!.value(forKey: "dietSuitablity") as! NSArray?){
+         if let value = (pdt!.value(forKey: "dietSuitability") as! NSArray?){
          let realm = try! Realm()
          let ds = realm.objects(DietSuitability).filter("name IN %@", value)
          for each in ds {
-         itemFood.dietSuitablity.append(each)
+         itemFood.dietSuitability.append(each)
          }
          }
          

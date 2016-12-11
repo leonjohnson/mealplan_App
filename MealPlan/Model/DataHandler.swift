@@ -351,7 +351,7 @@ class DataHandler: NSObject {
     static func getAllFoodsExceptLikedFoods(_ name:String)->[Food]{
         let realm = try! Realm()
         let foodsLiked = getLikeFoods().foods
-        let foodsIEat = getFoodsForYouDiet()
+        let foodsIEat = getFoodsForYourDiet()
         let namesOfFoodsLiked = NSMutableArray()
         for food in foodsLiked {
             namesOfFoodsLiked.add(food.name)
@@ -360,7 +360,7 @@ class DataHandler: NSObject {
         return Array(items)
     }
     
-    static func getFoodsForYouDiet() -> [Food]{
+    static func getFoodsForYourDiet() -> [Food]{
         let realm = try! Realm()
         let vegetarianPredicate = NSPredicate(format: "name = %@ OR name = %@", Constants.vegetarian, Constants.Vegan)
         let myDiets = realm.objects(DietSuitability.self).filter(vegetarianPredicate)
