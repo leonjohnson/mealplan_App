@@ -23,16 +23,41 @@ class Connect: NSObject {
         
         return 0.0
     }
-    
+    static func checkVersion(key:String, onResponse:@escaping (_ version:String?,_ status:Bool) -> Void)->Void{
+
+        let success = { (operation:AFHTTPRequestOperation?,response:AnyObject?, status:Bool) -> Void in
+            if let versionAvailbale = response as? NSDictionary{
+
+                if let value:String  = versionAvailbale.value(forKey: Constants.API_VERSION) as? String{
+                    onResponse(value,true)
+                }else{
+                    onResponse(nil,false)
+                }
+
+            }else{
+                onResponse(nil,false)
+            }
+        } ;
+
+
+        let failure  = { (op:AFHTTPRequestOperation?, err:NSError?) -> Void in
+            onResponse(nil,false)
+        }
+
+        Network.executeGETWithUrl(Constants.URL_VERSION_CHECK, andParameters: NSMutableDictionary(), andHeaders: nil , withSuccessHandler: success  , withFailureHandler: failure, withLoadingViewOn: nil)
+
+
+    }
+
     
     static func fetchFoodItems(_ key:String , limit:Int , offset:Int,view:UIView, onResponse:@escaping (_ items:[Food]?,_ status:Bool) -> Void)->Void{
         
         let url = Constants.API_URL + key + Constants.API_SEPERATOR + limit.description +  Constants.API_SEPERATOR + offset.description
         
         
-        Network.executeGETWithUrl( url, andParameters: NSMutableDictionary(), andHeaders: nil, withSuccessHandler: { (operation:AFHTTPRequestOperation!,response:AnyObject!, status:Bool) -> Void in
+        Network.executeGETWithUrl( url, andParameters: NSMutableDictionary(), andHeaders: nil, withSuccessHandler: { (operation:AFHTTPRequestOperation?,response:AnyObject?, status:Bool) -> Void in
             var items = [Food]();
-            if(response.count > 0){
+            if((response?.count)! > 0){
                 
                 if let itemsAvailable = response as? NSArray{
                     
@@ -44,7 +69,7 @@ class Connect: NSObject {
                 onResponse(items,false)
             }
             
-            } as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void as! (AFHTTPRequestOperation?, AnyObject?, Bool) -> Void , withFailureHandler: { (op:AFHTTPRequestOperation?, err:NSError?) -> Void in
+            }  , withFailureHandler: { (op:AFHTTPRequestOperation?, err:NSError?) -> Void in
                   onResponse(nil,false)
             }, withLoadingViewOn: view);
     }

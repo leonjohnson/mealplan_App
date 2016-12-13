@@ -60,9 +60,9 @@ class MealPlanAlgorithm : NSObject{
         
         meal1.name = "Meal " +  day.description
         
-        meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFood(1 % (day*countValue) + 1)! ,numberServing: 1.0));
-        meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFood(2 % (day*countValue) + 1)! ,numberServing: 1));
-        meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFood(3 % (day*countValue) + 1)! ,numberServing: 1));
+        meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFoodRandam(1 % (day*countValue) + 1)! ,numberServing: 1.0));
+        meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFoodRandam(2 % (day*countValue) + 1)! ,numberServing: 1));
+        meal1.foodItems.append(DataHandler.createFoodItem(DataHandler.getFoodRandam(3 % (day*countValue) + 1)! ,numberServing: 1));
         DataHandler.createMeal(meal1);
         return meal1;
         

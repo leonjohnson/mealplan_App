@@ -2,6 +2,38 @@ import UIKit
 import RealmSwift
 
 class SetUpMealPlan: NSObject {
+
+    static func loadDatInBackroundThread(){
+        DispatchQueue.global(qos: .background).async {
+            Connect.fetchInitialFoods(nil) { (foods, json, status) -> Void in
+
+                if(status == false){
+
+                    // @todo show an alert that we need a alert here
+                    print("STATUS : \(status)")
+                    return;
+                }
+
+                //Load nutritional information for these foods.
+                print("foods count : \(foods?.count)")
+                for  food in foods!{
+                    DataHandler.createFood(food);
+                }
+
+                //Add the food pairings
+                addFoodPairingsToDatabase(foods!,json: json)
+
+                //createMeal();
+                Config.setBoolValue("isCreated", status: true);
+                print("Got it created!")
+                
+            }
+
+            DispatchQueue.main.async {
+                print("back to main main queue after complete")
+            }
+        }
+    }
     
     static func loadDatabaseWithData(){
         
@@ -11,29 +43,7 @@ class SetUpMealPlan: NSObject {
         
         DietSuitability.addRowData();
         FoodType.addFoodTypes()
-        Connect.fetchInitialFoods(nil) { (foods, json, status) -> Void in
-            
-            if(status == false){
-                
-                // @todo show an alert that we need a alert here
-                print("STATUS : \(status)")
-                return;
-            }
-            
-            //Load nutritional information for these foods.
-            print("foods count : \(foods?.count)")
-            for  food in foods!{
-                DataHandler.createFood(food);
-            }
-            
-            //Add the food pairings
-            addFoodPairingsToDatabase(foods!,json: json)
-            
-            //createMeal();
-            Config.setBoolValue("isCreated", status: true);
-            print("Got it created!")
-            
-        }
+        loadDatInBackroundThread()
     }
     
     
@@ -92,8 +102,6 @@ class SetUpMealPlan: NSObject {
         return Int(thisWeeksWeight!) < Int(lastWeeksWeight!) ? true : false
     }
     
-    
-    
     static func cutCalories(fromWeek :Week, userfoundDiet: Constants.dietEase)->Int{
         switch userfoundDiet {
         case .easy:
@@ -128,7 +136,10 @@ class SetUpMealPlan: NSObject {
     
     
     static func calculateInitialCalorieAllowance()->Int{
-        let tdee = Double(calculateTDEE())
+        
+        let bio = DataHandler.getActiveBiographical()
+        let user = DataHandler.getActiveUser()
+        let tdee = Double(calculateTDEE(bio: bio, user: user))
         
         let aim = DataHandler.getActiveBiographical()
         if aim.gainMuscle.value == true {

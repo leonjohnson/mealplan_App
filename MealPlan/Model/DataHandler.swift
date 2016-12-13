@@ -282,6 +282,16 @@ class DataHandler: NSObject {
             return  nil;
         }
     }
+    //MARK: Data Handler For Profile
+    static func getFoodRandam(_ pk:Int)->Food?{
+        let realm = try! Realm()
+        let object = realm.objects(Food.self);
+           if (object.count > pk){
+                return object[pk];
+        }else{
+            return  nil;
+        }
+    }
     static func getOrCreateFood(_ pk:Int)->Food{
         var food = getFood(pk);
         if(food == nil){

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XnX-ao-tdT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Update Controller-->
+        <scene sceneID="5Nt-LY-fSK">
+            <objects>
+                <viewController storyboardIdentifier="UpdateController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XnX-ao-tdT" customClass="UpdateController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2uV-5F-z6S"/>
+                        <viewControllerLayoutGuide type="bottom" id="IUq-eF-XNw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Fz-he-SCB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LikeFood" translatesAutoresizingMaskIntoConstraints="NO" id="WJs-J7-Ma0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="mjM-Ze-zwR"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New update available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pn5-U1-L4e">
+                                <rect key="frame" x="0.0" y="310" width="375" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="qjX-TF-oAx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sqc-g0-hOE">
+                                <rect key="frame" x="108" y="366" width="159" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="1hF-nU-Cbx"/>
+                                </constraints>
+                                <state key="normal" title="Click to update"/>
+                                <connections>
+                                    <action selector="onClickUpdateWithSender:" destination="XnX-ao-tdT" eventType="touchUpInside" id="8rg-Rx-ScK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJU-PQ-uTW">
+                                <rect key="frame" x="159" y="617" width="57" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="57" id="JvX-Zg-GlC"/>
+                                    <constraint firstAttribute="height" constant="30" id="ouh-89-KQE"/>
+                                </constraints>
+                                <state key="normal" title="Not now"/>
+                                <connections>
+                                    <action selector="onClickLaterWithSender:" destination="XnX-ao-tdT" eventType="touchUpInside" id="dZa-75-54o"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aJU-PQ-uTW" firstAttribute="centerX" secondItem="2Fz-he-SCB" secondAttribute="centerX" id="3N5-J2-I2U"/>
+                            <constraint firstItem="pn5-U1-L4e" firstAttribute="leading" secondItem="2Fz-he-SCB" secondAttribute="leading" id="EqW-ez-A7c"/>
+                            <constraint firstItem="IUq-eF-XNw" firstAttribute="top" secondItem="aJU-PQ-uTW" secondAttribute="bottom" constant="20" id="HBg-Mo-owl"/>
+                            <constraint firstAttribute="trailing" secondItem="WJs-J7-Ma0" secondAttribute="trailing" id="NcY-dw-dlD"/>
+                            <constraint firstItem="Sqc-g0-hOE" firstAttribute="leading" secondItem="2Fz-he-SCB" secondAttribute="leadingMargin" constant="92" id="WX1-wc-Cto"/>
+                            <constraint firstAttribute="trailing" secondItem="pn5-U1-L4e" secondAttribute="trailing" id="XwP-nU-Rqw"/>
+                            <constraint firstItem="pn5-U1-L4e" firstAttribute="centerY" secondItem="2Fz-he-SCB" secondAttribute="centerY" id="c9h-uI-dUF"/>
+                            <constraint firstItem="pn5-U1-L4e" firstAttribute="centerX" secondItem="2Fz-he-SCB" secondAttribute="centerX" id="cxv-yI-0sB"/>
+                            <constraint firstItem="WJs-J7-Ma0" firstAttribute="leading" secondItem="2Fz-he-SCB" secondAttribute="leading" id="hl7-Xw-w3t"/>
+                            <constraint firstItem="Sqc-g0-hOE" firstAttribute="top" secondItem="pn5-U1-L4e" secondAttribute="bottom" constant="8" id="jeD-d8-nL7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Sqc-g0-hOE" secondAttribute="trailing" constant="92" id="vDN-mi-nIc"/>
+                            <constraint firstItem="WJs-J7-Ma0" firstAttribute="top" secondItem="2Fz-he-SCB" secondAttribute="top" id="x4p-xV-fRA"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hd5-Wd-NFT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-234" y="252"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LikeFood" width="24" height="24"/>
+    </resources>
+</document>
