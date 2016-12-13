@@ -657,7 +657,7 @@ class MealPlanAlgorithm : NSObject{
             }
 
             
-            for macro in Constants.MACRONUTRIENTS {
+            thecomebackBreak: for macro in Constants.MACRONUTRIENTS {
                 guard macro != Constants.vegetableFoodType else {
                     break
                 }
@@ -685,7 +685,7 @@ class MealPlanAlgorithm : NSObject{
                     Each line is looking for a macro >= another macro expressed as a ratio to itself (as a quotient).
                     For every gram of carbs, how many grams of fat do I want etc.
                     
-                    TODO: Consider modulo. Currentlt the predicate below will ignore foods that are precisely double or triple food.carbs or food.proteins. If we had those we could simply divide the serving by two or three.
+                    TODO: Consider modulo. Currently the predicate below will ignore foods that are precisely double or triple food.carbs or food.proteins. If we had those we could simply divide the serving by two or three.
  
  
                 */
@@ -713,13 +713,41 @@ class MealPlanAlgorithm : NSObject{
                     )
                 }
                 
-                let extraFoods = (array as NSArray).filtered(using: dynamicPredicate) as! [Food]
+                let extraFoodsFromDynamicPredicate = (array as NSArray).filtered(using: dynamicPredicate) as! [Food]
                 
-                print("Count the extraFoods: \n \(extraFoods.count)")
-                for each in extraFoods{
-                    print("Food found: \(each.name)")
+                if extraFoodsFromDynamicPredicate.count > 0{
+                    print("Count the extraFoods: \n\n \(extraFoodsFromDynamicPredicate.count)")
+                    for each in extraFoodsFromDynamicPredicate{
+                        print("Food found: \(each.name)")
+                    }
+                    
+                    
+                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(extraFoodsFromDynamicPredicate, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)
+                    
+                    
+                    guard fi.count > 0  else {
+                        print("The food couldnn't be scaled so exiting the loop.")
+                        break
+                    }
+                    
+                    for foodItemFound in fi{
+                        dailyMealPlan = assignMealTo(Constants.PROTEINS, foodItem: foodItemFound, plan: dailyMealPlan)
+                        let ka = ((foodItemFound.food!.calories) * foodItemFound.numberServing)
+                        let ca = ((foodItemFound.food!.carbohydrates) * foodItemFound.numberServing)
+                        let pr = ((foodItemFound.food!.proteins) * foodItemFound.numberServing)
+                        let fa = ((foodItemFound.food!.fats) * foodItemFound.numberServing)
+                        
+                        macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
+                        macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
+                        macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
+                        macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
+                        //TOD0: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
+                    }
+                    break thecomebackBreak
                 }
-                print("Got here 1")
+                
+                
+                
                 //TO-DO: Need to sort foods using a custom sort function
                 
                 breakLabel: switch macro {
