@@ -273,11 +273,28 @@ class SetUpMealPlan: NSObject {
         let protein = Macronutrient()
         let fats = Macronutrient()
         
+        // inch, cm, kg, pd
+        var heightInMetres = 0.0
+        var weightInKG = 0.0
         let aim = DataHandler.getActiveBiographical()
+        if aim.heightUnit == "inch"{
+            heightInMetres = (aim.heightMeasurement * Constants.INCH_TO_CM_CONSTANT)/100
+        }else {
+            heightInMetres = aim.heightMeasurement/100
+        }
+        
+        if aim.heightUnit == "pd"{
+            weightInKG = aim.weightMeasurement * Constants.POUND_TO_KG_CONSTANT
+        }else {
+            weightInKG = aim.weightMeasurement
+        }
+        
+        
         
         //BMI
         let upperLimitBMI : Double = 25.0
-        let proxyForFatFreeMassInkg = aim.heightMeasurement * aim.heightMeasurement * upperLimitBMI
+        let proxyForFatFreeMassInkg = heightInMetres * heightInMetres * upperLimitBMI
+        print("proxy is: \(proxyForFatFreeMassInkg)")
         
         var proteinRequirement : Double = 0.0
         if aim.looseFat.value == true{
@@ -293,7 +310,7 @@ class SetUpMealPlan: NSObject {
         fats.value = ceil((Double(calorieAllowance)*0.25)/9) //grams
         
         carb.name = Constants.CARBOHYDRATES
-        let caloriesFromFats = (fats.value * 4.0)
+        let caloriesFromFats = (fats.value * 9.0)
         let caloriesFromProteins = (protein.value * 4.0)
         carb.value = ceil((Double(calorieAllowance) - caloriesFromFats - caloriesFromProteins)/4.0) //grams
         let list = List() as List<Macronutrient>

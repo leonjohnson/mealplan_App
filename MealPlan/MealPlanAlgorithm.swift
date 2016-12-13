@@ -810,6 +810,7 @@ class MealPlanAlgorithm : NSObject{
                      If not, ensure no more than two foods are used in the foodOptions and if the deficit < 20 then use just one item
                     */
                     let sameFoodsFound = foodOptions.filter{ foodsAlreadySelected.contains($0.name)}
+                    print("same foods: \(sameFoodsFound)")
                     
                     if sameFoodsFound.count > 0{
                         foodOptions = sameFoodsFound
@@ -827,7 +828,9 @@ class MealPlanAlgorithm : NSObject{
                     
                     
                     
-                    
+                    for each in foodOptions{
+                        print("each protein: \(each.name)")
+                    }
                     
                     _ = foodOptions.map({_ in print("sorted proteins: \(food.proteins)")})
                     
@@ -869,7 +872,6 @@ class MealPlanAlgorithm : NSObject{
                     
                     //TOD0: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
                     
-                    var comeBackCarbFoodItem = FoodItem()
                     var food :Food = Food()
                     var foodOptions : [Food] = [Food]()
 
@@ -901,8 +903,6 @@ class MealPlanAlgorithm : NSObject{
                         //food = extraCarbTreats[randomInt]
                         foodOptions.append(extraCarbTreats[randomInt])
                     }
-                    //comeBackCarbFoodItem.food = food
-                    //comeBackCarbFoodItem.numberServing = (deficient/(food.carbohydrates))
                     
                     let overflow = createOverFlowStructure(numberOfMealsRemaining, macrosAllocatedToday: macrosAllocatedToday, macrosDesiredToday: macrosDesiredToday)
                     
@@ -930,7 +930,6 @@ class MealPlanAlgorithm : NSObject{
                         print("The food couldnn't be scaled so exiting the loop.")
                         break
                     }
-                    //comeBackCarbFoodItem = fi.first!
                     
                     for foodItemFound in fi{
                         dailyMealPlan = assignMealTo(macro, foodItem: foodItemFound, plan: dailyMealPlan)
@@ -965,8 +964,6 @@ class MealPlanAlgorithm : NSObject{
                     
                     
                     
-                    
-                    var comeBackFattyFoodItem = FoodItem()
                     var food :Food = Food()
                     var foodOptions : [Food] = [Food]()
                     
@@ -1000,12 +997,7 @@ class MealPlanAlgorithm : NSObject{
                         //food = extraFatFoods[randomInt]
                         foodOptions.append(extraFatFoods[randomInt])
                     }
-                    
-                    //comeBackFattyFoodItem.food = food
-                    //comeBackFattyFoodItem.numberServing = (deficient/(food.fats))
-                    
-                    
-                    
+
                     
                     let overflow = createOverFlowStructure(numberOfMealsRemaining, macrosAllocatedToday: macrosAllocatedToday, macrosDesiredToday: macrosDesiredToday)
                     print("Overflow in FATS == \(overflow)")
@@ -1023,7 +1015,10 @@ class MealPlanAlgorithm : NSObject{
                     
                     if deficient < 20 {
                         let randomInt = Int(arc4random_uniform(UInt32(foodOptions.count)))
-                        foodOptions = [foodOptions[randomInt]] //if we need less than 20g, then only select one food to be the hero.
+                        if foodOptions.count > 0{
+                            foodOptions = [foodOptions.first!]
+                        }
+                        //if we need less than 20g, then only select one food to be the hero.
                     }
                     
                     let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodOptions, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)

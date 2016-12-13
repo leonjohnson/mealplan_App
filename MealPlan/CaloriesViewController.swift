@@ -28,13 +28,13 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        caloriesListTable.allowsSelection = false
+        caloriesListTable.rowHeight = Constants.TABLE_ROW_HEIGHT
         let futureWeeks = SetUpMealPlan.getThisWeekAndNext()
         thisWeek = futureWeeks[0]
         assert(futureWeeks[1] != Week(), "Invalid futureWeek")
         nextWeek = futureWeeks[1]
         showPercentOnly = true
-        
         
         /*
          
@@ -56,8 +56,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         let newAttributes = [NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]
         percentToggle.setTitleTextAttributes(attributes, for: UIControlState())
         percentToggle.setTitleTextAttributes(newAttributes, for: .selected)
-        
-        
+
         //Format the number:
         
         let numberFormatter = NumberFormatter()
@@ -67,25 +66,9 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         
         caloriesCountLabel.attributedText = NSMutableAttributedString(string:string! + " calories", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
-        
-        // To display Regestered Users name on Meal Plan's page
-        // namelabel.text = DataHandler.getActiveUser().name + ", you need"
-        
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         
         caloriesListTable.reloadData()
@@ -94,19 +77,8 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().name.capitalized + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
         super.viewWillAppear(true)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
-    //Table Delagte & DataSource
+
+    //MARK - Table Delagte & DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 3
     }
@@ -123,7 +95,6 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
             let macroAttributes = [NSFontAttributeName: Constants.MACRO_LABEL, NSForegroundColorAttributeName:Constants.MP_BLACK]
             let numberAttributes = [NSFontAttributeName: Constants.MACRO_LABEL, NSForegroundColorAttributeName:Constants.MP_GREY]
             cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier:"CellIdentifier")
-            
             
             var macroName = ""
             var macroValue = ""
@@ -178,43 +149,20 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func mealPalnButtonClick(_ sender: AnyObject){
-        
-        /*
-        let storyboard = UIStoryboard(name: "HowTheMealPlanWillWork", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "explanation")
-        navigationController?.pushViewController(destination, animated: true)
-        */
-        
         let storyboard = Constants.MAIN_STORYBOARD
         let destination = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
         navigationController?.pushViewController(destination, animated: true)
-        
-    
     }
-    
-//    //Method for Navigating back to previous ViewController.
-//    @IBAction func BackAction(sender: AnyObject) {
-//        self.navigationController?.popViewControllerAnimated(true)
-//    }
-    
+
     @IBAction func closeButtonAction (_ sender : AnyObject){
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
 
     }
     
     
     @IBAction func changeUnitOfMacroMeasurement(_ segmentedControl:UISegmentedControl)
     {
-        switch segmentedControl.selectedSegmentIndex
-        {
-        case 0: // month
-            showPercentOnly = true
-        case 1: // calender quarter
-            showPercentOnly = false
-        default:
-            break;
-        }
-        
+        showPercentOnly = segmentedControl.selectedSegmentIndex == 0 ? true : false
         caloriesListTable.reloadData()
     }
 

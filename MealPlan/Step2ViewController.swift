@@ -68,7 +68,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     //Method for Navigating back to previous ViewController.
     @IBAction func closeAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
 
@@ -128,7 +128,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }
         else{
         self.performSegue(withIdentifier: "step2Identifier", sender: nil)
@@ -140,6 +140,6 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     //Method for Navigating back to previous ViewController.
     @IBAction func BackAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 }

@@ -351,13 +351,17 @@ class DataHandler: NSObject {
     static func getAllFoodsExceptLikedFoods(_ name:String)->[Food]{
         let realm = try! Realm()
         let foodsLiked = getLikeFoods().foods
-        let foodsIEat = getFoodsForYourDiet()
+        let foodsIEat = getFoodsForYourDiet().map({$0.name})
+        
         let namesOfFoodsLiked = NSMutableArray()
         for food in foodsLiked {
             namesOfFoodsLiked.add(food.name)
         }
-        let items = realm.objects(Food.self).filter("name contains '" + name + "' and pk != 0").filter("NOT name IN %@ AND IN %@", namesOfFoodsLiked, foodsIEat).sorted(byProperty: "name", ascending: true)
+        let pred = NSPredicate(format:"NOT SELF.name IN %@ AND SELF.name IN %@", namesOfFoodsLiked, foodsIEat)
+        
+        let items = realm.objects(Food.self).filter("name contains '" + name + "' and pk != 0").filter(pred).sorted(byProperty: "name", ascending: true)
         return Array(items)
+        //et dislikedFoodsPredicate = NSPredicate(format: "NOT SELF.name IN %@", dislikedFoods)
     }
     
     static func getFoodsForYourDiet() -> [Food]{
@@ -365,7 +369,7 @@ class DataHandler: NSObject {
         let vegetarianPredicate = NSPredicate(format: "name = %@ OR name = %@", Constants.vegetarian, Constants.Vegan)
         let myDiets = realm.objects(DietSuitability.self).filter(vegetarianPredicate)
         if myDiets.count > 0{
-            return Array(realm.objects(Food.self).filter("dietSuitability contains %@", myDiets).sorted(byProperty: "name", ascending: true))
+            return Array(realm.objects(Food.self).filter("ANY SELF.dietSuitability IN %@", myDiets).sorted(byProperty: "name", ascending: true))
             
         }
         return Array(realm.objects(Food.self))

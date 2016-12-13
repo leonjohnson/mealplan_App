@@ -533,7 +533,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }else{
             self.performSegue(withIdentifier: "step1Identifier", sender: nil)
         }
