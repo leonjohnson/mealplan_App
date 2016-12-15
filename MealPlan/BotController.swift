@@ -23,6 +23,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     var botType : botTypeEnum = .unstated
     var questions : [String] = BotData.NEW_FOOD.questions
     var options : [[String]] = BotData.NEW_FOOD.options
+    var buttonText : [String] = BotData.NEW_FOOD.buttonText
     var answers : [[String]] = BotData.NEW_FOOD.answers
     var validationType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.validationType
     
@@ -302,15 +303,14 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         
+        var row = indexPath.row
+        if (indexPath.row % 2) != 0{
+            row = indexPath.row + 1
+        }
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             
-            var row = indexPath.row
-
-            if (indexPath.row % 2) != 0{
-                row = indexPath.row + 1
-            }
             let tableViewRowData = options[row/2]
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
             //cellWithTableview.table.delegate = self
@@ -323,6 +323,15 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
             cellWithTableview.botDelegate = self
             return cellWithTableview
+        }
+        
+        
+        if Constants.questionsThatRequireButtons.contains(message.text!) {
+            let cellWithButton = collectionView.dequeueReusableCell(withReuseIdentifier: "button", for: indexPath) as! BotCellWithButton
+            cellWithButton.button.titleLabel?.text = buttonText[row/2]
+            cellWithButton.botDelegate = self
+            cellWithButton.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
+            cellWithButton.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
         }
         
         return cell

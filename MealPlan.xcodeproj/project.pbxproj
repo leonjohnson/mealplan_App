@@ -85,10 +85,11 @@
 		F78EDFDE1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */; };
 		F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */; };
 		F78EDFE31DF212B500AC1AF7 /* initialLoad4.json in Resources */ = {isa = PBXBuildFile; fileRef = F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */; };
-		F78EDFE51DF5FCD100AC1AF7 /* JSQ-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5401DD2156200DA2696 /* JSQ-Bridging-Header.h */; };
+		F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */; };
 		F7C480491DBFF37B00572706 /* Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C480481DBFF37B00572706 /* Deletion.swift */; };
 		F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4804A1DBFFB0000572706 /* RealmString.swift */; };
+		F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */; };
 		F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5411DD2225E00DA2696 /* BotController.swift */; };
 		F7E3C5441DD4AF0F00DA2696 /* Bot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */; };
 		F7E3C5461DD4AF6E00DA2696 /* SearchForFood.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */; };
@@ -218,6 +219,7 @@
 		F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosTallyView.swift; sourceTree = "<group>"; };
 		F7C480481DBFF37B00572706 /* Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deletion.swift; sourceTree = "<group>"; };
 		F7C4804A1DBFFB0000572706 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmString.swift; sourceTree = "<group>"; };
+		F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotCellWithButton.swift; sourceTree = "<group>"; };
 		F7E3C5411DD2225E00DA2696 /* BotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotController.swift; sourceTree = "<group>"; };
 		F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bot.storyboard; sourceTree = "<group>"; };
 		F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchForFood.storyboard; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */,
 				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
 				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
+				F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */,
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
@@ -793,7 +796,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F78EDFE51DF5FCD100AC1AF7 /* JSQ-Bridging-Header.h in Sources */,
+				F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */,
 				F7E3C5501DDB897D00DA2696 /* outCells.swift in Sources */,
 				F78AB7611DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift in Sources */,
 				F78AB7581DBE6DA400BB40EA /* Profile.swift in Sources */,
@@ -829,6 +832,7 @@
 				F7E3C55C1DDE4B7C00DA2696 /* tb.swift in Sources */,
 				F78AB73B1DBE6DA400BB40EA /* createMealPlan.swift in Sources */,
 				F78AB75B1DBE6DA400BB40EA /* Week.swift in Sources */,
+				F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */,
 				F78AB7381DBE6DA400BB40EA /* Config.swift in Sources */,
 				F7E3C55E1DE5F6EF00DA2696 /* String+Size.swift in Sources */,
 				F78AB73D1DBE6DA400BB40EA /* MealPlanAlgorithm.swift in Sources */,
@@ -1073,6 +1077,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "33c95294-a3c4-424e-976f-009f209cae3d";
 				PROVISIONING_PROFILE_SPECIFIER = YearsFromNowSolo;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MealPlan-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "JSQ-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1097,6 +1102,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "33c95294-a3c4-424e-976f-009f209cae3d";
 				PROVISIONING_PROFILE_SPECIFIER = YearsFromNowSolo;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MealPlan-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "JSQ-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

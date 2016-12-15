@@ -45,6 +45,8 @@ class Food: Object {
     
     dynamic var external_note = ""
     
+    var max_number_of_servings = RealmOptional<Double>()
+    
     //var fields : Array = Array(arrayLiteral: "name", "producer", "salt", "calories", "fats", "sat_fats", "carbohydrates", "sugars", "fibre", "proteins", "salt", "dietSuitability",  "vitaminB1", "vitaminB2", "vitaminB3", "vitaminB6", "calcium", "vitaminC", "vitaminD")
 
     

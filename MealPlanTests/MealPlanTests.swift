@@ -1,15 +1,16 @@
-//
-//  MealPlanTests.swift
-//  MealPlanTests
-//
-//  Created by toobler on 06/12/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
+/*
+ import XCTest
+ @testable import MealPlan
+ class ProfileTests: XCTestCase
+ */
 
 import XCTest
 @testable import MealPlan
 class MealPlanTests: XCTestCase {
-    let mealPlans = MealPlanAlgorithm.createMeal();
+    let mealPlans = MealPlanAlgorithm.createMeal()
+    
+    
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -20,10 +21,6 @@ class MealPlanTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
@@ -31,10 +28,107 @@ class MealPlanTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testItMealPlanCreationForTheGivenDay(){
+        for dayNumber in [6,7,8,14] {
+            //given
+            var status : Bool?
+            let calendar = Calendar.current
+            let today = calendar.startOfDay(for: Date())
+            let dateInFuture = (calendar as NSCalendar).date(byAdding: .day, value: dayNumber, to: today, options: [.matchFirst])
+            let response = SetUpMealPlan.doesMealPlanExistForThisWeek()//withTodaysDate: Date()
+            let mealPlanExistsForThisWeek = response.yayNay
+            
+            let weekInFuture = Week()
+            weekInFuture.start_date = dateInFuture! //calRequirements
+            let currentWeek = weekInFuture.currentWeek()
+            let daysUntilExpiry = currentWeek?.daysUntilWeekExpires()
+            guard currentWeek != nil else {
+                print("Error at 1")
+                return
+            }
+            
+            
+            //when
+            if mealPlanExistsForThisWeek == false{
+                //askForNewDetails()
+                let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
+                //SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
+                //SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
+                
+                status = true
+                XCTAssert(status! ,"This is day \(dayNumber). No meal plans exist for this week.")
+                //takeUserToMealPlan(shouldShowExplainerScreen: true)
+                
+            } else {
+                switch response.weeksAhead.count {
+                case 0:
+                    //askForNewDetails()
+                    if dayNumber > 7{
+                        status = true
+                    } else {
+                        status = false
+                    }
+                    
+                    XCTAssert(status!,"This is day \(dayNumber). Meal plans exist for this week but not next. Will now askForNewDetails")
+                    
+                    //SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: (currentWeek?.calorieAllowance)!)
+                    //SetUpMealPlan.createWeek(daysUntilCommencement: (daysUntilExpiry! + 7), calorieAllowance: (currentWeek?.calorieAllowance)!)
+                    //takeUserToMealPlan(shouldShowExplainerScreen: true)
+                    
+                    // run a new meal plan for next week and the week after
+                case 1:
+                    print("Case 1")
+                    //askForNewDetails()
+                    //var newCaloriesAllowance = 0
+                    
+                    guard currentWeek != nil else {
+                        print("Error at 2")
+                        return
+                    }
+                    var STANDARD_CALORIE_CUT : Bool?
+                    if(Config.getBoolValue(Constants.STANDARD_CALORIE_CUT) == true){
+                        //newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: currentWeek!, userfoundDiet: (currentWeek?.feedback?.easeOfFollowingDiet)!)
+                        STANDARD_CALORIE_CUT = true
+                        
+                    } else {
+                        //newCaloriesAllowance = SetUpMealPlan.initialCalorieCut(firstWeek: currentWeek!) // run initialCalorieCut
+                        Config.setBoolValue(Constants.STANDARD_CALORIE_CUT,status: true)
+                        STANDARD_CALORIE_CUT = false
+                    }
+                    
+                    // run a new meal plan based on this for next week and the week after.
+                    //SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
+                    //takeUserToMealPlan(shouldShowExplainerScreen: false)
+                    
+                    if dayNumber > 0 && dayNumber < 8{
+                        status = true
+                    } else {
+                        status = false
+                    }
+                    XCTAssert(status!,"This is day \(dayNumber). Meal plans exist for this week AND next. No need to askForNewDetails. STANDARD_CALORIE_CUT? : \(STANDARD_CALORIE_CUT). Days unitil expiry: \(daysUntilExpiry). ")
+                    
+                case 2:
+                    if dayNumber > 0 && dayNumber < 8{
+                        status = true
+                    } else {
+                        status = false
+                    }
+                    XCTAssert(status!,"This is day \(dayNumber). Meal plans exist for this week AND next AND one thereafter. Days unitil expiry: \(daysUntilExpiry). ")
+                return //we're good so return to your meal plan
+                default:
+                    // this could be because the user is between the 8th day and 12th day of a meal plan.
+                    return
+                }
+            }
+
+        }
+    }
+    
     func testMealsPlanSize(){
         //A meal plan is created that contains the number of meals
         //recorded as the users preference, which must be between 2 and 8
-        var status = true;
+        var status = true
         for mealPlan in mealPlans {
             if(!(mealPlan.meals.count >= 2 && mealPlan.meals.count <= 8)){
                 status = false;
@@ -43,6 +137,7 @@ class MealPlanTests: XCTestCase {
         }
         XCTAssert( status ,"which must be between 2 and 8")
     }
+    
     func testMealsPlanfoodSize(){
         var status = true;
         for mealPlan in mealPlans {
@@ -61,15 +156,15 @@ class MealPlanTests: XCTestCase {
         var status = true;
         for mealPlan in mealPlans {
             if(!status){
-                break;
+                break
             }
             var mealsName = [String]()
             for meal in mealPlan.meals {
                 if(mealsName.contains(meal.name)){
                     status = false
-                    break;
+                    break
                 }
-                mealsName.append(meal.name);
+                mealsName.append(meal.name)
             }
         }
          XCTAssert(status,"No two meals within the same day, have the same name")
@@ -81,17 +176,17 @@ class MealPlanTests: XCTestCase {
         for mealPlan in mealPlans {
 
             if(!status){
-                break;
+                break
             }
             for meal in mealPlan.meals {
                 if(!status){
-                    break;
+                    break
                 }
 
-                for food in meal.foodItems {
-                    if(foodsDisLiked.foods.contains(food.food!)){
-                        status = false;
-                        break;
+                for fooditem in meal.foodItems {
+                    if(foodsDisLiked.foods.contains(fooditem.food!)){
+                        status = false
+                        break
                     }
                 }
             }

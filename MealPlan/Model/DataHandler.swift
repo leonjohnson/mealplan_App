@@ -208,16 +208,14 @@ class DataHandler: NSObject {
         // Check if meal contains food from foodItem
         
         var foodItemToUpdate: FoodItem?
-        for fItem in meal.foodItems
-        {
-            if fItem.food!.name == foodItem.food!.name
-            {
+        for fItem in meal.foodItems{
+            if fItem.food!.name == foodItem.food!.name{
                 foodItemToUpdate = fItem
+                break
             }
         }
         
-        if foodItemToUpdate != nil
-        {
+        if foodItemToUpdate != nil{
             print(" found the same item in this meal. Going to update instead to: \((foodItemToUpdate?.numberServing)! + foodItem.numberServing ))")
             updateFoodItem(foodItemToUpdate!,numberServing:((foodItemToUpdate?.numberServing)! + foodItem.numberServing ))
             return
@@ -261,7 +259,6 @@ class DataHandler: NSObject {
             foodItem.numberServing = numberServing
             print("updating FoodItem \(foodItem.food!.name )")
         }
-        
     }
     
     static func updateFoodItem(_ foodItem:FoodItem,eaten:Bool){

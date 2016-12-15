@@ -37,6 +37,23 @@ class Meal: Object {
         return
     }
  */
+    func containsFood(food:Food) -> Bool {
+        for foo in foodItems{
+            if food.name == foo.food?.name{
+                return true
+            }
+        }
+        return false
+    }
+    
+    func getFoodItem(food: Food) -> FoodItem?{
+        for foo in foodItems{
+            if food.name == foo.food?.name{
+                return foo
+            }
+        }
+        return nil
+    }
     
     func totalCalories()->Double{
         var totalKcal = 0.0

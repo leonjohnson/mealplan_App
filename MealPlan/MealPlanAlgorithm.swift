@@ -202,7 +202,7 @@ class MealPlanAlgorithm : NSObject{
                 listOfAndPredicates.append(contentsOf: [/*dietaryRequirementPredicate,*/ dislikedFoodsPredicate, notCondiment, highProteinPredicate])
                 
                 if mealIndex == 1{
-                    listOfAndPredicates.popLast()
+                    _ = listOfAndPredicates.popLast()
                     listOfAndPredicates.append(contentsOf: [mediumBreakfastProteinPredicate, eatenAtBreakfastPredicate])
                 } else{
                     //listOfAndPredicates.append(notOnlyBreakfastPredicate)
@@ -216,7 +216,7 @@ class MealPlanAlgorithm : NSObject{
                 //let newOrCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: listOfORPredicates)
                 
                 
-                let foodResults = realm.objects(Food).filter(newAndCompoundPredicate)//.filter(newOrCompoundPredicate)
+                let foodResults = realm.objects(Food.self).filter(newAndCompoundPredicate)//.filter(newOrCompoundPredicate)
                 var randomNumber : UInt32 = arc4random_uniform(UInt32(foodResults.count))
                 
                 guard foodResults.count > 0 else {
@@ -315,6 +315,7 @@ class MealPlanAlgorithm : NSObject{
 
                     randomNumber = arc4random_uniform(UInt32(carbOptions.count))
                     let foodSelected = carbOptions[Int(randomNumber)]
+                    print("Carb list: \(carbOptions)")
                     
                     print("Picking : \(foodSelected.name) \n")
                     
@@ -341,8 +342,9 @@ class MealPlanAlgorithm : NSObject{
                     }
                 }
             
-            
-                random_yay_nay = Int(arc4random_uniform(3)) //if 0 t1hen lets get a second food, else move on and just use one.
+                
+                random_yay_nay = 0 // this controls the second carb food
+                //random_yay_nay = Int(arc4random_uniform(3)) //if 0 t1hen lets get a second food, else move on and just use one.
                 if random_yay_nay == 0 && extraCarbTreats.count > 0 {
                     
                     var newRandNum = arc4random_uniform(UInt32(extraCarbTreats.count))
@@ -1231,6 +1233,7 @@ class MealPlanAlgorithm : NSObject{
         
         
         for (index,meal) in plan.meals.enumerated(){
+            print("back at the top")
             if eatenAtBreakfastFlag == false && index == 0{
                 print("in continue statement : \(index)")
                 lowestMeal = plan.meals[1] // the lowest meal is meal number 2, as we can't use breakfast for this food which is not eaten at breakfast.
@@ -1256,14 +1259,16 @@ class MealPlanAlgorithm : NSObject{
         }
         for meal in plan.meals{
             if meal.isEqual(lowestMeal){
-                meal.foodItems.append(foodItem)
+                if let matchedFoodItem = meal.getFoodItem(food: foodItem.food!){
+                    matchedFoodItem.numberServing = matchedFoodItem.numberServing + foodItem.numberServing
+                    return plan
+                } else {
+                    meal.foodItems.append(foodItem)
+                }
                 print("Assigning: \(foodItem.food?.name), for \(macro), to meal number \(meal.name)")
             }
         }
-
-        
         return plan
-    
     }
    
     
@@ -1370,6 +1375,13 @@ class MealPlanAlgorithm : NSObject{
         if Constants.isFat.evaluate(with: fooditem.food) && highFatAllowedFlag == false {
             fooditem.numberServing = 0.1 //10g or 10ml of fat
             return fooditem
+        }
+        
+        if let max = fooditem.food?.max_number_of_servings.value {
+            if fooditem.numberServing > max {
+                fooditem.numberServing = max
+                return fooditem
+            }
         }
         
         switch (fooditem.food?.servingSize?.name)! {
@@ -1508,9 +1520,6 @@ class MealPlanAlgorithm : NSObject{
             var index = [food.proteins, food.carbohydrates, food.fats]
             var fooditem = FoodItem()
             fooditem.food = food
-            
-            let macro1ForFoodItem = (fooditem.numberServing * index[indices[0]])
-            let macro2ForFoodItem = (fooditem.numberServing * index[indices[1]])
 
             /*
              Whilst the protein or carb from this food is above the limit, reduce the item size a tiny amount and test again.
@@ -1593,7 +1602,7 @@ class MealPlanAlgorithm : NSObject{
                     
                     if fooditem.numberServing < 0 {
                         fooditem.numberServing = 0
-                        print("\(fooditem.food?.name) has a serving size below 0. The macro is: \(Constants.MACRONUTRIENTS[0]) of \(macro1ForFoodItem) and the leftOverForThisMeal is: \(leftOverForThisMeal[indices[0]]) \n")
+                        print("\(fooditem.food?.name) has a serving size below 0. The macro is: \(Constants.MACRONUTRIENTS[0]) and the leftOverForThisMeal is: \(leftOverForThisMeal[indices[0]]) \n")
                         break
                     }
                 }

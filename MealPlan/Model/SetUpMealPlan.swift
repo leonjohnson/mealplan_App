@@ -6,7 +6,7 @@ class SetUpMealPlan: NSObject {
     static func loadDatInBackroundThread(){
         DispatchQueue.global(qos: .background).async {
             Connect.fetchInitialFoods(nil) { (foods, json, status) -> Void in
-
+                
                 if(status == false){
 
                     // @todo show an alert that we need a alert here
@@ -17,7 +17,7 @@ class SetUpMealPlan: NSObject {
                 //Load nutritional information for these foods.
                 print("foods count : \(foods?.count)")
                 for  food in foods!{
-                    DataHandler.createFood(food);
+                    _ = DataHandler.createFood(food);
                 }
 
                 //Add the food pairings
@@ -153,10 +153,10 @@ class SetUpMealPlan: NSObject {
     
     
     
-    static func doesMealPlanExistForThisWeek()->(yayNay:Bool,weeksAhead:[Week]) {
+    static func doesMealPlanExistForThisWeek(withTodaysDate: Date = Date())->(yayNay:Bool,weeksAhead:[Week]) {
         let realm = try! Realm()
         let calender = Calendar.current
-        let today = calender.startOfDay(for: Date())
+        let today = calender.startOfDay(for: withTodaysDate)
         
         print("start date")
         
@@ -198,7 +198,9 @@ class SetUpMealPlan: NSObject {
         }
         newWeek.macroAllocation.append(objectsIn: macroAllocation(calorieAllowance: calorieAllowance, weeksOnProgram: numberOfWeeks))
         newWeek.calorieAllowance = calorieAllowance
-        newWeek.TDEE = calculateTDEE()
+        let bio = DataHandler.getActiveBiographical()
+        let user = DataHandler.getActiveUser()
+        newWeek.TDEE = calculateTDEE(bio: bio, user: user)
         newWeek.dailyMeals.append(objectsIn: MealPlanAlgorithm.createMealPlans(newWeek))
         try! realm.write {
             realm.add(newWeek)
@@ -332,10 +334,8 @@ class SetUpMealPlan: NSObject {
     }
     
     
-    static func calculateTDEE() -> Int {
+     static func calculateTDEE(bio:Biographical, user:User) -> Int {
         //"=66.5+(5*height in cm)+(13.75*weight in kg)-6.78*age in years"
-        let bio = DataHandler.getActiveBiographical()
-        let user = DataHandler.getActiveUser()
         
         let gender = user.gender
         var weightCoeffecient = 0.0

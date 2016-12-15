@@ -166,7 +166,7 @@ class Connect: NSObject {
         
         if let value = (pdt!.value(forKey: "foodType") as! NSArray?){
             let realm = try! Realm()
-            let ft = realm.objects(FoodType).filter("name IN %@", value)
+            let ft = realm.objects(FoodType.self).filter("name IN %@", value)
             for each in ft {
                 itemFood.foodType.append(each)
             }
@@ -176,6 +176,10 @@ class Connect: NSObject {
             itemFood.readyToEat = true
         } else if (pdt!.value(forKey: "readyToEat") as! Bool?)! == false {
             itemFood.readyToEat = false
+        }
+        
+        if let maxAllowedValue : Double =  getDoubleValueForKey("max_amount_allowed", pdt: pdt!){
+            itemFood.max_number_of_servings = RealmOptional<Double>(maxAllowedValue)
         }
         
         

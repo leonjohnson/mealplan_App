@@ -8,6 +8,9 @@
 
 import Foundation
 
-protocol BotDelegate {
-    func originalrowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType)
+@objc protocol BotDelegate {
+    @objc optional func originalrowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType)
+    @objc optional func buttonTapped(labelValue: String)
 }
+
+

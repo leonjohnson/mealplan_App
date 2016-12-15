@@ -203,6 +203,28 @@ struct Constants {
     */
     static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, BotData.NEW_FOOD.food_type.question]
     
+    static let questionsThatRequireButtons = [
+        BotData.NEW_FOOD.saturated_fat.question,
+        BotData.NEW_FOOD.sugar.question,
+        BotData.NEW_FOOD.fibre.question]
+    
+    /*
+     BotData.NEW_FOOD.name.validation,
+     BotData.NEW_FOOD.producer.validation,
+     BotData.NEW_FOOD.serving_type.validation,
+     BotData.NEW_FOOD.calories.validation,
+     BotData.NEW_FOOD.fat.validation,
+     BotData.NEW_FOOD.saturated_fat.validation,
+     BotData.NEW_FOOD.carbohydrates.validation,
+     BotData.NEW_FOOD.sugar.validation,
+     BotData.NEW_FOOD.fibre.validation,
+     BotData.NEW_FOOD.protein.validation,
+     BotData.NEW_FOOD.food_type.validation,
+     BotData.NEW_FOOD.ending.validation]
+    */
+    
+    
+    
     struct CellIdentifiers {
         static let Blue = "BlueCellIdentifier"
         static let Large = "LargeCellIdentifier"
@@ -238,6 +260,8 @@ struct Constants {
         case aboutRight = "about right"
         case full = "full"
     }
+    
+    static let no_value_stated = "No value"
     
     static let HAS_PROFILE = "hasProfile"
     static let FIRST_CALORIE_CUT = "firstCalorieCut"

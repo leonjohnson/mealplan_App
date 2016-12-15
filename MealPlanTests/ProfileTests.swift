@@ -81,12 +81,17 @@ class ProfileTests: XCTestCase {
             biographicalObject.heightMeasurement = (parsedObject as! NSMutableDictionary).value(forKey: "Height")as! Double
             biographicalObject.weightMeasurement = (parsedObject as! NSMutableDictionary).value(forKey: "Weight")as! Double
             biographicalObject.activityLevelAtWork = (parsedObject as! NSMutableDictionary).value(forKey: "activityLevelAtWork")as? String
+            
+            
             let mealPlansTDEE = Float(SetUpMealPlan.calculateTDEE(bio: biographicalObject, user: userObject))
+            
             print(mealPlansTDEE)
             
             let AdjustedTDEE = (parsedObject as! NSMutableDictionary).value(forKey: "AdjustedTDEE") as! Float
             let TDEE =  (parsedObject as! NSMutableDictionary).value(forKey: "TDEE")  as! Float
-            XCTAssertNotEqualWithAccuracy(TDEE, AdjustedTDEE, mealPlansTDEE, "failuer")
+            
+            XCTAssertEqualWithAccuracy(mealPlansTDEE, TDEE, accuracy: 10)
+            //XCTAssertNotEqualWithAccuracy(TDEE, AdjustedTDEE, mealPlansTDEE, "failuer")
            
         }
             

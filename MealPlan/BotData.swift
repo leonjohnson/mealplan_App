@@ -56,6 +56,20 @@ class BotData: NSObject {
             BotData.NEW_FOOD.food_type.tableViewList,
             BotData.NEW_FOOD.ending.tableViewList]
         
+        static let buttonText : [String]  = [
+            BotData.NEW_FOOD.name.buttonText,
+            BotData.NEW_FOOD.producer.buttonText,
+            BotData.NEW_FOOD.serving_type.buttonText,
+            BotData.NEW_FOOD.calories.buttonText,
+            BotData.NEW_FOOD.fat.buttonText,
+            BotData.NEW_FOOD.saturated_fat.buttonText,
+            BotData.NEW_FOOD.carbohydrates.buttonText,
+            BotData.NEW_FOOD.sugar.buttonText,
+            BotData.NEW_FOOD.fibre.buttonText,
+            BotData.NEW_FOOD.protein.buttonText,
+            BotData.NEW_FOOD.food_type.buttonText,
+            BotData.NEW_FOOD.ending.buttonText]
+        
         static let answers : [[String]] = [
             [String()],
             [String()],
@@ -130,7 +144,7 @@ class BotData: NSObject {
             struct saturated_fat {
                 static let question = "saturated fat?"
                 static let tableViewList:[String] = []
-                static let buttonText : String = ""
+                static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
@@ -146,7 +160,7 @@ class BotData: NSObject {
             struct sugar {
                 static let question = "of which are sugar?"
                 static let tableViewList:[String] = []
-                static let buttonText : String = ""
+                static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
@@ -154,7 +168,7 @@ class BotData: NSObject {
             struct fibre {
                 static let question = "and fibre?"
                 static let tableViewList:[String] = []
-                static let buttonText : String = ""
+                static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
