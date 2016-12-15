@@ -4,7 +4,7 @@ import AFNetworking
 class Connect: NSObject {
     
     //Method for Converting all Values to Double Format.
-    static func getDoubleValueForKey(_ key:String, pdt:NSDictionary)-> Double{
+    static func getDoubleValueForKey(_ key:String, pdt:NSDictionary)-> Double?{
         
         if let value :NSString = (pdt.value(forKey: key) as? NSString){
             if let answer:Double = value.doubleValue{
@@ -21,7 +21,7 @@ class Connect: NSObject {
             return Double(value)
         }
         
-        return 0.0
+        return nil
     }
     static func checkVersion(key:String, onResponse:@escaping (_ version:String?,_ status:Bool) -> Void)->Void{
 
@@ -178,7 +178,7 @@ class Connect: NSObject {
             itemFood.readyToEat = false
         }
         
-        if let maxAllowedValue : Double =  getDoubleValueForKey("max_amount_allowed", pdt: pdt!){
+        if let maxAllowedValue : Double =  getDoubleValueForKey(Constants.max_number_of_servings, pdt: pdt!){
             itemFood.max_number_of_servings = RealmOptional<Double>(maxAllowedValue)
         }
         

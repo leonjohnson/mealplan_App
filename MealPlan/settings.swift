@@ -29,7 +29,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if (section == 0){
-            return 2;
+            return 2
         }else{
             return 1
         }
@@ -76,6 +76,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     //Navigation to specific ViewControllers based on Cell Click.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
        
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         if (indexPath.section == 0){
@@ -101,6 +102,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
             navigationController?.pushViewController(destination, animated: true)
 
         }
+ */
         self.settingsTable.deselectRow(at: indexPath, animated: true)
 
 

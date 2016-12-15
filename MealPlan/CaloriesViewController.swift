@@ -56,6 +56,8 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         let newAttributes = [NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]
         percentToggle.setTitleTextAttributes(attributes, for: UIControlState())
         percentToggle.setTitleTextAttributes(newAttributes, for: .selected)
+        percentToggle.selectedSegmentIndex = 1
+        changeUnitOfMacroMeasurement(percentToggle)
 
         //Format the number:
         
@@ -106,7 +108,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
                 macroName = (thisWeek?.macroAllocation[1].name)!//proteins
                 macroValue = String(Int((thisWeek?.macroAllocation[1].value)!))+"g"
                 let a = (thisWeek?.macroAllocation[1].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
-                macroPercent = Int(a * 100)
+                macroPercent = Int(a * 100)+1
             case 1:
                 macroName = (thisWeek?.macroAllocation[0].name)! //carbs
                 macroValue = String(Int((thisWeek?.macroAllocation[0].value)!))+"g"

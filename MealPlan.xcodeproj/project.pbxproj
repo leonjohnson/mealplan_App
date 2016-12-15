@@ -328,7 +328,6 @@
 		F78AB6E01DBE6DA400BB40EA /* MealPlan */ = {
 			isa = PBXGroup;
 			children = (
-				4A504E991DF6A9AC00719B0B /* UpdateController */,
 				F7C480431DBF61AF00572706 /* Extensions */,
 				F7C480411DBF609300572706 /* Controllers */,
 				F7C480401DBF602900572706 /* View */,
@@ -453,6 +452,7 @@
 		F7C480411DBF609300572706 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4A504E991DF6A9AC00719B0B /* UpdateController */,
 				F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */,
 				F78AB6EE1DBE6DA400BB40EA /* CaloriesTableViewCell.swift */,
 				F78AB6EF1DBE6DA400BB40EA /* CaloriesViewController.swift */,
@@ -1005,7 +1005,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
@@ -1050,7 +1050,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				SDKROOT = iphoneos;
@@ -1075,8 +1075,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "33c95294-a3c4-424e-976f-009f209cae3d";
-				PROVISIONING_PROFILE_SPECIFIER = YearsFromNowSolo;
+				PROVISIONING_PROFILE = "977437a7-19a4-455d-b8fd-f324c9058b9a";
+				PROVISIONING_PROFILE_SPECIFIER = mp;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MealPlan-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "JSQ-Bridging-Header.h";
@@ -1100,8 +1100,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "33c95294-a3c4-424e-976f-009f209cae3d";
-				PROVISIONING_PROFILE_SPECIFIER = YearsFromNowSolo;
+				PROVISIONING_PROFILE = "977437a7-19a4-455d-b8fd-f324c9058b9a";
+				PROVISIONING_PROFILE_SPECIFIER = mp;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MealPlan-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "JSQ-Bridging-Header.h";

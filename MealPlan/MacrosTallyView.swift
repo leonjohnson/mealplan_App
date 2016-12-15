@@ -10,17 +10,6 @@ class MacrosTallyView: UIView {
         self.backgroundColor = UIColor.clear
         headline.backgroundColor = UIColor.clear
         //headline.contentOffset = CGPoint(x: headline.contentOffset.x, y: 0)
-        
-        
-        /*
-         let imv = UIImageView.init(image: #imageLiteral(resourceName: "macroCheckMark"))
-        print("frame of imageview: \(imageView.frame)")
-        imv.frame = imageView.frame
-        //imv.addConstraints(imageView.constraints)
-        imv.backgroundColor = UIColor.clear
-        self.addSubview(imv)
-        imageView!.contentMode = .scaleAspectFit
- */
     }
 
     

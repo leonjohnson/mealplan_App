@@ -315,7 +315,6 @@ class MealPlanAlgorithm : NSObject{
 
                     randomNumber = arc4random_uniform(UInt32(carbOptions.count))
                     let foodSelected = carbOptions[Int(randomNumber)]
-                    print("Carb list: \(carbOptions)")
                     
                     print("Picking : \(foodSelected.name) \n")
                     
@@ -343,7 +342,7 @@ class MealPlanAlgorithm : NSObject{
                 }
             
                 
-                random_yay_nay = 0 // this controls the second carb food
+                random_yay_nay = 1 // this controls the second carb food
                 //random_yay_nay = Int(arc4random_uniform(3)) //if 0 t1hen lets get a second food, else move on and just use one.
                 if random_yay_nay == 0 && extraCarbTreats.count > 0 {
                     
@@ -812,7 +811,7 @@ class MealPlanAlgorithm : NSObject{
                      If not, ensure no more than two foods are used in the foodOptions and if the deficit < 20 then use just one item
                     */
                     let sameFoodsFound = foodOptions.filter{ foodsAlreadySelected.contains($0.name)}
-                    print("same foods: \(sameFoodsFound)")
+                    print("same foods found)")
                     
                     if sameFoodsFound.count > 0{
                         foodOptions = sameFoodsFound
@@ -913,8 +912,13 @@ class MealPlanAlgorithm : NSObject{
                     if foodOptions.count > 2{
                         foodOptions = [foodOptions.first!, foodOptions[1]] // we only want a maximum of two comeback foods
                     }
+                    //if let max = fooditem.food?.max_number_of_servings.value
                     foodOptions.sort(by: { x, y in
-                        return x.carbohydrates < x.carbohydrates
+                        if x.max_number_of_servings.value != nil && y.max_number_of_servings.value != nil{
+                            return x.max_number_of_servings.value! > y.max_number_of_servings.value!
+                        } else {
+                            return x.carbohydrates < x.carbohydrates
+                        }
                     })
                     
                     for foo in foodOptions{
@@ -1260,6 +1264,7 @@ class MealPlanAlgorithm : NSObject{
         for meal in plan.meals{
             if meal.isEqual(lowestMeal){
                 if let matchedFoodItem = meal.getFoodItem(food: foodItem.food!){
+                    print("Found the same food in the same meal, will add to this food.")
                     matchedFoodItem.numberServing = matchedFoodItem.numberServing + foodItem.numberServing
                     return plan
                 } else {

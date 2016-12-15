@@ -188,7 +188,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func updateMacroTally(forDay:Int){
-        print("size of the imageview: \(mealPlanTally.imageView.frame)")
         var longString = ""
         let variance = thisWeek.dailyMeals[forDay].calculateMacroDiscrepancy(macros: thisWeek.macroAllocation)
         if variance.yesOrNo == false{

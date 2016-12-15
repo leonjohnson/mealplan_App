@@ -9,5 +9,5 @@
 import Foundation
 
 protocol OutgoingCellDelegate {
-    func rowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType)
+    func rowSelected(labelValue: String, withQuestion: String, index: IndexPath, addOrDelete:UITableViewCellAccessoryType)
 }

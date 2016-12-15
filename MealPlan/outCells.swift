@@ -62,9 +62,9 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         print("init'ed")
     }
     
-    func rowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType) {
+    func rowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
         print("row selected in Outcell: \(labelValue)")
-        botDelegate?.originalrowSelected(labelValue: labelValue, withQuestion: withQuestion, addOrDelete:addOrDelete)
+        botDelegate?.originalrowSelected!(labelValue: labelValue, withQuestion: withQuestion, index:index, addOrDelete:addOrDelete)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -110,7 +110,7 @@ class outCells: JSQMessagesCollectionViewCellOutgoing, UITableViewDelegate, UITa
         }
         
         tableView.cellForRow(at: indexPath)?.accessoryType = newRowAccessory
-        (tableView.cellForRow(at: indexPath) as! miniTableViewCell).outgoingCellDelegate?.rowSelected(labelValue: (currentCell?.textLabel?.text)!, withQuestion: question, addOrDelete: newRowAccessory)
+        (tableView.cellForRow(at: indexPath) as! miniTableViewCell).outgoingCellDelegate?.rowSelected(labelValue: (currentCell?.textLabel?.text)!, withQuestion: question, index: indexPath, addOrDelete: newRowAccessory)
         
         
         

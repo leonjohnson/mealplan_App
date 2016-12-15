@@ -27,7 +27,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     var answers : [[String]] = BotData.NEW_FOOD.answers
     var validationType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.validationType
     
-    
+    var sideButton : UIButton?
     
     /*
     var questions : [String] = [
@@ -165,6 +165,21 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         outCellViewController.botDelegate = self
         
         
+        //let height = self.inputToolbar.contentView.leftBarButtonContainerView.frame.size.height
+        let image = UIImage(named:"keyboard")
+        sideButton = UIButton(type: .custom)
+        sideButton?.setImage(image, for: .normal)
+        sideButton?.frame = CGRect(x: 0, y: 0, width: (sideButton?.frame.width)!, height: (sideButton?.frame.height)!)
+        /*
+        sideButton.frame =
+         UIImage *image = [UIImage imageNamed:@"smileButton"];
+         UIButton* smileButton = [UIButton buttonWithType:UIButtonTypeCustom];
+         [smileButton setImage:image forState:UIControlStateNormal];
+         [smileButton addTarget:self action:@selector(smileButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+         [smileButton setFrame:CGRectMake(0, 0, 25, height)];
+        */
+        
+        
         questions[0] = "Hey \(user.name)! What is the full name of the food?"
         addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
         /*
@@ -177,7 +192,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         self.finishSendingMessage(animated: true);
     }
 
-    func originalrowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType) {
+    func originalrowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
         
         guard var indexForAnswer = questions.index(of: withQuestion) else {
             print("WIRING ERROR")
@@ -268,17 +283,45 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
         let currentKeyboard = self.inputToolbar.contentView.textView.keyboardType
-        let newKeyboard = (currentKeyboard == .default) ? UIKeyboardType.decimalPad : UIKeyboardType.default
+        let newKeyboardType = (currentKeyboard == .default) ? UIKeyboardType.decimalPad : UIKeyboardType.default
+        sideButton?.imageView?.image = (newKeyboardType  == .decimalPad) ? UIImage(named: "keyboard") : UIImage(named: "number_keypad")
+        
         self.inputToolbar.contentView.textView.resignFirstResponder()
-        self.inputToolbar.contentView.textView.keyboardType = newKeyboard
+        self.inputToolbar.contentView.textView.keyboardType = newKeyboardType
         self.inputToolbar.contentView.textView.becomeFirstResponder()
         
     }
     
-    func rowSelected(labelValue: String, withQuestion: String, addOrDelete:UITableViewCellAccessoryType){
+    func rowSelected(labelValue: String, withQuestion: String, index: IndexPath, addOrDelete:UITableViewCellAccessoryType){
         print("row \(labelValue) selected in the outGoing cell")
+        
+        if BotData.NEW_FOOD.serving_type.question == withQuestion {
+            //serving size table
+            let servingSizeType = Constants.servingSizeBotQuestionMapping[withQuestion]
+            if let servingSizeTypeIndex = questions.index(of: BotData.NEW_FOOD.serving_type.question){
+                if addOrDelete == .checkmark{
+                    answers[servingSizeTypeIndex].append(servingSizeType!)
+                } else {
+                    answers[servingSizeTypeIndex].removeObject(servingSizeType!)
+                }
+            }
+        }
+        
+        if BotData.NEW_FOOD.food_type.question == withQuestion {
+            //food type size table
+            let foodType = Constants.foodTypeBotQuestionMapping[withQuestion]
+            if let foodTypeIndex = questions.index(of: BotData.NEW_FOOD.food_type.question){
+                if addOrDelete == .checkmark{
+                    answers[foodTypeIndex].append(foodType!)
+                } else {
+                    answers[foodTypeIndex].removeObject(foodType!)
+                }
+            }
+        }
+        
     }
-    
+
+
     private func validateAnswer()->Bool{
         return true
     }
@@ -310,7 +353,6 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
-            
             let tableViewRowData = options[row/2]
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
             //cellWithTableview.table.delegate = self

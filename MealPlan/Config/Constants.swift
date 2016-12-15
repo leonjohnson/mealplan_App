@@ -120,6 +120,8 @@ struct Constants {
     static let fish = "Fish"
     static let fizzy = "Fizzy"
     static let dietTypes = [Constants.vegetarian, Constants.Vegan, /*Constants.pescatarian, Constants.lactoseFree,*/ Constants.glutenFree, Constants.NONE_OF_THE_ABOVE]
+    
+    static let max_number_of_servings = "max_number_of_servings"
 
     
     
@@ -201,7 +203,32 @@ struct Constants {
     static let BOT_QUESTION_FOOD_TYPE = "Please help me categorise this item. \n\nWhich of the following numbers apply to this item? \n\n1.It's a drink 2. It's a fizzy drink\n3.It's a fruit \n4.It's a vegetable \n5.I would eat this at breakfast \n6.I would only eat this at breakfast \n7.This is a type of fish \n8.This is a condiment \n9.None of the above "
     static let BOT_QUESTION_DONE = "Thanks! You're all done now."
     */
+    
+    
+    static let servingSizeBotQuestionMapping : [String:String] = [
+        "100g": Constants.grams,
+        "100ml": Constants.ml,
+        "slice":Constants.slice,
+        "item": Constants.item,
+        "heaped teaspoon": Constants.heaped_teaspoon]
+    
+    
+    static let foodTypeBotQuestionMapping : [String:String] = [
+    "It's a drink":Constants.drinkFoodType,
+    "It's a fizzy drink":Constants.fizzy,
+    "It's a fruit":Constants.fruitFoodType,
+    "It's a vegetable":Constants.vegetableFoodType,
+    "I would eat this at breakfast":Constants.eatenAtBreakfastFoodType,
+    "I would only eat this at breakfast":Constants.onlyBreakfastFoodType ,
+    "This is a type of fish":Constants.fish,
+    "This is a condiment:":Constants.condimentFoodType,
+    "None of the above":"None"]
+    
+    
+
     static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, BotData.NEW_FOOD.food_type.question]
+    
+    
     
     static let questionsThatRequireButtons = [
         BotData.NEW_FOOD.saturated_fat.question,
