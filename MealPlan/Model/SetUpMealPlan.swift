@@ -311,16 +311,16 @@ class SetUpMealPlan: NSObject {
         
         var proteinRequirement : Double = 0.0
         if aim.looseFat.value == true{
-            proteinRequirement = weeksOnProgram < 3 ? (1.7 * proxyForFatFreeMassInkg) : (2.2 * proxyForFatFreeMassInkg)
+            proteinRequirement = weeksOnProgram < 3 ? (2.0 * proxyForFatFreeMassInkg) : (2.2 * proxyForFatFreeMassInkg)
         } else {
-            proteinRequirement = weeksOnProgram < 3 ? (1.7 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
+            proteinRequirement = weeksOnProgram < 3 ? (2.0 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
         }
         
         protein.name = Constants.PROTEINS
         protein.value = ceil(proteinRequirement) //grams
         
         fats.name = Constants.FATS
-        fats.value = ceil((Double(calorieAllowance)*0.25)/9) //grams
+        fats.value = ceil((Double(calorieAllowance)*0.28)/9) //grams
         
         carb.name = Constants.CARBOHYDRATES
         let caloriesFromFats = (fats.value * 9.0)

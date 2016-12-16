@@ -51,8 +51,8 @@ class DailyMealPlan: Object {
             totalFats = totalFats + meal.totalFats()
         }
         
-        if abs((totalProteins) - (macros[0].value)) > 5.0{
-            overAcceptableLimitBy[Constants.PROTEINS] = abs((totalProteins) - (macros[0].value)) - 5.0
+        if abs((totalProteins) - (macros[0].value)) > 7.0{
+            overAcceptableLimitBy[Constants.PROTEINS] = abs((totalProteins) - (macros[0].value)) - 7.0
         } else {
             overAcceptableLimitBy[Constants.PROTEINS] = 0
         }
@@ -65,8 +65,8 @@ class DailyMealPlan: Object {
         }
         
         
-        if abs((totalFats) - (macros[2].value)) > 3.0{
-            overAcceptableLimitBy[Constants.FATS] = abs((totalFats) - (macros[2].value)) - 3.0
+        if abs((totalFats) - (macros[2].value)) > 6.0{
+            overAcceptableLimitBy[Constants.FATS] = abs((totalFats) - (macros[2].value)) - 6.0
         } else {
             overAcceptableLimitBy[Constants.FATS] = 0
         }

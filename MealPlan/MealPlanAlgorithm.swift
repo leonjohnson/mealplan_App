@@ -16,8 +16,6 @@ class MealPlanAlgorithm : NSObject{
         if numberOfMealsRemaining == 0{
             remainingMeals = 1
         }
-        print("check numberOfMealsRemaining: \(numberOfMealsRemaining)")
-        
         
         overflowP = ((macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!)/Double(remainingMeals))
         overflowC = ((macrosDesiredToday[Constants.CARBOHYDRATES]! - macrosAllocatedToday[Constants.CARBOHYDRATES]!)/Double(remainingMeals))
@@ -489,7 +487,7 @@ class MealPlanAlgorithm : NSObject{
                 }
                 csv1 += "\n"
                 
-                
+                sortedFoodBasket = [sortedFoodBasket[1], sortedFoodBasket[0], sortedFoodBasket[2]] //[[Food]]
                 
                 
                 
@@ -507,7 +505,9 @@ class MealPlanAlgorithm : NSObject{
                 var loop = 0
                 for (index,foodArray) in sortedFoodBasket.enumerated(){
                     
-                    let key = Constants.MACRONUTRIENTS[loop]
+                    //let key = Constants.MACRONUTRIENTS[loop]
+                    let key  = Constants.SPECIAL_MACRONUTRIENTS[loop]
+                    
 
                     print("\(key.capitalized) loop: \n leftOverForThisMeal: \(leftOverForThisMeal) \n")
                     
@@ -658,7 +658,7 @@ class MealPlanAlgorithm : NSObject{
             }
 
             
-            thecomebackBreak: for macro in Constants.MACRONUTRIENTS {
+            thecomebackBreak: for macro in Constants.SPECIAL_MACRONUTRIENTS {
                 guard macro != Constants.vegetableFoodType else {
                     break
                 }
@@ -722,6 +722,19 @@ class MealPlanAlgorithm : NSObject{
                         print("Food found: \(each.name)")
                     }
                     
+                    for foodFound in extraFoodsFromDynamicPredicate{
+                        if foodFound.servingSize?.name == Constants.grams{
+                            if overflow[0]/foodFound.proteins > 3 || overflow[1]/foodFound.carbohydrates > 3 || overflow[2]/foodFound.fats > 3{
+                                break thecomebackBreak
+                            }
+                            if let max = foodFound.max_number_of_servings.value{
+                                if (overflow[0]/foodFound.proteins) > max || (overflow[1]/foodFound.carbohydrates) > max || (overflow[2]/foodFound.fats) > max{
+                                    break thecomebackBreak
+                                }
+                            }
+                            
+                        }
+                    }
                     
                     let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(extraFoodsFromDynamicPredicate, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)
                     
@@ -753,6 +766,10 @@ class MealPlanAlgorithm : NSObject{
                 
                 breakLabel: switch macro {
                 case Constants.PROTEINS: // TODO - DELETE as this should never be called.
+                    
+                    print("NO PROTEIN -----\n")
+                    //break breakLabel
+                    
                     deficient = macrosDesiredToday[Constants.PROTEINS]! - macrosAllocatedToday[Constants.PROTEINS]!
                     print("Got here : \(deficient)")
                     
@@ -908,9 +925,14 @@ class MealPlanAlgorithm : NSObject{
                     let overflow = createOverFlowStructure(numberOfMealsRemaining, macrosAllocatedToday: macrosAllocatedToday, macrosDesiredToday: macrosDesiredToday)
                     
                     print("Overflow in CARBO == \(overflow)")
+                    for foo in foodOptions{
+                        print("sorted carbs: \(foo.name)")
+                    }
+
                     
                     if foodOptions.count > 2{
-                        foodOptions = [foodOptions.first!, foodOptions[1]] // we only want a maximum of two comeback foods
+                        let randomInt = Int(arc4random_uniform(UInt32(foodOptions.count)))
+                        foodOptions = [foodOptions[randomInt]] // we only want a maximum of two comeback foods
                     }
                     //if let max = fooditem.food?.max_number_of_servings.value
                     foodOptions.sort(by: { x, y in
@@ -921,9 +943,6 @@ class MealPlanAlgorithm : NSObject{
                         }
                     })
                     
-                    for foo in foodOptions{
-                        print("sorted carbs: \(foo.carbohydrates)")
-                    }
                     
                     if deficient < 20 {
                         foodOptions = [foodOptions.first!] //if we need less than 20g, then only select one food to be the hero.
@@ -1009,20 +1028,24 @@ class MealPlanAlgorithm : NSObject{
                     print("Overflow in FATS == \(overflow)")
                     
                     if foodOptions.count > 2{
-                        foodOptions = [foodOptions.first!, foodOptions[1]] // we only want a maximum of 2 foods for the comeback
+                        let randomInt = Int(arc4random_uniform(UInt32(extraFatFoods.count)))
+                        foodOptions = [foodOptions[randomInt], foodOptions.last!] // we only want a maximum of 2 foods for the comeback
+                        if foodOptions[0] == foodOptions[1]{
+                            foodOptions = [foodOptions[0]]
+                        }
                     }
                     foodOptions.sort(by: { x, y in
                         return x.fats < x.fats
                     })
                     
                     for foo in foodOptions{
-                        print("sorted fats: \(foo.proteins)")
+                        print("sorted fats: \(foo.name)")
                     }
                     
                     if deficient < 20 {
                         let randomInt = Int(arc4random_uniform(UInt32(foodOptions.count)))
                         if foodOptions.count > 0{
-                            foodOptions = [foodOptions.first!]
+                            foodOptions = [foodOptions[randomInt]]
                         }
                         //if we need less than 20g, then only select one food to be the hero.
                     }
@@ -1237,13 +1260,10 @@ class MealPlanAlgorithm : NSObject{
         
         
         for (index,meal) in plan.meals.enumerated(){
-            print("back at the top")
             if eatenAtBreakfastFlag == false && index == 0{
-                print("in continue statement : \(index)")
                 lowestMeal = plan.meals[1] // the lowest meal is meal number 2, as we can't use breakfast for this food which is not eaten at breakfast.
                 continue
             }
-            print("outside continue statement : \(index)")
             switch macro {
             case Constants.PROTEINS:
                 if meal.totalProteins() < lowestMeal.totalProteins(){
@@ -1483,6 +1503,9 @@ class MealPlanAlgorithm : NSObject{
     static func apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(_ foods:[Food], attribute:String, desiredQuantity:Double, overflowAmounts:[Double], macrosAllocatedToday:[String:Double], lastMealFlag:Bool, beforeComeBackFlag:Bool, dietaryRequirements: List<DietSuitability>)->[FoodItem]
     {
         var leftOverForThisMeal = overflowAmounts
+        if beforeComeBackFlag == true{
+            leftOverForThisMeal[0] = leftOverForThisMeal[0] - 12
+        }
         var foodItems : [FoodItem] = []
         var indices : [Int] = []
         var requiredAmount = 0.0
@@ -1520,27 +1543,24 @@ class MealPlanAlgorithm : NSObject{
             
             // TODO - if attribute is 0.0 then exit
             
-            var cushion = 0.0
-            var limits : [Double] = []
+            var cushionForFats = 0.0
             let loopsRemaining = Double(foods.count) - Double(loopCount)
             var index = [food.proteins, food.carbohydrates, food.fats]
             var fooditem = FoodItem()
             fooditem.food = food
-
+            
+            let macro1ForFoodItem = (fooditem.numberServing * index[indices[0]])
+            let macro2ForFoodItem = (fooditem.numberServing * index[indices[1]])
+            
             /*
              Whilst the protein or carb from this food is above the limit, reduce the item size a tiny amount and test again.
              */
-            if (loopCount+1 == foods.count /*|| loopCount == foods.count)*/ &&
-                beforeComeBackFlag == true /*&&
-                leftOverForThisMeal[0] < 15 &&
-                leftOverForThisMeal[1] < 15 &&
-                leftOverForThisMeal[2] < 15*/) {
-                // this is the penultimate or last of the foods in the array and it's 'before the comeback', and the leftovers needed are approaching a low point (15) - ensure it doesn't leave with less than 7g of any macro
+            if loopCount+1 == foods.count && beforeComeBackFlag == true {
+                // this is the last of the foods in the array and its 'before the comeback', ensure it doesn't leave with less than 5g of any macro
                 print("beforeComeBackFlag == true")
                 print("loop+1 == \(loopCount + 1)")
                 print("foods.count == \(foods.count)")
                 requiredAmount = requiredAmount - Double(foods.count * 7)
-                //cushion = 7.0
             }
             
             print("Calcu is: \(requiredAmount) / (\(foods.count) - \(loopCount)) then divided by \(foodAttributeAmount)" )
@@ -1556,30 +1576,28 @@ class MealPlanAlgorithm : NSObject{
             print("what's going on: \(fooditem.numberServing)")
             
             if attribute == Constants.PROTEINS {
-                limits = beforeComeBackFlag == true ? [0,0,0] : [7, 25, 10]
                 
                 if leftOverForThisMeal[1] > Constants.maximumNumberOfGramsToIgnore && leftOverForThisMeal[2] > Constants.maximumNumberOfGramsToIgnore && lastMealFlag == false{
                     //proteinCushionForFats = 5
                     
                     // because everything has a little bit of protein and by the time I get to carbs, fats, and veg, it will up to 100% or more
-                    cushion = 7.0
+                    cushionForFats = 7.0
+                    //fooditem.numberServing = fooditem.numberServing * 0.875
+                    //print("FI numberServing Was: \(fooditem.numberServing) now it's \(fooditem.numberServing * 0.875)")
                 }
             }
             
             if attribute == Constants.CARBOHYDRATES {
-                limits = beforeComeBackFlag == true ? [0,0,0] : [5, 25, 20]
-                
                 if lastMealFlag == false || beforeComeBackFlag == true{
                     fooditem.numberServing = fooditem.numberServing * (1 - Constants.vegetablesAsPercentageOfCarbs) // 7% of carb allowance reserved for vegetables
                 } // else we want the full whack.
+                
+                
+                
+                
             }
             print("Starting point is a serving size of : \(fooditem.numberServing)")
-            
-            if attribute  == Constants.FATS {
-                limits = beforeComeBackFlag == true ? [0,0,0] : [3, 17, 15]
-            }
             // But not allowed to overflow, so...
-
             
             //IMPROVEMENT: We may as well exit here if we have negative numbers.
             
@@ -1601,26 +1619,20 @@ class MealPlanAlgorithm : NSObject{
             
             /*
              This checks that 15g of this product will not exceed the limits we have. If so, then don't waste time and let's move on.
-            */
+             */
             if ((0.15 * index[indices[0]])  <= (leftOverForThisMeal[indices[0]]/Double(foods.count))) && ((0.15 * index[indices[1]])  <= leftOverForThisMeal[indices[1]]/Double(foods.count)) {
                 print("Reducing the portion size for \(fooditem.food?.name)")
-
                 
                 
-                print("index:\(index)\n")
-                print("indices:\(indices)\n")
-                print("leftOverForThisMeal:\(leftOverForThisMeal)\n")
-                while ((fooditem.numberServing * index[indices[0]]) + cushion  > (leftOverForThisMeal[indices[0]]/loopsRemaining)) || 
-                      ((fooditem.numberServing * index[indices[1]]) + cushion  > (leftOverForThisMeal[indices[1]]/loopsRemaining)) &&
-                      (fooditem.numberServing * (fooditem.food?.proteins)!) < limits[0] &&
-                      (fooditem.numberServing * (fooditem.food?.carbohydrates)!) < limits[1] &&
-                      (fooditem.numberServing * (fooditem.food?.fats)!) < limits[2] {
+                
+                
+                while ((fooditem.numberServing * index[indices[0]]) + cushionForFats  > (leftOverForThisMeal[indices[0]]/loopsRemaining)) || ((fooditem.numberServing * index[indices[1]]) + cushionForFats  > (leftOverForThisMeal[indices[1]]/loopsRemaining)){
                     
                     fooditem.numberServing = (fooditem.numberServing - 0.01)
                     
                     if fooditem.numberServing < 0 {
                         fooditem.numberServing = 0
-                        print("\(fooditem.food?.name) has a serving size below 0. The macro is: \(Constants.MACRONUTRIENTS[0]) and the leftOverForThisMeal is: \(leftOverForThisMeal[indices[0]]) \n")
+                        print("\(fooditem.food?.name) has a serving size below 0. The macro is: \(Constants.MACRONUTRIENTS[0]) of \(macro1ForFoodItem) and the leftOverForThisMeal is: \(leftOverForThisMeal[indices[0]]) \n")
                         break
                     }
                 }
