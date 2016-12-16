@@ -963,7 +963,7 @@ class MealPlanAlgorithm : NSObject{
                     let highFatOilPredicate = NSPredicate(format: "fats > 80 AND ANY SELF.oftenEatenWith IN %@", dailyMealPlan.foods())
                     
                     
-                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates:[highFatPredicate, highFatOilPredicate /*notCondiment dietaryRequirementPredicate,*/])
+                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates:[ highFatOilPredicate, highFatPredicate /*notCondiment dietaryRequirementPredicate,*/])
                     
                     let extraFatFoods = realm.objects(Food.self).filter(fPredicate).sorted(byProperty: Constants.FATS.lowercased(), ascending: true)
                     //TODO: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
@@ -1520,7 +1520,8 @@ class MealPlanAlgorithm : NSObject{
             
             // TODO - if attribute is 0.0 then exit
             
-            var cushionForFats = 0.0
+            var cushion = 0.0
+            var limits : [Double] = []
             let loopsRemaining = Double(foods.count) - Double(loopCount)
             var index = [food.proteins, food.carbohydrates, food.fats]
             var fooditem = FoodItem()
@@ -1529,12 +1530,17 @@ class MealPlanAlgorithm : NSObject{
             /*
              Whilst the protein or carb from this food is above the limit, reduce the item size a tiny amount and test again.
              */
-            if loopCount+1 == foods.count && beforeComeBackFlag == true {
-                // this is the last of the foods in the array and its 'before the comeback', ensure it doesn't leave with less than 5g of any macro
+            if (loopCount+1 == foods.count /*|| loopCount == foods.count)*/ &&
+                beforeComeBackFlag == true /*&&
+                leftOverForThisMeal[0] < 15 &&
+                leftOverForThisMeal[1] < 15 &&
+                leftOverForThisMeal[2] < 15*/) {
+                // this is the penultimate or last of the foods in the array and it's 'before the comeback', and the leftovers needed are approaching a low point (15) - ensure it doesn't leave with less than 7g of any macro
                 print("beforeComeBackFlag == true")
                 print("loop+1 == \(loopCount + 1)")
                 print("foods.count == \(foods.count)")
                 requiredAmount = requiredAmount - Double(foods.count * 7)
+                //cushion = 7.0
             }
             
             print("Calcu is: \(requiredAmount) / (\(foods.count) - \(loopCount)) then divided by \(foodAttributeAmount)" )
@@ -1550,27 +1556,28 @@ class MealPlanAlgorithm : NSObject{
             print("what's going on: \(fooditem.numberServing)")
             
             if attribute == Constants.PROTEINS {
+                limits = beforeComeBackFlag == true ? [0,0,0] : [7, 25, 10]
                 
                 if leftOverForThisMeal[1] > Constants.maximumNumberOfGramsToIgnore && leftOverForThisMeal[2] > Constants.maximumNumberOfGramsToIgnore && lastMealFlag == false{
                     //proteinCushionForFats = 5
                     
                     // because everything has a little bit of protein and by the time I get to carbs, fats, and veg, it will up to 100% or more
-                    cushionForFats = 7.0
-                    //fooditem.numberServing = fooditem.numberServing * 0.875
-                    //print("FI numberServing Was: \(fooditem.numberServing) now it's \(fooditem.numberServing * 0.875)")
+                    cushion = 7.0
                 }
             }
             
             if attribute == Constants.CARBOHYDRATES {
+                limits = beforeComeBackFlag == true ? [0,0,0] : [5, 25, 20]
+                
                 if lastMealFlag == false || beforeComeBackFlag == true{
                     fooditem.numberServing = fooditem.numberServing * (1 - Constants.vegetablesAsPercentageOfCarbs) // 7% of carb allowance reserved for vegetables
                 } // else we want the full whack.
-                
-                
-                
-                
             }
             print("Starting point is a serving size of : \(fooditem.numberServing)")
+            
+            if attribute  == Constants.FATS {
+                limits = beforeComeBackFlag == true ? [0,0,0] : [3, 17, 15]
+            }
             // But not allowed to overflow, so...
 
             
@@ -1600,8 +1607,14 @@ class MealPlanAlgorithm : NSObject{
 
                 
                 
-                
-                while ((fooditem.numberServing * index[indices[0]]) + cushionForFats  > (leftOverForThisMeal[indices[0]]/loopsRemaining)) || ((fooditem.numberServing * index[indices[1]]) + cushionForFats  > (leftOverForThisMeal[indices[1]]/loopsRemaining)){
+                print("index:\(index)\n")
+                print("indices:\(indices)\n")
+                print("leftOverForThisMeal:\(leftOverForThisMeal)\n")
+                while ((fooditem.numberServing * index[indices[0]]) + cushion  > (leftOverForThisMeal[indices[0]]/loopsRemaining)) || 
+                      ((fooditem.numberServing * index[indices[1]]) + cushion  > (leftOverForThisMeal[indices[1]]/loopsRemaining)) &&
+                      (fooditem.numberServing * (fooditem.food?.proteins)!) < limits[0] &&
+                      (fooditem.numberServing * (fooditem.food?.carbohydrates)!) < limits[1] &&
+                      (fooditem.numberServing * (fooditem.food?.fats)!) < limits[2] {
                     
                     fooditem.numberServing = (fooditem.numberServing - 0.01)
                     
@@ -1618,7 +1631,7 @@ class MealPlanAlgorithm : NSObject{
             
             
            
-            print("For \(food.name), ended up with serving size of \(fooditem.numberServing)")
+            print("For \(food.name), ended up with serving size of \(fooditem.numberServing)\n\n")
             //find out the macros that we need to deal with - macros minus me
 
             
