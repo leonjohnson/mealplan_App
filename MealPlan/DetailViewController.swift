@@ -194,26 +194,43 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-    func configureDataView()
-    {
+    func configureDataView(){
         // Update the user interface for the detail item.
         nutrientsToDisplay = []
-        nutrientsToDisplay += [(name: "Calories", value: (Int(((detailItem.food?.calories)! * (detailItem.numberServing))).description) + " kcal")]
-        let fa = (detailItem.food?.fats)! * (detailItem.numberServing)
-        let sa = (detailItem.food?.sat_fats.value)! * (detailItem.numberServing)
-        let ca = (detailItem.food?.carbohydrates)! * (detailItem.numberServing)
-        let su = (detailItem.food?.sugars.value)! * (detailItem.numberServing)
-        let fi = (detailItem.food?.fibre.value)! * (detailItem.numberServing)
-        let pr = (detailItem.food?.proteins)! * (detailItem.numberServing)
-        let salt = (detailItem.food?.salt)! * (detailItem.numberServing)
         
-        nutrientsToDisplay += [(name: "Fats", value: String(Constants.roundToPlaces(fa, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Saturated fats", value: String(Constants.roundToPlaces(sa, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Carbohydrates", value: String(Constants.roundToPlaces(ca, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Sugars", value: String(Constants.roundToPlaces(su, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Fibre", value: String(Constants.roundToPlaces(fi, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Proteins", value: String(Constants.roundToPlaces(pr, decimalPlaces: 2)) + " g")]
-        nutrientsToDisplay += [(name: "Salt", value: String(Constants.roundToPlaces(salt, decimalPlaces: 2)) + " mg")]
+        let calories : String = Int(((detailItem.food?.calories)! * (detailItem.numberServing))).description
+        nutrientsToDisplay += [(name: "Calories", value: (calories) + " kcal")]
+
+        if let fa = detailItem.food?.fats{
+            nutrientsToDisplay += [(name: "Fats", value: String(Constants.roundToPlaces(fa * detailItem.numberServing, decimalPlaces: 2)) + " g")]
+        }
+        
+        if let sa = detailItem.food?.sat_fats.value{
+            nutrientsToDisplay += [(name: "Saturated fats", value: String(Constants.roundToPlaces(sa * detailItem.numberServing, decimalPlaces: 2)) + " g")]
+        }
+        
+        
+        if let ca = detailItem.food?.carbohydrates{
+            nutrientsToDisplay += [(name: "Carbohydrates", value: String(Constants.roundToPlaces(ca * detailItem.numberServing, decimalPlaces: 2)) + " g")]
+        }
+        
+        
+        if let su = detailItem.food?.sugars.value{
+            nutrientsToDisplay += [(name: "Sugars", value: String(Constants.roundToPlaces(su * detailItem.numberServing, decimalPlaces: 2)) + " g")]
+        }
+        
+        if let fi = detailItem.food?.fibre.value{
+            nutrientsToDisplay += [(name: "Fibre", value: String(Constants.roundToPlaces(fi * detailItem.numberServing, decimalPlaces: 2)) + " g")]
+        }
+        
+        if let pr = detailItem.food?.proteins{
+            nutrientsToDisplay += [(name: "Proteins", value: String(Constants.roundToPlaces(pr * detailItem.numberServing, decimalPlaces: 2)) + " g")]
+        }
+        
+        if let salt = detailItem.food?.salt{
+            nutrientsToDisplay += [(name: "Salt", value: String(Constants.roundToPlaces(salt * detailItem.numberServing, decimalPlaces: 2)) + " mg")]
+        }
+        
     }
     
     

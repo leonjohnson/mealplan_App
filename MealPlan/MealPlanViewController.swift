@@ -421,9 +421,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.delegate = self
             cell.foodItemIndexPath = indexPath
-            
-            print("fooditem eaten: \(foodItem.eaten.description)")
-            
         }
         
         //cell seprator line programztically:

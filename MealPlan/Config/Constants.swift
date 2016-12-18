@@ -101,8 +101,15 @@ struct Constants {
     static let FATS = "Fats"
     static let CALORIES = "kCals"
     static let NUMBER_OF_NUTRIENTS_TO_DISPLAY = 8
-    static let MACRONUTRIENTS = [Constants.PROTEINS, Constants.CARBOHYDRATES, Constants.FATS, Constants.vegetableFoodType]
-    static let SPECIAL_MACRONUTRIENTS = [Constants.CARBOHYDRATES, Constants.PROTEINS, Constants.FATS, Constants.vegetableFoodType]
+    static let MACRONUTRIENTS = [Constants.PROTEINS, 
+                                 Constants.CARBOHYDRATES, 
+                                 Constants.FATS, 
+                                 Constants.vegetableFoodType]
+    
+    static let SPECIAL_MACRONUTRIENTS = [Constants.CARBOHYDRATES, 
+                                         Constants.PROTEINS, 
+                                         Constants.FATS, 
+                                         Constants.vegetableFoodType]
     
     
     //NSPredicate constants

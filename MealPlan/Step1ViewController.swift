@@ -457,7 +457,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             //No need to for age as the user has just pressed the button that is besides the age field
             
             // create the alert
-            let alert = UIAlertController(title: "", message: "Age should not be empty or zero", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "Please enter your age", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -475,7 +475,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             
             // create the alert
             scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            let alert = UIAlertController(title: "", message: "Select gender value", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "Select a value for your gender", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -489,13 +489,13 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         
         //Alert for Work Active
-        if(bio.activityLevelAtWork == ""){
+        if(bio.activityLevelAtWork == nil){
             
             //Scroll to relevant area
             scrollView.setContentOffset(CGPoint(x: 0, y: 463), animated: true)
             
             // create the alert
-            let alert = UIAlertController(title: "", message: "Select work active value", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "Please select values for 'Activity levels'", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -508,7 +508,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //Alert for weight Value
         if(bio.weightMeasurement == 0.0){
             // create the alert
-            let alert = UIAlertController(title: "", message: "Select Height&Weight values", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "Please select values for your height and weight", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))

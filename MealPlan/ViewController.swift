@@ -21,7 +21,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Constants.MP_WHITE
+        self.view.backgroundColor = Constants.MP_BLUE
         createPageViewController()
         setupPageControl()
     }

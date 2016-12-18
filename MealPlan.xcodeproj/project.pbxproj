@@ -86,7 +86,7 @@
 		F78EDFDE1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDD1DEDCE2200AC1AF7 /* HowTheMealPlanWillWork.swift */; };
 		F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */; };
 		F78EDFE31DF212B500AC1AF7 /* initialLoad4.json in Resources */ = {isa = PBXBuildFile; fileRef = F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */; };
-		F78EDFE51DF5FCD100AC1AF7 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */; };
 		F7C480491DBFF37B00572706 /* Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C480481DBFF37B00572706 /* Deletion.swift */; };
 		F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4804A1DBFFB0000572706 /* RealmString.swift */; };
@@ -800,7 +800,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */,
-				F78EDFE51DF5FCD100AC1AF7 /* BuildFile in Sources */,
+				F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */,
 				F7E3C5501DDB897D00DA2696 /* outCells.swift in Sources */,
 				F78AB7611DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift in Sources */,
 				F78AB7581DBE6DA400BB40EA /* Profile.swift in Sources */,

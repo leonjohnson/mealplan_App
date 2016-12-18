@@ -487,7 +487,7 @@ class MealPlanAlgorithm : NSObject{
                 }
                 csv1 += "\n"
                 
-                sortedFoodBasket = [sortedFoodBasket[1], sortedFoodBasket[0], sortedFoodBasket[2]] //[[Food]]
+                sortedFoodBasket = [sortedFoodBasket[1], sortedFoodBasket[0], sortedFoodBasket[2], sortedFoodBasket[3]] //[[Food]]
                 
                 
                 
@@ -703,14 +703,14 @@ class MealPlanAlgorithm : NSObject{
                         overflow[2] = 0.1
                     }
                     return (
-                            food.carbohydrates >= food.fats*(overflow[1]/overflow[2])*0.8  &&
-                            food.carbohydrates <= food.fats*(overflow[1]/overflow[2])*1.2 &&
+                            food.carbohydrates >= food.fats*(overflow[1]/overflow[2])*0.95  &&
+                            food.carbohydrates <= food.fats*(overflow[1]/overflow[2])*1.05 &&
                             
-                            food.proteins >= food.fats*(overflow[0]/overflow[2])*0.8 &&
-                            food.proteins <= food.fats*(overflow[0]/overflow[2])*1.2 &&
+                            food.proteins >= food.fats*(overflow[0]/overflow[2])*0.95 &&
+                            food.proteins <= food.fats*(overflow[0]/overflow[2])*1.05 &&
                         
-                            food.proteins >= food.carbohydrates*(overflow[0]/overflow[1])*0.8 &&
-                            food.proteins <= food.carbohydrates*(overflow[0]/overflow[1])*1.2
+                            food.proteins >= food.carbohydrates*(overflow[0]/overflow[1])*0.95 &&
+                            food.proteins <= food.carbohydrates*(overflow[0]/overflow[1])*1.05
                     )
                 }
                 
@@ -722,21 +722,31 @@ class MealPlanAlgorithm : NSObject{
                         print("Food found: \(each.name)")
                     }
                     
+                    let numberOfMealsInDayMinusBreakfast = Double(numberOfMealsRemaining - 1)
                     for foodFound in extraFoodsFromDynamicPredicate{
                         if foodFound.servingSize?.name == Constants.grams{
-                            if overflow[0]/foodFound.proteins > 3 || overflow[1]/foodFound.carbohydrates > 3 || overflow[2]/foodFound.fats > 3{
-                                break thecomebackBreak
+                            if overflow[0]/foodFound.proteins > 1 * numberOfMealsInDayMinusBreakfast || overflow[1]/foodFound.carbohydrates > 1 * numberOfMealsInDayMinusBreakfast || overflow[2]/foodFound.fats > 1 * numberOfMealsInDayMinusBreakfast{
+                                continue thecomebackBreak
                             }
-                            if let max = foodFound.max_number_of_servings.value{
-                                if (overflow[0]/foodFound.proteins) > max || (overflow[1]/foodFound.carbohydrates) > max || (overflow[2]/foodFound.fats) > max{
-                                    break thecomebackBreak
+                            if let max = foodFound.max_number_of_servings.value {
+                                if (overflow[0]/foodFound.proteins) > max * numberOfMealsInDayMinusBreakfast || (overflow[1]/foodFound.carbohydrates) > max * numberOfMealsInDayMinusBreakfast || (overflow[2]/foodFound.fats) > max * numberOfMealsInDayMinusBreakfast{
+                                    continue thecomebackBreak
                                 }
                             }
                             
                         }
                     }
                     
-                    let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(extraFoodsFromDynamicPredicate, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)
+                    var fi : [FoodItem] = []
+                    for each in extraFoodsFromDynamicPredicate{
+                        let foodItemo = FoodItem()
+                        foodItemo.food = each
+                        foodItemo.numberServing = overflow[0]/each.proteins
+                        fi.append(foodItemo)
+                    }
+                    
+                    
+                    //let fi = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(extraFoodsFromDynamicPredicate, attribute: macro, desiredQuantity: deficient, overflowAmounts: overflow, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: true, beforeComeBackFlag: false, dietaryRequirements: dietRequirements)
                     
                     
                     guard fi.count > 0  else {
@@ -927,6 +937,12 @@ class MealPlanAlgorithm : NSObject{
                     print("Overflow in CARBO == \(overflow)")
                     for foo in foodOptions{
                         print("sorted carbs: \(foo.name)")
+                    }
+                    
+                    let possibleOptions = foodsThatCanMeetMacroNeeds(foods: foodOptions, macro: macro, amountNeeded: overflow)
+                    if possibleOptions.count > 0{
+                        foodOptions = possibleOptions
+                        print("Found additional carbs that can meet my needs ")
                     }
 
                     
@@ -1171,6 +1187,30 @@ class MealPlanAlgorithm : NSObject{
     
     static func mealSortByFats(_ m1: Meal, _ m2: Meal) -> Bool {
         return m1.totalFats() < m2.totalFats()
+    }
+    
+    
+    static func foodsThatCanMeetMacroNeeds(foods: [Food], macro:String, amountNeeded:[Double]) ->[Food]{
+        var canMeet : [Food] = []
+        for food in foods{
+            switch macro {
+            case Constants.CARBOHYDRATES:
+                let carbsNeeded = amountNeeded[1]
+                if carbsNeeded/food.carbohydrates < 3.25 { // An extra .25 because the proteins and fats can help out.
+                    if let max = food.max_number_of_servings.value{
+                        if max <= carbsNeeded/food.carbohydrates{
+                            canMeet.append(food)
+                            continue
+                        }
+                    }
+                    canMeet.append(food)
+                    continue
+                }
+            default:
+                break
+            }
+        }
+        return canMeet
     }
     
     /**
