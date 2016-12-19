@@ -63,11 +63,15 @@ struct Constants {
     static let FOOD_LABEL_COLOR =  UIColor (red: 0/225, green: 141/225, blue: 198/225, alpha: 1)
     static let MP_PURPLE = UIColor(red: 0.447, green: 0.176, blue: 0.792, alpha: 0.83)
     static let MP_BLUE = UIColor(red: 0.176, green: 0.376, blue: 0.796, alpha: 0.88)
-    static let MP_GREEN = UIColor(red: 0.494, green: 0.827, blue: 0.129, alpha: 1.000)
+    static let MP_GREEN = UIColor(red:0.53, green:0.84, blue:0.78, alpha:1.0)
     static let MP_BEIGE = UIColor(red: 0.776, green: 0.796, blue: 0.176, alpha: 0.05)
     static let MP_WHITE = UIColor.white
-    static let MP_GREY = UIColor.lightGray
+    static let MP_GREY = UIColor(red:0.90, green:0.91, blue:0.91, alpha:1.0)
+    static let MP_LIGHT_GREY = UIColor(red:0.90, green:0.91, blue:0.91, alpha:0.25)
     static let MP_BLACK = UIColor.black
+    static let MP_DARK_GREY = UIColor(red:0.47, green:0.47, blue:0.47, alpha:0.25)
+    
+    
     
     //REE formula constants
     static let femaleConstant = 655.0

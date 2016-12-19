@@ -158,7 +158,7 @@ class SetUpMealPlan: NSObject {
         let calender = Calendar.current
         let today = calender.startOfDay(for: withTodaysDate)
         
-        print("start date")
+        print("start date: \(withTodaysDate)")
         
         let todayPredicate = NSPredicate(format: "start_date == %@", today as CVarArg)
         let mealPlanStartingToday = realm.objects(Week.self).filter(todayPredicate).first
@@ -169,9 +169,9 @@ class SetUpMealPlan: NSObject {
             let weeksAheadArray : [Week] = weeksAhead.map {$0}
             return (true, weeksAheadArray)
         }
-        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -7, to: calender.startOfDay(for: Date()), options: [.matchFirst])
+        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -7, to: calender.startOfDay(for: today), options: [.matchFirst])
         
-        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
+        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", today as CVarArg)
         
         let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
         let weeksAheadArray : [Week] = weeksAhead.map {$0}

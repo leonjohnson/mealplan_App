@@ -7,13 +7,23 @@
 import XCTest
 @testable import MealPlan
 class MealPlanTests: XCTestCase {
-    let mealPlans = MealPlanAlgorithm.createMeal()
+    var mealPlans : [DailyMealPlan] = []
+    let thisWeek = Week().currentWeek()
+    var thisWeeksProtein : Double = 0
+    var thisWeeksCarbs : Double = 0
+    var thisWeeksFats : Double = 0
     
     
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        let thisWeek = Week().currentWeek()
+        let macros = thisWeek?.macroAllocation
+        thisWeeksProtein = (macros?[0].value)!
+        thisWeeksCarbs = (macros?[1].value)!
+        thisWeeksFats = (macros?[2].value)!
+        mealPlans = MealPlanAlgorithm.createMealPlans(self.thisWeek!)
     }
     
     override func tearDown() {
@@ -26,6 +36,7 @@ class MealPlanTests: XCTestCase {
         // This is an example of a performance test case.
         self.measure { 
             // Put the code you want to measure the time of here.
+            _ = MealPlanAlgorithm.createMealPlans(self.thisWeek!)
         }
     }
     
@@ -35,8 +46,8 @@ class MealPlanTests: XCTestCase {
             var status : Bool?
             let calendar = Calendar.current
             let today = calendar.startOfDay(for: Date())
-            let dateInFuture = (calendar as NSCalendar).date(byAdding: .day, value: dayNumber, to: today, options: [.matchFirst])
-            let response = SetUpMealPlan.doesMealPlanExistForThisWeek()//withTodaysDate: Date()
+            let dateInFuture = (calendar as NSCalendar).date(byAdding: .day, value: dayNumber, to: (thisWeek?.start_date)!, options: [.matchFirst])
+            let response = SetUpMealPlan.doesMealPlanExistForThisWeek(withTodaysDate: dateInFuture!)
             let mealPlanExistsForThisWeek = response.yayNay
             
             let weekInFuture = Week()
@@ -101,7 +112,7 @@ class MealPlanTests: XCTestCase {
                     //SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
                     //takeUserToMealPlan(shouldShowExplainerScreen: false)
                     
-                    if dayNumber > 0 && dayNumber < 8{
+                    if dayNumber > 0 && dayNumber <= 7{
                         status = true
                     } else {
                         status = false
@@ -109,7 +120,7 @@ class MealPlanTests: XCTestCase {
                     XCTAssert(status!,"This is day \(dayNumber). Meal plans exist for this week AND next. No need to askForNewDetails. STANDARD_CALORIE_CUT? : \(STANDARD_CALORIE_CUT). Days unitil expiry: \(daysUntilExpiry). ")
                     
                 case 2:
-                    if dayNumber > 0 && dayNumber < 8{
+                    if dayNumber > 7 && dayNumber <= 14{
                         status = true
                     } else {
                         status = false
@@ -135,7 +146,7 @@ class MealPlanTests: XCTestCase {
                 break;
             }
         }
-        XCTAssert( status ,"which must be between 2 and 8")
+        XCTAssert( status ,"the meals number between 2 and 8")
     }
     
     func testMealsPlanfoodSize(){
@@ -151,7 +162,8 @@ class MealPlanTests: XCTestCase {
         }
         XCTAssert(status,"Each meal contains at least one food")
     }
-    func testMealsPlanRepetation(){
+    
+    func testMealsPlanRepetition(){
         //No two meals within the same day, have the same name
         var status = true;
         for mealPlan in mealPlans {
@@ -169,10 +181,11 @@ class MealPlanTests: XCTestCase {
         }
          XCTAssert(status,"No two meals within the same day, have the same name")
     }
+    
     func testMealsPlanfoodsareNonInDisliked(){
         //The foods selected must not be in the users disliked list
         let foodsDisLiked = DataHandler.getDisLikedFoods()
-        var status = true;
+        var status = true
         for mealPlan in mealPlans {
 
             if(!status){
@@ -193,58 +206,37 @@ class MealPlanTests: XCTestCase {
         }
          XCTAssert(status,"the foods selected must not be in the users disliked list")
     }
+    
     func testMealsPlan(){
 
-        var status = true
+        var status : Bool?
+        var totalProtein = 0.0
+        var totalCarbohydrates = 0.0
+        var totalFats = 0.0
+        var totalCalories = 0.0
 
         for mealPlan in mealPlans {
-
-            if(!status){
-                break;
-            }
-
-            // each meal’s carbohydrates, proteins, and fats should be equally divided +-15%
-            for meal in mealPlan.meals {
-
-                var carbohydrate = 0.0;
-                var protein = 0.0;
-                var fats = 0.0;
-
-                // Calculate total calories ina Meals
-                for food in meal.foodItems {
-                    carbohydrate = carbohydrate + (food.food?.carbohydrates)!
-                    protein = protein + (food.food?.proteins)!
-                    fats = fats + (food.food?.fats)!
-                }
-
-                // Get the Total of each Calories
-                let total = carbohydrate + protein + fats;
-
-                // Get the percentage of each Calories
-                let carbohydratePercentage  = ( carbohydrate / total ) * 100
-                let proteinPercentage  = ( protein / total ) * 100
-                let fatsPercentage  = ( fats / total ) * 100
-
-                // Get the avrerage of each Calories
-                let avg = 100.0/3.0;
-
-                if(!(avg - carbohydratePercentage < 15 &&  avg - carbohydratePercentage > -15)){
-                    status = false;
-                    break;
-                }
-                if(!(avg - proteinPercentage < 15 &&  avg - proteinPercentage > -15)){
-                    status = false;
-                    break;
-                }
-                if(!(avg - fatsPercentage < 15 &&  avg - fatsPercentage > -15)){
-                    status = false;
-                    break;
-                }
-
-            }
+            totalProtein = totalProtein + mealPlan.totalProteins()
+            totalCarbohydrates = totalCarbohydrates + mealPlan.totalCarbohydrates()
+            totalFats = totalFats + mealPlan.totalFats()
+            totalCalories = mealPlan.totalCalories()
         }
-        XCTAssert( status,
-                   "Each meal’s carbohydrates,proteins,fats should be equally divided +-15%")
+        
+        print("total carbs: \(totalCarbohydrates), total protein: \(totalProtein), total fats: \(totalFats)")
+        totalProtein = totalProtein/Double(mealPlans.count)
+        totalCarbohydrates = totalCarbohydrates/Double(mealPlans.count)
+        totalFats = totalFats/Double(mealPlans.count)
+        
+        if totalCarbohydrates >= (thisWeeksCarbs - 7.0) && totalCarbohydrates <= (thisWeeksCarbs + 7.0) &&
+            totalProtein >= (thisWeeksProtein - 7.0) && totalProtein <= (thisWeeksProtein + 7.0) &&
+            totalFats >= (thisWeeksFats - 3.0) && totalFats <= (thisWeeksFats + 3.0){
+            status = true
+        } else {
+            status = false
+        }
+            
+        XCTAssert(status!,
+                   "total carbs: \(totalCarbohydrates). total proteins: \(totalProtein). total fats: \(totalFats)")
     }
 
 }

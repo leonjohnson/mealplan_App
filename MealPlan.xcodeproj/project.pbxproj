@@ -17,6 +17,11 @@
 		F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */; };
 		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
 		F74E3C7A1DF8FAA8004B0259 /* BotData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74E3C791DF8FAA8004B0259 /* BotData.swift */; };
+		F74F96D31E0839E2009ADA2D /* Explanation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F74F96D21E0839E2009ADA2D /* Explanation.storyboard */; };
+		F74F96D71E0839F2009ADA2D /* FirstView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F74F96D41E0839F2009ADA2D /* FirstView.xib */; };
+		F74F96D81E0839F2009ADA2D /* ExplanationScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74F96D51E0839F2009ADA2D /* ExplanationScreens.swift */; };
+		F74F96D91E0839F2009ADA2D /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F74F96D61E0839F2009ADA2D /* SecondView.xib */; };
+		F74F96DB1E083A2B009ADA2D /* ExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74F96DA1E083A2B009ADA2D /* ExplanationViewController.swift */; };
 		F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */; };
 		F78AB72C1DBE6DA400BB40EA /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */; };
 		F78AB72D1DBE6DA400BB40EA /* ActivityLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */; };
@@ -145,6 +150,11 @@
 		F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
 		F74E3C791DF8FAA8004B0259 /* BotData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BotData.swift; path = ../BotData.swift; sourceTree = "<group>"; };
+		F74F96D21E0839E2009ADA2D /* Explanation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Explanation.storyboard; sourceTree = "<group>"; };
+		F74F96D41E0839F2009ADA2D /* FirstView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstView.xib; sourceTree = "<group>"; };
+		F74F96D51E0839F2009ADA2D /* ExplanationScreens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplanationScreens.swift; sourceTree = "<group>"; };
+		F74F96D61E0839F2009ADA2D /* SecondView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecondView.xib; sourceTree = "<group>"; };
+		F74F96DA1E083A2B009ADA2D /* ExplanationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplanationViewController.swift; sourceTree = "<group>"; };
 		F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProgressMaster.swift; sourceTree = "<group>"; };
 		F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLevelViewController.swift; sourceTree = "<group>"; };
@@ -291,7 +301,6 @@
 			isa = PBXGroup;
 			children = (
 				4A504E9A1DF6A9D400719B0B /* UpdateController.swift */,
-				4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */,
 			);
 			name = UpdateController;
 			sourceTree = "<group>";
@@ -325,6 +334,25 @@
 				4ADE43451DF6874B00491005 /* MealPlanTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F74F96DC1E083A9D009ADA2D /* ExplanationScreens */ = {
+			isa = PBXGroup;
+			children = (
+				F74F96D51E0839F2009ADA2D /* ExplanationScreens.swift */,
+				F74F96D21E0839E2009ADA2D /* Explanation.storyboard */,
+				F74F96D41E0839F2009ADA2D /* FirstView.xib */,
+				F74F96D61E0839F2009ADA2D /* SecondView.xib */,
+			);
+			name = ExplanationScreens;
+			sourceTree = "<group>";
+		};
+		F74F96DD1E083ADC009ADA2D /* ExplanationController */ = {
+			isa = PBXGroup;
+			children = (
+				F74F96DA1E083A2B009ADA2D /* ExplanationViewController.swift */,
+			);
+			name = ExplanationController;
 			sourceTree = "<group>";
 		};
 		F78AB6E01DBE6DA400BB40EA /* MealPlan */ = {
@@ -432,10 +460,12 @@
 		F7C480401DBF602900572706 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F74F96DC1E083A9D009ADA2D /* ExplanationScreens */,
 				F78AB7161DBE6DA400BB40EA /* mpButton.swift */,
 				F78AB6ED1DBE6DA400BB40EA /* bkgrd.swift */,
 				F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */,
 				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
+				4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */,
 				F78AB6E71DBE6DA400BB40EA /* Introduction.storyboard */,
 				F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */,
 				F78AB6E91DBE6DA400BB40EA /* LaunchScreen.storyboard */,
@@ -455,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				4A504E991DF6A9AC00719B0B /* UpdateController */,
+				F74F96DD1E083ADC009ADA2D /* ExplanationController */,
 				F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */,
 				F78AB6EE1DBE6DA400BB40EA /* CaloriesTableViewCell.swift */,
 				F78AB6EF1DBE6DA400BB40EA /* CaloriesViewController.swift */,
@@ -656,14 +687,17 @@
 				F78B6EE51DFC51360033A456 /* BotCellWithButton.xib in Resources */,
 				F78AB7341DBE6DA400BB40EA /* Main.storyboard in Resources */,
 				F78EDFDC1DEDCD3D00AC1AF7 /* HowTheMealPlanWillWork.storyboard in Resources */,
+				F74F96D91E0839F2009ADA2D /* SecondView.xib in Resources */,
 				4A504E9D1DF6B79500719B0B /* UpdateController.storyboard in Resources */,
 				F78AB7331DBE6DA400BB40EA /* LaunchScreen.storyboard in Resources */,
+				F74F96D71E0839F2009ADA2D /* FirstView.xib in Resources */,
 				F7E3C5561DDBC44300DA2696 /* miniTableViewCell.xib in Resources */,
 				F7E3C5441DD4AF0F00DA2696 /* Bot.storyboard in Resources */,
 				F78AB7461DBE6DA400BB40EA /* initialLoad3.json in Resources */,
 				F7FB35001DC95F0B00CAB6B7 /* TrackingUsersProgress.storyboard in Resources */,
 				F7E3C5461DD4AF6E00DA2696 /* SearchForFood.storyboard in Resources */,
 				F78EDFE31DF212B500AC1AF7 /* initialLoad4.json in Resources */,
+				F74F96D31E0839E2009ADA2D /* Explanation.storyboard in Resources */,
 				F78AB7301DBE6DA400BB40EA /* Assets.xcassets in Resources */,
 				F78AB74B1DBE6DA400BB40EA /* Media.xcassets in Resources */,
 				F78AB7421DBE6DA400BB40EA /* IconImages.xcassets in Resources */,
@@ -805,6 +839,7 @@
 				F78AB7611DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift in Sources */,
 				F78AB7581DBE6DA400BB40EA /* Profile.swift in Sources */,
 				F78AB7401DBE6DA400BB40EA /* FoodSearchViewController.swift in Sources */,
+				F74F96D81E0839F2009ADA2D /* ExplanationScreens.swift in Sources */,
 				F78AB7681DBE6DA400BB40EA /* Step2ViewController.swift in Sources */,
 				F78AB72D1DBE6DA400BB40EA /* ActivityLevelViewController.swift in Sources */,
 				F7C480491DBFF37B00572706 /* Deletion.swift in Sources */,
@@ -818,6 +853,7 @@
 				F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */,
 				F78AB7391DBE6DA400BB40EA /* Constants.swift in Sources */,
 				F78AB7561DBE6DA400BB40EA /* Macronutrient.swift in Sources */,
+				F74F96DB1E083A2B009ADA2D /* ExplanationViewController.swift in Sources */,
 				4A504E9B1DF6A9D400719B0B /* UpdateController.swift in Sources */,
 				F78AB75E1DBE6DA400BB40EA /* Network.swift in Sources */,
 				F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */,

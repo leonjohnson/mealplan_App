@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="slide1" translatesAutoresizingMaskIntoConstraints="NO" id="aLw-8B-Q7e">
+                    <rect key="frame" x="30" y="100" width="315" height="467"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1n-tc-jbL">
+                    <rect key="frame" x="136" y="599" width="103" height="30"/>
+                    <state key="normal" title="Dummy Button"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="C1n-tc-jbL" firstAttribute="top" secondItem="aLw-8B-Q7e" secondAttribute="bottom" constant="32" id="EPg-e4-rLm"/>
+                <constraint firstAttribute="trailing" secondItem="aLw-8B-Q7e" secondAttribute="trailing" constant="30" id="fUK-7H-cKt"/>
+                <constraint firstItem="aLw-8B-Q7e" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="ira-gj-M0C"/>
+                <constraint firstItem="aLw-8B-Q7e" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="itc-ze-dEi"/>
+                <constraint firstAttribute="bottom" secondItem="aLw-8B-Q7e" secondAttribute="bottom" constant="100" id="lmM-vI-6AY"/>
+                <constraint firstItem="C1n-tc-jbL" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rPa-Q6-1td"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="slide1" width="414" height="736"/>
+    </resources>
+</document>

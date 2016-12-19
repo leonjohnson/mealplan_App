@@ -168,26 +168,23 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
        
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }else{
 
-        self.performSegue(withIdentifier: "step4Identifier", sender: nil)
+        self.performSegue(withIdentifier: "explanation", sender: nil)
         }
 
 
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
-        if segue.identifier == "step4Identifier"{
-            let vc = segue.destination as! CaloriesViewController
-            vc.fromController = "step4Identifier"
-        }
+        let vc = segue.destination as! ExplanationViewController
     }
     
     
     
     //Method for Navigating back to previous ViewController.
     @IBAction func BackAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
 }

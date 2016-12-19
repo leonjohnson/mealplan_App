@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="KkB-oR-mGb" customClass="ExplanationScreens" customModule="MealPlan" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" text="Your meal plan has been created" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jr-rQ-jI4">
+                    <rect key="frame" x="0.0" y="40" width="375" height="36.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="250" constant="60" id="J1V-Bl-w4Z"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <view contentMode="scaleToFill" horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BYR-aC-qfG">
+                    <rect key="frame" x="0.0" y="76.5" width="375" height="435.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHA-j0-yob">
+                            <rect key="frame" x="8" y="206" width="359" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="eA6-1S-B2o"/>
+                            </constraints>
+                            <attributedString key="attributedText">
+                                <fragment content="Label">
+                                    <attributes>
+                                        <font key="NSFont" metaFont="system" size="17"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2cr-PJ-0Cr">
+                            <rect key="frame" x="80" y="36" width="214" height="150"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="150" id="7mD-wq-ZNJ"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                    <constraints>
+                        <constraint firstItem="2cr-PJ-0Cr" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leading" constant="80" id="4lm-HV-Jar"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leadingMargin" id="807-bm-GN7"/>
+                        <constraint firstItem="2cr-PJ-0Cr" firstAttribute="centerX" secondItem="BYR-aC-qfG" secondAttribute="centerX" id="HeZ-oo-1TT"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="top" secondItem="2cr-PJ-0Cr" secondAttribute="bottom" constant="20" id="VA7-Oy-oz2"/>
+                        <constraint firstItem="2cr-PJ-0Cr" firstAttribute="top" secondItem="BYR-aC-qfG" secondAttribute="top" constant="36" id="dJX-RO-PrA"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="centerX" secondItem="2cr-PJ-0Cr" secondAttribute="centerX" id="r1A-Oc-1AR"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6h-Cj-FoN">
+                    <rect key="frame" x="0.0" y="532" width="375" height="55"/>
+                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="ibI-Ci-JTX"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="4Jr-rQ-jI4" firstAttribute="leading" secondItem="o6h-Cj-FoN" secondAttribute="leading" id="8T7-1G-ZqN"/>
+                <constraint firstItem="4Jr-rQ-jI4" firstAttribute="top" secondItem="KkB-oR-mGb" secondAttribute="top" constant="40" id="8Tm-Rh-ata"/>
+                <constraint firstItem="4Jr-rQ-jI4" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leading" id="8uC-aV-td8"/>
+                <constraint firstAttribute="bottom" secondItem="o6h-Cj-FoN" secondAttribute="bottom" constant="80" id="9nh-V8-pwz"/>
+                <constraint firstItem="BYR-aC-qfG" firstAttribute="top" secondItem="4Jr-rQ-jI4" secondAttribute="bottom" id="EtF-RV-mcP"/>
+                <constraint firstItem="4Jr-rQ-jI4" firstAttribute="trailing" secondItem="BYR-aC-qfG" secondAttribute="trailing" id="KjT-nG-PYc"/>
+                <constraint firstItem="4Jr-rQ-jI4" firstAttribute="leading" secondItem="KkB-oR-mGb" secondAttribute="leading" id="Mht-yj-4ZI"/>
+                <constraint firstItem="o6h-Cj-FoN" firstAttribute="top" secondItem="BYR-aC-qfG" secondAttribute="bottom" constant="20" id="U57-lq-en8"/>
+                <constraint firstAttribute="trailing" secondItem="4Jr-rQ-jI4" secondAttribute="trailing" id="Yun-ME-G9s"/>
+                <constraint firstItem="4Jr-rQ-jI4" firstAttribute="trailing" secondItem="o6h-Cj-FoN" secondAttribute="trailing" id="oJU-9q-UVP"/>
+            </constraints>
+            <connections>
+                <outlet property="doneButton" destination="o6h-Cj-FoN" id="iWi-W6-3IO"/>
+                <outlet property="imageView" destination="2cr-PJ-0Cr" id="PFc-HO-fWP"/>
+                <outlet property="mainObject" destination="BYR-aC-qfG" id="ZRM-5Z-GWH"/>
+                <outlet property="subText" destination="LHA-j0-yob" id="iOt-jn-w2j"/>
+                <outlet property="textView" destination="4Jr-rQ-jI4" id="fZP-Ht-1X6"/>
+            </connections>
+            <point key="canvasLocation" x="231.5" y="68.5"/>
+        </view>
+    </objects>
+</document>
