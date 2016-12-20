@@ -15,7 +15,6 @@ class Food: Object {
     dynamic  var proteins        = 0.0
     dynamic var salt : Double = 0.00
     
-    
     dynamic  var image          = ""
     dynamic  var servingSize : ServingSize? = nil
     dynamic var authoredBy: User? //Should this be a string or a User object. Users will be just you and us?
@@ -46,14 +45,11 @@ class Food: Object {
     dynamic var external_note = ""
     
     var max_number_of_servings = RealmOptional<Double>()
+    var min_number_of_servings = RealmOptional<Double>()
     
     //var fields : Array = Array(arrayLiteral: "name", "producer", "salt", "calories", "fats", "sat_fats", "carbohydrates", "sugars", "fibre", "proteins", "salt", "dietSuitability",  "vitaminB1", "vitaminB2", "vitaminB3", "vitaminB6", "calcium", "vitaminC", "vitaminD")
 
-    
-    
-    
-    
-    
+
     /*
     
     Food is an object of the item wich is awailable for a meal plan

@@ -233,7 +233,6 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pnq-sc-grh">
                                 <rect key="frame" x="314" y="28" width="45" height="16"/>
-                                <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="N2h-88-dQx"/>
                                 </constraints>
@@ -430,7 +429,6 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ooH-3o-RRE" userLabel="likeUnlikeButton">
                                 <rect key="frame" x="256" y="28" width="46" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="46" id="1xx-Tf-BZs"/>
                                     <constraint firstAttribute="width" constant="46" id="Pwo-1W-eIS"/>
@@ -501,7 +499,6 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xTW-1p-gtI" userLabel="deleteButton">
                                 <rect key="frame" x="188" y="28" width="56" height="16"/>
-                                <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="4JR-7w-w5w"/>
                                     <constraint firstAttribute="width" constant="56" id="NYp-gg-KyD"/>
@@ -1400,7 +1397,7 @@
                 <viewControllerPlaceholder storyboardName="Explanation" referencedIdentifier="explanation" id="fQx-Au-Sak" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7c7-lD-bHs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2478" y="739"/>
+            <point key="canvasLocation" x="-2055" y="716"/>
         </scene>
         <!--Macros-->
         <scene sceneID="0B5-og-06M">
@@ -5163,7 +5160,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2BJ-lU-2bc">
-                                <rect key="frame" x="16" y="237" width="343" height="50"/>
+                                <rect key="frame" x="16" y="176" width="343" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FWa-Oq-oMd" customClass="MacrosTallyView" customModule="MealPlan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
@@ -5204,11 +5201,11 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="60" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="5R4-Ru-vqQ">
-                                <rect key="frame" x="2" y="307" width="371" height="315"/>
+                                <rect key="frame" x="2" y="246" width="371" height="376"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="315" id="NRT-90-eEf"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="315" id="NRT-90-eEf"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="60" id="gNJ-91-wcJ" customClass="MPTableViewCell" customModule="MealPlan" customModuleProvider="target">
@@ -5486,8 +5483,8 @@
                             <constraint firstItem="vzr-xy-79U" firstAttribute="centerX" secondItem="D1Q-Am-6b6" secondAttribute="centerX" id="Bz8-dc-Jth"/>
                             <constraint firstItem="2BJ-lU-2bc" firstAttribute="leading" secondItem="2nF-bd-fA8" secondAttribute="leadingMargin" id="FYk-Zf-Rpj"/>
                             <constraint firstItem="zaf-su-zPk" firstAttribute="top" secondItem="vzr-xy-79U" secondAttribute="bottom" constant="4" id="Fmk-du-0u4"/>
-                            <constraint firstItem="2BJ-lU-2bc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2nF-bd-fA8" secondAttribute="top" constant="150" id="JB4-UT-PNb"/>
                             <constraint firstItem="vzr-xy-79U" firstAttribute="centerX" secondItem="5R4-Ru-vqQ" secondAttribute="centerX" id="JG1-Vs-ocO"/>
+                            <constraint firstItem="2BJ-lU-2bc" firstAttribute="top" secondItem="zaf-su-zPk" secondAttribute="bottom" constant="80" id="JPj-AD-hXv"/>
                             <constraint firstItem="D1Q-Am-6b6" firstAttribute="top" secondItem="vzr-xy-79U" secondAttribute="bottom" constant="8" symbolic="YES" id="QJu-HC-iEq">
                                 <variation key="heightClass=regular-widthClass=compact" constant="16"/>
                             </constraint>
@@ -5527,10 +5524,10 @@
                                 <exclude reference="m8g-5U-Im7"/>
                                 <exclude reference="QJu-HC-iEq"/>
                                 <exclude reference="abe-JY-qFm"/>
+                                <exclude reference="qaD-k6-VXD"/>
                                 <exclude reference="8DK-H2-zf2"/>
                                 <exclude reference="Fmk-du-0u4"/>
                                 <exclude reference="veL-TV-lW5"/>
-                                <exclude reference="qaD-k6-VXD"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -6172,7 +6169,7 @@
                         <outlet property="disLikeFoodListTable" destination="R7Y-2N-xtC" id="wMM-0W-PaA"/>
                         <outlet property="disLikeSearchBar" destination="vfg-4Y-ENn" id="KAS-h6-XCW"/>
                         <segue destination="Uzn-qb-mC4" kind="push" identifier="step4Identifier" id="DSQ-3N-2Bj"/>
-                        <segue destination="fQx-Au-Sak" kind="show" identifier="explanation" id="qzD-Lc-Vbs"/>
+                        <segue destination="fQx-Au-Sak" kind="presentation" identifier="explanation" id="qzD-Lc-Vbs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x9F-WR-6N4" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -182,6 +182,10 @@ class Connect: NSObject {
             itemFood.max_number_of_servings = RealmOptional<Double>(maxAllowedValue)
         }
         
+        if let minAllowedValue : Double =  getDoubleValueForKey(Constants.min_number_of_servings, pdt: pdt!){
+            itemFood.min_number_of_servings = RealmOptional<Double>(minAllowedValue)
+        }
+        
         
         return itemFood;
         

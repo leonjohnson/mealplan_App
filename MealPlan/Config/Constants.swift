@@ -134,9 +134,10 @@ struct Constants {
     static let lactoseFree = "Lactose free"
     static let fish = "Fish"
     static let fizzy = "Fizzy"
-    static let dietTypes = [Constants.vegetarian, Constants.Vegan, /*Constants.pescatarian, Constants.lactoseFree,*/ Constants.glutenFree, Constants.NONE_OF_THE_ABOVE]
+    static let dietTypes = [Constants.vegetarian, /*Constants.Vegan, Constants.pescatarian, Constants.lactoseFree,*/ Constants.glutenFree, Constants.NONE_OF_THE_ABOVE]
     
     static let max_number_of_servings = "max_number_of_servings"
+    static let min_number_of_servings = "min_number_of_servings"
 
     
     

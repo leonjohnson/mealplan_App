@@ -616,6 +616,7 @@ class MealPlanAlgorithm : NSObject{
                     
                     
                 }
+                //TODO: FIX THIS DATE
                 meal.date = (Calendar.current as NSCalendar).date(byAdding: .day,value: Constants.DAYS_SINCE_START_OF_THIS_WEEK,to: Constants.START_OF_WEEK as Date, options: [])!
                 
                 dailyMealPlan.meals.append(meal)
@@ -1237,7 +1238,21 @@ class MealPlanAlgorithm : NSObject{
         return totalOutBy < totalOutBy2
     }
     
+    static func mealsSortedByProtein(_ meal1: Meal, _ meal2: Meal) -> Bool {
+        return meal1.totalProteins() > meal2.totalProteins()
+    }
     
+    static func mealsSortedByCarbohydrates(_ meal1: Meal, _ meal2: Meal) -> Bool {
+        return meal1.totalCarbohydrates() > meal2.totalCarbohydrates()
+    }
+    
+    static func mealsSortedByFat(_ meal1: Meal, _ meal2: Meal) -> Bool {
+        return meal1.totalFats() > meal2.totalFats()
+    }
+
+    
+    
+
     /**
      This function checks the given meal plan for any duplicates within a meal. If duplicates are found the numberofServings are combined, the other item reduced to -1 and then removed via a filter.
      
@@ -1280,10 +1295,165 @@ class MealPlanAlgorithm : NSObject{
      
      
      */
+    
+    /*
     static func assignMealTo(_ macro:String, foodItem:FoodItem, plan:DailyMealPlan) ->DailyMealPlan{
     
         assert([Constants.PROTEINS, Constants.CARBOHYDRATES, Constants.FATS].contains(macro), "INVALID MACRO USED")
        
+        let eatenAtBreakfast = DataHandler.getFoodType(Constants.eatenAtBreakfastFoodType)
+        let eatenAtBreakfastFlag = (foodItem.food?.foodType.contains(eatenAtBreakfast))! ? true : false
+        let breakFastOnly = DataHandler.getFoodType(Constants.onlyBreakfastFoodType)
+        var lowestMeal = plan.meals[0]
+        
+        
+        
+        if (foodItem.food?.foodType.contains(breakFastOnly))!{
+            lowestMeal.foodItems.append(foodItem)
+            print("Assigning: \(foodItem.food?.name), for \(macro), to meal number \(lowestMeal.name)")
+            return plan
+        }
+        
+        var arrayOfMeals : [Meal] = [Meal]()
+        for each in plan.meals{
+            arrayOfMeals.append(each)
+        }
+        
+        for meal in arrayOfMeals{
+            if eatenAtBreakfastFlag == false && arrayOfMeals.index(of: meal) == 0{
+                continue
+            }
+        }
+        
+        var assignedPlan : [Meal] = []
+        switch macro {
+        case Constants.PROTEINS:
+            assignedPlan = arrayOfMeals.sorted(by: mealsSortedByProtein)
+        case Constants.CARBOHYDRATES:
+            assignedPlan = arrayOfMeals.sorted(by: mealsSortedByCarbohydrates)
+        case Constants.FATS:
+            assignedPlan = arrayOfMeals.sorted(by: mealsSortedByFat)
+        default:
+            assignedPlan = arrayOfMeals.sorted(by: mealsSortedByCarbohydrates)
+        }
+        
+        print("PEEP: 1-\(assignedPlan)")
+        for meal in assignedPlan{
+            switch macro {
+            case Constants.PROTEINS:
+                print("meal has: \(meal.totalProteins())")
+            case Constants.CARBOHYDRATES:
+                print("meal has: \(meal.totalCarbohydrates())")
+            case Constants.FATS:
+                print("meal has: \(meal.totalFats())")
+            default:
+                breakFastOnly
+            }
+            
+        }
+        
+        
+        
+        if assignedPlan.count > 1 && macro == Constants.PROTEINS && (foodItem.numberServing * (foodItem.food?.proteins)!) > 100{
+            // Split protein amongst two meals if result is >50g each
+            var halvedFoodItem = foodItem
+            halvedFoodItem.numberServing = foodItem.numberServing/2
+            
+            let mealZeroIsBreakfast = assignedPlan[0] == plan.meals[0] ? true : false
+            let mealOneIsBreakfast = assignedPlan[1] == plan.meals[1] ? true : false
+            
+            if mealZeroIsBreakfast == true && eatenAtBreakfastFlag == false {
+                assignedPlan[1].foodItems.append(foodItem)
+            } else if mealOneIsBreakfast == true && eatenAtBreakfastFlag == false{
+                assignedPlan[0].foodItems.append(foodItem)
+            } else {
+                // neither of the two I want to send food to are breakfast and this not being a breakfast food, so apportion equally between the two meals
+                assignedPlan[0].foodItems.append(halvedFoodItem)
+                assignedPlan[1].foodItems.append(halvedFoodItem)
+            }
+            let newDailyMealPlan = plan
+            newDailyMealPlan.meals.removeAll()
+            newDailyMealPlan.meals.append(objectsIn: assignedPlan)
+            print("PEEP: 2-\(assignedPlan)")
+            return newDailyMealPlan
+        }
+        
+        
+        // If we have an amount smaller than the min required and can find the same food already in the meal plan then try and combine, else leave
+        if let min = foodItem.food?.min_number_of_servings.value{
+            if foodItem.numberServing < min {
+                for meal in plan.meals{
+                    if let matchedFoodItem = meal.getFoodItem(food: foodItem.food!){
+                        if matchedFoodItem.numberServing == foodItem.numberServing{
+                            //same fooditem so ignore
+                            continue
+                        } else {
+                            matchedFoodItem.numberServing = matchedFoodItem.numberServing + foodItem.numberServing
+                            print("adding servings for \(matchedFoodItem.food?.name) to make a combined: \(matchedFoodItem.numberServing)")
+                            return plan
+                        }
+                        
+                    }
+                }
+            }
+            
+        }
+        
+        return plan
+
+        
+        
+       
+        
+        
+        
+        
+                
+       /*
+        for (index,meal) in plan.meals.enumerated(){
+            if eatenAtBreakfastFlag == false && index == 0{
+                lowestMeal = plan.meals[1] // the lowest meal is meal number 2, as we can't use breakfast for this food which is not eaten at breakfast.
+                continue
+            }
+            switch macro {
+            case Constants.PROTEINS:
+                if meal.totalProteins() < lowestMeal.totalProteins(){
+                    lowestMeal = meal
+                }
+            case Constants.CARBOHYDRATES:
+                if meal.totalCarbohydrates() < lowestMeal.totalCarbohydrates(){
+                    lowestMeal = meal
+                }
+            case Constants.FATS:
+                if meal.totalFats() < lowestMeal.totalFats(){
+                    lowestMeal = meal
+                }
+            default: break
+                
+            }
+        }
+        
+        for meal in plan.meals{
+            if meal.isEqual(lowestMeal){
+                if let matchedFoodItem = meal.getFoodItem(food: foodItem.food!){
+                    print("Found the same food in the same meal, will add to this food.")
+                    matchedFoodItem.numberServing = matchedFoodItem.numberServing + foodItem.numberServing
+                    return plan
+                } else {
+                    meal.foodItems.append(foodItem)
+                }
+                print("Assigning: \(foodItem.food?.name), for \(macro), to meal number \(meal.name)")
+            }
+        }
+        return plan
+      */
+    }
+   */
+    
+    static func assignMealTo(_ macro:String, foodItem:FoodItem, plan:DailyMealPlan) ->DailyMealPlan{
+        
+        assert([Constants.PROTEINS, Constants.CARBOHYDRATES, Constants.FATS].contains(macro), "INVALID MACRO USED")
+        
         let eatenAtBreakfast = DataHandler.getFoodType(Constants.eatenAtBreakfastFoodType)
         let eatenAtBreakfastFlag = (foodItem.food?.foodType.contains(eatenAtBreakfast))! ? true : false
         let breakFastOnly = DataHandler.getFoodType(Constants.onlyBreakfastFoodType)
@@ -1336,7 +1506,6 @@ class MealPlanAlgorithm : NSObject{
         }
         return plan
     }
-   
     
     
 
