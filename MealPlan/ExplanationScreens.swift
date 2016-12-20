@@ -1,11 +1,3 @@
-//
-//  explanationScreens.swift
-//  Story
-//
-//  Created by Leon Johnson on 19/12/2016.
-//  Copyright © 2016 Safiyan Zulfiqar. All rights reserved.
-//
-
 import UIKit
 
 class ExplanationScreens: UIView {
@@ -14,6 +6,22 @@ class ExplanationScreens: UIView {
     @IBOutlet var imageView : UIImageView!
     @IBOutlet var subText : UILabel!
     @IBOutlet var doneButton : UIButton!
+    
+    var screen1Text : NSAttributedString?
+    var screen1SubText : NSAttributedString?
+    let screen1Image : UIImage = UIImage()
+    
+    var screen2Text : NSAttributedString?
+    var screen2SubText : NSAttributedString?
+    let screen2Image : UIImage = UIImage()
+    
+    var screen3Text : NSAttributedString?
+    var screen3SubText : NSAttributedString?
+    let screen3Image : UIImage = UIImage()
+    
+    var screen4Text : NSAttributedString?
+    var screen4SubText : NSAttributedString?
+    let screen4Image : UIImage = UIImage()
     
 
     override func awakeFromNib() {
@@ -30,6 +38,29 @@ class ExplanationScreens: UIView {
         doneButton.isEnabled = false
         doneButton.setTitleColor(Constants.MP_WHITE, for: .disabled)
         
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+
+        
+        screen1Text = NSAttributedString(string: "Your meal plan has been created!", attributes:[
+            NSFontAttributeName:Constants.MEAL_PLAN_TITLE,
+            NSForegroundColorAttributeName:Constants.MP_BLACK,
+            NSParagraphStyleAttributeName:paragraphStyle])
+        
+        screen2Text = NSMutableAttributedString(string: "We'll start you off slowly", attributes:[
+            NSFontAttributeName:Constants.MEAL_PLAN_TITLE, 
+            NSForegroundColorAttributeName:Constants.MP_BLACK,
+            NSParagraphStyleAttributeName:paragraphStyle])
+        
+        screen3Text = NSAttributedString(string: "You'll get a different meal plan for each day of the week", attributes:[
+            NSFontAttributeName:Constants.MEAL_PLAN_TITLE,
+            NSForegroundColorAttributeName:Constants.MP_BLACK,
+            NSParagraphStyleAttributeName:paragraphStyle])
+        
+        screen4Text = NSAttributedString(string: "You'll need to prepare your meals in advance", attributes:[
+            NSFontAttributeName:Constants.MEAL_PLAN_TITLE,
+            NSForegroundColorAttributeName:Constants.MP_BLACK,
+            NSParagraphStyleAttributeName:paragraphStyle])
         
     }
 }

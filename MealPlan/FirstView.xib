@@ -16,22 +16,29 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" text="Your meal plan has been created" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jr-rQ-jI4">
-                    <rect key="frame" x="0.0" y="40" width="375" height="36.5"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jr-rQ-jI4">
+                    <rect key="frame" x="0.0" y="40" width="375" height="37"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="250" constant="60" id="J1V-Bl-w4Z"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <attributedString key="attributedText">
+                        <fragment content="Your meal plan has been created">
+                            <attributes>
+                                <font key="NSFont" metaFont="system" size="17"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <view contentMode="scaleToFill" horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BYR-aC-qfG">
-                    <rect key="frame" x="0.0" y="76.5" width="375" height="435.5"/>
+                    <rect key="frame" x="0.0" y="77" width="375" height="435"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHA-j0-yob">
-                            <rect key="frame" x="8" y="206" width="359" height="40"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHA-j0-yob">
+                            <rect key="frame" x="8" y="206" width="359" height="60"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="eA6-1S-B2o"/>
+                                <constraint firstAttribute="height" constant="60" id="lm9-sX-aks"/>
                             </constraints>
                             <attributedString key="attributedText">
                                 <fragment content="Label">
@@ -53,11 +60,11 @@
                     <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                     <constraints>
                         <constraint firstItem="2cr-PJ-0Cr" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leading" constant="80" id="4lm-HV-Jar"/>
-                        <constraint firstItem="LHA-j0-yob" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leadingMargin" id="807-bm-GN7"/>
                         <constraint firstItem="2cr-PJ-0Cr" firstAttribute="centerX" secondItem="BYR-aC-qfG" secondAttribute="centerX" id="HeZ-oo-1TT"/>
-                        <constraint firstItem="LHA-j0-yob" firstAttribute="top" secondItem="2cr-PJ-0Cr" secondAttribute="bottom" constant="20" id="VA7-Oy-oz2"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="top" secondItem="2cr-PJ-0Cr" secondAttribute="bottom" constant="20" id="KGa-eH-yLD"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="centerX" secondItem="2cr-PJ-0Cr" secondAttribute="centerX" id="KSC-8s-cHk"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leadingMargin" id="Tar-zo-Jq5"/>
                         <constraint firstItem="2cr-PJ-0Cr" firstAttribute="top" secondItem="BYR-aC-qfG" secondAttribute="top" constant="36" id="dJX-RO-PrA"/>
-                        <constraint firstItem="LHA-j0-yob" firstAttribute="centerX" secondItem="2cr-PJ-0Cr" secondAttribute="centerX" id="r1A-Oc-1AR"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6h-Cj-FoN">

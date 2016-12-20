@@ -8,7 +8,7 @@ class PageItemController: UIViewController {
     var itemIndex: Int = 0 // ***
     var imageName: String = ""  // ***
     @IBOutlet var ButtonHolder: UIView!
-    @IBOutlet var letsStartButton : mpButton!
+    @IBOutlet var letsStartButton : MPButton!
     @IBOutlet var contentImageView: UIImageView!
     @IBOutlet var introText: UITextView!
     @IBOutlet var skipButton: UIButton!

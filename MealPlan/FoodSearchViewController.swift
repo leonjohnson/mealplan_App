@@ -12,7 +12,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet var foodListTable : UITableView!
     @IBOutlet var closeButton : UIButton!
-    @IBOutlet var addNewFoodButton : UIButton!
+    @IBOutlet var addNewFoodButton : MPButton!
     
     var localData : [Food]?
     var filterdData:[Food]?
@@ -32,19 +32,15 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     override  func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         foodListTable.delegate = self
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
         
-        // Do any additional setup after loading the view.
-        //create button inside header view
-        //addItemButton.setTitle("Add item + ", forState: UIControlState.Normal)
-        
-        addNewFoodButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, NSForegroundColorAttributeName:Constants.MP_WHITE]), for: UIControlState())
-        
-        addNewFoodButton.backgroundColor = UIColor.lightGray
-        addNewFoodButton.titleLabel?.textColor = UIColor.blue
-        
+        addNewFoodButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:
+            [NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, 
+             NSForegroundColorAttributeName:Constants.MP_WHITE,
+             NSParagraphStyleAttributeName:paragraphStyle]), for: UIControlState())
+                
         //addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
         
     }

@@ -68,7 +68,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     @IBOutlet var activityLevelButton : UIButton!
     @IBOutlet var weeksPickerView : UIPickerView!
     @IBOutlet var ageNameView : UIView!
-    @IBOutlet var nextButton : mpButton!
+    @IBOutlet var nextButton : MPButton!
     @IBOutlet var heightWeightButton : UIButton!
     @IBOutlet var weeksLabel : UILabel!
     @IBOutlet var ageText : UITextField!

@@ -48,28 +48,16 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var alertController : UIAlertController?
     var deleteSheetIndexSelected : Int = -1
-    
-    
-    
     var dragger:DragToTable?
     var meals :[Meal] = [Meal]()
     var thisWeek: Week = Week()
     var nextWeek: Week = Week()
-    
     var dateCount:Int = 0
     var lastDayVisitedBeforeLeavingPage:Int = 0
     
     
-    
-    
-    
-
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
         var stringWithName = DataHandler.getActiveUser().name
         if stringWithName.uppercased().characters.last == "S"{
             stringWithName = stringWithName + "' meal plan"
@@ -88,14 +76,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         mealPlanListTable.delegate = self
         backDateButton.isUserInteractionEnabled = false
         backDateButton.alpha = 0.5
-        
-        
-        
         thisWeek = SetUpMealPlan.getThisWeekAndNext()[0]
-        
-        print("0 start date: \(SetUpMealPlan.getThisWeekAndNext()[0].start_date)")
-        print("1 start date: \(SetUpMealPlan.getThisWeekAndNext()[1].start_date)")
-        
         let calendar: Calendar = Calendar.current
         let date1 = calendar.startOfDay(for: thisWeek.start_date as Date)
         let date2 = calendar.startOfDay(for: Date())
@@ -171,20 +152,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
 
     
     
-    override func viewDidAppear(_ animated: Bool)
-    {
+    override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(true)
-        
-        
-        
-
         changeMealPlanDisplayed(nil)
-        
-        
         updateMacroTally(forDay: dateCount)
-        
-        
-
     }
     
     func updateMacroTally(forDay:Int){
@@ -288,8 +259,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     
-    func handleNotification()
-    {
+    func handleNotification(){
         let notifications =  UIApplication.shared.scheduledLocalNotifications
         if(notifications?.count > 0)
         {
@@ -302,8 +272,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     //For local Notification Alert:
-    func enableLocalNotification()
-    {
+    func enableLocalNotification(){
         let settings = UIUserNotificationSettings(types: [.alert, .badge , .sound], categories: nil)
         UIApplication.shared.registerUserNotificationSettings(settings)
     }
@@ -323,26 +292,11 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     
-    
-
-    
-    
-    
-    
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
-    {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         return 70
     }
     
-    //MealPlanListTable Delegate Methods
-    
-    func insertNewObject(_ sender: AnyObject) {
-        
-        // Here goes the add button
-        
-    }
-    
+
     
     // MARK: - Table View
     
@@ -360,7 +314,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MPTableViewCell
-        
         let foodItem : FoodItem = meals[indexPath.section].foodItems[indexPath.row]
         let label =  cell.viewWithTag(102) as? UILabel
         label?.attributedText = NSAttributedString(string: foodItem.food!.name, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
@@ -410,10 +363,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             let amount = Int(roundToPlaces((foodItem.numberServing * servingQuantityAsNumber), decimalPlaces: 0))
-            
-            
-            
-            
+
             label2?.attributedText = NSAttributedString(string: amount.description + ending, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
             
             let label3 =  cell.viewWithTag(101) as? UILabel
@@ -427,9 +377,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let sep = UIView(frame:CGRect(x: 0, y: 1, width: cell.frame.size.width, height: 0.5) )
         sep.backgroundColor = UIColor.white
         cell.addSubview(sep)
-        
-        
-        
         return cell
     }
     
@@ -461,20 +408,14 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let vheadView = UIView()
-        
-        
         vheadView.backgroundColor = UIColor.clear
-        
-        let  headerCell = UILabel()
+        let headerCell = UILabel()
         headerCell.frame=CGRect(x: 10, y: 10, width: tableView.frame.width-30, height: 20)
         vheadView.addSubview(headerCell)
         headerCell.attributedText = NSAttributedString(string: meals[section].name, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
-        
-        
         //create label inside header view
         let calorieCountLabel = UILabel()
-        
         calorieCountLabel.frame = CGRect(x: 10, y: 10, width: tableView.frame.width-25, height: 20)
         calorieCountLabel.textAlignment = NSTextAlignment.right
         calorieCountLabel.textColor = UIColor.white
@@ -488,7 +429,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //totalCaloriesString = Int(meals[section].totalCalories())
         calorieCountLabel.attributedText = NSAttributedString(string: totalCaloriesString + " kcal", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
-        
         vheadView.addSubview(calorieCountLabel)
         
         //create button inside header view
@@ -496,9 +436,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         addItemButton.frame = CGRect(x: 10, y: 25, width: self.view.frame.size.width - 100, height: 35)
         //addItemButton.setTitle("Add item + ", forState: UIControlState.Normal)
         addItemButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
-        
         addItemButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, NSForegroundColorAttributeName:Constants.MP_WHITE]), for: UIControlState())
-        
         
         addItemButton.titleLabel?.textColor = UIColor.white
         addItemButton.titleLabel?.textAlignment = NSTextAlignment.left
@@ -525,7 +463,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     func findFoodSearchAction(_ sender: UIButton){
         
         let storyboard = UIStoryboard(name: "SearchForFood", bundle: nil)
-        
         let scene = storyboard.instantiateViewController(withIdentifier: "foodSearchList") as! FoodSearchViewController
         scene.meal = meals[sender.tag]
         
@@ -539,7 +476,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     // MARK: - Segues
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let indexPath = self.mealPlanListTable.indexPathForSelectedRow {
-            
             let object =   meals[indexPath.section].foodItems[indexPath.row]
             if(object.food!.pk == 0){
                 self.mealPlanListTable.deselectRow(at: indexPath, animated: true)
@@ -556,8 +492,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             if let indexPath = self.mealPlanListTable.indexPathForSelectedRow {
                 self.mealPlanListTable.deselectRow(at: indexPath, animated: true)
                 let object =   meals[indexPath.section].foodItems[indexPath.row]
-                
-                
                 let controller = segue.destination as! DetailViewController
                 controller.meal = meals[indexPath.section]
                 controller.detailItem = object
@@ -603,7 +537,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             case 2:
                 print("sheet 2")
             case 3:
-                print("sheet 2")
+                print("sheet 3")
                 DataHandler.removeFoodItem(foodItem)
             default:
                 print("")

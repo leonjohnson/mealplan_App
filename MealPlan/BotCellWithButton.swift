@@ -4,7 +4,7 @@ import JSQMessagesViewController
 class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
     
     @IBOutlet var questionTextView : JSQMessagesCellTextView?
-    @IBOutlet var button:mpButton!
+    @IBOutlet var button:MPButton!
     var question : String = String()
     var data : (question:String, options:[String]) = ("",[])
     

@@ -15,7 +15,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     @IBOutlet var categoryView : UIView!
     
     @IBOutlet var backButton : UIButton!
-    @IBOutlet var step2NextButton : mpButton!
+    @IBOutlet var step2NextButton : MPButton!
     @IBOutlet var closeButton : UIButton!
     @IBOutlet var areYouLabel : UILabel!
     @IBOutlet var dietRequirementTable : UITableView!

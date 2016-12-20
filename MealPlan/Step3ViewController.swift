@@ -16,7 +16,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet var likeFoodListTable : UITableView!
     @IBOutlet var likeFoodLabel : UILabel!
     @IBOutlet weak var likeSearchBar: UISearchBar!
-    @IBOutlet var step3NextButton : mpButton!
+    @IBOutlet var step3NextButton : MPButton!
     @IBOutlet var closeButton : UIButton!
     
     //variable created for constant class

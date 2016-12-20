@@ -240,7 +240,9 @@
                                     <constraint firstAttribute="width" constant="45" id="yZT-A5-lH9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Add"/>
+                                <state key="normal" title="Add">
+                                    <color key="titleColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                </state>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="yZT-A5-lH9"/>
@@ -885,7 +887,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOp-eP-e4l">
                                 <rect key="frame" x="0.0" y="567" width="375" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mCG-hl-Psb" customClass="mpButton" customModule="DailyMeals">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mCG-hl-Psb" customClass="MPButton" customModule="MealPlan">
                                         <rect key="frame" x="15" y="30" width="345" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.73818936951640435" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -3849,7 +3851,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OoA-zf-sYD" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OoA-zf-sYD" customClass="MPButton">
                                         <rect key="frame" x="10" y="1345" width="300" height="35"/>
                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -4292,7 +4294,7 @@
                                                             <outlet property="delegate" destination="rEt-vx-djH" id="0pY-If-sYD"/>
                                                         </connections>
                                                     </pickerView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OfZ-F8-zyN" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OfZ-F8-zyN" customClass="MPButton">
                                                         <rect key="frame" x="10" y="762" width="300" height="40"/>
                                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -4902,7 +4904,7 @@
                                                             </mask>
                                                         </variation>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOU-51-buK" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOU-51-buK" customClass="MPButton">
                                                         <rect key="frame" x="10" y="550" width="300" height="40"/>
                                                         <color key="backgroundColor" red="0.05735957782" green="0.68782888419999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -5740,7 +5742,7 @@
                                             <outlet property="delegate" destination="ToE-ta-dql" id="s2N-sc-q80"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6W-PC-edf" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6W-PC-edf" customClass="MPButton">
                                         <rect key="frame" x="10" y="1345" width="300" height="35"/>
                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -6049,7 +6051,7 @@
                                             <outlet property="delegate" destination="cDr-t1-rY9" id="huP-Uw-F2d"/>
                                         </connections>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9G-VJ-SXJ" customClass="mpButton" customModule="MealPlan" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9G-VJ-SXJ" customClass="MPButton">
                                         <rect key="frame" x="10" y="1345" width="300" height="35"/>
                                         <color key="backgroundColor" red="0.0" green="0.73818936950000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>

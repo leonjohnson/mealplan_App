@@ -50,6 +50,9 @@ struct Constants {
     static let MEAL_PLAN_SERVINGSIZE_LABEL = UIFont.systemFont(ofSize: 9, weight: UIFontWeightRegular)
     static let DETAIL_PAGE_FOOD_NAME_LABEL = UIFont.systemFont(ofSize: 17, weight: UIFontWeightBold)
     
+    //Styles
+    static let ParagraphStyleAlignment = NSMutableParagraphStyle().alignment
+    
     //TableView constants
     static let TABLE_ROW_HEIGHT = CGFloat(55)
     static let TABLE_ROW_HEIGHT_SMALL = CGFloat(40)

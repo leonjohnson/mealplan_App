@@ -32,6 +32,7 @@ class MPTableViewCell: UITableViewCell {
 
  
     override func awakeFromNib() {
+        /*
         // add a pan recognizer
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(MPTableViewCell.handlePan(_:)))
         recognizer.delegate = self
@@ -46,6 +47,7 @@ class MPTableViewCell: UITableViewCell {
         crossLabel.text = "\u{2717}"
         crossLabel.textAlignment = .left
         addSubview(crossLabel)
+ */
         
     }
     

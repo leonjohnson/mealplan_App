@@ -8,7 +8,7 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet var disLikeFoodListTable : UITableView!
     @IBOutlet var disLikeFoodLabel : UILabel!
     @IBOutlet var disLikeSearchBar : UISearchBar!
-    @IBOutlet var step4FinishButton : mpButton!
+    @IBOutlet var step4FinishButton : MPButton!
     @IBOutlet var closeButton : UIButton!
     
     
