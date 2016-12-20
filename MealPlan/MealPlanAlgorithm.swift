@@ -1134,6 +1134,7 @@ class MealPlanAlgorithm : NSObject{
             for foodArray in dailyMealPlan.meals{
                 for foodItem in foodArray.foodItems{
                     csv3 += (foodItem.food?.name)! + ","
+                    foodItem.numberServing = Constants.roundToPlaces(foodItem.numberServing, decimalPlaces: 2) // rounding for customer use
                 }
                 
             }

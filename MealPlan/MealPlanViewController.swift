@@ -31,7 +31,8 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPTableViewCellDelegate {
+
+class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPTableViewCellDelegate, MPViewControllerDelegate {
     
     var showExplainerScreen : Bool?
     var settingsControl : Bool? //For SettingsTab bar
@@ -95,13 +96,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         mealPlanListTable.reloadData();
         mealPlanDate.text = dateForthisMealPlan // Monday June 30, 2014 10:42:21am PS
         mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
-        
-        
-        
-        
-        
-        
+
         Config.setBoolValue(Constants.HAS_PROFILE,status: true) // ENABLE TO MOVE TO START PAGE
+        
         alertController = UIAlertController(title: "Reason for removing this food?",
                                             message: "",
                                             preferredStyle: .actionSheet)
@@ -385,6 +382,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return true
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
@@ -493,8 +494,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.mealPlanListTable.deselectRow(at: indexPath, animated: true)
                 let object =   meals[indexPath.section].foodItems[indexPath.row]
                 let controller = segue.destination as! DetailViewController
+                controller.delegate = self
                 controller.meal = meals[indexPath.section]
                 controller.detailItem = object
+                controller.foodItemIndexPath = indexPath
                 controller.newItemMode = false
                 //controller.hideAddButton = true
                 //   controller.masterView = self
@@ -521,11 +524,13 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //let index = (toDoItems as NSArray).indexOfObject(toDoItem)
         //if index == NSNotFound { return }
 
-        
+        print("called")
         switch editType {
         case Constants.DELETE:
+            print("delete called")
             self.present(alertController!, animated: true, completion: nil)
             let foodItem = meals[indexPath.section].foodItems[indexPath.row]
+            DataHandler.removeFoodItem(foodItem)
             //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
             mealPlanListTable.reloadData()
             
@@ -538,11 +543,11 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("sheet 2")
             case 3:
                 print("sheet 3")
-                DataHandler.removeFoodItem(foodItem)
             default:
                 print("")
             }
          case Constants.EDIT:
+            print("edit called")
             let fi = meals[indexPath.section].foodItems[indexPath.row]
             DataHandler.updateFoodItem(fi, eaten: true)
             

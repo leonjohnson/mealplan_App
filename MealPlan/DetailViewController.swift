@@ -6,6 +6,10 @@ private extension Selector {
     //#selector(tap(_:))
 }
  */
+protocol MPViewControllerDelegate {
+    // indicates that the given item has been deleted
+    func editFoodItemAtIndexPath(_ indexPath: IndexPath, editType: String)
+}
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     
@@ -17,6 +21,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var valServingSize: UITextField!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var addFoodButton: UIButton!
+    @IBOutlet var deleteFoodButton: UIButton!
     
     @IBOutlet var nutritionTable: UITableView!
     
@@ -24,6 +29,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var likedFoods = NSMutableArray()
     var revertToOriginal :Bool = true
     var newItemMode :Bool = false
+    
+    var delegate: MPViewControllerDelegate? // The object that acts as delegate for this cell.
+    var foodItemIndexPath: IndexPath? // The item that this cell renders.
     
     //var hideAddButton: Bool? = nil
     
@@ -346,6 +354,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         return (false, nil)
+    }
+    
+    
+    @IBAction func deleteIt(){
+        onBackClick(UIButton())
+        if delegate != nil{
+            delegate!.editFoodItemAtIndexPath(foodItemIndexPath!, editType: Constants.DELETE)
+        }
+        print("delete it called in detail view")
     }
     
         
