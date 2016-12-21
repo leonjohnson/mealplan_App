@@ -232,6 +232,7 @@ class MealPlanAlgorithm : NSObject{
                     
                     if randomNumber > 0 {
                         //TODO: CHECK with delegate method before selection.
+                        options[Int(randomNumber)].doNotReduceToZero = true
                         foodBasket[carbIndex].append(options[Int(randomNumber)])
                     }
                     
@@ -255,7 +256,10 @@ class MealPlanAlgorithm : NSObject{
                         if newFood.alwaysEatenWithOneOf.count > 0{
                             newRandNum = arc4random_uniform(UInt32(newFood.alwaysEatenWithOneOf.count))
                             let selectedFood = newFood.alwaysEatenWithOneOf[Int(newRandNum)]
+                            selectedFood.doNotReduceToZero = true
                             
+                            
+                            //TO-DO - Use food.macro instead of the code below
                             if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)) {
                                 foodBasket[vegIndex].append(selectedFood)
                             }
@@ -321,6 +325,7 @@ class MealPlanAlgorithm : NSObject{
                     foodSelectedBreak: if foodSelected.alwaysEatenWithOneOf.count > 0{
                         randomNumber = arc4random_uniform(UInt32(foodSelected.alwaysEatenWithOneOf.count))
                         let selectedFood = foodSelected.alwaysEatenWithOneOf[Int(randomNumber)]
+                        selectedFood.doNotReduceToZero = true
                         
                         if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
                             foodBasket[vegIndex].append(selectedFood)
@@ -353,6 +358,7 @@ class MealPlanAlgorithm : NSObject{
                         if newFood.alwaysEatenWithOneOf.count > 0{
                             newRandNum = arc4random_uniform(UInt32(newFood.alwaysEatenWithOneOf.count))
                             let selectedFood = newFood.alwaysEatenWithOneOf[Int(newRandNum)]
+                            selectedFood.doNotReduceToZero = true
                             
                             if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
                                 foodBasket[vegIndex].append(selectedFood)
@@ -417,6 +423,7 @@ class MealPlanAlgorithm : NSObject{
                     foodSelectedBreak: if fatSelected.alwaysEatenWithOneOf.count > 0{
                         randomNumber = arc4random_uniform(UInt32(fatSelected.alwaysEatenWithOneOf.count))
                         let selectedFood = fatSelected.alwaysEatenWithOneOf[Int(randomNumber)]
+                        selectedFood.doNotReduceToZero = true
                         
                         if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)){
                             foodBasket[vegIndex].append(selectedFood)
@@ -660,6 +667,7 @@ class MealPlanAlgorithm : NSObject{
 
             
             thecomebackBreak: for macro in Constants.SPECIAL_MACRONUTRIENTS {
+                
                 guard macro != Constants.vegetableFoodType else {
                     break
                 }
@@ -776,7 +784,8 @@ class MealPlanAlgorithm : NSObject{
                 //TO-DO: Need to sort foods using a custom sort function
                 
                 breakLabel: switch macro {
-                case Constants.PROTEINS: // TODO - DELETE as this should never be called.
+                case Constants.PROTEINS:
+                    
                     
                     print("NO PROTEIN -----\n")
                     //break breakLabel
@@ -1845,6 +1854,12 @@ class MealPlanAlgorithm : NSObject{
                         print("\(fooditem.food?.name) has a serving size below 0. The macro is: \(Constants.MACRONUTRIENTS[0]) of \(macro1ForFoodItem) and the leftOverForThisMeal is: \(leftOverForThisMeal[indices[0]]) \n")
                         break
                     }
+                }
+                if fooditem.numberServing == 0 && fooditem.food?.doNotReduceToZero == true {
+                    if let min = fooditem.food?.min_number_of_servings.value{
+                        fooditem.numberServing = min
+                    }
+                    
                 }
             } else {
                 fooditem.numberServing = 0

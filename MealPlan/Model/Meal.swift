@@ -87,5 +87,21 @@ class Meal: Object {
         return totalFat
     }
     
+    func foodsMissingAlwaysEatenWithOneOf()-> [Food]{
+        var foodsMissingAEWOO : [Food] = []
+        
+        let foodNamesInMeal = foodItems.map({
+            $0.food?.name
+        })
+        
+        let predicate = NSPredicate(format: "ANY SELF.name IN [c] %@", foodNamesInMeal as! CVarArg)
+        
+        for fi in foodItems{
+            if (fi.food?.alwaysEatenWithOneOf.filter(predicate).count)! == 0{ // none of the aewoo foods are in the meal plan
+                foodsMissingAEWOO.append(fi.food!)
+            }
+        }
+        return foodsMissingAEWOO
+    }
     
 }

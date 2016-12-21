@@ -519,33 +519,28 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // cell delegate
     func editFoodItemAtIndexPath(_ indexPath: IndexPath, editType: String) {
-        //meals[indexPath.section].foodItems[indexPath.row]
-        //let index = self.mealPlanListTable
-        //let index = (toDoItems as NSArray).indexOfObject(toDoItem)
-        //if index == NSNotFound { return }
-
-        print("called")
+        switch deleteSheetIndexSelected {
+        case 0:
+            print("sheet 0")
+        case 1:
+            print("sheet 1")
+        default:
+            print("")
+        }
+        
         switch editType {
         case Constants.DELETE:
             print("delete called")
-            self.present(alertController!, animated: true, completion: nil)
-            let foodItem = meals[indexPath.section].foodItems[indexPath.row]
-            DataHandler.removeFoodItem(foodItem)
-            //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
-            mealPlanListTable.reloadData()
-            
-            switch deleteSheetIndexSelected {
-            case 0:
-                print("sheet 0")
-            case 1:
-                print("sheet 1")
-            case 2:
-                print("sheet 2")
-            case 3:
-                print("sheet 3")
-            default:
-                print("")
-            }
+            self.present(alertController!, animated: true, completion: {
+                let foodItem = self.meals[indexPath.section].foodItems[indexPath.row]
+                DataHandler.removeFoodItem(foodItem)
+                //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
+                //mealPlanListTable.reloadData()
+                //self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)
+                //http://stackoverflow.com/questions/14576921/uitableview-reloaddata-with-animation
+                let sections = NSIndexSet(index: indexPath.section)
+                self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)
+            })
          case Constants.EDIT:
             print("edit called")
             let fi = meals[indexPath.section].foodItems[indexPath.row]
@@ -554,9 +549,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         default:
             break
         }
-        //let indexPathForRow = NSIndexPath(forRow: index, inSection: 0)
-        //tableView.deleteRowsAtIndexPaths([indexPathForRow], withRowAnimation: .Fade)
-        
     }
     
     

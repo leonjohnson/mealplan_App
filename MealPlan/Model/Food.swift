@@ -47,6 +47,12 @@ class Food: Object {
     var max_number_of_servings = RealmOptional<Double>()
     var min_number_of_servings = RealmOptional<Double>()
     
+    dynamic var doNotReduceToZero : Bool = false
+    
+    override static func ignoredProperties() -> [String] {
+        return ["doNotReduceToZero"]
+    }
+    
     //var fields : Array = Array(arrayLiteral: "name", "producer", "salt", "calories", "fats", "sat_fats", "carbohydrates", "sugars", "fibre", "proteins", "salt", "dietSuitability",  "vitaminB1", "vitaminB2", "vitaminB3", "vitaminB6", "calcium", "vitaminC", "vitaminD")
 
 
@@ -55,8 +61,26 @@ class Food: Object {
     Food is an object of the item wich is awailable for a meal plan
     Considering the workout as a Food with product id = 0;
      
-     
-    
     */
+    
+    func macro()->String? {
+        
+        if foodType.contains(DataHandler.getFoodType(Constants.vegetableFoodType)) {
+            return Constants.vegetableFoodType
+        }
+        
+        if proteins > fats && proteins > carbohydrates{
+            return Constants.PROTEINS
+        }
+        if carbohydrates > fats && carbohydrates > proteins{
+            return Constants.CARBOHYDRATES
+        }
+        if fats > carbohydrates && fats > proteins{
+            return Constants.FATS
+        }
+        
+        return nil
+    }
+    
     
 }
