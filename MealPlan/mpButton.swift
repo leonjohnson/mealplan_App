@@ -4,7 +4,7 @@ class MPButton: UIButton {
 
     override func awakeFromNib() {
         self.backgroundColor = Constants.MP_GREEN
-        self.layer.cornerRadius = 15
+        self.layer.cornerRadius = 20
         self.isEnabled = true
     }
 }

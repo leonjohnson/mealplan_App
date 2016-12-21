@@ -185,14 +185,14 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
 
         }
         
-        
-        self.navigationController?.popViewController(animated: true)
+        parentView?.scrollToNextQuestion = true
+        _ = self.navigationController?.popViewController(animated: true)
         
     }
     
     //Method for Navigating back to previous ViewController.
     @IBAction func BackAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     

@@ -32,6 +32,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     override  func viewDidLoad() {
         super.viewDidLoad()
+        
         foodListTable.delegate = self
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
@@ -40,6 +41,8 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             [NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, 
              NSForegroundColorAttributeName:Constants.MP_WHITE,
              NSParagraphStyleAttributeName:paragraphStyle]), for: UIControlState())
+        addNewFoodButton.layer.cornerRadius = 15
+        
                 
         //addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
         

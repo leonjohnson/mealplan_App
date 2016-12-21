@@ -62,6 +62,9 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     //For SettingsTab bar
     var settingsControl : Bool?
     
+    //Scroll to relevant place
+    var scrollToNextQuestion : Bool?
+    
     @IBOutlet var genderview : UIView!
     @IBOutlet var goalsView : UIView!
     @IBOutlet var eatTimePicker : UIPickerView!
@@ -249,6 +252,14 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if scrollToNextQuestion == true{
+            //Scroll to relevant area
+            scrollView.setContentOffset(CGPoint(x: 0, y: 600), animated: true)
+            
+        }
+    }
+    
     //For saving Default Selected index values from the picker as Values:
     func prefill(){
         eatTimeValue      = eatTimes[2]
@@ -259,7 +270,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     
     //Method for Navigating back to previous ViewController.
     @IBAction func BackAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     //Method for showing values on load from settings page.
