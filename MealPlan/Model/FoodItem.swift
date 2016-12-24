@@ -5,10 +5,11 @@ class FoodItem: Object
 {
     dynamic var food:Food?
     dynamic var numberServing:Double = 1
-    dynamic var eaten = false
+    dynamic var eaten = true
     let dateTimeAdded: Date = Date()
     
     func getTotalCal()->Double{
        return  (food!.calories * numberServing)
     }
+    
 }

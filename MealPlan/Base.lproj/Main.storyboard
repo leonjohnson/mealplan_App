@@ -583,9 +583,9 @@
                                 <exclude reference="bns-eh-XOh"/>
                                 <exclude reference="csk-AN-Ff6"/>
                                 <exclude reference="hJz-UK-dUX"/>
+                                <exclude reference="Lgl-Zq-jqZ"/>
                                 <exclude reference="YxV-hh-yu5"/>
                                 <exclude reference="chs-AS-vSv"/>
-                                <exclude reference="Lgl-Zq-jqZ"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -612,9 +612,9 @@
                                 <include reference="bns-eh-XOh"/>
                                 <include reference="csk-AN-Ff6"/>
                                 <include reference="hJz-UK-dUX"/>
+                                <include reference="Lgl-Zq-jqZ"/>
                                 <include reference="YxV-hh-yu5"/>
                                 <include reference="chs-AS-vSv"/>
-                                <include reference="Lgl-Zq-jqZ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2565,13 +2565,20 @@
                                                                     </mask>
                                                                 </variation>
                                                             </label>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="We need to know a bit about you to create your meal plan" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMp-iV-iql">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMp-iV-iql">
                                                                 <rect key="frame" x="0.0" y="22" width="295" height="45"/>
                                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="45" id="KHN-4k-Xkd"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <attributedString key="attributedText">
+                                                                    <fragment content="We need to know a bit about you to create your meal plan.">
+                                                                        <attributes>
+                                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 <variation key="default">
                                                                     <mask key="constraints">
@@ -2770,7 +2777,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="VIE-64-thG"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                         <color key="textColor" red="0.58823529411764708" green="0.59215686274509804" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                         <variation key="default">
@@ -2791,7 +2798,7 @@
                                                                 <variation key="widthClass=compact" constant="21"/>
                                                             </constraint>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                         <color key="textColor" red="0.58823529411764708" green="0.59215686274509804" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                         <variation key="default">
@@ -2805,14 +2812,14 @@
                                                             </mask>
                                                         </variation>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How many weeks would you like to do this for? *We recommend 8-20 for best results" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHX-Qd-bI3">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How many weeks would you like to do this for? *We recommend 8-20" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHX-Qd-bI3">
                                                         <rect key="frame" x="25" y="840" width="270" height="48"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="33" id="mh5-ue-lky">
                                                                 <variation key="widthClass=compact" constant="48"/>
                                                             </constraint>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                         <color key="textColor" red="0.58823529411764708" green="0.59215686274509804" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                         <variation key="default">
@@ -2853,7 +2860,7 @@
                                                                 <variation key="widthClass=compact" constant="21"/>
                                                             </constraint>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                         <color key="textColor" red="0.58823529411764708" green="0.59215686274509804" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                         <variation key="default">
@@ -5524,10 +5531,10 @@
                                 <exclude reference="m8g-5U-Im7"/>
                                 <exclude reference="QJu-HC-iEq"/>
                                 <exclude reference="abe-JY-qFm"/>
-                                <exclude reference="qaD-k6-VXD"/>
                                 <exclude reference="8DK-H2-zf2"/>
                                 <exclude reference="Fmk-du-0u4"/>
                                 <exclude reference="veL-TV-lW5"/>
+                                <exclude reference="qaD-k6-VXD"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -5593,12 +5600,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGr-n6-QAS">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1400"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the foods you like ❤️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bW-q9-AnR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap up to 5 foods you like" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bW-q9-AnR">
                                         <rect key="frame" x="10" y="35" width="300" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="5jm-63-j9e"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.55470488520000005" blue="0.77461210660000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
@@ -5902,12 +5909,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tyg-xJ-k1d">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1400"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the foods you dislike 😷" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV8-ul-bvJ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap up to 5 foods you dislike" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV8-ul-bvJ">
                                         <rect key="frame" x="10" y="35" width="300" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="za5-Mv-xYy"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.55470488520000005" blue="0.77461210660000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">

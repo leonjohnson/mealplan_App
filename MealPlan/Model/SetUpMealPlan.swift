@@ -201,6 +201,7 @@ class SetUpMealPlan: NSObject {
         let bio = DataHandler.getActiveBiographical()
         let user = DataHandler.getActiveUser()
         newWeek.TDEE = calculateTDEE(bio: bio, user: user)
+        newWeek.calorieConsumption = newWeek.calculateCalorieConsumptionForMeal()
         newWeek.dailyMeals.append(objectsIn: MealPlanAlgorithm.createMealPlans(newWeek))
         try! realm.write {
             realm.add(newWeek)

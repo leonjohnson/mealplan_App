@@ -13,10 +13,10 @@ class Week: Object {
     dynamic var calorieConsumption:Int = 0 // what I ate this week. Lets assume that I ate everything in my meal plan for now.
     
     
-    func calculateCalorieConsumption()->Int{
+    func calculateCalorieConsumptionForMeal()->Int{
         var totalCalories = 0
         for mealplan in self.dailyMeals{
-            totalCalories = totalCalories + Int(mealplan.totalCalories())
+            totalCalories = totalCalories + Int(mealplan.totalKcalOfEatenFoods())
         }
         return totalCalories
     }

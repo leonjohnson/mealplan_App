@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // This method is called to let your app know that it moved from the inactive to active state. This can occur because your app was launched by the user or the system. Apps can also return to the active state if the user chooses to ignore an interruption (such as an incoming phone call or SMS message) that sent the app temporarily to the inactive state.
         //UpdateController.checkUpdate()
         print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
-        SetUpMealPlan.loadDatabaseWithData();
+        SetUpMealPlan.loadDatabaseWithData()
         
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             

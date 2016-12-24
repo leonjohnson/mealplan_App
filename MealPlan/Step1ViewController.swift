@@ -256,7 +256,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         if scrollToNextQuestion == true{
             //Scroll to relevant area
             scrollView.setContentOffset(CGPoint(x: 0, y: 600), animated: true)
-            
+            scrollToNextQuestion = false
         }
     }
     
@@ -563,6 +563,8 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         else if (segue.identifier == "HeightClassIdentifier"){
             let heightDestination = segue.destination as? Height_WeightListViewController
             heightDestination?.parentView = self
+            ageText.resignFirstResponder()
+            nameText.resignFirstResponder()
         }
     }
     

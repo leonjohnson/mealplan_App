@@ -79,30 +79,13 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //Method for Navigating back to previous ViewController.
     @IBAction func closeAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        
-    }
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
+
     //MealPlanListTable Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        
         return filterdData!.count
     }
     
@@ -125,13 +108,15 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         let cell = tableView.cellForRow(at: indexPath)
         
-        if(likeFoodValue.contains(filterdData![indexPath.row])){
-            likeFoodValue.remove(filterdData![indexPath.row])
-            cell!.accessoryType = UITableViewCellAccessoryType.none
-        }else{
-            likeFoodValue.add(filterdData![indexPath.row])
-            cell!.accessoryType = UITableViewCellAccessoryType.checkmark
-        }
+            if(likeFoodValue.contains(filterdData![indexPath.row])){
+                likeFoodValue.remove(filterdData![indexPath.row])
+                cell!.accessoryType = UITableViewCellAccessoryType.none
+            }else{
+                if likeFoodValue.count < 5 {
+                    likeFoodValue.add(filterdData![indexPath.row])
+                    cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+                }
+            }
         tableView.deselectRow(at: indexPath, animated: true)
         likeSearchBar.resignFirstResponder()
 
@@ -142,6 +127,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
         likeSearchBar.resignFirstResponder()
     }
+    
     
     
     

@@ -9,6 +9,7 @@ private extension Selector {
 protocol MPViewControllerDelegate {
     // indicates that the given item has been deleted
     func editFoodItemAtIndexPath(_ indexPath: IndexPath, editType: String)
+    func getThisWeek()->Week
 }
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
@@ -129,7 +130,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     fileprivate func updateFoodItem(numOfServing:Double? = nil){
-        
+        let currentWeek = delegate?.getThisWeek()
         print("called with parameter of :\(numOfServing)")
         
         var numServing = 0.0
@@ -146,6 +147,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if (newItemMode == false) { // existing food
             if(numServing > 0){
                 DataHandler.updateFoodItem(detailItem, numberServing: numServing)
+                DataHandler.updateCalorieConsumption(thisWeek: currentWeek!)
+                
             } else {
                 print("Error: Please add a positive number")
             }
@@ -155,7 +158,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             // it's a new food item but not one that is in the meal already
             if(numServing > 0){
                 DataHandler.updateFoodItem(detailItem, numberServing: numServing)
-                DataHandler.addFoodItemToMeal(meal!, foodItem:detailItem);
+                DataHandler.addFoodItemToMeal(meal!, foodItem:detailItem)
+                DataHandler.updateCalorieConsumption(thisWeek: currentWeek!)
             }else{
                 print("Error: Please add a positive number")
                 //Invalid value entered in the serving field

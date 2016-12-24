@@ -155,6 +155,10 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         updateMacroTally(forDay: dateCount)
     }
     
+    func getThisWeek()->Week{
+        return thisWeek
+    }
+    
     func updateMacroTally(forDay:Int){
         var longString = ""
         let variance = thisWeek.dailyMeals[forDay].calculateMacroDiscrepancy(macros: thisWeek.macroAllocation)
@@ -534,6 +538,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             self.present(alertController!, animated: true, completion: {
                 let foodItem = self.meals[indexPath.section].foodItems[indexPath.row]
                 DataHandler.removeFoodItem(foodItem)
+                DataHandler.updateCalorieConsumption(thisWeek: self.thisWeek)
                 //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
                 //mealPlanListTable.reloadData()
                 //self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)

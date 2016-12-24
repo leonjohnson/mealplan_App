@@ -237,6 +237,13 @@ class DataHandler: NSObject {
             realm.delete(foodItem)
         }
     }
+    
+    static func updateCalorieConsumption(thisWeek:Week){
+        let realm = try! Realm()
+        try! realm.write {
+            thisWeek.calorieConsumption = thisWeek.calculateCalorieConsumptionForMeal()
+        }
+    }
     /*
     static func removeFoodItemFromMeal(_ meal:Meal,index:Int){
         let realm = try! Realm()

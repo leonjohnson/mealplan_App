@@ -72,7 +72,7 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //Method for Navigating back to previous ViewController.
     @IBAction func closeAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     
@@ -117,21 +117,23 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     //Selecting Multiple Cells
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         let cell = tableView.cellForRow(at: indexPath)
-        cell!.textLabel?.font = Constants.STANDARD_FONT
         
         if( dislikeFoodValue.contains(filterdData![indexPath.row])){
             dislikeFoodValue.remove(filterdData![indexPath.row])
             cell!.accessoryType = UITableViewCellAccessoryType.none
         }else{
-            dislikeFoodValue.add(filterdData![indexPath.row])
-            cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+            if dislikeFoodValue.count < 5 {
+                dislikeFoodValue.add(filterdData![indexPath.row])
+                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
         disLikeSearchBar.resignFirstResponder()
     }
+    
+    
     
     //DeSelecting Multiple Cells
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

@@ -15,6 +15,27 @@ class DailyMealPlan: Object {
         return  totalKcal
     }
     
+    func totalKcalOfEatenFoods()->Int{
+        var totalKcal = 0
+        for meal in meals{
+            for fi in meal.foodItems{
+                if fi.eaten == true{
+                    totalKcal = totalKcal + Int(fi.getTotalCal())
+                }
+            }
+        }
+        return totalKcal
+    }
+    
+    func getMeal(mealToFind:Meal)->Meal?{
+        for meal in meals{
+            if meal.isEqual(mealToFind){
+                return meal
+            }
+        }
+        return nil
+    }
+    
     func totalCarbohydrates()->Double{
         var totalCarbohydrate = 0.0
         for meal in meals{

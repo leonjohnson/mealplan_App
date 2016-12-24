@@ -21,6 +21,9 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let data = ExplanationScreens()
+        
         // Do any additional setup after loading the view, typically from a nib.
         self.scrollView.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:self.view.frame.height)
         let scrollViewWidth:CGFloat = self.scrollView.frame.width
@@ -30,12 +33,11 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         
         
         // Page 1 of scroll view
-        let page1Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
+        let page1Content = loadFromNibNamed(nibNamed: "FirstView")!
         page1Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
-        page1Content.textView.attributedText = page1Content.screen1Text
-        page1Content.subText.attributedText = NSAttributedString(string: "You don’t need to count calories or macronutrients, it’s all been done for you. You simply follow the meal plan", attributes:[NSFontAttributeName:Constants.SMALL_FONT,
-            NSForegroundColorAttributeName:Constants.MP_BLACK,
-            NSParagraphStyleAttributeName:paragraphStyle])
+        //Data
+        page1Content.textView.attributedText = data.screen1Text
+        page1Content.subText.attributedText = data.screen1SubText
         let page1 = UIView(frame: CGRect(x:0, y:0,width:scrollViewWidth, height:scrollViewHeight))
         page1.addSubview(page1Content)
         
@@ -44,11 +46,8 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         let page2Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
         page2Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
         page2Content.textView.textAlignment = .center
-        page2Content.textView.attributedText = page2Content.screen2Text
-        page2Content.subText.attributedText = NSAttributedString(string: "For the first week you need to eat all of the foods in the meal plan plus any extra foods you want to eat, but you have to record it in the meal plan!", attributes:[
-            NSFontAttributeName:Constants.SMALL_FONT,
-            NSForegroundColorAttributeName:Constants.MP_BLACK,
-            NSParagraphStyleAttributeName:paragraphStyle])
+        page2Content.textView.attributedText = data.screen2Text
+        page2Content.subText.attributedText = data.screen2SubText
         let page2 = UIView(frame: CGRect(x:scrollViewWidth, y:0,width:scrollViewWidth, height:scrollViewHeight))
         page2.addSubview(page2Content)
         
@@ -57,10 +56,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         let page3Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
         page3Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
         page3Content.textView.attributedText = page3Content.screen3Text
-        page3Content.subText.attributedText = NSAttributedString(string: "Each one is slightly different. Feel free to follow the same plan if you prefer one over others.", attributes:[
-            NSFontAttributeName:Constants.SMALL_FONT, 
-            NSForegroundColorAttributeName:Constants.MP_BLACK,
-            NSParagraphStyleAttributeName:paragraphStyle])
+        page3Content.subText.attributedText = data.screen3SubText
         let page3 = UIView(frame: CGRect(x:scrollViewWidth*2, y:0,width:scrollViewWidth, height:scrollViewHeight))
         page3.addSubview(page3Content)
         
@@ -69,10 +65,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         let page4Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
         page4Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
         page4Content.textView.attributedText = page4Content.screen4Text
-        page4Content.subText.attributedText = NSAttributedString(string: "To know how much you’re eating, you’ll need to weigh your food. For this reason you’ll need some scales.", attributes:[
-            NSFontAttributeName:Constants.SMALL_FONT, 
-            NSForegroundColorAttributeName:Constants.MP_BLACK,
-            NSParagraphStyleAttributeName:paragraphStyle])
+        page4Content.subText.attributedText = data.screen4SubText
         let page4 = UIView(frame: CGRect(x:scrollViewWidth*3, y:0,width:scrollViewWidth*3, height:scrollViewHeight))
         
         
@@ -105,7 +98,12 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         self.pageControl.pageIndicatorTintColor = Constants.MP_DARK_GREY
     }
 
-    
+    func loadFromNibNamed(nibNamed: String, bundle : Bundle? = nil) -> ExplanationScreens? {
+        return UINib(
+            nibName: nibNamed,
+            bundle: bundle
+            ).instantiate(withOwner: nil, options: nil)[0] as? ExplanationScreens
+    }
  
     
     @IBAction func pageChanged(_ sender: UIPageControl) {

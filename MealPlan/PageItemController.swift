@@ -13,7 +13,7 @@ class PageItemController: UIViewController {
     @IBOutlet var introText: UITextView!
     @IBOutlet var skipButton: UIButton!
     
-    fileprivate let introMessages = ["We create customised meal plans to help you lose weight and gain muscle.",
+    fileprivate let introMessages = ["We create customised meal plans to help you lose weight or gain muscle.",
                                  "This works because what you eat is the biggest contributor to what your body looks like.",
                                  "This is what a meal plan looks like",
                                  "Tell us a little bit about yourself so we can create your personalised meal plan"]
