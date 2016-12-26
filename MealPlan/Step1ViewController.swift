@@ -46,7 +46,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
 
     
     // Numer of eat times to select from
-    var eatTimes = [2, 3, 4, 5, 6]
+    var eatTimes = [3, 4, 5, 6, 7]
     
     // Number of weeks to select from
     var numberOfweeks   = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]

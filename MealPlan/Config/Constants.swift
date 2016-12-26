@@ -31,7 +31,7 @@ struct Constants {
     
     //Fonts
     static let STANDARD_FONT = UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular)
-    static let SMALL_FONT = UIFont.systemFont(ofSize: 11, weight: UIFontWeightRegular)
+    static let SMALL_FONT = UIFont.systemFont(ofSize: 12, weight: UIFontWeightRegular)
     static let GENERAL_LABEL = UIFont.systemFont(ofSize: 14, weight: UIFontWeightBold)
     static let MEAL_PLAN_TITLE = UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold)
     static let MEAL_PLAN_SUBTITLE = UIFont.systemFont(ofSize: 13, weight: UIFontWeightBold)
@@ -317,5 +317,7 @@ struct Constants {
     static let MAIN_STORYBOARD = UIStoryboard(name: "Main", bundle: nil)
     static let FEEDBACK_STORYBOARD = UIStoryboard(name: "Feedback", bundle: nil)
     static let BOT_STORYBOARD = UIStoryboard(name: "Bot", bundle: nil)
+    
+    
     
     }

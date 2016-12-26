@@ -66,6 +66,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             stringWithName = stringWithName + "'s meal plan"
         }
         nameLabel.attributedText? = NSAttributedString(string:stringWithName, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        
+        mealPlanTally.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
