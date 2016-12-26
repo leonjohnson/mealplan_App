@@ -603,6 +603,12 @@ class MealPlanAlgorithm : NSObject{
                 let meal = Meal()
                 meal.name = "Meal " + String(mealIndex)
                 
+                let calender = Calendar.current
+
+                let mealplanDate = (calender as NSCalendar).date(byAdding: .day, value: dayIndex, to: calender.startOfDay(for: thisWeek.start_date), options: [.matchFirst])
+                
+                meal.date = mealplanDate!
+                
                 var count = 0
                 for foodArray in sortedFoodItemBasket{
                     

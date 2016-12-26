@@ -102,6 +102,7 @@ class SetUpMealPlan: NSObject {
         return Int(thisWeeksWeight!) < Int(lastWeeksWeight!) ? true : false
     }
     
+    
     static func cutCalories(fromWeek :Week, userfoundDiet: Constants.dietEase)->Int{
         switch userfoundDiet {
         case .easy:
@@ -268,8 +269,7 @@ class SetUpMealPlan: NSObject {
     }
     
     
-    static func startOfNextWeek() -> Date
-    {
+    static func startOfNextWeek() -> Date{
         let calendar = Calendar.current
         let dateComponets = (calendar as NSCalendar).components([.weekday, .hour], from: Date())
         (dateComponets as NSDateComponents).setValue(9-dateComponets.weekday!, forComponent: .weekday)
