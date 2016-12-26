@@ -3,26 +3,26 @@ import RealmSwift
 
 class Food: Object {
 
-    dynamic  var pk             = 1;
-    dynamic  var name           = "";
-    dynamic  var producer       = ""
-    dynamic  var calories       = 0.0
-    dynamic  var fats           = 0.0
+    dynamic var pk = 1
+    dynamic var name = ""
+    dynamic var localName = ""
+    dynamic var producer = ""
+    dynamic var calories = 0.0
+    dynamic var fats = 0.0
     var sat_fats = RealmOptional<Double>()
-    dynamic  var carbohydrates   = 0.0
+    dynamic var carbohydrates = 0.0
     var sugars = RealmOptional<Double>()
     var fibre = RealmOptional<Double>()
-    dynamic  var proteins        = 0.0
+    dynamic var proteins = 0.0
     dynamic var salt : Double = 0.00
     
-    dynamic  var image          = ""
-    dynamic  var servingSize : ServingSize? = nil
+    dynamic var image = ""
+    dynamic var servingSize : ServingSize? = nil
     dynamic var authoredBy: User? //Should this be a string or a User object. Users will be just you and us?
     var dietSuitability = List<DietSuitability>()
     var foodType = List<FoodType>()
     dynamic var spicy = false
     dynamic var coreFood = false
-    
     var vitaminB1 = RealmOptional<Double>()
     var vitaminB2 = RealmOptional<Double>()
     var vitaminB3 = RealmOptional<Double>()
