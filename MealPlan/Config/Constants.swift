@@ -74,6 +74,9 @@ struct Constants {
     static let MP_BLACK = UIColor.black
     static let MP_DARK_GREY = UIColor(red:0.47, green:0.47, blue:0.47, alpha:0.25)
     
+    static let MP_BLUEGREY = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
+    
+    
     
     
     //REE formula constants

@@ -506,7 +506,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                 controller.foodItemIndexPath = indexPath
                 controller.newItemMode = false
                 //controller.hideAddButton = true
-                //   controller.masterView = self
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 // self.tableView.deselectRowAtIndexPath(indexPath, animated: true)

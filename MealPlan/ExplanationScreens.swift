@@ -72,7 +72,7 @@ class ExplanationScreens: UIView {
         screen4Text = NSAttributedString(string: "You'll need to prepare your meals in advance", attributes:title_attributes)
         screen4SubText = NSAttributedString(string: "Each one is slightly different. Feel free to follow the same plan if you prefer one over others.", attributes:sub_text_attributes)
         
-        screen5Text = NSMutableAttributedString(string: "Lastly, you got to stay active!", attributes: title_attributes)
+        screen5Text = NSMutableAttributedString(string: "Lastly, you have got to stay active!", attributes: title_attributes)
         screen5SubText = NSAttributedString(string: "Ensure you stick with all of the gym sessions / physical activities that you stated you do during the sign up process", attributes:sub_text_attributes)
         
     }

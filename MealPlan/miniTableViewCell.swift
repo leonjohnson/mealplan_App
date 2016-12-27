@@ -10,7 +10,7 @@ import UIKit
 
 class miniTableViewCell: UITableViewCell {
 
-    var outgoingCellDelegate: OutgoingCellDelegate?
+    var incomingCellDelegate: IncomingCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

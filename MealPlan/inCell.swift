@@ -1,8 +1,8 @@
 import UIKit
 import JSQMessagesViewController
 
-class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITableViewDataSource {
-
+class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITableViewDataSource, IncomingCellDelegate {
+    
     @IBOutlet var questionTextView : JSQMessagesCellTextView?
     @IBOutlet var table : UITableView!
     var question : String = String()
@@ -22,16 +22,16 @@ class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITa
         self.messageBubbleTopLabel.textAlignment = .center
         self.tapGestureRecognizer.cancelsTouchesInView = false
         self.cellBottomLabel.textAlignment = .right
-
-        }
+        
+    }
     
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x, 
-                                                       y: self.messageBubbleContainerView.frame.origin.y, 
-                                                       width: self.messageBubbleContainerView.frame.width, 
+        self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x,
+                                                       y: self.messageBubbleContainerView.frame.origin.y,
+                                                       width: self.messageBubbleContainerView.frame.width,
                                                        height: CGFloat(300 + (data.options.count * Int(Constants.TABLE_ROW_HEIGHT_SMALL))))
         
         for row in 0...data.options.count {
@@ -54,7 +54,7 @@ class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITa
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -79,7 +79,7 @@ class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITa
         cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
         //cell.textLabel?.text = data.options[indexPath.row]
         cell.textLabel?.textColor = UIColor.black
-        //cell.incomingCellDelegate = self
+        cell.incomingCellDelegate = self
         return cell
     }
     
@@ -103,7 +103,7 @@ class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITa
         
         
         for row in 0...data.options.count {
-                tableView.cellForRow(at: [indexPath.section, row])?.accessoryType = UITableViewCellAccessoryType.none
+            tableView.cellForRow(at: [indexPath.section, row])?.accessoryType = UITableViewCellAccessoryType.none
         }
         
         tableView.cellForRow(at: indexPath)?.accessoryType = newRowAccessory
@@ -120,12 +120,13 @@ class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.TABLE_ROW_HEIGHT_SMALL
     }
-
+    
 }
 
 
-    
-    
-    
+
+
+
+
 
 

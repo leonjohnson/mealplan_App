@@ -3,7 +3,7 @@ import RealmSwift
 import JSQMessagesViewController
 import JSQSystemSoundPlayer
 
-final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
+final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     var messages:[JSQMessage] = [JSQMessage]();
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
@@ -11,7 +11,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     var customOutgoingMediaCellIdentifier : String = ""
     var miniCellViewController = miniTableViewCell()
-    var outCellViewController = outCells()
+    var inComingCellViewController = inCell()
     
     var questionIndex : Int = 0
     
@@ -26,8 +26,8 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     var buttonText : [String] = BotData.NEW_FOOD.buttonText
     var answers : [[String]] = BotData.NEW_FOOD.answers
     var validationType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.validationType
-    
     var sideButton : UIButton?
+    
     
     /*
     var questions : [String] = [
@@ -97,6 +97,7 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         self.navigationController?.toolbar.isHidden = false
         self.navigationController?.toolbar.isUserInteractionEnabled = false
         self.inputToolbar.contentView.textView.autocorrectionType = .no
+        self.collectionView.backgroundColor = Constants.MP_BLUEGREY
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -131,9 +132,10 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         self.automaticallyScrollsToMostRecentMessage = true
         self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
         //self.outgoingCellIdentifier = outCells.cellReuseIdentifier()
+        self.collectionView.register(UINib(nibName: "inCell", bundle: nil), forCellWithReuseIdentifier: "in")
         self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
         self.collectionView.isUserInteractionEnabled = true
-        self.collectionView.collectionViewLayout.messageBubbleFont = UIFont(name: "Helvetica Neue", size: 13)
+        self.collectionView.collectionViewLayout.messageBubbleFont = Constants.STANDARD_FONT
         
         
         // MARK: ### SET SEND BUTTON AS IMAGE
@@ -161,8 +163,8 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         //self.inputToolbar.contentView.leftBarButtonItem = nil
-        miniCellViewController.outgoingCellDelegate = self
-        outCellViewController.botDelegate = self
+        miniCellViewController.incomingCellDelegate = self
+        inComingCellViewController.botDelegate = self
         
         
         //let height = self.inputToolbar.contentView.leftBarButtonContainerView.frame.size.height
@@ -351,18 +353,20 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
             row = indexPath.row + 1
         }
         let message = messages[indexPath.item]
-        let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        cell.textView.textColor = UIColor.black
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             let tableViewRowData = options[row/2]
-            let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "out", for: indexPath) as! outCells
+            let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "in", for: indexPath) as! inCell
             //cellWithTableview.table.delegate = self
             
             cellWithTableview.question = message.text
-            cellWithTableview.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            cellWithTableview.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
             cellWithTableview.data.question = message.text
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
+            cellWithTableview.backgroundColor = UIColor.clear
             cellWithTableview.botDelegate = self
             return cellWithTableview
         }
@@ -439,12 +443,12 @@ final class BotController: JSQMessagesViewController, OutgoingCellDelegate, BotD
     
     private func setupOutgoingBubble() -> JSQMessagesBubbleImage {
         let bubbleImageFactory = JSQMessagesBubbleImageFactory()
-        return bubbleImageFactory!.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
+        return bubbleImageFactory!.outgoingMessagesBubbleImage(with: Constants.MP_WHITE)
     }
     
     private func setupIncomingBubble() -> JSQMessagesBubbleImage {
         let bubbleImageFactory = JSQMessagesBubbleImageFactory()
-        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
+        return bubbleImageFactory!.incomingMessagesBubbleImage(with: Constants.MP_GREEN.withAlphaComponent(0.5))
         }
     
     

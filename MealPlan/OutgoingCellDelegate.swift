@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol OutgoingCellDelegate {
+protocol IncomingCellDelegate {
     func rowSelected(labelValue: String, withQuestion: String, index: IndexPath, addOrDelete:UITableViewCellAccessoryType)
 }

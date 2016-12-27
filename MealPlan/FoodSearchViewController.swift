@@ -1,11 +1,3 @@
-//
-//  FoodSearchViewController.swift
-//  DailyMeals
-//
-//  Created by Jithu on 3/17/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
-//TO DO COMMENDTS (Add proper comments for all method)
 import UIKit
 
 class FoodSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
@@ -44,15 +36,10 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         addNewFoodButton.layer.cornerRadius = 15
         
                 
-        //addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
+        addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
         
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     
     /*
     // MARK: - Navigation

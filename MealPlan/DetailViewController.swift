@@ -38,7 +38,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var meal : Meal?
     
-    var masterView:ListViewController!
     var nutrientsToDisplay:[(name: String, value: String)] = []
     var detailItem: FoodItem! = FoodItem() {
         didSet {
