@@ -134,6 +134,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         //self.outgoingCellIdentifier = outCells.cellReuseIdentifier()
         self.collectionView.register(UINib(nibName: "inCell", bundle: nil), forCellWithReuseIdentifier: "in")
         self.collectionView.register(UINib(nibName: "outCell", bundle: nil), forCellWithReuseIdentifier: "out")
+        self.collectionView.register(UINib(nibName: "BotCellWithButton", bundle: nil), forCellWithReuseIdentifier: "button")
         self.collectionView.isUserInteractionEnabled = true
         self.collectionView.collectionViewLayout.messageBubbleFont = Constants.STANDARD_FONT
         
@@ -374,10 +375,12 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         
         if Constants.questionsThatRequireButtons.contains(message.text!) {
             let cellWithButton = collectionView.dequeueReusableCell(withReuseIdentifier: "button", for: indexPath) as! BotCellWithButton
+            print("buttonText: \(buttonText)")
             cellWithButton.button.titleLabel?.text = buttonText[row/2]
             cellWithButton.botDelegate = self
             cellWithButton.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
             cellWithButton.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            return cellWithButton
         }
         
         return cell

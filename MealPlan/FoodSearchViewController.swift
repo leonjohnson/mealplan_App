@@ -30,7 +30,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         paragraphStyle.alignment = .center
         
         addNewFoodButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:
-            [NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, 
+            [NSFontAttributeName:Constants.STANDARD_FONT_BOLD, 
              NSForegroundColorAttributeName:Constants.MP_WHITE,
              NSParagraphStyleAttributeName:paragraphStyle]), for: UIControlState())
         addNewFoodButton.layer.cornerRadius = 15

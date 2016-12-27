@@ -443,7 +443,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         addItemButton.frame = CGRect(x: 10, y: 25, width: self.view.frame.size.width - 100, height: 35)
         //addItemButton.setTitle("Add item + ", forState: UIControlState.Normal)
         addItemButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
-        addItemButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, NSForegroundColorAttributeName:Constants.MP_WHITE]), for: UIControlState())
+        addItemButton.setAttributedTitle(NSAttributedString(string:"Add item +", attributes:[NSFontAttributeName:Constants.STANDARD_FONT_BOLD, NSForegroundColorAttributeName:Constants.MP_WHITE]), for: UIControlState())
         
         addItemButton.titleLabel?.textColor = UIColor.white
         addItemButton.titleLabel?.textAlignment = NSTextAlignment.left

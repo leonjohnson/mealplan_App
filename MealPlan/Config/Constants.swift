@@ -34,7 +34,7 @@ struct Constants {
     static let SMALL_FONT = UIFont.systemFont(ofSize: 12, weight: UIFontWeightRegular)
     static let GENERAL_LABEL = UIFont.systemFont(ofSize: 14, weight: UIFontWeightBold)
     static let MEAL_PLAN_TITLE = UIFont.systemFont(ofSize: 16, weight: UIFontWeightBold)
-    static let MEAL_PLAN_SUBTITLE = UIFont.systemFont(ofSize: 13, weight: UIFontWeightBold)
+    static let STANDARD_FONT_BOLD = UIFont.systemFont(ofSize: 13, weight: UIFontWeightBold)
     static let MEAL_PLAN_DATE = UIFont.systemFont(ofSize: 13, weight: UIFontWeightLight)
     
     static let FOOD_LABEL_FONT = UIFont(name: "Helvetica",size: 17.0)!

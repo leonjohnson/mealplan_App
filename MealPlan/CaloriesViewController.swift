@@ -94,8 +94,8 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
              Dynamic cell creation .
              It Should be changed base on the future scenario
              */
-            let macroAttributes = [NSFontAttributeName: Constants.MACRO_LABEL, NSForegroundColorAttributeName:Constants.MP_BLACK]
-            let numberAttributes = [NSFontAttributeName: Constants.MACRO_LABEL, NSForegroundColorAttributeName:Constants.MP_GREY]
+            let macroAttributes = [NSFontAttributeName: Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK]
+            let numberAttributes = [NSFontAttributeName: Constants.STANDARD_FONT_BOLD, NSForegroundColorAttributeName:Constants.MP_BLACK]
             cell = UITableViewCell(style: UITableViewCellStyle.subtitle,reuseIdentifier:"CellIdentifier")
             
             var macroName = ""

@@ -90,7 +90,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         doneButton.layer.cornerRadius = 25
         doneButton.addTarget(self, action: #selector(ExplanationViewController.takeMeToMyMealPlan(_:)), for: .allTouchEvents)
         let att = NSAttributedString(string: "Let's get started", attributes:[
-            NSFontAttributeName:Constants.MEAL_PLAN_SUBTITLE, 
+            NSFontAttributeName:Constants.STANDARD_FONT_BOLD, 
             NSForegroundColorAttributeName:Constants.MP_WHITE,
             NSParagraphStyleAttributeName:paragraphStyle])
         doneButton.setAttributedTitle(att, for: .normal)

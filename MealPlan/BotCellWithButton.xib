@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="button" id="YKP-dV-AKb">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="button" id="YKP-dV-AKb" customClass="BotCellWithButton" customModule="MealPlan" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="337" height="362"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -62,7 +62,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BON-fH-ikk" customClass="MPButton">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BON-fH-ikk" customClass="MPButton" customModule="MealPlan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="252" width="224" height="30"/>
                                         <state key="normal" title="Button"/>
                                     </button>
@@ -130,6 +130,7 @@
                 <outlet property="avatarContainerViewHeightConstraint" destination="eIO-gL-N7C" id="Be9-IG-z9V"/>
                 <outlet property="avatarContainerViewWidthConstraint" destination="qT7-pu-lld" id="Vxo-4h-efk"/>
                 <outlet property="avatarImageView" destination="l7x-PL-yqo" id="GyW-A2-8ke"/>
+                <outlet property="button" destination="BON-fH-ikk" id="HRQ-Op-Cgv"/>
                 <outlet property="cellBottomLabel" destination="P1j-mq-QlY" id="Y3c-BE-Vzb"/>
                 <outlet property="cellBottomLabelHeightConstraint" destination="L8g-yB-b63" id="UA0-YB-N4l"/>
                 <outlet property="cellTopLabel" destination="QF2-9b-ond" id="JWx-vP-bEV"/>

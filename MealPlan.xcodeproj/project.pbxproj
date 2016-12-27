@@ -66,7 +66,6 @@
 		F78AB7591DBE6DA400BB40EA /* ServingSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7131DBE6DA400BB40EA /* ServingSize.swift */; };
 		F78AB75A1DBE6DA400BB40EA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7141DBE6DA400BB40EA /* User.swift */; };
 		F78AB75B1DBE6DA400BB40EA /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7151DBE6DA400BB40EA /* Week.swift */; };
-		F78AB75C1DBE6DA400BB40EA /* mpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7161DBE6DA400BB40EA /* mpButton.swift */; };
 		F78AB75D1DBE6DA400BB40EA /* Connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7181DBE6DA400BB40EA /* Connect.swift */; };
 		F78AB75E1DBE6DA400BB40EA /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7191DBE6DA400BB40EA /* Network.swift */; };
 		F78AB75F1DBE6DA400BB40EA /* PageItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB71A1DBE6DA400BB40EA /* PageItemController.swift */; };
@@ -91,6 +90,8 @@
 		F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */; };
 		F7A61B651E1195CB0099DE42 /* Introduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A61B641E1195CB0099DE42 /* Introduction.swift */; };
 		F7A61B671E12DBAF0099DE42 /* inCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A61B661E12DBAF0099DE42 /* inCell.swift */; };
+		F7A61B6A1E12E0240099DE42 /* inCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7A61B691E12E0240099DE42 /* inCell.xib */; };
+		F7A61B6C1E12E2D70099DE42 /* MP_Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A61B6B1E12E2D70099DE42 /* MP_Button.swift */; };
 		F7C480491DBFF37B00572706 /* Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C480481DBFF37B00572706 /* Deletion.swift */; };
 		F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4804A1DBFFB0000572706 /* RealmString.swift */; };
 		F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */; };
@@ -199,7 +200,6 @@
 		F78AB7131DBE6DA400BB40EA /* ServingSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServingSize.swift; sourceTree = "<group>"; };
 		F78AB7141DBE6DA400BB40EA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F78AB7151DBE6DA400BB40EA /* Week.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
-		F78AB7161DBE6DA400BB40EA /* mpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mpButton.swift; sourceTree = "<group>"; };
 		F78AB7181DBE6DA400BB40EA /* Connect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connect.swift; sourceTree = "<group>"; };
 		F78AB7191DBE6DA400BB40EA /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		F78AB71A1DBE6DA400BB40EA /* PageItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageItemController.swift; sourceTree = "<group>"; };
@@ -225,6 +225,8 @@
 		F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosTallyView.swift; sourceTree = "<group>"; };
 		F7A61B641E1195CB0099DE42 /* Introduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
 		F7A61B661E12DBAF0099DE42 /* inCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inCell.swift; sourceTree = "<group>"; };
+		F7A61B691E12E0240099DE42 /* inCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = inCell.xib; sourceTree = "<group>"; };
+		F7A61B6B1E12E2D70099DE42 /* MP_Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP_Button.swift; sourceTree = "<group>"; };
 		F7C480481DBFF37B00572706 /* Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deletion.swift; sourceTree = "<group>"; };
 		F7C4804A1DBFFB0000572706 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmString.swift; sourceTree = "<group>"; };
 		F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotCellWithButton.swift; sourceTree = "<group>"; };
@@ -457,8 +459,8 @@
 			isa = PBXGroup;
 			children = (
 				F74F96DC1E083A9D009ADA2D /* ExplanationScreens */,
-				F78AB7161DBE6DA400BB40EA /* mpButton.swift */,
 				F78AB6ED1DBE6DA400BB40EA /* bkgrd.swift */,
+				F7A61B6B1E12E2D70099DE42 /* MP_Button.swift */,
 				F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */,
 				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
 				F78AB6E71DBE6DA400BB40EA /* Introduction.storyboard */,
@@ -472,6 +474,7 @@
 				F78B6EE41DFC51360033A456 /* BotCellWithButton.xib */,
 				F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */,
 				4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */,
+				F7A61B691E12E0240099DE42 /* inCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 			files = (
 				F78AB7321DBE6DA400BB40EA /* Introduction.storyboard in Resources */,
 				F7E3C5521DDB8FF700DA2696 /* outCell.xib in Resources */,
+				F7A61B6A1E12E0240099DE42 /* inCell.xib in Resources */,
 				F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */,
 				F78B6EE51DFC51360033A456 /* BotCellWithButton.xib in Resources */,
 				F78AB7341DBE6DA400BB40EA /* Main.storyboard in Resources */,
@@ -834,6 +838,7 @@
 				F78AB7401DBE6DA400BB40EA /* FoodSearchViewController.swift in Sources */,
 				F74F96D81E0839F2009ADA2D /* ExplanationScreens.swift in Sources */,
 				F78AB7681DBE6DA400BB40EA /* Step2ViewController.swift in Sources */,
+				F7A61B6C1E12E2D70099DE42 /* MP_Button.swift in Sources */,
 				F78AB72D1DBE6DA400BB40EA /* ActivityLevelViewController.swift in Sources */,
 				F7C480491DBFF37B00572706 /* Deletion.swift in Sources */,
 				F7E3C5551DDBC44300DA2696 /* miniTableViewCell.swift in Sources */,
@@ -885,7 +890,6 @@
 				F78AB7371DBE6DA400BB40EA /* CaloriesViewController.swift in Sources */,
 				F78AB7551DBE6DA400BB40EA /* FoodType.swift in Sources */,
 				F78AB74C1DBE6DA400BB40EA /* Biographical.swift in Sources */,
-				F78AB75C1DBE6DA400BB40EA /* mpButton.swift in Sources */,
 				F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */,
 				F78AB76C1DBE6DA400BB40EA /* Step4ViewController.swift in Sources */,
 				F78AB7541DBE6DA400BB40EA /* FoodsLiked.swift in Sources */,

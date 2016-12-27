@@ -32,7 +32,7 @@ class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
     
     
     override class func nib() -> UINib {
-        return UINib(nibName: "outCell", bundle: nil)
+        return UINib(nibName: "BotCellWithButton", bundle: nil)
     }
     
     override class func mediaCellReuseIdentifier() -> String {
@@ -46,7 +46,6 @@ class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print("init'ed")
     }
     
     func buttonTapped(labelValue: String) {
