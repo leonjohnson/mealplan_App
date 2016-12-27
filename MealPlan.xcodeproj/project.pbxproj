@@ -47,7 +47,6 @@
 		F78AB7421DBE6DA400BB40EA /* IconImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78AB6FB1DBE6DA400BB40EA /* IconImages.xcassets */; };
 		F78AB7461DBE6DA400BB40EA /* initialLoad3.json in Resources */ = {isa = PBXBuildFile; fileRef = F78AB6FF1DBE6DA400BB40EA /* initialLoad3.json */; };
 		F78AB7471DBE6DA400BB40EA /* LastWeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7001DBE6DA400BB40EA /* LastWeekViewController.swift */; };
-		F78AB7481DBE6DA400BB40EA /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7011DBE6DA400BB40EA /* ListViewController.swift */; };
 		F78AB7491DBE6DA400BB40EA /* MealPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7021DBE6DA400BB40EA /* MealPlanViewController.swift */; };
 		F78AB74A1DBE6DA400BB40EA /* MPTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7031DBE6DA400BB40EA /* MPTableViewCell.swift */; };
 		F78AB74B1DBE6DA400BB40EA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78AB7041DBE6DA400BB40EA /* Media.xcassets */; };
@@ -76,7 +75,6 @@
 		F78AB7621DBE6DA400BB40EA /* AKPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB71E1DBE6DA400BB40EA /* AKPickerView.swift */; };
 		F78AB7631DBE6DA400BB40EA /* DragToTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB71F1DBE6DA400BB40EA /* DragToTable.swift */; };
 		F78AB7641DBE6DA400BB40EA /* MultiTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7201DBE6DA400BB40EA /* MultiTag.swift */; };
-		F78AB7651DBE6DA400BB40EA /* PremiumPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7211DBE6DA400BB40EA /* PremiumPlanViewController.swift */; };
 		F78AB7661DBE6DA400BB40EA /* settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7221DBE6DA400BB40EA /* settings.swift */; };
 		F78AB7671DBE6DA400BB40EA /* Step1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7231DBE6DA400BB40EA /* Step1ViewController.swift */; };
 		F78AB7681DBE6DA400BB40EA /* Step2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB7241DBE6DA400BB40EA /* Step2ViewController.swift */; };
@@ -93,6 +91,7 @@
 		F78EDFE31DF212B500AC1AF7 /* initialLoad4.json in Resources */ = {isa = PBXBuildFile; fileRef = F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */; };
 		F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */; };
+		F7A61B651E1195CB0099DE42 /* Introduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A61B641E1195CB0099DE42 /* Introduction.swift */; };
 		F7C480491DBFF37B00572706 /* Deletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C480481DBFF37B00572706 /* Deletion.swift */; };
 		F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4804A1DBFFB0000572706 /* RealmString.swift */; };
 		F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */; };
@@ -182,7 +181,6 @@
 		F78AB6FC1DBE6DA400BB40EA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F78AB6FF1DBE6DA400BB40EA /* initialLoad3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = initialLoad3.json; sourceTree = "<group>"; };
 		F78AB7001DBE6DA400BB40EA /* LastWeekViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastWeekViewController.swift; sourceTree = "<group>"; };
-		F78AB7011DBE6DA400BB40EA /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F78AB7021DBE6DA400BB40EA /* MealPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealPlanViewController.swift; sourceTree = "<group>"; };
 		F78AB7031DBE6DA400BB40EA /* MPTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTableViewCell.swift; sourceTree = "<group>"; };
 		F78AB7041DBE6DA400BB40EA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -211,7 +209,6 @@
 		F78AB71E1DBE6DA400BB40EA /* AKPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKPickerView.swift; sourceTree = "<group>"; };
 		F78AB71F1DBE6DA400BB40EA /* DragToTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragToTable.swift; sourceTree = "<group>"; };
 		F78AB7201DBE6DA400BB40EA /* MultiTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTag.swift; sourceTree = "<group>"; };
-		F78AB7211DBE6DA400BB40EA /* PremiumPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PremiumPlanViewController.swift; sourceTree = "<group>"; };
 		F78AB7221DBE6DA400BB40EA /* settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = settings.swift; sourceTree = "<group>"; };
 		F78AB7231DBE6DA400BB40EA /* Step1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step1ViewController.swift; sourceTree = "<group>"; };
 		F78AB7241DBE6DA400BB40EA /* Step2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Step2ViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +226,7 @@
 		F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = initialLoad4.json; sourceTree = "<group>"; };
 		F78EDFE41DF328AE00AC1AF7 /* jsq_messages_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = jsq_messages_sample.m4a; path = Model/jsq_messages_sample.m4a; sourceTree = "<group>"; };
 		F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosTallyView.swift; sourceTree = "<group>"; };
+		F7A61B641E1195CB0099DE42 /* Introduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
 		F7C480481DBFF37B00572706 /* Deletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deletion.swift; sourceTree = "<group>"; };
 		F7C4804A1DBFFB0000572706 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmString.swift; sourceTree = "<group>"; };
 		F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotCellWithButton.swift; sourceTree = "<group>"; };
@@ -465,7 +463,6 @@
 				F78AB6ED1DBE6DA400BB40EA /* bkgrd.swift */,
 				F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */,
 				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
-				4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */,
 				F78AB6E71DBE6DA400BB40EA /* Introduction.storyboard */,
 				F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */,
 				F78AB6E91DBE6DA400BB40EA /* LaunchScreen.storyboard */,
@@ -477,6 +474,7 @@
 				F7E3C5511DDB8FF700DA2696 /* outCell.xib */,
 				F78B6EE41DFC51360033A456 /* BotCellWithButton.xib */,
 				F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */,
+				4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -499,8 +497,6 @@
 				F78AB7031DBE6DA400BB40EA /* MPTableViewCell.swift */,
 				F78AB6FA1DBE6DA400BB40EA /* Height&WeightListViewController.swift */,
 				F78AB7001DBE6DA400BB40EA /* LastWeekViewController.swift */,
-				F78AB7011DBE6DA400BB40EA /* ListViewController.swift */,
-				F78AB7211DBE6DA400BB40EA /* PremiumPlanViewController.swift */,
 				F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */,
 				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
 				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
@@ -515,6 +511,7 @@
 		F7C480421DBF60F400572706 /* Walkthrough */ = {
 			isa = PBXGroup;
 			children = (
+				F7A61B641E1195CB0099DE42 /* Introduction.swift */,
 				F78AB72B1DBE6DA400BB40EA /* ViewController.swift */,
 				F78AB71A1DBE6DA400BB40EA /* PageItemController.swift */,
 				F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */,
@@ -859,6 +856,7 @@
 				F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */,
 				F7E3C54E1DDA3A7E00DA2696 /* customBotMessage.swift in Sources */,
 				F78AB7641DBE6DA400BB40EA /* MultiTag.swift in Sources */,
+				F7A61B651E1195CB0099DE42 /* Introduction.swift in Sources */,
 				F78AB74D1DBE6DA400BB40EA /* DailyMealPlan.swift in Sources */,
 				F78AB73C1DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift in Sources */,
 				F78AB7621DBE6DA400BB40EA /* AKPickerView.swift in Sources */,
@@ -884,7 +882,6 @@
 				F78AB75D1DBE6DA400BB40EA /* Connect.swift in Sources */,
 				F78AB73E1DBE6DA400BB40EA /* DetailViewController.swift in Sources */,
 				F78AB74A1DBE6DA400BB40EA /* MPTableViewCell.swift in Sources */,
-				F78AB7481DBE6DA400BB40EA /* ListViewController.swift in Sources */,
 				F7E3C5581DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift in Sources */,
 				F78AB7351DBE6DA400BB40EA /* bkgrd.swift in Sources */,
 				F78AB7501DBE6DA400BB40EA /* FeedBack.swift in Sources */,
@@ -899,7 +896,6 @@
 				F78AB7541DBE6DA400BB40EA /* FoodsLiked.swift in Sources */,
 				F78AB75F1DBE6DA400BB40EA /* PageItemController.swift in Sources */,
 				F78AB76B1DBE6DA400BB40EA /* Step4TableViewCell.swift in Sources */,
-				F78AB7651DBE6DA400BB40EA /* PremiumPlanViewController.swift in Sources */,
 				F78AB72E1DBE6DA400BB40EA /* AppDelegate.swift in Sources */,
 				F78AB76E1DBE6DA400BB40EA /* Util.swift in Sources */,
 				F78AB76F1DBE6DA400BB40EA /* ViewController.swift in Sources */,

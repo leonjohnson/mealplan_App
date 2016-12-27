@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gpy-uJ-Mu4">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gpy-uJ-Mu4">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,10 +30,10 @@
             </objects>
             <point key="canvasLocation" x="-5307" y="451"/>
         </scene>
-        <!--View Controller-->
+        <!--Introduction-->
         <scene sceneID="SNI-1w-tw7">
             <objects>
-                <viewController id="1WN-fu-fSq" customClass="ViewController" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1WN-fu-fSq" customClass="Introduction" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OKd-JD-nqf"/>
                         <viewControllerLayoutGuide type="bottom" id="ksU-zw-fNi"/>
@@ -40,13 +41,58 @@
                     <view key="view" contentMode="scaleToFill" id="z7P-xY-hCb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKO-cb-6u5" customClass="MPButton" customModule="MealPlan" customModuleProvider="target">
+                                <rect key="frame" x="20" y="652" width="374" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ozR-Cj-dWz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="LET'S GET STARTED">
+                                    <color key="titleColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Eg5-GE-jqI" kind="show" id="ZnC-xc-zmn"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="We create customised meal plans to help you loose weight or gain muscle." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrY-AU-gN8">
+                                <rect key="frame" x="20" y="226" width="374" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="iUc-G3-qmt"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="0Cr-FC-feR">
+                                <rect key="frame" x="107.66666666666669" y="152" width="200" height="52"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0Cr-FC-feR" firstAttribute="top" secondItem="OKd-JD-nqf" secondAttribute="bottom" constant="132" id="0Z7-RT-EeC"/>
+                            <constraint firstItem="0Cr-FC-feR" firstAttribute="centerX" secondItem="z7P-xY-hCb" secondAttribute="centerX" id="7wm-XX-IZd"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="leading" secondItem="lKO-cb-6u5" secondAttribute="leading" id="BN4-3g-JLe"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="trailing" secondItem="lKO-cb-6u5" secondAttribute="trailing" id="J03-R9-OL8"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="centerX" secondItem="0Cr-FC-feR" secondAttribute="centerX" id="X1L-3O-q1n"/>
+                            <constraint firstItem="lKO-cb-6u5" firstAttribute="leading" secondItem="z7P-xY-hCb" secondAttribute="leadingMargin" id="Z0a-77-9zE"/>
+                            <constraint firstItem="ksU-zw-fNi" firstAttribute="top" secondItem="lKO-cb-6u5" secondAttribute="bottom" constant="44" id="pTH-AY-Nie"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="top" secondItem="0Cr-FC-feR" secondAttribute="bottom" constant="22" id="q09-cb-E7S"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MuM-uh-krR"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DBo-eB-VFM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4265" y="451"/>
+            <point key="canvasLocation" x="-4265.217391304348" y="450.81521739130437"/>
+        </scene>
+        <!--step1StoryBoardID-->
+        <scene sceneID="RVA-oB-jCC">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="step1StoryBoardID" id="Eg5-GE-jqI" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zZM-CG-G2Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4265" y="869"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="G61-PK-a9G">
@@ -66,4 +112,7 @@
             <point key="canvasLocation" x="-5307" y="451"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo" width="200" height="52"/>
+    </resources>
 </document>
