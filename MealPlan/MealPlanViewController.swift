@@ -154,7 +154,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidAppear(_ animated: Bool){
         super.viewDidAppear(true)
         changeMealPlanDisplayed(nil)
-        updateMacroTally(forDay: dateCount)
+        //updateMacroTally(forDay: dateCount)
     }
     
     func getThisWeek()->Week{
@@ -254,7 +254,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         mealPlanDate.attributedText? = NSAttributedString(string:mealPlanDate.text!, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_DATE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         meals = Array(thisWeek.dailyMeals[index!].meals)
         mealPlanListTable.reloadData();
-        updateMacroTally(forDay: index!)
+        //updateMacroTally(forDay: index!)
     }
     
     
