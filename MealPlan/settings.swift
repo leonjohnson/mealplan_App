@@ -1,3 +1,11 @@
+/*!
+ @header     settings
+ @abstract   The settings class provides an interface for the user to send an email to us.
+ @discussion MFMailComposeViewController is used for implementing a simple interface for users to enter
+ and send email.
+ */
+
+
 import UIKit
 import MessageUI
 class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFMailComposeViewControllerDelegate {
@@ -5,26 +13,21 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     
     @IBOutlet var settingsTable : UITableView!
     @IBOutlet var settingsLabel : UILabel!
+    let imagesForSettings = ["AboutUs", "ContactUs"]
     
-    let bio  = Biographical()
-    let settingstableImages = ["AboutUs", "ContactUs"]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingsLabel.attributedText = NSAttributedString(string: "Settings", attributes: [NSFontAttributeName:Constants.DETAIL_PAGE_FOOD_NAME_LABEL, NSForegroundColorAttributeName:Constants.MP_GREY])
+        settingsLabel.attributedText = NSAttributedString(string: "Settings", attributes: [NSFontAttributeName:Constants.STANDARD_FONT_BOLD, NSForegroundColorAttributeName:Constants.MP_BLACK])
+        
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     //TABLEVIEW DELEGATE & DATASOURCE
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -42,92 +45,68 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: "profileCellIdentifier", for: indexPath)
+        //ImageSet from variable for each case:
+        let imageName = UIImage(named: imagesForSettings[indexPath.row])
+        //Text value alligned to left
+        cell.textLabel?.textAlignment = NSTextAlignment.left
         
-        if (indexPath.section == 0){
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "profileCellIdentifier", for: indexPath)
-
-            //ImageSet from variable for each case:
-            let imageName = UIImage(named: settingstableImages[indexPath.row])
-            //Text value alligned to left
-            cell.textLabel?.textAlignment = NSTextAlignment.left
-
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "About us"
-                cell.imageView?.image = imageName
-            case 1:
-                cell.textLabel?.text = "Contact us"
-                cell.imageView?.image = imageName
-            default:
-                break
-            }
-            return cell
+        switch indexPath.row {
+        case 0:
+            cell.textLabel?.text = "About us"
+            cell.imageView?.image = imageName
+        case 1:
+            cell.textLabel?.text = "Contact us"
+            cell.imageView?.image = imageName
+        default:
+            break
         }
-        else{
-           
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
-            cell.textLabel?.textAlignment = NSTextAlignment.center
-            cell.textLabel?.text = "How is your meal plan going?"
-            return cell
-        }
+        return cell
     }
     
     //Navigation to specific ViewControllers based on Cell Click.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-       
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        if indexPath.row == 0 {
+            let url = URL(string:Constants.ABOUT_US_URL)!
+            //let request = NSURLRequest(url: url) as URLRequest
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
         
-        if (indexPath.section == 0){
-            
-        switch indexPath.row {
-        case 0:
-            let destination = storyboard.instantiateViewController(withIdentifier: "aboutUsStoryBoardID") as! AboutUsViewController
-            destination.settingsControl = true
-            //destination.fromController = "step1Settings"
-            navigationController?.pushViewController(destination, animated: true)
-            break;
-        case 1:
-            sendMail()
-            break;
-        default:
-            break
-            }
+        if indexPath.row == 1{
+            sendEmail()
         }
-        else{
-            let storyboard = UIStoryboard(name: "Feedback", bundle: Bundle.main)
-            let destination = storyboard.instantiateInitialViewController() as! LastWeekViewController
-            destination.settingsControl = true
-            navigationController?.pushViewController(destination, animated: true)
-
-        }
- */
         self.settingsTable.deselectRow(at: indexPath, animated: true)
-
-
     }
-    func sendMail(){
-        if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
-            return
-        }else{
-            let composeVC = MFMailComposeViewController()
-            composeVC.mailComposeDelegate = self
 
-            // Configure the fields of the interface.
-            composeVC.setToRecipients(["address@example.com"])
-            composeVC.setSubject("Hello! Have look")
-            composeVC.setMessageBody("Hello from Meals Plan!", isHTML: false)
-
-            // Present the view controller modally.
-            self.present(composeVC, animated: true, completion: nil)
+    
+    func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["feedback@mealplanapp.com"])
+            mail.setSubject("Feedback")
+            
+            present(mail, animated: true)
+        } else {
+            // show failure alert
         }
     }
     
-
-    private func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        self.dismiss(animated: true, completion: nil)    }
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        
+        switch result {
+        case .cancelled:
+            print("Mail cancelled")
+        case .saved:
+            print("Mail saved")
+        case .sent:
+            print("Mail sent")
+        case .failed:
+            print("Mail sent failure: \(error?.localizedDescription)")
+        }
+        controller.dismiss(animated: true)
+    }
 
 
 

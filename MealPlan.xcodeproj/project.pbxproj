@@ -13,6 +13,7 @@
 		5D0D828B2EFCEEDCF9A6AA8D /* Pods_MealPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3AF48C698D6F7E38C608B2 /* Pods_MealPlan.framework */; };
 		B93B729C44D3525F62D13B57 /* Pods_MealPlanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C566C2623EA159E5FA97288 /* Pods_MealPlanTests.framework */; };
 		F41E48A11DF9439300421CEC /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E48A01DF9439300421CEC /* ProfileTests.swift */; };
+		F70694781E15730500A3B6C6 /* UserFeedbackVanilla.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */; };
 		F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */; };
 		F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */; };
 		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
@@ -145,6 +146,7 @@
 		A32A5CC299F1EFF620522F7D /* Pods-MealPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MealPlan/Pods-MealPlan.debug.xcconfig"; sourceTree = "<group>"; };
 		ACFD24E8491873D32D6D5FC8 /* Pods_DailyMeals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyMeals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41E48A01DF9439300421CEC /* ProfileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
+		F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFeedbackVanilla.swift; sourceTree = "<group>"; };
 		F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 				F7A61B661E12DBAF0099DE42 /* inCell.swift */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
+				F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -831,6 +834,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */,
+				F70694781E15730500A3B6C6 /* UserFeedbackVanilla.swift in Sources */,
 				F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */,
 				F7E3C5501DDB897D00DA2696 /* outCells.swift in Sources */,
 				F78AB7611DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift in Sources */,

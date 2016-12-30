@@ -1,8 +1,19 @@
-import UIKit
+import Foundation
 import RealmSwift
 
 class SetUpMealPlan: NSObject {
 
+    static func loadDatabaseWithData(){
+        
+        if (Config.getBoolValue("isCreated")){
+            //return
+        }
+        
+        DietSuitability.addRowData();
+        FoodType.addFoodTypes()
+        loadDatInBackroundThread()
+    }
+    
     static func loadDatInBackroundThread(){
         DispatchQueue.global(qos: .background).async {
             Connect.fetchInitialFoods(nil) { (foods, json, status) -> Void in
@@ -24,7 +35,7 @@ class SetUpMealPlan: NSObject {
                 addFoodPairingsToDatabase(foods!,json: json)
 
                 //createMeal();
-                Config.setBoolValue("isCreated", status: true);
+                //Config.setBoolValue("isCreated", status: true);
                 print("Got it created!")
                 
             }
@@ -35,16 +46,7 @@ class SetUpMealPlan: NSObject {
         }
     }
     
-    static func loadDatabaseWithData(){
-        
-        if (Config.getBoolValue("isCreated")){
-            return
-        }
-        
-        DietSuitability.addRowData();
-        FoodType.addFoodTypes()
-        loadDatInBackroundThread()
-    }
+    
     
     
     
@@ -95,10 +97,10 @@ class SetUpMealPlan: NSObject {
     
     static func isLoosingWeight(thisWeek:Week)->Bool? {
         let thisWeeksWeight = thisWeek.feedback?.weightMeasurement
-        guard (thisWeek.lastWeek().first != nil) else {
+        guard (thisWeek.lastWeek() != nil) else {
             return nil
         }
-        let lastWeeksWeight = thisWeek.lastWeek().first?.feedback?.weightMeasurement
+        let lastWeeksWeight = thisWeek.lastWeek()?.feedback?.weightMeasurement
         return Int(thisWeeksWeight!) < Int(lastWeeksWeight!) ? true : false
     }
     
@@ -363,7 +365,6 @@ class SetUpMealPlan: NSObject {
         default:
             print("ERROR: gender not known")
             print("User name \(user.name)")
-            print("User dob \(user.birthdate.age)")
             print("User gender \(user.gender)")
         }
         

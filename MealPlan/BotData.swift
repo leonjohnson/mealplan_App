@@ -1,5 +1,5 @@
 //import Foundation
-import UIKit
+import Foundation
 
 
 class BotData: NSObject {

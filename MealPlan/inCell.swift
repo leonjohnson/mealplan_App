@@ -60,7 +60,7 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     }
     
     func rowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
-        print("row selected in Outcell: \(labelValue)")
+        print("row selected in INCELL: \(labelValue)")
         botDelegate?.originalrowSelected!(labelValue: labelValue, withQuestion: withQuestion, index:index, addOrDelete:addOrDelete)
     }
     
@@ -94,7 +94,7 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("TABLE SELECTED .")
+        print("TABLE SELECTED in INCELL.")
         
         let currentCell = tableView.cellForRow(at: indexPath)
         let currentRowAccessory = table.cellForRow(at: indexPath)?.accessoryType

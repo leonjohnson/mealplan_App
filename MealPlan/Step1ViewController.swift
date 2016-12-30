@@ -198,7 +198,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         
         //UnderKeyBoard Library functionality
-        underKeyboardLayoutConstraint.setup(bottomLayoutConstraint, view: view,
+        underKeyboardLayoutConstraint.setup(bottomLayoutConstraint: bottomLayoutConstraint, view: view,
             bottomLayoutGuide: bottomLayoutGuide)
         keyboardObserver.start()
         // Called before the keyboard is animated

@@ -211,7 +211,7 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
         
         // MARK: TODO save it to the last week mealplan
         self.dismiss(animated: true) { () -> Void in
-            if let weekJustFinished = Week().lastWeek().first{
+            if let weekJustFinished = Week().lastWeek(){
                 weekJustFinished.feedback?.weightMeasurement = 0.0
                 
                 weekJustFinished.feedback?.weightUnit = Constants.KILOGRAMS

@@ -16,7 +16,7 @@ class miniTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         //self.accessoryType = .checkmark
-        self.selectionStyle = .none
+        //self.selectionStyle = .none
         
     }
 

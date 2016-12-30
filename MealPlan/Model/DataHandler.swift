@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 import RealmSwift
 
 class DataHandler: NSObject {
@@ -185,11 +185,44 @@ class DataHandler: NSObject {
     
     
     
+    static func deleteFutureMealPlansWeeksAndFoodItems(){
+        let realm = try! Realm()
+        let fooditems = realm.objects(FoodItem.self)
+        let plans = realm.objects(DailyMealPlan.self)
+        let weeks = realm.objects(Week.self)
+        try! realm.write {
+            realm.delete(fooditems)
+            realm.delete(plans)
+            realm.delete(weeks)
+        }
+    }
+    
     static func deleteFutureMealPlans(){
+        
         let objectsToDelete = SetUpMealPlan.getThisWeekAndNext()
         let realm = try! Realm()
         try! realm.write {
             realm.delete(objectsToDelete)
+        }
+    }
+    
+    
+    static func deleteEverything(){
+        let realm = try! Realm()
+        let foods = realm.objects(Food.self)
+        let fooditems = realm.objects(FoodItem.self)
+        let plans = realm.objects(DailyMealPlan.self)
+        let weeks = realm.objects(Week.self)
+        let user = DataHandler.getActiveUser()
+        let bio = DataHandler.getActiveBiographical()
+        
+        try! realm.write {
+            realm.delete(foods)
+            realm.delete(fooditems)
+            realm.delete(plans)
+            realm.delete(weeks)
+            realm.delete(user)
+            realm.delete(bio)
         }
     }
     
@@ -276,6 +309,16 @@ class DataHandler: NSObject {
         }
         
     }
+    
+    static func updateMealPlanFeedback(_ lastWeek:Week, feedback: FeedBack){
+        let realm = try! Realm()
+        try! realm.write {
+            lastWeek.feedback = feedback
+            print("updating lastWeeks feedback")
+        }
+    }
+    
+    
     //MARK: Data Handler For Profile
     static func getFood(_ pk:Int)->Food?{
         let realm = try! Realm()
@@ -416,6 +459,9 @@ class DataHandler: NSObject {
             }
         }
     }
+    
+    
+    
     
     
     

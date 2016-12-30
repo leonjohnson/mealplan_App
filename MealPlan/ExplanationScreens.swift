@@ -27,7 +27,13 @@ class ExplanationScreens: UIView {
     var screen5SubText : NSAttributedString?
     let screen5Image : UIImage = UIImage()
     
-
+    var congratulationsText : NSAttributedString?
+    var congratulationsSubText : NSAttributedString?
+    var congratulationsImage : UIImage = UIImage()
+    
+    var startOverText : NSAttributedString?
+    var startOverSubText : NSAttributedString?
+    var startOverImage : UIImage = UIImage()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -74,6 +80,9 @@ class ExplanationScreens: UIView {
         
         screen5Text = NSMutableAttributedString(string: "Lastly, you have got to stay active!", attributes: title_attributes)
         screen5SubText = NSAttributedString(string: "Ensure you stick with all of the gym sessions / physical activities that you stated you do during the sign up process", attributes:sub_text_attributes)
+        
+        
+        
         
     }
 }

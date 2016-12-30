@@ -8,10 +8,10 @@ struct Constants {
     static let URL_VERSION_CHECK = "http://echo.jsontest.com/version/1.0.1/"
     static let API_VERSION  = "version"
     static let URL_UPDATE_URL = "itms://itunes.apple.com/de/app/mealsapp/id8001010"
-      static let ABOUT_US_URL = "https://www.google.com/intl/en/about/"
+    static let ABOUT_US_URL = "https://www.mealplanapp.com/about/"
 
     static let API_URL  = BASE_URL + API_SEPERATOR + API_KEY + API_SEPERATOR
-    static let BASE_URL = "http://mp0.herokuapp.com"
+    static let BASE_URL = "https://mp0.herokuapp.com"
     static let API_SEARCH_LIMIT = 20
     static let API_SEARCH_OFSET = 0
     static let API_SEPERATOR = "/"
@@ -245,7 +245,7 @@ struct Constants {
     
     
 
-    static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, BotData.NEW_FOOD.food_type.question]
+    static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, BotData.NEW_FOOD.food_type.question, BotData.FEEDBACK.howHungryWereYou.question]
     
     
     
@@ -307,6 +307,11 @@ struct Constants {
         case full = "full"
     }
     
+    enum explainerScreenType {
+        case none
+        case congratulations
+        case startingOver // Used when creating Bot page to provide it with some context of task.
+    }
     static let no_value_stated = "No value"
     
     static let HAS_PROFILE = "hasProfile"
@@ -321,6 +326,9 @@ struct Constants {
     static let FEEDBACK_STORYBOARD = UIStoryboard(name: "Feedback", bundle: nil)
     static let BOT_STORYBOARD = UIStoryboard(name: "Bot", bundle: nil)
     
-    
+    /*
+     MARK:  EXPLAINER SCREEN VARS
+     */
+
     
     }

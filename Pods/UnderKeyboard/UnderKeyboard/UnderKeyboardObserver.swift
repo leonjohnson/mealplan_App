@@ -32,8 +32,8 @@ public final class UnderKeyboardObserver: NSObject {
   public func start() {
     stop()
     
-    notificationCenter.addObserver(self, selector: #selector(UnderKeyboardObserver.keyboardNotification(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
-    notificationCenter.addObserver(self, selector: #selector(UnderKeyboardObserver.keyboardNotification(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
+    notificationCenter.addObserver(self, selector: Selector("keyboardNotification:"), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+    notificationCenter.addObserver(self, selector: Selector("keyboardNotification:"), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
   }
   
   /// Stop listening for keyboard notifications.
@@ -43,7 +43,7 @@ public final class UnderKeyboardObserver: NSObject {
   
   // MARK: - Notification
   
-  func keyboardNotification(_ notification: Notification) {
+  func keyboardNotification(notification: NSNotification) {
     let isShowing = notification.name == NSNotification.Name.UIKeyboardWillShow
     
     if let userInfo = notification.userInfo,
