@@ -29,7 +29,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <segue destination="u96-wf-vhs" kind="presentation" identifier="giveUserFeedback" id="rxX-5l-Yya"/>
-                        <segue destination="ugA-6S-ESV" kind="show" identifier="showMealPlan" id="VtG-s0-m5k"/>
+                        <segue destination="ugA-6S-ESV" kind="showDetail" identifier="showMealPlan" action="showViewController:sender:" id="VtG-s0-m5k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g4D-8X-G0z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -151,6 +151,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xmu-ct-9zV"/>
+        <segue reference="VtG-s0-m5k"/>
     </inferredMetricsTieBreakers>
 </document>

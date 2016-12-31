@@ -56,7 +56,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     var selcetedGender = 2;
     
     //Goals Array
-    var goalsValues = ["Gain Muscle", "Lose Fat", "Add more definition"]
+    var goalsValues = ["Gain Muscle", "Lose Fat"]
     var selectedGoal:NSMutableArray = NSMutableArray();
    
     //For SettingsTab bar
@@ -168,9 +168,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             if(pickerDBVal.gainMuscle.value == true){
                 selectedGoal.add(goalsValues[1])
             }
-            if(pickerDBVal.addMoreDefinition.value == true){
-                selectedGoal.add(goalsValues[2])
-            }
+            
             
             ageText.text = profileDBVal.birthdate.age.description;
             
@@ -533,7 +531,6 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //Saving to DB Class:
         bio.looseFat.value   =  (selectedGoal.contains(goalsValues[0]))
         bio.gainMuscle.value =   (selectedGoal.contains(goalsValues[1]))
-        bio.addMoreDefinition.value = (selectedGoal.contains(goalsValues[2]))
         
         bio.numberOfDailyMeals = eatTimeValue!
         bio.howLong = weekTimeValue!

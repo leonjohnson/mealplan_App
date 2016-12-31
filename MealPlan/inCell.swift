@@ -7,6 +7,7 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     @IBOutlet var table : UITableView!
     var question : String = String()
     var data : (question:String, options:[String]) = ("",[])
+    var beenTappedBefore:Bool = false
     
     var botDelegate: BotDelegate?
     
@@ -28,26 +29,43 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        print("/n PREPARING INCELL FOR REUSE!")
         
-        self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x,
+        /*
+            self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x,
                                                        y: self.messageBubbleContainerView.frame.origin.y,
                                                        width: self.messageBubbleContainerView.frame.width,
-                                                       height: CGFloat(300 + (data.options.count * Int(Constants.TABLE_ROW_HEIGHT_SMALL))))
-        
-        for row in 0...data.options.count {
-            self.table.cellForRow(at: [0, row])?.accessoryType = UITableViewCellAccessoryType.none
+                                                       height: CGFloat((data.options.count * Int(Constants.TABLE_ROW_HEIGHT_SMALL))))
+        */
+        //var rowsSelected : [Int] = []
+        if beenTappedBefore == false {
+            for row in 0...data.options.count {
+                /*
+                 if self.table.cellForRow(at: [0, row])?.accessoryType == .checkmark{
+                 rowsSelected.append(row)
+                 }*/
+                self.table.cellForRow(at: [0, row])?.accessoryType = UITableViewCellAccessoryType.none
+                
+                
+            }
         }
-        table.contentInset = Constants.TABLE_INSETS
+        
+        
+        //table.contentInset = Constants.TABLE_INSETS
     }
     
     
     
     override class func nib() -> UINib {
-        return UINib(nibName: "outCell", bundle: nil)
+        return UINib(nibName: "inCell", bundle: nil)
     }
     
     override class func mediaCellReuseIdentifier() -> String {
         return "CustomMessagesCollectionViewCellIncoming"
+    }
+    
+    override class func cellReuseIdentifier() -> String {
+        return "cell"
     }
     
     
@@ -74,12 +92,16 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! miniTableViewCell
         
+        
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! miniTableViewCell
         cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
         //cell.textLabel?.text = data.options[indexPath.row]
         cell.textLabel?.textColor = UIColor.black
         cell.incomingCellDelegate = self
+        
         return cell
     }
     
@@ -94,7 +116,8 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("TABLE SELECTED in INCELL.")
+        
+        beenTappedBefore = true
         
         let currentCell = tableView.cellForRow(at: indexPath)
         let currentRowAccessory = table.cellForRow(at: indexPath)?.accessoryType
@@ -109,10 +132,7 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
         tableView.cellForRow(at: indexPath)?.accessoryType = newRowAccessory
         (tableView.cellForRow(at: indexPath) as! miniTableViewCell).incomingCellDelegate?.rowSelected(labelValue: (currentCell?.textLabel?.text)!, withQuestion: question, index: indexPath, addOrDelete: newRowAccessory)
         
-        
-        
-        // if unselected, deselect everything else and select this row
-        //if selected, unselect it
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     

@@ -54,16 +54,20 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let user = DataHandler.getActiveUser()
+        let weightUnit = DataHandler.getActiveBiographical().weightUnit
         
         // Load the data
         switch botType {
         case .addNewFood:
             questions = BotData.NEW_FOOD.questions
+            questions[0] = "Hey \(user.name)! What is the full name of the food you want to record?"
             options = BotData.NEW_FOOD.options
             answers = BotData.NEW_FOOD.answers
             validationType = BotData.NEW_FOOD.validationType
         case .feedback:
             questions = BotData.FEEDBACK.questions
+            questions[0] = "Hey \(user.name)! I'm checking in with you to see how things have been going?\nWhat was your weight this morning (in \(weightUnit)s)?"
             options = BotData.FEEDBACK.options
             answers = BotData.FEEDBACK.answers
             validationType = BotData.FEEDBACK.validationType
@@ -71,7 +75,9 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             print("no bot type sent")
             return
         }
-        
+        if botType == .addNewFood{
+            
+        }
         
         self.automaticallyScrollsToMostRecentMessage = true
         self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
@@ -99,7 +105,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         tap.delegate = self
         self.inputToolbar.contentView?.textView?.addGestureRecognizer(tap)
         
-        let user = DataHandler.getActiveUser()
+        
         self.senderId = user.name
         self.senderDisplayName = user.name
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
@@ -115,9 +121,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         sideButton?.setImage(image, for: .normal)
         sideButton?.frame = CGRect(x: 0, y: 0, width: (sideButton?.frame.width)!, height: (sideButton?.frame.height)!)
         
-        if botType == .addNewFood{
-            questions[0] = "Hey \(user.name)! What is the full name of the food?"
-        }
+        
         addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
         self.finishSendingMessage(animated: true)
         
@@ -195,11 +199,26 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
         self.finishSendingMessage(animated: true)
         
+        // Set the keyboard type
+        if validationType[questionIndex - 1] != validationType[questionIndex]{
+            switch validationType[questionIndex] {
+            case .decimal:
+                self.inputToolbar.contentView.textView.keyboardType = .decimalPad
+            case .text:
+                self.inputToolbar.contentView.textView.keyboardType = .default
+            case .none:
+                self.inputToolbar.contentView.textView.keyboardType = .default
+            }
+            self.inputToolbar.contentView.textView.reloadInputViews()
+        }
+        
+        
         if questionIndex == (questions.count-1) {
             switch botType {
             case .addNewFood:
                 createNewFoodFromConversation()
             case .feedback:
+                print("feedback type of bot")
                 saveFeedbackForTheWeek()
             case .unstated:
                 print("this bot type is unknown")
@@ -213,9 +232,8 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         let currentKeyboard = self.inputToolbar.contentView.textView.keyboardType
         let newKeyboardType = (currentKeyboard == .default) ? UIKeyboardType.decimalPad : UIKeyboardType.default
         sideButton?.imageView?.image = (newKeyboardType  == .decimalPad) ? UIImage(named: "keyboard") : UIImage(named: "number_keypad")
-        self.inputToolbar.contentView.textView.resignFirstResponder()
         self.inputToolbar.contentView.textView.keyboardType = newKeyboardType
-        self.inputToolbar.contentView.textView.becomeFirstResponder()
+        self.inputToolbar.contentView.textView.reloadInputViews()
     }
     
     
@@ -309,6 +327,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         if (indexPath.row % 2) != 0{
             row = indexPath.row + 1
         }
+        
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         cell.textView.textColor = UIColor.black
@@ -323,21 +342,29 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
+            print("size of bubble: \(incomingBubbleImageView.messageBubbleImage.size) and size of cell : \(cellWithTableview.frame.size)")
             cellWithTableview.backgroundColor = UIColor.clear
             cellWithTableview.botDelegate = self
+            
+            
+
             return cellWithTableview
-        }
-        
-        
-        if Constants.questionsThatRequireButtons.contains(message.text!) {
+            
+        } else if Constants.questionsThatRequireButtons.contains(message.text!) {
             let cellWithButton = collectionView.dequeueReusableCell(withReuseIdentifier: "button", for: indexPath) as! BotCellWithButton
             print("buttonText: \(buttonText)")
-            cellWithButton.button.titleLabel?.text = buttonText[row/2]
+            cellWithButton.button.setTitle(buttonText[row/2], for: .normal)
+            cellWithButton.backgroundColor = UIColor.clear
             cellWithButton.botDelegate = self
             cellWithButton.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
-            cellWithButton.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            cellWithButton.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
             return cellWithButton
         }
+          else {
+            print("Size of cell : \(cell.frame.size)")
+        }
+        
+        
         
         return cell
     }
@@ -355,12 +382,11 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource!
     {
         let message = messages[indexPath.item] // 1
-        if message.senderId == senderId
-        {
+        if message.senderId == senderId {
             return outgoingBubbleImageView
         }
         else {
-            print("\(outgoingBubbleImageView.messageBubbleImage)")
+            print("returning incomingBubbleImageView\(incomingBubbleImageView.messageBubbleImage)")
             return incomingBubbleImageView
         }
     }
@@ -452,10 +478,10 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             
         } else {
             switch mealPlanExistsForThisWeek!.weeksAhead.count {
-            case 0:
+            case 0...1:
                 print("Case 0")
                 let currentWeek = Week().currentWeek()
-                let lastWeek = Week().lastWeek()
+                let lastWeek = currentWeek?.lastWeek()
                 guard currentWeek != nil && lastWeek != nil else {
                     print("Error at 2")
                     return
@@ -475,11 +501,14 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
                 
                 // run a new meal plan based on this for next week and the week after.
                 SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
-                SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry! + 7, calorieAllowance: newCaloriesAllowance)
+                if mealPlanExistsForThisWeek!.weeksAhead.count == 0{
+                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry! + 7, calorieAllowance: newCaloriesAllowance)
+                    print("0 week ahead")
+                } else {
+                    print("1 week ahead")
+                }
+                
                 takeUserToMealPlan(explainerScreenTypeIs: .congratulations)
-                break
-            case 1:
-                print("1 week ahead")
                 break
             case 2:
                 print("2 weeks ahead")
@@ -493,8 +522,15 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
     
     
     func takeUserToMealPlan(explainerScreenTypeIs:Constants.explainerScreenType){
+        
+        
+        
         if explainerScreenTypeIs == .none{
-            performSegue(withIdentifier: "showMealPlan", sender: explainerScreenTypeIs)
+            //performSegue(withIdentifier: "showMealPlan", sender: explainerScreenTypeIs)
+            
+             _ = self.navigationController?.popToRootViewController(animated: false)
+            self.navigationController?.isNavigationBarHidden = true
+            
         } else {
             performSegue(withIdentifier: "giveUserFeedback", sender: explainerScreenTypeIs)
         }
@@ -586,7 +622,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             let realm = try! Realm()
             let foodTypesSelected = answers[foodTypeIndex]
             print("foodTypesSelected: \(foodTypesSelected)")
-            let foodTypesFound = realm.objects(FoodType.self).filter("name IN %@", foodTypesSelected)
+            let foodTypesFound = Set(realm.objects(FoodType.self).filter("name IN %@", foodTypesSelected))
             print("realm objects found: \(foodTypesFound)")
             food.foodType.append(contentsOf: foodTypesFound)
         }

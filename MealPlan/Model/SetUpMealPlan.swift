@@ -6,7 +6,7 @@ class SetUpMealPlan: NSObject {
     static func loadDatabaseWithData(){
         
         if (Config.getBoolValue("isCreated")){
-            //return
+            return
         }
         
         DietSuitability.addRowData();
@@ -35,7 +35,7 @@ class SetUpMealPlan: NSObject {
                 addFoodPairingsToDatabase(foods!,json: json)
 
                 //createMeal();
-                //Config.setBoolValue("isCreated", status: true);
+                Config.setBoolValue("isCreated", status: true);
                 print("Got it created!")
                 
             }

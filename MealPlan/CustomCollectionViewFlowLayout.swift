@@ -20,9 +20,18 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
             
             let rows = (4 * 45) + (4*23)
             superSize.height = CGFloat(rows)
-            //superSize.width = superSize.width
+            superSize.width = superSize.width + 40
             return superSize
  
+        }
+        
+        if Constants.questionsThatRequireButtons.contains(currentMessageText!){
+            
+            superSize.height = 80
+            superSize.width = superSize.width + 40
+            
+            return superSize
+            
         }
         
         return superSize

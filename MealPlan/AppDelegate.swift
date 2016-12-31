@@ -18,18 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationDidBecomeActive(_ application: UIApplication) {
         // This method is called to let your app know that it moved from the inactive to active state. This can occur because your app was launched by the user or the system. Apps can also return to the active state if the user chooses to ignore an interruption (such as an incoming phone call or SMS message) that sent the app temporarily to the inactive state.
         //UpdateController.checkUpdate()
+        
         print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
         SetUpMealPlan.loadDatabaseWithData()
-        
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             
             let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
             let mealPlanExistsForThisWeek = response.yayNay
-            
-            
             let testCurrentWeek = Week().currentWeek()
-            print("TESTS: \n1. areThereWeeksAheads:\(response.yayNay) numberOfWeeksAhead:\(response.weeksAhead)")
-            print("TESTS: \n2. CurrentWeek:\(testCurrentWeek) days until it expires:\(testCurrentWeek?.daysUntilWeekExpires())")
             
             if mealPlanExistsForThisWeek == false{
                 askForNewDetails(doesMealPlanExistForThisWeek: response)
@@ -42,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     break
                 case 1:
                     print("Case 1")
-                    askForNewDetails(doesMealPlanExistForThisWeek: response)
+                    //askForNewDetails(doesMealPlanExistForThisWeek: response)
                     return
                 case 2:
                     print("Case 2")
@@ -108,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             let pvc = storyboard.instantiateViewController(withIdentifier: "feedback")
             self.window?.rootViewController?.present(pvc, animated: true, completion: { () -> Void in
                 UIApplication.shared.cancelAllLocalNotifications();
-            });
+            })
             
         }
     }

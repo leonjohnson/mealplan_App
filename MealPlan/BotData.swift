@@ -264,7 +264,7 @@ class BotData: NSObject {
         }
         
         struct howHungryWereYou {
-            static let question = "How hungry were you after following last weeks meal plans?"
+            static let question = "How hungry were you after last weeks meal plans?"
             static let tableViewList:[String] = [Constants.hungerLevels.veryHungry.rawValue,
                                                  Constants.hungerLevels.littleHungry.rawValue,
                                                  Constants.hungerLevels.aboutRight.rawValue,

@@ -17,16 +17,18 @@ class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
         self.tapGestureRecognizer.cancelsTouchesInView = false
         self.cellBottomLabel.textAlignment = .right
         
+        
     }
     
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        /*
         self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x,
                                                        y: self.messageBubbleContainerView.frame.origin.y,
                                                        width: self.messageBubbleContainerView.frame.width,
                                                        height: CGFloat(300))
+ */
     }
     
     
@@ -48,7 +50,7 @@ class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
         super.init(frame: frame)
     }
     
-    func buttonTapped(labelValue: String) {
+    @IBAction func buttonTapped(button: UIButton) {
         print("print")
     }
     
