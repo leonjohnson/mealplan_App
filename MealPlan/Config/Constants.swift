@@ -245,7 +245,10 @@ struct Constants {
     
     
 
-    static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, BotData.NEW_FOOD.food_type.question, BotData.FEEDBACK.howHungryWereYou.question]
+    static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, 
+                                                 BotData.NEW_FOOD.food_type.question, 
+                                                 BotData.FEEDBACK.howHungryWereYou.question,
+                                                 BotData.FEEDBACK.easeOfFollowingDiet.question]
     
     
     
@@ -297,6 +300,7 @@ struct Constants {
         case easy = "easy"
         case ok = "ok"
         case hard = "hard"
+        case veryHard = "very hard"
     }
     
     enum hungerLevels: String {
@@ -319,7 +323,7 @@ struct Constants {
     static let STANDARD_CALORIE_CUT = "standardCalorieCut"
     static let standard_calorie_increase_for_muscle = 1.075
     static let standard_calorie_reduction_for_weightloss = 0.96
-    static let small_calorie_reduction_for_weightloss = 0.98
+    static let small_calorie_reduction_for_weightloss = 0.97
     
     /// STORY BOARDS
     static let MAIN_STORYBOARD = UIStoryboard(name: "Main", bundle: nil)

@@ -198,11 +198,21 @@ class DataHandler: NSObject {
     }
     
     static func deleteFutureMealPlans(){
-        
+        print("about to delete future meal plans")
         let objectsToDelete = SetUpMealPlan.getThisWeekAndNext()
         let realm = try! Realm()
         try! realm.write {
             realm.delete(objectsToDelete)
+        }
+    }
+    
+    static func deleteThisWeeksMealPlan(){
+        print("about to this weeks meal plans")
+        if let objectsToDelete = SetUpMealPlan.getThisWeekAndNext().first {
+            let realm = try! Realm()
+            try! realm.write {
+                realm.delete(objectsToDelete)
+            }
         }
     }
     

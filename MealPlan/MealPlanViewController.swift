@@ -551,6 +551,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             print("edit called")
             let fi = meals[indexPath.section].foodItems[indexPath.row]
             DataHandler.updateFoodItem(fi, eaten: true)
+            DataHandler.updateCalorieConsumption(thisWeek: self.thisWeek)
             
         default:
             break

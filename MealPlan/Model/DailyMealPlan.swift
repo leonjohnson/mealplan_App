@@ -17,7 +17,7 @@ class DailyMealPlan: Object {
     
     func totalKcalOfEatenFoods()->Int{
         var totalKcal = 0
-        for meal in meals{
+        for meal in self.meals{
             for fi in meal.foodItems{
                 if fi.eaten == true{
                     totalKcal = totalKcal + Int(fi.getTotalCal())

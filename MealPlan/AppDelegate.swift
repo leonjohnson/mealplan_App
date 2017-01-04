@@ -11,7 +11,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        
     }
     
     
@@ -20,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         //UpdateController.checkUpdate()
         
         print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
+        
         SetUpMealPlan.loadDatabaseWithData()
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             
@@ -31,14 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 askForNewDetails(doesMealPlanExistForThisWeek: response)
                 
             } else {
-                switch response.weeksAhead.count {
+                switch response.weeksAheadIncludingCurrent.count {
                 case 0:
                     print("Case 0")
                     askForNewDetails(doesMealPlanExistForThisWeek: response)
                     break
                 case 1:
                     print("Case 1")
-                    //askForNewDetails(doesMealPlanExistForThisWeek: response)
+                    askForNewDetails(doesMealPlanExistForThisWeek: response)
                     return
                 case 2:
                     print("Case 2")
@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     
-    func askForNewDetails(doesMealPlanExistForThisWeek: (Bool,[Week])) {
+    func askForNewDetails(doesMealPlanExistForThisWeek: (yayNay:Bool,weeksAheadIncludingCurrent:[Week])) {
         let storyBoard = Constants.BOT_STORYBOARD
         let scene = storyBoard.instantiateViewController(withIdentifier: "bot") as! BotController
         scene.botType = .feedback

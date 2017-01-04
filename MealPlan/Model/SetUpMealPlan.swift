@@ -106,15 +106,18 @@ class SetUpMealPlan: NSObject {
     
     
     static func cutCalories(fromWeek :Week, userfoundDiet: Constants.dietEase)->Int{
+        print("cutCalories: \(userfoundDiet.rawValue)")
         switch userfoundDiet {
         case .easy:
-            return Int(Double(fromWeek.calorieAllowance) * Constants.standard_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
         case .ok:
-            return Int(Double(fromWeek.calorieAllowance) * Constants.standard_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
         case .hard:
-            return Int(Double(fromWeek.calorieAllowance) * Constants.small_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
+        case .veryHard:
+            return fromWeek.calorieConsumption
         case .unstated:
-            return Int(Double(fromWeek.calorieAllowance) * Constants.small_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.calorieConsumption) * Constants.small_calorie_reduction_for_weightloss)
             
         }
     }
@@ -156,25 +159,25 @@ class SetUpMealPlan: NSObject {
     
     
     
-    static func doesMealPlanExistForThisWeek(withTodaysDate: Date = Date())->(yayNay:Bool,weeksAhead:[Week]) {
+    static func doesMealPlanExistForThisWeek(withTodaysDate: Date = Date())->(yayNay:Bool,weeksAheadIncludingCurrent:[Week]) {
         let realm = try! Realm()
         let calender = Calendar.current
         let today = calender.startOfDay(for: withTodaysDate)
         
         print("start date: \(withTodaysDate)")
         
-        let todayPredicate = NSPredicate(format: "start_date == %@", today as CVarArg)
+        let todayPredicate = NSPredicate(format: "start_date == %@", today as NSDate)
         let mealPlanStartingToday = realm.objects(Week.self).filter(todayPredicate).first
         
         if mealPlanStartingToday != nil {
-            let futureWeeksPredicate = NSPredicate(format: "start_date >= %@", today as CVarArg)
+            let futureWeeksPredicate = NSPredicate(format: "start_date >= %@", today as NSDate)
             let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
             let weeksAheadArray : [Week] = weeksAhead.map {$0}
             return (true, weeksAheadArray)
         }
-        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -7, to: calender.startOfDay(for: today), options: [.matchFirst])
+        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -7, to: calender.startOfDay(for: today), options: [.matchFirst])!
         
-        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", today as CVarArg)
+        let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo as NSDate)
         
         let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
         let weeksAheadArray : [Week] = weeksAhead.map {$0}
@@ -204,8 +207,8 @@ class SetUpMealPlan: NSObject {
         let bio = DataHandler.getActiveBiographical()
         let user = DataHandler.getActiveUser()
         newWeek.TDEE = calculateTDEE(bio: bio, user: user)
-        newWeek.calorieConsumption = newWeek.calculateCalorieConsumptionForMeal()
         newWeek.dailyMeals.append(objectsIn: MealPlanAlgorithm.createMealPlans(newWeek))
+        newWeek.calorieConsumption = newWeek.calculateCalorieConsumptionForMeal()
         try! realm.write {
             realm.add(newWeek)
         }
@@ -259,14 +262,15 @@ class SetUpMealPlan: NSObject {
         let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
         let weeks = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
         
+        /*
         if weeks.count == 0{
             let kcal = SetUpMealPlan.calculateInitialCalorieAllowance()
             createWeek(daysUntilCommencement: 0, calorieAllowance: kcal)
             createWeek(daysUntilCommencement: 7, calorieAllowance: kcal)
             return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
         }
-        
-        assert(weeks.count == 1 || weeks.count == 2, "The user got to the mealplan page but there's an unexpected number of weeks found in the future.")
+        */
+        //assert(weeks.count == 1 || weeks.count == 2, "The user got to the mealplan page but there's an unexpected number of weeks found in the future.")
         return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
     }
     

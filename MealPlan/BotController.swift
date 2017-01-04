@@ -3,7 +3,7 @@ import RealmSwift
 import JSQMessagesViewController
 import JSQSystemSoundPlayer
 
-final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
+final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     var messages:[JSQMessage] = [JSQMessage]();
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
@@ -34,13 +34,14 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
     var validationType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.validationType
     var sideButton : UIButton?
     
-    var mealPlanExistsForThisWeek : (yayNay:Bool, weeksAhead:[Week])?
+    var mealPlanExistsForThisWeek : (yayNay:Bool, weeksAheadIncludingCurrent:[Week])?
     
     override func viewWillAppear(_ animated: Bool) {
         //self.navigationController?.hidesBottomBarWhenPushed = true
         self.navigationController?.toolbar.isHidden = false
         self.navigationController?.toolbar.isUserInteractionEnabled = false
         self.inputToolbar.contentView.textView.autocorrectionType = .no
+        self.inputToolbar.contentView.textView.becomeFirstResponder()
         self.collectionView.backgroundColor = Constants.MP_BLUEGREY
     }
     
@@ -111,15 +112,18 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         //self.inputToolbar.contentView.leftBarButtonItem = nil
-        miniCellViewController.incomingCellDelegate = self
+        //miniCellViewController.incomingCellDelegate = self
         inComingCellViewController.botDelegate = self
         
         
         //let height = self.inputToolbar.contentView.leftBarButtonContainerView.frame.size.height
-        let image = UIImage(named:"keyboard")
-        sideButton = UIButton(type: .custom)
-        sideButton?.setImage(image, for: .normal)
-        sideButton?.frame = CGRect(x: 0, y: 0, width: (sideButton?.frame.width)!, height: (sideButton?.frame.height)!)
+        //let image = UIImage(named:"keyboard")
+        //sideButton = UIButton(type: .custom)
+        //sideButton?.setImage(image, for: .normal)
+        //sideButton?.frame = CGRect(x: 0, y: 0, width: (sideButton?.frame.width)!, height: (sideButton?.frame.height)!)
+        sideButton?.imageView?.image = UIImage(named:"keyboard")
+        sideButton?.sizeToFit()
+        
         
         
         addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
@@ -212,7 +216,6 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             self.inputToolbar.contentView.textView.reloadInputViews()
         }
         
-        
         if questionIndex == (questions.count-1) {
             switch botType {
             case .addNewFood:
@@ -230,14 +233,25 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
         let currentKeyboard = self.inputToolbar.contentView.textView.keyboardType
+        
         let newKeyboardType = (currentKeyboard == .default) ? UIKeyboardType.decimalPad : UIKeyboardType.default
-        sideButton?.imageView?.image = (newKeyboardType  == .decimalPad) ? UIImage(named: "keyboard") : UIImage(named: "number_keypad")
+        //page1Content.imageView.image = UIImage(named:"winner")
+        
+        if currentKeyboard == .decimalPad{
+            sideButton?.imageView?.image = UIImage(named:"keyboard")
+        }
+        if currentKeyboard == .default{
+            sideButton?.imageView?.image = UIImage(named:"number_keypad")
+        }
+        
+        //sideButton?.imageView.im == UIImage(named:"winner") ? UIImage(named: "keyboard") : UIImage(named: "number_keypad")
         self.inputToolbar.contentView.textView.keyboardType = newKeyboardType
         self.inputToolbar.contentView.textView.reloadInputViews()
     }
     
     
     func originalrowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
+        print("PING : originalrowSelected called.")
         
         guard var indexForAnswer = questions.index(of: withQuestion) else {
             print("WIRING ERROR")
@@ -246,15 +260,34 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         
         var entryValue = labelValue
         indexForAnswer = questions.index(of: withQuestion)!
+        
         if addOrDelete == UITableViewCellAccessoryType.none{
             answers[indexForAnswer].removeObject(labelValue)
+            print("deleted : \(labelValue)")
         }
         if addOrDelete == UITableViewCellAccessoryType.checkmark{
             print("tapped checkmark")
-            if withQuestion == BotData.NEW_FOOD.food_type.question{
+            
+            if BotData.NEW_FOOD.food_type.question == withQuestion {
                 let indexOfSelectedOptionInFoodTypeList = BotData.NEW_FOOD.food_type.tableViewList.index(of: labelValue)
                 entryValue = Constants.FOOD_TYPES[indexOfSelectedOptionInFoodTypeList!]
             }
+            
+            if BotData.FEEDBACK.easeOfFollowingDiet.question == withQuestion {
+                let indexOfSelectedOption = BotData.FEEDBACK.easeOfFollowingDiet.tableViewList.index(of: labelValue)
+                entryValue = BotData.FEEDBACK.easeOfFollowingDiet.tableViewList[indexOfSelectedOption!]
+            }
+            
+            if BotData.FEEDBACK.howHungryWereYou.question == withQuestion {
+                let indexOfSelectedOption = BotData.FEEDBACK.howHungryWereYou.tableViewList.index(of: labelValue)
+                entryValue = BotData.FEEDBACK.howHungryWereYou.tableViewList[indexOfSelectedOption!]
+            }
+            
+            if BotData.FEEDBACK.changeNumberOfMeals.question == withQuestion {
+                
+            }
+            
+            print("entryValue of selected item : \(entryValue)")
             answers[indexForAnswer].append(entryValue)
             answers[indexForAnswer].removeFirst()
         }
@@ -264,12 +297,12 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             // we've tapped a row in a table that is the answer to the most progressed question yet
             progressToNextQuestion()
         }
-        
     }
-
     
-    
+    /*
     func rowSelected(labelValue: String, withQuestion: String, index: IndexPath, addOrDelete:UITableViewCellAccessoryType){
+        print("PING : rowSelected called.")
+        
         print("row \(labelValue) selected called from BotController")
         
         if BotData.NEW_FOOD.serving_type.question == withQuestion {
@@ -297,7 +330,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         }
         
     }
-
+    */
 
     private func validateAnswer()->Bool{
         return true
@@ -333,6 +366,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         cell.textView.textColor = UIColor.black
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             let tableViewRowData = options[row/2]
+            print("tableViewRowData: \(tableViewRowData)")
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "in", for: indexPath) as! inCell
             //cellWithTableview.table.delegate = self
             
@@ -444,22 +478,46 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             
             feedback.weightUnit = DataHandler.getActiveBiographical().weightUnit
             
-            if let weightMeasurementIndex = questions.index(of: BotData.FEEDBACK.howWasLastWeek.question) {
-                feedback.weightMeasurement = Double(answers[weightMeasurementIndex].first!)!
-            }
-            
+            feedback.weightMeasurement = Double(answers[0].first!)!
+            // using subscript notation as the text to this question has been changed but I'm confident that it's the first one
+            print("about to add weightMeasurement of \(feedback.weightMeasurement)")
             
             if let hungerIndex = questions.index(of: BotData.FEEDBACK.howHungryWereYou.question) {
                 feedback.hungerLevels = answers[hungerIndex].first!
+                print("about to add hungerLevels")
             }
-            
+            /*
             if let didItHelpedIndex = questions.index(of: BotData.FEEDBACK.howWasLastWeek.question) {
                 feedback.didItHelped = (answers[didItHelpedIndex].first == "true") ? true : false
+                print("about to add didItHelped")
+            }
+             */
+            
+            if let easeOfFollowingIndex = questions.index(of: BotData.FEEDBACK.easeOfFollowingDiet.question) {
+                switch answers[easeOfFollowingIndex].first! {
+                
+                case Constants.dietEase.easy.rawValue:
+                    feedback.easeOfFollowingDiet = .easy
+                
+                case Constants.dietEase.hard.rawValue:
+                    feedback.easeOfFollowingDiet = .hard
+                
+                case Constants.dietEase.ok.rawValue:
+                    feedback.easeOfFollowingDiet = .ok
+                
+                default:
+                    feedback.easeOfFollowingDiet = .unstated
+                }
+                
+                print("tap result: \(feedback.easeOfFollowingDiet)")
+                print("tap result: \(answers[easeOfFollowingIndex].first!)")
             }
             
             if let notesIndex = questions.index(of: BotData.FEEDBACK.anyComments.question) {
                 feedback.notes = answers[notesIndex].first
             }
+            
+            print("feedback: \(feedback)")
             
             DataHandler.updateMealPlanFeedback(weekJustFinished, feedback: feedback)
             
@@ -475,13 +533,17 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
             //Eat TDEE plus what you want // create meal plan from today for the next two weeks (we're starting over)
             takeUserToMealPlan(explainerScreenTypeIs: .startingOver)
+            return
             
         } else {
-            switch mealPlanExistsForThisWeek!.weeksAhead.count {
-            case 0...1:
-                print("Case 0")
+            switch mealPlanExistsForThisWeek!.weeksAheadIncludingCurrent.count {
+            case 1:
+                print("Case 1")
                 let currentWeek = Week().currentWeek()
                 let lastWeek = currentWeek?.lastWeek()
+                print("currentweek: \(currentWeek?.start_date)")
+                print("lastWeek: \(lastWeek?.start_date)")
+                
                 guard currentWeek != nil && lastWeek != nil else {
                     print("Error at 2")
                     return
@@ -489,8 +551,7 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
                 let daysUntilExpiry = currentWeek?.daysUntilWeekExpires()
                 
                 
-                //TO-DO: Get next weeks plan and use the foods in those meal plans for generating the next mp
-                DataHandler.deleteFutureMealPlans() // delete next weeks plan, just in case
+                
                 var newCaloriesAllowance = 0
                 if(Config.getBoolValue(Constants.STANDARD_CALORIE_CUT) == true){
                     newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: lastWeek!, userfoundDiet: (lastWeek?.feedback?.easeOfFollowingDiet)!)
@@ -499,31 +560,25 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
                     Config.setBoolValue(Constants.STANDARD_CALORIE_CUT,status: true)
                 }
                 
-                // run a new meal plan based on this for next week and the week after.
+                // delete current week and create a new meal plan for this week and next.
+                DataHandler.deleteThisWeeksMealPlan() //TO-DO: Create MP from next weeks foods to minimise changes
+                SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry! - 7, calorieAllowance: newCaloriesAllowance)
                 SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
-                if mealPlanExistsForThisWeek!.weeksAhead.count == 0{
-                    SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry! + 7, calorieAllowance: newCaloriesAllowance)
-                    print("0 week ahead")
-                } else {
-                    print("1 week ahead")
-                }
-                
                 takeUserToMealPlan(explainerScreenTypeIs: .congratulations)
-                break
+                return
             case 2:
                 print("2 weeks ahead")
-                break
+                return
             default:
-                break // this could be because the user is between the 8th day and 12th day of a meal plan.
+                return // this could be because the user is between the 8th day and 12th day of a meal plan.
             }
         }
-        takeUserToMealPlan(explainerScreenTypeIs:.none)
     }
     
     
     func takeUserToMealPlan(explainerScreenTypeIs:Constants.explainerScreenType){
         
-        
+        print("takeUserToMealPlan: \(explainerScreenTypeIs)")
         
         if explainerScreenTypeIs == .none{
             //performSegue(withIdentifier: "showMealPlan", sender: explainerScreenTypeIs)
@@ -532,11 +587,11 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
             self.navigationController?.isNavigationBarHidden = true
             
         } else {
+            print("about to go to explainer screen from bot controller with: \(explainerScreenTypeIs)")
             performSegue(withIdentifier: "giveUserFeedback", sender: explainerScreenTypeIs)
         }
-        
-        
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "giveUserFeedback" {
@@ -545,9 +600,8 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
         }
     }
 
+    
     private func createNewFoodFromConversation(){
-        
-        
         let food = Food()
         if let pk = DataHandler.getNewPKForFood() {
             food.pk = pk
@@ -650,8 +704,6 @@ final class BotController: JSQMessagesViewController, IncomingCellDelegate, BotD
          itemFood.readyToEat = false
          }
          */
-        
-        
     }
     
     

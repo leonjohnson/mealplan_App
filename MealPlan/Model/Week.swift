@@ -15,16 +15,17 @@ class Week: Object {
     
     func calculateCalorieConsumptionForMeal()->Int{
         var totalCalories = 0
-        for mealplan in self.dailyMeals{
+        for mealplan in dailyMeals{
             totalCalories = totalCalories + Int(mealplan.totalKcalOfEatenFoods())
         }
-        return totalCalories
+        print("calculateCalorieConsumptionForMeal: \(totalCalories)")
+        return totalCalories/dailyMeals.count
     }
     
     func lastWeek()->Week?{
         let calendar = Constants.Calendar.usersCalendar
-        let aWeekAgo = (calendar as NSCalendar).date(byAdding: .day, value: -7, to: calendar.startOfDay(for: self.start_date), options: [.matchFirst])
-        let aWeekAgoPredicate = NSPredicate(format: "start_date == %@", aWeekAgo! as CVarArg)
+        let aWeekAgo = (calendar as NSCalendar).date(byAdding: .day, value: -14, to: calendar.startOfDay(for: self.start_date), options: [.matchFirst])
+        let aWeekAgoPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
         
         let realm = try! Realm()
         let lastWeek = realm.objects(Week.self).filter(aWeekAgoPredicate).sorted(byProperty: "start_date", ascending: true).first

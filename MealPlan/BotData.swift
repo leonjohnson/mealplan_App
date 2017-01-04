@@ -212,12 +212,14 @@ class BotData: NSObject {
         static let questions : [String] = [
             BotData.FEEDBACK.howWasLastWeek.question,
             BotData.FEEDBACK.howHungryWereYou.question,
+            BotData.FEEDBACK.easeOfFollowingDiet.question,
             BotData.FEEDBACK.anyComments.question,
             BotData.FEEDBACK.ending.question]
         
         static let options : [[String]]  = [
             BotData.FEEDBACK.howWasLastWeek.tableViewList,
             BotData.FEEDBACK.howHungryWereYou.tableViewList,
+            BotData.FEEDBACK.easeOfFollowingDiet.tableViewList,
             BotData.FEEDBACK.anyComments.tableViewList,
             BotData.FEEDBACK.ending.tableViewList]
  
@@ -231,6 +233,7 @@ class BotData: NSObject {
             BotData.FEEDBACK.howWasLastWeek.validation,
             BotData.FEEDBACK.howHungryWereYou.validation,
             BotData.FEEDBACK.anyComments.validation,
+            BotData.FEEDBACK.easeOfFollowingDiet.validation,
             BotData.FEEDBACK.ending.validation]
         
         struct greeting {
@@ -269,6 +272,26 @@ class BotData: NSObject {
                                                  Constants.hungerLevels.littleHungry.rawValue,
                                                  Constants.hungerLevels.aboutRight.rawValue,
                                                  Constants.hungerLevels.full.rawValue]
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let validation = Constants.botValidationEntryType.none
+        }
+        
+        struct easeOfFollowingDiet {
+            static let question = "How easy was it to stick to the meal plan?"
+            static let tableViewList:[String] = [Constants.dietEase.easy.rawValue,
+                                                 Constants.dietEase.ok.rawValue,
+                                                 Constants.dietEase.hard.rawValue,
+                                                 Constants.dietEase.veryHard.rawValue]
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let validation = Constants.botValidationEntryType.none
+        }
+        
+        struct changeNumberOfMeals {
+            static let question = "Last week you had 0 meals per day, how many would you like this week?"
+            static let tableViewList:[String] = ["Keep the same",
+                                                 "2","3","4","5","6","7"]
             static let buttonText : String = ""
             static let tips : String = ""
             static let validation = Constants.botValidationEntryType.none
