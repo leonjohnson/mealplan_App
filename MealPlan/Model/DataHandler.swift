@@ -36,7 +36,23 @@ class DataHandler: NSObject {
             try! realm.write {
                 realm.add(pr)
             }
-            return  pr;
+            return  pr
+        }
+    }
+    
+    static func updateWeight(newWeight:Int, unit:String?){
+        let realm = try! Realm()
+        let profile = realm.objects(Biographical.self).first
+        if((profile) != nil){
+            try! realm.write {
+                profile?.weightMeasurement = Double(newWeight)
+                if unit != nil{
+                    profile?.weightUnit = unit!
+                }
+                
+            }
+        } else {
+            print("error updating weight.")
         }
     }
     //MARK: Data Handler For Profile
@@ -50,7 +66,7 @@ class DataHandler: NSObject {
             try! realm.write {
                 realm.add(pr)
             }
-            return  pr;
+            return  pr
         }
     }
     
@@ -514,7 +530,7 @@ class DataHandler: NSObject {
     
     static func getFoodType(_ ft:String)->FoodType{
         let realm = try! Realm()
-        let x = realm.objects(FoodType)
+        let x = realm.objects(FoodType.self)
         for each in x {
             if each.name == ft{
                 return each

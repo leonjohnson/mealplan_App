@@ -508,18 +508,14 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 default:
                     feedback.easeOfFollowingDiet = .unstated
                 }
-                
-                print("tap result: \(feedback.easeOfFollowingDiet)")
-                print("tap result: \(answers[easeOfFollowingIndex].first!)")
             }
             
             if let notesIndex = questions.index(of: BotData.FEEDBACK.anyComments.question) {
                 feedback.notes = answers[notesIndex].first
             }
             
-            print("feedback: \(feedback)")
-            
             DataHandler.updateMealPlanFeedback(weekJustFinished, feedback: feedback)
+            DataHandler.updateWeight(newWeight: Int(feedback.weightMeasurement), unit: nil)
             
             
         }
@@ -532,6 +528,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
             SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
             //Eat TDEE plus what you want // create meal plan from today for the next two weeks (we're starting over)
+            
             takeUserToMealPlan(explainerScreenTypeIs: .startingOver)
             return
             
@@ -541,8 +538,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 print("Case 1")
                 let currentWeek = Week().currentWeek()
                 let lastWeek = currentWeek?.lastWeek()
-                print("currentweek: \(currentWeek?.start_date)")
-                print("lastWeek: \(lastWeek?.start_date)")
                 
                 guard currentWeek != nil && lastWeek != nil else {
                     print("Error at 2")
@@ -564,6 +559,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 DataHandler.deleteThisWeeksMealPlan() //TO-DO: Create MP from next weeks foods to minimise changes
                 SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry! - 7, calorieAllowance: newCaloriesAllowance)
                 SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
+                                
                 takeUserToMealPlan(explainerScreenTypeIs: .congratulations)
                 return
             case 2:

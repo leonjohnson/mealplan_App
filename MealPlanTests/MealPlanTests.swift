@@ -74,7 +74,7 @@ class MealPlanTests: XCTestCase {
                 //takeUserToMealPlan(shouldShowExplainerScreen: true)
                 
             } else {
-                switch response.weeksAhead.count {
+                switch response.weeksAheadIncludingCurrent.count {
                 case 0:
                     //askForNewDetails()
                     if dayNumber > 7{

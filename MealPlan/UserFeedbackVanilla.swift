@@ -62,7 +62,10 @@ class UserFeedbackVanilla: UIViewController {
     }
 
     @IBAction func showMealPlan() {
-        performSegue(withIdentifier: "thanksImDone", sender: nil)
+        //performSegue(withIdentifier: "thanksImDone", sender: nil)
+        print("in there")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
     }
 
 }

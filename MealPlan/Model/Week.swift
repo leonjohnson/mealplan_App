@@ -18,7 +18,6 @@ class Week: Object {
         for mealplan in dailyMeals{
             totalCalories = totalCalories + Int(mealplan.totalKcalOfEatenFoods())
         }
-        print("calculateCalorieConsumptionForMeal: \(totalCalories)")
         return totalCalories/dailyMeals.count
     }
     
