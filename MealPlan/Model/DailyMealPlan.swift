@@ -115,6 +115,18 @@ class DailyMealPlan: Object {
         return false
     }
     
+    func mealsThatContainFood(_ food:Food)->[Meal]{
+        var mealsArray : [Meal] = []
+        for meal in meals{
+            for fi in meal.foodItems{
+                if fi.food == food{
+                    mealsArray.append(meal)
+                }
+            }
+        }
+        return mealsArray
+    }
+    
     func foodNames()->[String]{
         var foodsArray:[String] = []
         for meal in meals{
