@@ -1,4 +1,6 @@
 import UIKit
+import UserNotifications
+import Firebase
 
 
 extension ExplanationScreens {
@@ -37,7 +39,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         let page1Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
         page1Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
         page1Content.imageView.image = UIImage(named:"winner")
-        print("imageview size: \(page1Content.imageView.frame.size)")
+
         page1Content.textView.attributedText = page1Content.screen1Text
         page1Content.subText.attributedText = NSAttributedString(string: "You don’t need to count calories or macronutrients, it’s all been done for you. You simply follow the meal plan", attributes:attributes)
         let page1 = UIView(frame: CGRect(x:0, y:0,width:scrollViewWidth, height:scrollViewHeight))
@@ -85,10 +87,20 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         page5.addSubview(page5Content)
         
         
-        let doneButton = page5Content.doneButton!
+        // Page 6 of scroll view
+        let page6Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
+        page6Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
+        page6Content.imageView.image = UIImage(named:"running")
+        page6Content.textView.attributedText = page6Content.screen6Text
+        page6Content.subText.attributedText = page6Content.screen6SubText
+        let page6 = UIView(frame: CGRect(x:scrollViewWidth*5, y:0,width:scrollViewWidth*3, height:scrollViewHeight))
+        page6.addSubview(page6Content)
+        
+        
+        let doneButton = page6Content.doneButton!
         doneButton.backgroundColor = Constants.MP_GREEN
         doneButton.layer.cornerRadius = 25
-        doneButton.addTarget(self, action: #selector(ExplanationViewController.takeMeToMyMealPlan(_:)), for: .allTouchEvents)
+        doneButton.addTarget(self, action: #selector(ExplanationViewController.showmp(_:)), for: .touchUpInside)
         let att = NSAttributedString(string: "Let's get started", attributes:[
             NSFontAttributeName:Constants.STANDARD_FONT_BOLD, 
             NSForegroundColorAttributeName:Constants.MP_WHITE,
@@ -104,7 +116,8 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         self.scrollView.addSubview(page3)
         self.scrollView.addSubview(page4)
         self.scrollView.addSubview(page5)
-        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 5, height:self.scrollView.frame.height)
+        self.scrollView.addSubview(page6)
+        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 6, height:self.scrollView.frame.height)
         
         
         self.scrollView.delegate = self
@@ -135,16 +148,34 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         let pageWidth:CGFloat = scrollView.frame.width
         let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
         // Change the indicator
-        self.pageControl.currentPage = Int(currentPage);
+        self.pageControl.currentPage = Int(currentPage)
+    }
+    
+    func showmp(_ sender: UIButton){
+        print("showmp pressed: \(sender)")
+        let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
+        SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
+        SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
         
-    
-        }
-    
-    @IBAction func takeMeToMyMealPlan(_ sender: UIButton){
-        print("pressed")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
     }
+    
+    
+    func takeMeToMyMealPlan(_ sender: UIButton){
+        print("takeMeToMyMealPlan pressed: \(sender)")
+        
+        let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
+        SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
+        SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
+        
+        
+    }
+    
+    
+
+ 
+    
 }
 
 

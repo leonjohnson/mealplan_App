@@ -12,6 +12,8 @@ target 'MealPlan' do
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'JSQMessagesViewController'
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
 end
 
 target 'MealPlanTests' do

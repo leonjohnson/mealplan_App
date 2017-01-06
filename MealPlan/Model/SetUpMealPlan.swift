@@ -265,6 +265,7 @@ class SetUpMealPlan: NSObject {
         for w in weeks{
             print("week start date: \(w.start_date) and \(w.TDEE)")
         }
+        print("")
         return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
     }
     

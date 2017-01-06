@@ -14,6 +14,9 @@
 		B93B729C44D3525F62D13B57 /* Pods_MealPlanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C566C2623EA159E5FA97288 /* Pods_MealPlanTests.framework */; };
 		F41E48A11DF9439300421CEC /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E48A01DF9439300421CEC /* ProfileTests.swift */; };
 		F70694781E15730500A3B6C6 /* UserFeedbackVanilla.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */; };
+		F706947B1E1FD34500A3B6C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F706947A1E1FD34500A3B6C6 /* GoogleService-Info.plist */; };
+		F706947C1E1FD34500A3B6C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F706947A1E1FD34500A3B6C6 /* GoogleService-Info.plist */; };
+		F706947D1E1FD34500A3B6C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F706947A1E1FD34500A3B6C6 /* GoogleService-Info.plist */; };
 		F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */; };
 		F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */; };
 		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
@@ -147,6 +150,8 @@
 		ACFD24E8491873D32D6D5FC8 /* Pods_DailyMeals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyMeals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41E48A01DF9439300421CEC /* ProfileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
 		F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFeedbackVanilla.swift; sourceTree = "<group>"; };
+		F70694791E1FC15300A3B6C6 /* MealPlan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MealPlan.entitlements; sourceTree = "<group>"; };
+		F706947A1E1FD34500A3B6C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
@@ -318,6 +323,7 @@
 		965A5F031BFC48CF0055ACA4 = {
 			isa = PBXGroup;
 			children = (
+				F706947A1E1FD34500A3B6C6 /* GoogleService-Info.plist */,
 				F78AB6E01DBE6DA400BB40EA /* MealPlan */,
 				4ADE43461DF6874B00491005 /* MealPlanTests */,
 				965A5F0D1BFC48D00055ACA4 /* Products */,
@@ -358,6 +364,7 @@
 		F78AB6E01DBE6DA400BB40EA /* MealPlan */ = {
 			isa = PBXGroup;
 			children = (
+				F70694791E1FC15300A3B6C6 /* MealPlan.entitlements */,
 				F7C480431DBF61AF00572706 /* Extensions */,
 				F7C480411DBF609300572706 /* Controllers */,
 				F7C480401DBF602900572706 /* View */,
@@ -641,6 +648,11 @@
 						DevelopmentTeam = 644582FWFB;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					965A5F2C1BFC48D00055ACA4 = {
 						CreatedOnToolsVersion = 7.1;
@@ -674,6 +686,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F706947D1E1FD34500A3B6C6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +714,7 @@
 				F78AB7301DBE6DA400BB40EA /* Assets.xcassets in Resources */,
 				F78AB74B1DBE6DA400BB40EA /* Media.xcassets in Resources */,
 				F78AB7421DBE6DA400BB40EA /* IconImages.xcassets in Resources */,
+				F706947B1E1FD34500A3B6C6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,6 +722,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F706947C1E1FD34500A3B6C6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1109,11 +1124,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MealPlan/MealPlan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Leon Johnson (644582FWFB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 644582FWFB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MealPlan/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1134,11 +1154,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MealPlan/MealPlan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Leon Johnson (644582FWFB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 644582FWFB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MealPlan/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";

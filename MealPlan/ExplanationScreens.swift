@@ -27,6 +27,10 @@ class ExplanationScreens: UIView {
     var screen5SubText : NSAttributedString?
     let screen5Image : UIImage = UIImage()
     
+    var screen6Text : NSAttributedString?
+    var screen6SubText : NSAttributedString?
+    let screen6Image : UIImage = UIImage()
+    
     var congratulationsText : NSAttributedString?
     var congratulationsSubText : NSAttributedString?
     var congratulationsImage : UIImage = UIImage()
@@ -63,23 +67,47 @@ class ExplanationScreens: UIView {
         NSFontAttributeName:Constants.MEAL_PLAN_TITLE,
         NSForegroundColorAttributeName:Constants.MP_BLACK,
         NSParagraphStyleAttributeName:paragraphStyle]
-
-        
-        screen1Text = NSAttributedString(string: "Your meal plan has been created!", attributes:title_attributes )
-        screen1SubText = NSAttributedString(string: "You don’t need to count calories or macronutrients, it’s all been done for you. You simply follow the meal plan", attributes:sub_text_attributes)
-        
-        screen2Text = NSAttributedString(string: "You'll get a different meal plan for each day of the week", attributes:title_attributes)
-        screen2SubText = NSAttributedString(string: "Each one is slightly different. Feel free to follow the same plan if you prefer one over others.", attributes:sub_text_attributes)
-        
-        screen3Text = NSMutableAttributedString(string: "We'll start you off slowly", attributes:title_attributes)
-        screen3SubText = NSAttributedString(string: "For the first week you need to eat all of the foods in the meal plan plus any extra foods you want to eat, but you have to record it in the meal plan!", attributes:sub_text_attributes)
         
         
-        screen4Text = NSAttributedString(string: "You'll need to prepare your meals in advance", attributes:title_attributes)
-        screen4SubText = NSAttributedString(string: "Each one is slightly different. Feel free to follow the same plan if you prefer one over others.", attributes:sub_text_attributes)
         
-        screen5Text = NSMutableAttributedString(string: "Lastly, you have got to stay active!", attributes: title_attributes)
-        screen5SubText = NSAttributedString(string: "Ensure you stick with all of the gym sessions / physical activities that you stated you do during the sign up process", attributes:sub_text_attributes)
+        
+        
+        let congratulationsTitle = "Your meal plan has been created!"
+        let congratulationsSubText = "You don’t need to count calories or macronutrients, it’s all been done for you! You simply follow your meal plan."
+        
+        let differentTitle = "Your meals will be different for each day of the week."
+        let differentSubTitle = "This is so you don't get bored! Feel free to repeat any day's plan if you prefer it over another - the calories and macros will be the same."
+        
+        let gentlyTitle = "We'll start you off gently."
+        let gentlySubTitle = "For the first week you need to eat all of the foods in the meal plan plus any extra foods you want to eat. Just make sure you record your extra foods and drinks in the app."
+        
+        let preparationTitle = "Preparation will help you to succeed."
+        let preparationSubTitle = "You can see the following week's meals in advance so that you can buy and prepare the food you'll need."
+        
+        let stayactiveTitle = "You have got to stay active!"
+        let stayactiveSubTitle = "Ensure you stick with all of the gym sessions / physical activities that you told us about during the sign up process. Your meal plan gives you the food you need to fuel these activities."
+        
+        let notificationTitle = "Lastly, we'd like to occasionally send you notifications."
+        let notificationSubTitle = "You're more likely to stick with a plan if you have reminders."
+        
+        
+        screen1Text = NSAttributedString(string: congratulationsTitle, attributes:title_attributes )
+        screen1SubText = NSAttributedString(string: congratulationsSubText, attributes:sub_text_attributes)
+        
+        screen2Text = NSAttributedString(string: differentTitle, attributes:title_attributes)
+        screen2SubText = NSAttributedString(string: differentSubTitle, attributes:sub_text_attributes)
+        
+        screen3Text = NSMutableAttributedString(string: gentlyTitle, attributes:title_attributes)
+        screen3SubText = NSAttributedString(string: gentlySubTitle, attributes:sub_text_attributes)
+        
+        screen4Text = NSAttributedString(string: preparationTitle, attributes:title_attributes)
+        screen4SubText = NSAttributedString(string: preparationSubTitle, attributes:sub_text_attributes)
+        
+        screen5Text = NSMutableAttributedString(string: stayactiveTitle, attributes: title_attributes)
+        screen5SubText = NSAttributedString(string: stayactiveSubTitle, attributes:sub_text_attributes)
+        
+        screen6Text = NSMutableAttributedString(string: notificationTitle, attributes: title_attributes)
+        screen6SubText = NSAttributedString(string: notificationSubTitle, attributes:sub_text_attributes)
         
         
         

@@ -2,6 +2,10 @@ import UIKit
 import Fabric
 import Crashlytics
 import RealmSwift
+import FBSDKCoreKit
+
+
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -21,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
         //UpdateController.checkUpdate()
         SetUpMealPlan.loadDatabaseWithData()
+        
+        FBSDKAppEvents.activateApp()
+        AppEventsLogger.activate(application)
+        
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             
             let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
@@ -48,6 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     return
                 }
             }
+        } else {
+            print("First time here/n/n")
         }
         
         /*
@@ -88,7 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-            
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             takeUserToMealPlan(shouldShowExplainerScreen: false)
         }
@@ -96,7 +108,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return true
     }
     
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
     
+    //WHAT IS THIS FOR?
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
