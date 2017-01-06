@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         //UpdateController.checkUpdate()
         
         print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
-        
+        //UpdateController.checkUpdate()
         SetUpMealPlan.loadDatabaseWithData()
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             

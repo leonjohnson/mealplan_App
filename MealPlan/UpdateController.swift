@@ -1,11 +1,3 @@
-//
-//  UpdateController.swift
-//  DailyMeals
-//
-//  Created by toobler on 30/11/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
-
 import UIKit
 
 class UpdateController: UIViewController {
@@ -15,12 +7,11 @@ class UpdateController: UIViewController {
      * INVOKED FROM THE APP DELEGATE
      */
     static func checkUpdate(){
-        // GET ACTIVE VERSION
-        let currentVersion = getVersion();
-        // NETWORK CALL
+        
+        let currentVersion = getVersion() // GET ACTIVE VERSION
         Connect.checkVersion(key: "",onResponse: { (version, status) in
             if(status){
-                //  VERSION NUMBER RETUNED SO CAMBARE
+                //  VERSION NUMBER RETUNED SO
                 if version!.compare(currentVersion, options: NSString.CompareOptions.numeric) == ComparisonResult.orderedDescending
                 {
                     // ("We havE a new version available")
@@ -35,6 +26,7 @@ class UpdateController: UIViewController {
 
         });
     }
+    
     // GET ACTIVE VERSION
     static func getVersion()->String{
         //First get the nsObject by defining as an optional anyObject
@@ -61,16 +53,14 @@ class UpdateController: UIViewController {
         // INVOKE THE URL FROM CONSTANTS
         let url = NSURL(string:Constants.URL_UPDATE_URL)
         if UIApplication.shared.canOpenURL(url! as URL) {
-            UIApplication.shared.openURL(url! as URL)
+            UIApplication.shared.open((url! as URL), options: [:], completionHandler: nil)
         }
     }
 
     @IBAction func onClickLater(sender: AnyObject) {
-        // DISMISS CLICKED CLOSE
-        self.dismiss(animated: true,completion: nil)
+        self.dismiss(animated: true,completion: nil) // DISMISS CLICKED CLOSE
     }
     @IBAction func onClickUpdate(sender: AnyObject) {
-        // INVOKE UPDATE CLICKED
-        invokeUpdate()
+        invokeUpdate()// INVOKE UPDATE CLICKED
     }
 }
