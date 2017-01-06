@@ -2093,7 +2093,7 @@ class MealPlanAlgorithm : NSObject{
             
             if fooditem.numberServing > 0{
                 fooditem = constrainPortionSizeBasedOnFood(fooditem, highFatAllowedFlag: lastMealFlag, dietaryRequirements: dietaryRequirements)
-                if fooditem.numberServing >= 5{ // as constrain may have made it 0.
+                if fooditem.numberServing >= 0.05{ // as constrain may have made it 0.
                     foodItems.append(fooditem)
                     print("Just added: \(fooditem.food?.name)\n")
                     leftOverForThisMeal[0] = leftOverForThisMeal[0] - (fooditem.numberServing * food.proteins)
