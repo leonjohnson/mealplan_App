@@ -3,6 +3,7 @@ import Fabric
 import Crashlytics
 import RealmSwift
 import FBSDKCoreKit
+import FacebookCore
 
 
 import UserNotifications
@@ -26,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         //UpdateController.checkUpdate()
         SetUpMealPlan.loadDatabaseWithData()
         
-        FBSDKAppEvents.activateApp()
         AppEventsLogger.activate(application)
         
         if(Config.getBoolValue(Constants.HAS_PROFILE)){

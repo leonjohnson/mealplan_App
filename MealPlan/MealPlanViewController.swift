@@ -6,6 +6,7 @@
 
 import UIKit
 import RealmSwift
+import FacebookCore
 
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -69,6 +70,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         nameLabel.attributedText? = NSAttributedString(string:stringWithName, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
         mealPlanTally.isHidden = true
+        
+        AppEventsLogger.log("MealPlanViewController view will appear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {

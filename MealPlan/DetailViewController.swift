@@ -1,4 +1,5 @@
 import UIKit
+import FacebookCore
 /*
 private extension Selector {
     static let hideKeyboard =
@@ -128,6 +129,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        AppEventsLogger.log("DetailViewController view will appear")
+    }
+    
     fileprivate func updateFoodItem(numOfServing:Double? = nil){
         let currentWeek = delegate?.getThisWeek()
         print("called with parameter of :\(numOfServing)")
@@ -176,7 +181,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         updateFoodItem()
-        onBackClick(sender);
+        onBackClick(sender)
+        AppEventsLogger.log("added food to meal plan")
         
     }
     

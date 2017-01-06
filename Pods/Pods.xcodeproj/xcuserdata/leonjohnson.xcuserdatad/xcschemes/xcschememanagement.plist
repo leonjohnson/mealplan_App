@@ -9,27 +9,47 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>GoogleToolboxForMac.xcscheme</key>
+		<key>Bolts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>JSQMessagesViewController-iOS10.0.xcscheme</key>
+		<key>FBSDKCoreKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>JSQMessagesViewController-iOS10.1.xcscheme</key>
+		<key>FBSDKLoginKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>JSQSystemSoundPlayer-iOS10.0.xcscheme</key>
+		<key>FBSDKShareKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>JSQSystemSoundPlayer-iOS10.1.xcscheme</key>
+		<key>FacebookCore.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FacebookLogin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FacebookShare.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>JSQMessagesViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>JSQSystemSoundPlayer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -54,22 +74,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Realm-iOS10.0.xcscheme</key>
+		<key>Realm.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Realm-iOS10.1.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>RealmSwift-iOS10.0.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>RealmSwift-iOS10.1.xcscheme</key>
+		<key>RealmSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -87,7 +97,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3D530B6B3239A5466AEB72CDF7E6BF54</key>
+		<key>22CDCCAF6E29D90035D1C0727D754B58</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>332F91393FB1DE033D370B4CEDDD5FCF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,62 +112,67 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4209F477D95DDBF204F71F69433AC933</key>
+		<key>44CAD6CE523055ED339E87154473A254</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>43A0C96D0DD321C27C24A48D3D0F3426</key>
+		<key>593E9479C06FB200807D11AB29EB50BD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4A4D890E27B256572EADF83A8553D0DE</key>
+		<key>5A5FDFDE912A2BC9BBBF24325AA2FA1C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>57991E0AB0C03C38BC6ADD7672469FEA</key>
+		<key>5B5AC3C06B783F8674FDB4C0F900B56A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>67A0943F786B7D3F7E661E7EFB79A21D</key>
+		<key>6C5EDF9BEC07EAEF1657A05F9E27012A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>72557E35DB587311FC4359A8538B2BBB</key>
+		<key>70219EC81A0F180C852EDF019F9263AC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>846DBF2D5DDD080B627DC258C103680B</key>
+		<key>7335E9C9689F3B8A16F063A884748533</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8FA5B34F1AF427141E61620D597C156B</key>
+		<key>A7FEAA14E89971698ACA148F7F7202F2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A374377D9391B7A2B0B3065E837BC9E3</key>
+		<key>A89811530B02FDA3E204B88D1D07B5D7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C5B80060FE8C664DF08841000F41D515</key>
+		<key>C7DCF2B547F7871B9BFD74DE93B0E173</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E13785B82812AD9C91AC19F564959B61</key>
+		<key>D0581AF7BF4A6DA140D280B19ECC7BFF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E48F71D265453956D8352E18418462AA</key>
+		<key>DDBCFDE490CDFDABF6F16A26F346932D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E51AA7DAA7D0D362BAB5BBC364E4BE4D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

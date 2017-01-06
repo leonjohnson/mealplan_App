@@ -2,6 +2,7 @@ import UIKit
 import RealmSwift
 import JSQMessagesViewController
 import JSQSystemSoundPlayer
+import FacebookCore
 
 final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
     
@@ -571,7 +572,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 DataHandler.deleteThisWeeksMealPlan() //TO-DO: Create MP from next weeks foods to minimise changes
                 SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry! - 7, calorieAllowance: newCaloriesAllowance)
                 SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
-                                
+                AppEventsLogger.log("updated meal plans")
+                
                 takeUserToMealPlan(explainerScreenTypeIs: .congratulations)
                 return
             case 2:

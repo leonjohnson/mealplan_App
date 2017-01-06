@@ -12,8 +12,9 @@ target 'MealPlan' do
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'JSQMessagesViewController'
-    pod 'Firebase/Core'
-    pod 'Firebase/Messaging'
+    pod 'FacebookCore'
+    pod 'FacebookLogin'
+    pod 'FacebookShare'
 end
 
 target 'MealPlanTests' do

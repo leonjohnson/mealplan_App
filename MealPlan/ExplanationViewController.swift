@@ -1,6 +1,6 @@
 import UIKit
 import UserNotifications
-import Firebase
+import FacebookCore
 
 
 extension ExplanationScreens {
@@ -168,6 +168,9 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
         SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
         SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
+        
+        AppEventsLogger.log(.completedRegistration())
+        
         
         
     }

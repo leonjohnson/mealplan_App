@@ -1,4 +1,5 @@
 import UIKit
+import FacebookCore
 
 class FoodSearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
     
@@ -15,7 +16,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         localData = DataHandler.readFoodsData("");
-        filterdData = localData;
+        filterdData = localData
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,6 +85,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("reloaded")
         var cell = tableView.dequeueReusableCell(withIdentifier: "foodListCellIdentifier") as? FoodListTableViewCell
         if(cell == nil){
             cell = FoodListTableViewCell();
@@ -108,7 +110,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(filterdData?.count == indexPath.row){
            // print( "Search online")
-            searchOnline(filterText);
+            searchOnline(filterText)
         }else{
             let food = filterdData![indexPath.row];
             let item = DataHandler.createFoodItem(food, numberServing: 1)
@@ -123,6 +125,7 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             scene.newItemMode = true
             //scene.hideAddButton = false
             scene.meal = meal
+            AppEventsLogger.log(.searched(contentId: "Food", searchedString: nil, successful: true, valueToSum: nil, extraParameters: ["row selected":"\(item.food?.name)"]))
             self.navigationController?.pushViewController(scene, animated: true)
         }
     }
@@ -163,14 +166,16 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     func searchOnline(_ text:String){
         //encode a URL string for accepting all special characters in search.
+        
         let originalString = text
         let escapedString = originalString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         
         Connect.fetchFoodItems(escapedString!, limit: Constants.API_SEARCH_LIMIT, offset:Constants.API_SEARCH_OFSET, view: self.view) { (items, status) -> Void in
             if(status){
                 //Move now
-                self.filterdData = items;
-                self.searchTable?.reloadData();
+                self.filterdData = items
+                self.searchTable?.reloadData()
+                print("inside search online: \(status)")
             }
             else{
                 // create the alert
