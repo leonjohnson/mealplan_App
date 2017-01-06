@@ -223,8 +223,9 @@ class DataHandler: NSObject {
     }
     
     static func deleteThisWeeksMealPlan(){
-        print("about to this weeks meal plans")
+        
         if let objectsToDelete = SetUpMealPlan.getThisWeekAndNext().first {
+            print("about to this weeks meal plans with start date: \(objectsToDelete.start_date)")
             let realm = try! Realm()
             try! realm.write {
                 realm.delete(objectsToDelete)

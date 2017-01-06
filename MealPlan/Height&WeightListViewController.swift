@@ -201,9 +201,9 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
             setWeight(item)
             label = weightValue;
             if(weightSegment.selectedSegmentIndex == 0){
-                lastdigit = "kg"
+                lastdigit = Constants.KILOGRAMS
             }else{
-                lastdigit = "pd"
+                lastdigit = Constants.POUNDS
             }
             break;
         case heightPickerValue :

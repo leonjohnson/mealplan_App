@@ -472,9 +472,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     
     private func saveFeedbackForTheWeek(){
+        var feedback = FeedBack()
         if let weekJustFinished = Week().lastWeek(){
             // Get the standard measurement
-            var feedback = FeedBack()
+            
             
             feedback.weightUnit = DataHandler.getActiveBiographical().weightUnit
             
@@ -494,19 +495,27 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
              */
             
             if let easeOfFollowingIndex = questions.index(of: BotData.FEEDBACK.easeOfFollowingDiet.question) {
+                print("easeOfFollowingIndex - entered! With \(feedback.easeOfFollowingDiet.rawValue)\n\n")
+                
+                print("answers entered! \(answers[easeOfFollowingIndex].first!) and easeOfFollowingIndex:\(easeOfFollowingIndex)\n\n")
+                print("I have: \(Constants.dietEase.ok.rawValue) and \(Constants.dietEase.ok)")
                 switch answers[easeOfFollowingIndex].first! {
                 
                 case Constants.dietEase.easy.rawValue:
                     feedback.easeOfFollowingDiet = .easy
+                    print("hit easy")
                 
                 case Constants.dietEase.hard.rawValue:
                     feedback.easeOfFollowingDiet = .hard
+                    print("hit hard")
                 
                 case Constants.dietEase.ok.rawValue:
                     feedback.easeOfFollowingDiet = .ok
+                    print("hit ok")
                 
                 default:
                     feedback.easeOfFollowingDiet = .unstated
+                    print("hit default")
                 }
             }
             
@@ -549,7 +558,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 
                 var newCaloriesAllowance = 0
                 if(Config.getBoolValue(Constants.STANDARD_CALORIE_CUT) == true){
-                    newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: lastWeek!, userfoundDiet: (lastWeek?.feedback?.easeOfFollowingDiet)!)
+                    print("last weeks ease of diet: \(lastWeek?.feedback?.easeOfFollowingDiet)")
+                    print("last weeks ease of diet: \(lastWeek?.start_date)")
+                    
+                    newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: lastWeek!, userfoundDiet: feedback.easeOfFollowingDiet)
                 } else {
                     newCaloriesAllowance = SetUpMealPlan.initialCalorieCut(firstWeek: lastWeek!) // run initialCalorieCut
                     Config.setBoolValue(Constants.STANDARD_CALORIE_CUT,status: true)

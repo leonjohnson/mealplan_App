@@ -266,9 +266,9 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
             setWeight(item)
             label = weightValue;
             if(weightSegment.selectedSegmentIndex == 0){
-                lastdigit = "kg"
+                lastdigit = Constants.KILOGRAMS
             }else{
-                lastdigit = "pd"
+                lastdigit = Constants.POUNDS
             }
             //label = weightValue;
         label?.text = (pickerView.getValue1(item)).description + pickerView.seperator + (pickerView.getValue2(item)).description + pickerView.endIcon + lastdigit

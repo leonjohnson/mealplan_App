@@ -202,7 +202,8 @@ class SetUpMealPlan: NSObject {
         if (futureWeekStartDate != nil){
             newWeek.start_date = futureWeekStartDate!
         }
-        newWeek.macroAllocation.append(objectsIn: macroAllocation(calorieAllowance: calorieAllowance, weeksOnProgram: numberOfWeeks))
+        let newMacros = macroAllocation(calorieAllowance: calorieAllowance, weeksOnProgram: numberOfWeeks)
+        newWeek.macroAllocation.append(objectsIn: newMacros)
         newWeek.calorieAllowance = calorieAllowance
         let bio = DataHandler.getActiveBiographical()
         let user = DataHandler.getActiveUser()
@@ -257,20 +258,13 @@ class SetUpMealPlan: NSObject {
     static func getThisWeekAndNext()-> Results<Week>
     {
         let calender = Calendar.current
-        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -6, to: calender.startOfDay(for: Date()), options: [.matchFirst])
+        let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -7, to: calender.startOfDay(for: Date()), options: [.matchFirst])
         let realm = try! Realm()
         let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
         let weeks = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
-        
-        /*
-        if weeks.count == 0{
-            let kcal = SetUpMealPlan.calculateInitialCalorieAllowance()
-            createWeek(daysUntilCommencement: 0, calorieAllowance: kcal)
-            createWeek(daysUntilCommencement: 7, calorieAllowance: kcal)
-            return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
+        for w in weeks{
+            print("week start date: \(w.start_date) and \(w.TDEE)")
         }
-        */
-        //assert(weeks.count == 1 || weeks.count == 2, "The user got to the mealplan page but there's an unexpected number of weeks found in the future.")
         return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
     }
     
@@ -303,7 +297,7 @@ class SetUpMealPlan: NSObject {
             heightInMetres = aim.heightMeasurement/100
         }
         
-        if aim.heightUnit == "pd"{
+        if aim.heightUnit == Constants.POUNDS {
             weightInKG = aim.weightMeasurement * Constants.POUND_TO_KG_CONSTANT
         }else {
             weightInKG = aim.weightMeasurement

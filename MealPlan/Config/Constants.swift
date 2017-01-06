@@ -104,6 +104,7 @@ struct Constants {
     static let MAX_HEIGHT  = 300
     static let KILOGRAMS = "kg"
     static let POUNDS = "lbs"
+    
 
     //Macronutriet names
     static let CARBOHYDRATES = "Carbohydrates"
