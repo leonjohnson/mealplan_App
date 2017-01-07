@@ -33,15 +33,15 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <view contentMode="scaleToFill" horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BYR-aC-qfG">
-                    <rect key="frame" x="0.0" y="52" width="375" height="290"/>
+                    <rect key="frame" x="0.0" y="52" width="375" height="275"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHA-j0-yob">
-                            <rect key="frame" x="8" y="0.0" width="359" height="60"/>
+                            <rect key="frame" x="8" y="0.0" width="359" height="70"/>
                             <accessibility key="accessibilityConfiguration">
                                 <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                             </accessibility>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" id="lm9-sX-aks"/>
+                                <constraint firstAttribute="height" constant="70" id="8cF-cD-EFa"/>
                             </constraints>
                             <attributedString key="attributedText">
                                 <fragment content="Label">
@@ -54,7 +54,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2cr-PJ-0Cr">
-                            <rect key="frame" x="0.0" y="90" width="375" height="180"/>
+                            <rect key="frame" x="0.0" y="75" width="375" height="180"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="180" id="R0b-9l-h8Z"/>
                             </constraints>
@@ -62,17 +62,17 @@
                     </subviews>
                     <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                     <constraints>
+                        <constraint firstItem="2cr-PJ-0Cr" firstAttribute="top" secondItem="LHA-j0-yob" secondAttribute="bottom" constant="5" id="CC3-uh-3Fo"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="top" secondItem="BYR-aC-qfG" secondAttribute="top" id="CMj-GC-y9H"/>
                         <constraint firstAttribute="trailing" secondItem="2cr-PJ-0Cr" secondAttribute="trailing" id="Dd7-P4-iCF"/>
-                        <constraint firstItem="2cr-PJ-0Cr" firstAttribute="centerX" secondItem="LHA-j0-yob" secondAttribute="centerX" id="Obt-ud-g15"/>
-                        <constraint firstItem="LHA-j0-yob" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leadingMargin" id="Tar-zo-Jq5"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leadingMargin" id="Mho-uC-XSs"/>
+                        <constraint firstItem="LHA-j0-yob" firstAttribute="centerX" secondItem="2cr-PJ-0Cr" secondAttribute="centerX" id="ORZ-lv-kJS"/>
                         <constraint firstItem="2cr-PJ-0Cr" firstAttribute="leading" secondItem="BYR-aC-qfG" secondAttribute="leading" id="cet-er-kf6"/>
-                        <constraint firstItem="2cr-PJ-0Cr" firstAttribute="top" secondItem="LHA-j0-yob" secondAttribute="bottom" constant="30" id="ghp-OQ-WBe"/>
                         <constraint firstItem="2cr-PJ-0Cr" firstAttribute="bottom" secondItem="BYR-aC-qfG" secondAttribute="bottomMargin" constant="-12" id="hXZ-P3-56f"/>
-                        <constraint firstItem="LHA-j0-yob" firstAttribute="top" secondItem="BYR-aC-qfG" secondAttribute="top" id="nZY-GV-8No"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6h-Cj-FoN">
-                    <rect key="frame" x="0.0" y="357" width="375" height="55"/>
+                    <rect key="frame" x="0.0" y="342" width="375" height="55"/>
                     <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="ibI-Ci-JTX"/>

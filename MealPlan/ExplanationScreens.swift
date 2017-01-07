@@ -79,15 +79,15 @@ class ExplanationScreens: UIView {
         let differentSubTitle = "This is so you don't get bored! Feel free to repeat any day's plan if you prefer it over another - the calories and macros will be the same."
         
         let gentlyTitle = "We'll start you off gently."
-        let gentlySubTitle = "For the first week you need to eat all of the foods in the meal plan plus any extra foods you want to eat. Just make sure you record your extra foods and drinks in the app."
+        let gentlySubTitle = "For the first week you need to eat all of the foods in the meal plan plus any extra foods you want. Just add them in the app."
         
         let preparationTitle = "Preparation will help you to succeed."
-        let preparationSubTitle = "You can see the following week's meals in advance so that you can buy and prepare the food you'll need."
+        let preparationSubTitle = "You can see the following week's meals in advance so that you can buy and prepare the food you'll need. To know how much you're eating, you'll need scales to weigh your food"
         
         let stayactiveTitle = "You have got to stay active!"
-        let stayactiveSubTitle = "Ensure you stick with all of the gym sessions / physical activities that you told us about during the sign up process. Your meal plan gives you the food you need to fuel these activities."
+        let stayactiveSubTitle = "Ensure you stick with all of the physical activities that you told us about during the sign up process."
         
-        let notificationTitle = "Lastly, we'd like to occasionally send you notifications."
+        let notificationTitle = "We'd like to occasionally send you notifications."
         let notificationSubTitle = "You're more likely to stick with a plan if you have reminders."
         
         

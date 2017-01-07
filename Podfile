@@ -20,6 +20,9 @@ end
 target 'MealPlanTests' do
     pod 'RealmSwift' #'~> 2.0.1'
     pod 'JSQMessagesViewController'
+    pod 'FacebookCore'
+    pod 'FacebookLogin'
+    pod 'FacebookShare'
 end
 
 post_install do |installer|

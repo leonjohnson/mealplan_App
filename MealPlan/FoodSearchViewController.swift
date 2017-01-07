@@ -85,7 +85,6 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("reloaded")
         var cell = tableView.dequeueReusableCell(withIdentifier: "foodListCellIdentifier") as? FoodListTableViewCell
         if(cell == nil){
             cell = FoodListTableViewCell();
@@ -113,7 +112,10 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             searchOnline(filterText)
         }else{
             let food = filterdData![indexPath.row];
-            let item = DataHandler.createFoodItem(food, numberServing: 1)
+            //let item = DataHandler.createFoodItem(food, numberServing: 1)
+            let item = FoodItem()
+            item.food = food
+            item.numberServing = 1
             if(meal != nil){
                 
                 //DataHandler.addFoodItemToMeal(meal!, foodItem:item);
@@ -122,7 +124,6 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let scene = storyboard.instantiateViewController(withIdentifier: "servingDetails") as! DetailViewController
             scene.detailItem = item
-            scene.newItemMode = true
             //scene.hideAddButton = false
             scene.meal = meal
             AppEventsLogger.log(.searched(contentId: "Food", searchedString: nil, successful: true, valueToSum: nil, extraParameters: ["row selected":"\(item.food?.name)"]))

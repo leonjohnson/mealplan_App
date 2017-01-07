@@ -10,6 +10,6 @@ class FeedBack: Object {
     dynamic var didItHelped = Bool()
     dynamic var weightMeasurement = 0.0
     dynamic var weightUnit = ""
-    var easeOfFollowingDiet : Constants.dietEase = .unstated
+    var easeOfFollowingDiet : String = Constants.dietEase.unstated.rawValue
 
 }

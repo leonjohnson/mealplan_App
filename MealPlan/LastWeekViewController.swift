@@ -11,7 +11,9 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
     var selcetedHungryLevel = 4;
     
     //Last week Bolated Level:
-    var dietEaseArray = [Constants.dietEase.easy,Constants.dietEase.ok,Constants.dietEase.hard]
+    var dietEaseArray = [Constants.dietEase.easy.rawValue,
+                         Constants.dietEase.ok.rawValue,
+                         Constants.dietEase.hard.rawValue]
     var selectedDietEaseValue = -1;
     
     //Last week Help Level:
@@ -98,7 +100,7 @@ class LastWeekViewController: UIViewController,AKPickerViewDelegate, UITableView
         }else if (tableView == dietEaseTable){
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "dietEaseCell", for: indexPath)
-            cell.textLabel?.text = dietEaseArray[indexPath.row].rawValue
+            cell.textLabel?.text = dietEaseArray[indexPath.row]
             
             if (selectedDietEaseValue == indexPath.row){
                 cell.accessoryType = UITableViewCellAccessoryType.checkmark

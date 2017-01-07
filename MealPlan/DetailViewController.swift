@@ -30,7 +30,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var originalLikedFoods = NSMutableArray()
     var likedFoods = NSMutableArray()
     var revertToOriginal :Bool = true
-    var newItemMode :Bool = false
+    var newItemMode :Bool = true
     
     var delegate: MPViewControllerDelegate? // The object that acts as delegate for this cell.
     var foodItemIndexPath: IndexPath? // The item that this cell renders.
@@ -56,6 +56,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         self.nutritionTable.allowsSelection = false
         self.nutritionTable.delegate = self
+        let dele = navigationController?.viewControllers.first as! MPViewControllerDelegate?
+        print("dele: \(dele.debugDescription)")
+        delegate = navigationController?.viewControllers.first as! MPViewControllerDelegate?
         
         
         if newItemMode == false {
@@ -135,22 +138,16 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     fileprivate func updateFoodItem(numOfServing:Double? = nil){
         let currentWeek = delegate?.getThisWeek()
-        print("called with parameter of :\(numOfServing)")
+        let numServing = Constants.roundToPlaces(Double(valServingSize.text!)!, decimalPlaces: 2)
         
-        var numServing = 0.0
-        if numOfServing == nil {
-            numServing = Constants.roundToPlaces(Double(valServingSize.text!)!, decimalPlaces: 2)
-        } else {
-            numServing = originalDetailItemNumberOfServing
-        }
-        
-        _ = mealContainsFood(foodItem: detailItem)
-        
+        let answer = mealContainsFood(foodItem: detailItem)
+        newItemMode = !answer.0
 
         
         if (newItemMode == false) { // existing food
+            print("this is an existing food")
             if(numServing > 0){
-                DataHandler.updateFoodItem(detailItem, numberServing: numServing)
+                DataHandler.updateFoodItem(answer.1!, numberServing: (numServing + (answer.1?.numberServing)!))
                 DataHandler.updateCalorieConsumption(thisWeek: currentWeek!)
                 
             } else {
@@ -159,6 +156,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         else
         {
+            print("this is a new food")
             // it's a new food item but not one that is in the meal already
             if(numServing > 0){
                 DataHandler.updateFoodItem(detailItem, numberServing: numServing)
@@ -180,7 +178,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             textField.resignFirstResponder()
         }
         
-        updateFoodItem()
+        updateFoodItem(numOfServing: Double(valServingSize.text!))
         onBackClick(sender)
         AppEventsLogger.log("added food to meal plan")
         
@@ -197,7 +195,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if revertToOriginal == true{
             print("original serving size: \(originalDetailItemNumberOfServing)")
-            updateFoodItem(numOfServing: originalDetailItemNumberOfServing)
+            //updateFoodItem(numOfServing: originalDetailItemNumberOfServing)
         }
         
         

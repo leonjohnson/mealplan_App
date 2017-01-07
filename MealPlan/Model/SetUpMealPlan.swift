@@ -109,15 +109,15 @@ class SetUpMealPlan: NSObject {
         print("cutCalories: \(userfoundDiet.rawValue)")
         switch userfoundDiet {
         case .easy:
-            return Int(Double(fromWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.caloriesEaten) * Constants.standard_calorie_reduction_for_weightloss)
         case .ok:
-            return Int(Double(fromWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.caloriesEaten) * Constants.standard_calorie_reduction_for_weightloss)
         case .hard:
-            return Int(Double(fromWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.caloriesEaten) * Constants.standard_calorie_reduction_for_weightloss)
         case .veryHard:
-            return fromWeek.calorieConsumption
+            return fromWeek.caloriesEaten
         case .unstated:
-            return Int(Double(fromWeek.calorieConsumption) * Constants.small_calorie_reduction_for_weightloss)
+            return Int(Double(fromWeek.caloriesEaten) * Constants.small_calorie_reduction_for_weightloss)
             
         }
     }
@@ -129,11 +129,11 @@ class SetUpMealPlan: NSObject {
         let cap = Int(Double(firstWeek.TDEE) * 1.25)
         
          // 2. If you're eating significantly less than your TDEE then your starting point should (TDEE x a reasonable cut). We can't sanction silly values which can happen if we cut from a very low calorie Consumption level.
-        if Double(firstWeek.calorieConsumption) < Double(firstWeek.TDEE) * 0.8{
+        if Double(firstWeek.caloriesEaten) < Double(firstWeek.TDEE) * 0.8{
             return Int(Double(firstWeek.TDEE) * 0.8)
         } else {
             // 3. if my calories consumption last week is above the cap, then start me off on the cap, otherwise start me off on last weeks kcals minus my first cut
-            let lastWeeksCaloriesMinusACut = Int(Double(firstWeek.calorieConsumption) * Constants.standard_calorie_reduction_for_weightloss)
+            let lastWeeksCaloriesMinusACut = Int(Double(firstWeek.caloriesEaten) * Constants.standard_calorie_reduction_for_weightloss)
             return firstWeek.calorieAllowance > cap ? cap : lastWeeksCaloriesMinusACut
         }
     }
@@ -209,7 +209,7 @@ class SetUpMealPlan: NSObject {
         let user = DataHandler.getActiveUser()
         newWeek.TDEE = calculateTDEE(bio: bio, user: user)
         newWeek.dailyMeals.append(objectsIn: MealPlanAlgorithm.createMealPlans(newWeek))
-        newWeek.calorieConsumption = newWeek.calculateCalorieConsumptionForMeal()
+        newWeek.caloriesEaten = newWeek.calculateCalorieConsumptionForMeal()
         try! realm.write {
             realm.add(newWeek)
         }

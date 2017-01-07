@@ -10,7 +10,7 @@ class Week: Object {
     dynamic var feedback:FeedBack?
     dynamic var TDEE : Int = 0 // What I need
     dynamic var calorieAllowance:Int = 0 // Recommended for this stage in my journey
-    dynamic var calorieConsumption:Int = 0 // what I ate this week. Lets assume that I ate everything in my meal plan for now.
+    dynamic var caloriesEaten:Int = 0 // what I ate this week. Lets assume that I ate everything in my meal plan for now.
     
     
     func calculateCalorieConsumptionForMeal()->Int{

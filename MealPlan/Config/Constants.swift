@@ -12,7 +12,7 @@ struct Constants {
 
     static let API_URL  = BASE_URL + API_SEPERATOR + API_KEY + API_SEPERATOR
     static let BASE_URL = "https://mp0.herokuapp.com"
-    static let API_SEARCH_LIMIT = 20
+    static let API_SEARCH_LIMIT = 9
     static let API_SEARCH_OFSET = 0
     static let API_SEPERATOR = "/"
     static let API_KEY  = "api"

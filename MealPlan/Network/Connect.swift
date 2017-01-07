@@ -52,7 +52,7 @@ class Connect: NSObject {
     
     static func fetchFoodItems(_ key:String , limit:Int , offset:Int,view:UIView, onResponse:@escaping (_ items:[Food]?,_ status:Bool) -> Void)->Void{
         
-        let url = Constants.API_URL + key + Constants.API_SEPERATOR + limit.description +  Constants.API_SEPERATOR + offset.description
+        let url = Constants.API_URL + key + Constants.API_SEPERATOR + limit.description +  Constants.API_SEPERATOR + offset.description + Constants.API_SEPERATOR
         
         
         Network.executeGETWithUrl( url, andParameters: NSMutableDictionary(), andHeaders: nil, withSuccessHandler: { (operation:AFHTTPRequestOperation?,response:AnyObject?, status:Bool) -> Void in
@@ -71,7 +71,7 @@ class Connect: NSObject {
             
             }  , withFailureHandler: { (op:AFHTTPRequestOperation?, err:NSError?) -> Void in
                   onResponse(nil,false)
-            }, withLoadingViewOn: view);
+            }, withLoadingViewOn: nil);
     }
     
     

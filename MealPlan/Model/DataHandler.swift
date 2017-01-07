@@ -301,7 +301,7 @@ class DataHandler: NSObject {
     static func updateCalorieConsumption(thisWeek:Week){
         let realm = try! Realm()
         try! realm.write {
-            thisWeek.calorieConsumption = thisWeek.calculateCalorieConsumptionForMeal()
+            thisWeek.caloriesEaten = thisWeek.calculateCalorieConsumptionForMeal()
         }
     }
     /*
@@ -523,9 +523,9 @@ class DataHandler: NSObject {
     
     static func createFoodItem(_ item:Food,numberServing:Double)->FoodItem{
         let foodItem = FoodItem()
-        foodItem.food = createFood(item);
-        foodItem.numberServing = numberServing;
-        DataHandler.createFoodItem(foodItem);
+        foodItem.food = item //createFood(item)
+        foodItem.numberServing = numberServing
+        DataHandler.createFoodItem(foodItem)
         return foodItem;
     }
     
