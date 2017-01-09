@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -41,102 +40,40 @@
             <objects>
                 <viewController id="u96-wf-vhs" customClass="UserFeedbackVanilla" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="V83-ra-H47"/>
-                        <viewControllerLayoutGuide type="bottom" id="ayh-IG-L3m"/>
+                        <viewControllerLayoutGuide type="top" id="LBc-Of-iUT"/>
+                        <viewControllerLayoutGuide type="bottom" id="3lA-xe-SWf"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="sjF-dV-VRG" customClass="ExplanationScreens" customModule="MealPlan" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="MMi-iX-sCV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PqZ-YH-J4x">
-                                <rect key="frame" x="20" y="44" width="335" height="37"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTq-po-HbV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="5gf-17-NP2">
+                                <rect key="frame" x="163" y="590" width="50" height="37"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" priority="250" constant="60" id="Zlf-mf-5ir"/>
+                                    <constraint firstAttribute="width" constant="50" id="NNp-TQ-PbX"/>
                                 </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="Your meal plan has been created">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system" size="17"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <view contentMode="scaleToFill" horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qeT-qM-GM8">
-                                <rect key="frame" x="20" y="96" width="335" height="290"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQU-fW-Jyz">
-                                        <rect key="frame" x="8" y="0.0" width="319" height="60"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
-                                        </accessibility>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="6bd-5F-AJJ"/>
-                                        </constraints>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Label">
-                                                <attributes>
-                                                    <font key="NSFont" metaFont="system" size="17"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="10" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ng9-qB-sHY">
-                                        <rect key="frame" x="20" y="90" width="295" height="180"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="180" id="Xwf-w4-F7c"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
-                                <constraints>
-                                    <constraint firstItem="tQU-fW-Jyz" firstAttribute="top" secondItem="qeT-qM-GM8" secondAttribute="top" id="3pH-Uk-WLI"/>
-                                    <constraint firstAttribute="trailing" secondItem="ng9-qB-sHY" secondAttribute="trailing" constant="20" id="CA9-qQ-2h5"/>
-                                    <constraint firstItem="ng9-qB-sHY" firstAttribute="leading" secondItem="qeT-qM-GM8" secondAttribute="leading" constant="20" id="Eb6-Pn-0fc"/>
-                                    <constraint firstItem="ng9-qB-sHY" firstAttribute="top" secondItem="tQU-fW-Jyz" secondAttribute="bottom" constant="30" id="Ir5-pQ-aOO"/>
-                                    <constraint firstItem="tQU-fW-Jyz" firstAttribute="leading" secondItem="qeT-qM-GM8" secondAttribute="leadingMargin" id="JhF-lm-cSe"/>
-                                    <constraint firstItem="ng9-qB-sHY" firstAttribute="centerX" secondItem="tQU-fW-Jyz" secondAttribute="centerX" id="hnL-Xo-c30"/>
-                                    <constraint firstItem="ng9-qB-sHY" firstAttribute="bottom" secondItem="qeT-qM-GM8" secondAttribute="bottomMargin" constant="-12" id="zET-cM-lZC"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="200" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FWh-vk-0dN">
-                                <rect key="frame" x="20" y="401" width="335" height="55"/>
-                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="K9P-h9-2XP"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="showMealPlan" destination="u96-wf-vhs" eventType="touchUpInside" id="VlK-Q2-lbI"/>
-                                </connections>
-                            </button>
+                                <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" red="0.97550481560000002" green="0.049580626189999998" blue="0.3670156598" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </pageControl>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qeT-qM-GM8" firstAttribute="top" secondItem="PqZ-YH-J4x" secondAttribute="bottom" constant="15" id="0L8-Vc-dDP"/>
-                            <constraint firstItem="FWh-vk-0dN" firstAttribute="top" secondItem="qeT-qM-GM8" secondAttribute="bottom" priority="750" constant="15" id="Dzr-gU-35P"/>
-                            <constraint firstItem="PqZ-YH-J4x" firstAttribute="leading" secondItem="qeT-qM-GM8" secondAttribute="leading" id="IWx-g1-xfx"/>
-                            <constraint firstItem="FWh-vk-0dN" firstAttribute="leading" secondItem="sjF-dV-VRG" secondAttribute="leading" constant="20" id="V1X-6w-d4E"/>
-                            <constraint firstItem="PqZ-YH-J4x" firstAttribute="top" secondItem="sjF-dV-VRG" secondAttribute="topMargin" constant="44" id="V6j-X0-IDz"/>
-                            <constraint firstItem="PqZ-YH-J4x" firstAttribute="trailing" secondItem="qeT-qM-GM8" secondAttribute="trailing" id="Xdd-7G-xI9"/>
-                            <constraint firstItem="PqZ-YH-J4x" firstAttribute="leading" secondItem="sjF-dV-VRG" secondAttribute="leading" constant="20" id="jbl-qZ-rip"/>
-                            <constraint firstAttribute="trailing" secondItem="PqZ-YH-J4x" secondAttribute="trailing" constant="20" id="n4n-Ac-PHC"/>
-                            <constraint firstAttribute="trailing" secondItem="FWh-vk-0dN" secondAttribute="trailing" constant="20" id="uld-Zc-QiY"/>
+                            <constraint firstItem="qTq-po-HbV" firstAttribute="top" secondItem="MMi-iX-sCV" secondAttribute="top" id="Mif-cu-Rd1"/>
+                            <constraint firstItem="3lA-xe-SWf" firstAttribute="top" secondItem="5gf-17-NP2" secondAttribute="bottom" constant="40" id="OeC-3V-33s"/>
+                            <constraint firstAttribute="trailing" secondItem="qTq-po-HbV" secondAttribute="trailing" id="XKp-KA-Lol"/>
+                            <constraint firstItem="qTq-po-HbV" firstAttribute="bottom" secondItem="3lA-xe-SWf" secondAttribute="top" id="tgx-OI-bHG"/>
+                            <constraint firstItem="5gf-17-NP2" firstAttribute="centerX" secondItem="MMi-iX-sCV" secondAttribute="centerX" id="wn5-2B-wvc"/>
+                            <constraint firstItem="qTq-po-HbV" firstAttribute="leading" secondItem="MMi-iX-sCV" secondAttribute="leading" id="z2Y-vc-oH6"/>
                         </constraints>
-                        <connections>
-                            <outlet property="doneButton" destination="FWh-vk-0dN" id="Fds-CN-RdE"/>
-                            <outlet property="imageView" destination="ng9-qB-sHY" id="qii-2b-lzB"/>
-                            <outlet property="mainObject" destination="qeT-qM-GM8" id="FEM-f6-OBu"/>
-                            <outlet property="subText" destination="tQU-fW-Jyz" id="dVD-vx-IRR"/>
-                            <outlet property="textView" destination="PqZ-YH-J4x" id="l1o-hW-lR6"/>
-                        </connections>
                     </view>
                     <connections>
-                        <outlet property="feedbackView" destination="sjF-dV-VRG" id="lS5-UB-r0z"/>
+                        <outlet property="pageControl" destination="5gf-17-NP2" id="ap6-es-y8b"/>
+                        <outlet property="scrollView" destination="qTq-po-HbV" id="tr7-Mu-CJy"/>
+                        <outlet property="view" destination="MMi-iX-sCV" id="viQ-Uk-0Ct"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eCP-bP-LNT" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -21,12 +21,10 @@ class SetUpMealPlan: NSObject {
                 if(status == false){
 
                     // @todo show an alert that we need a alert here
-                    print("STATUS : \(status)")
-                    return;
+                    return
                 }
 
                 //Load nutritional information for these foods.
-                print("foods count : \(foods?.count)")
                 for  food in foods!{
                     _ = DataHandler.createFood(food);
                 }
@@ -36,7 +34,6 @@ class SetUpMealPlan: NSObject {
 
                 //createMeal();
                 Config.setBoolValue("isCreated", status: true);
-                print("Got it created!")
                 
             }
 
@@ -63,7 +60,6 @@ class SetUpMealPlan: NSObject {
     static func addFoodPairingsToDatabase (_ foods:[Food], json:NSArray)
     {
         
-        print("foods count: \(foods.count) json count: \(json.count)")
         let realm = try! Realm()
         for (index, food) in foods.enumerated() {
             
@@ -106,7 +102,9 @@ class SetUpMealPlan: NSObject {
     
     
     static func cutCalories(fromWeek :Week, userfoundDiet: Constants.dietEase)->Int{
+        #if debug
         print("cutCalories: \(userfoundDiet.rawValue)")
+        #endif
         switch userfoundDiet {
         case .easy:
             return Int(Double(fromWeek.caloriesEaten) * Constants.standard_calorie_reduction_for_weightloss)
@@ -164,7 +162,6 @@ class SetUpMealPlan: NSObject {
         let calender = Calendar.current
         let today = calender.startOfDay(for: withTodaysDate)
         
-        print("start date: \(withTodaysDate)")
         
         let todayPredicate = NSPredicate(format: "start_date == %@", today as NSDate)
         let mealPlanStartingToday = realm.objects(Week.self).filter(todayPredicate).first
@@ -262,10 +259,6 @@ class SetUpMealPlan: NSObject {
         let realm = try! Realm()
         let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
         let weeks = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
-        for w in weeks{
-            print("week start date: \(w.start_date) and \(w.TDEE)")
-        }
-        print("")
         return realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
     }
     
@@ -309,7 +302,10 @@ class SetUpMealPlan: NSObject {
         //BMI
         let upperLimitBMI : Double = 25.0
         let proxyForFatFreeMassInkg = heightInMetres * heightInMetres * upperLimitBMI
-        print("proxy is: \(proxyForFatFreeMassInkg)")
+        #if DEBUG
+            print("proxy is: \(proxyForFatFreeMassInkg)")
+        #endif
+        
         
         var proteinRequirement : Double = 0.0
         if aim.looseFat.value == true{
@@ -363,8 +359,6 @@ class SetUpMealPlan: NSObject {
             kConstant = Constants.femaleConstant
         default:
             print("ERROR: gender not known")
-            print("User name \(user.name)")
-            print("User gender \(user.gender)")
         }
         
         

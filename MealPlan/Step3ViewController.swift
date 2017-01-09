@@ -158,7 +158,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     
     
-    //IBAction for NextButton Clicked in Step3 VC. Saving all datas into an ProfileClass.
+    //IBAction for NextButton Clicked in Step3 VC. Saving all datas into an Bio class.
     @IBAction func step3NextButtonClicked (_ sender : AnyObject){
         DataHandler.updateLikeFoods(likeFoodValue)
         //if from Settings Tab bar View.

@@ -161,7 +161,7 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
-    //Method for Saving Values to Profile Class.
+    //Method for Saving Values to Bio Class.
     @IBAction func doneButtonClicked (_ sender : AnyObject){
         
         //Adding values to constant Class

@@ -57,7 +57,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.nutritionTable.allowsSelection = false
         self.nutritionTable.delegate = self
         let dele = navigationController?.viewControllers.first as! MPViewControllerDelegate?
-        print("dele: \(dele.debugDescription)")
         delegate = navigationController?.viewControllers.first as! MPViewControllerDelegate?
         
         
@@ -145,7 +144,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         
         if (newItemMode == false) { // existing food
-            print("this is an existing food")
             if(numServing > 0){
                 DataHandler.updateFoodItem(answer.1!, numberServing: (numServing + (answer.1?.numberServing)!))
                 DataHandler.updateCalorieConsumption(thisWeek: currentWeek!)
@@ -156,7 +154,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         else
         {
-            print("this is a new food")
             // it's a new food item but not one that is in the meal already
             if(numServing > 0){
                 DataHandler.updateFoodItem(detailItem, numberServing: numServing)

@@ -80,6 +80,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         mealPlanListTable.delegate = self
         backDateButton.isUserInteractionEnabled = false
         backDateButton.alpha = 0.5
@@ -89,11 +90,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let date2 = calendar.startOfDay(for: Date())
         let flags = NSCalendar.Unit.day
         let components = (calendar as NSCalendar).components(flags, from: date1, to: date2, options: []) // the difference in days
-        print("Dates : \(date1) and \(date2)")
         
         
         dateCount = components.day!
-        print("The difference in days = \(dateCount)")
         
         let dateForthisMealPlan = setDate()
         //meals = Array(data.meals)
@@ -539,7 +538,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         
         switch editType {
         case Constants.DELETE:
-            print("delete called")
             self.present(alertController!, animated: true, completion: {
                 let foodItem = self.meals[indexPath.section].foodItems[indexPath.row]
                 DataHandler.removeFoodItem(foodItem)
@@ -552,7 +550,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)
             })
          case Constants.EDIT:
-            print("edit called")
             let fi = meals[indexPath.section].foodItems[indexPath.row]
             DataHandler.updateFoodItem(fi, eaten: true)
             DataHandler.updateCalorieConsumption(thisWeek: self.thisWeek)

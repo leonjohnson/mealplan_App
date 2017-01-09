@@ -38,7 +38,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //To hide close button when app. loads normaly from Profile view.
+        //To hide close button when app. loads normaly from Bio view.
         closeButton.isHidden = true
 
         //Setup Default value when loading from settings Page:
@@ -106,7 +106,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     
     
     
-    //IBAction for NextButton Clicked in Step2 VC. Saving all datas into an ProfileClass.
+    //IBAction for NextButton Clicked in Step2 VC. Saving all datas into an Bio class.
     @IBAction func step2NextButtonClicked (_ sender : AnyObject){
         //Saving Values to the Varible Declared for ProfileStep2 constant class.
         if (selectedPath < 0){

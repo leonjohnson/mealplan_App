@@ -152,7 +152,6 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
     }
     
     func showmp(_ sender: UIButton){
-        print("showmp pressed: \(sender)")
         let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
         SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
         SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
@@ -162,9 +161,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
     }
     
     
-    func takeMeToMyMealPlan(_ sender: UIButton){
-        print("takeMeToMyMealPlan pressed: \(sender)")
-        
+    func takeMeToMyMealPlan(_ sender: UIButton){        
         let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
         SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
         SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)

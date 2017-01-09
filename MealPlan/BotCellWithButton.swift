@@ -51,7 +51,6 @@ class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
     }
     
     @IBAction func buttonTapped(button: UIButton) {
-        print("print")
     }
     
 

@@ -60,7 +60,6 @@ class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITa
     }
     
     func rowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
-        print("row selected in Outcell: \(labelValue)")
         botDelegate?.originalrowSelected!(labelValue: labelValue, withQuestion: withQuestion, index:index, addOrDelete:addOrDelete)
     }
     
@@ -94,8 +93,9 @@ class outCells: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("TABLE SELECTED .")
-        
+        #if debug
+            print("TABLE SELECTED .")
+        #endif
         let currentCell = tableView.cellForRow(at: indexPath)
         let currentRowAccessory = table.cellForRow(at: indexPath)?.accessoryType
         

@@ -204,26 +204,6 @@ struct Constants {
     
     static let vegetablesAsPercentageOfCarbs = 0.15
     
-    //BOT QUESTIONS
-    
-        
-    
-    
-    /*
-    static let BOT_QUESTION_NAME = "Hi! What is the full name of the food?" //name
-    static let BOT_QUESTION_PRODUCER = "Who makes this product?" // manufacter, don't know, blank, some other unuseful answer
-    static let BOT_QUESTION_SERVING_TYPE = "For the nutritional information you're going to enter is it per:\n1.100g \n2.100ml\n3.Slice\n4.Item (such as per banana or per apple)? \nPlease enter the relevant number" //1,2,3 or 4
-    static let BOT_QUESTION_CALORIES = "Thanks. How many calories are in it?"
-    static let BOT_QUESTION_FAT = "grams of fat?" //per 100g or 100ml
-    static let BOT_QUESTION_SATURATED_FAT = "grams of saturated fat?"
-    static let BOT_QUESTION_CARBOHYDRATES = "and carbohydrates?"
-    static let BOT_QUESTION_SUGAR = "of which are sugar? (type n/a if it's not labelled)"
-    static let BOT_QUESTION_FIBRE = "and fibre? (type n/a if it's not labelled)"
-    static let BOT_QUESTION_PROTEIN = "how much protein does this item have?"
-    static let BOT_QUESTION_FOOD_TYPE = "Please help me categorise this item. \n\nWhich of the following numbers apply to this item? \n\n1.It's a drink 2. It's a fizzy drink\n3.It's a fruit \n4.It's a vegetable \n5.I would eat this at breakfast \n6.I would only eat this at breakfast \n7.This is a type of fish \n8.This is a condiment \n9.None of the above "
-    static let BOT_QUESTION_DONE = "Thanks! You're all done now."
-    */
-    
     
     static let servingSizeBotQuestionMapping : [String:String] = [
         "100g": Constants.grams,
@@ -257,23 +237,6 @@ struct Constants {
         BotData.NEW_FOOD.saturated_fat.question,
         BotData.NEW_FOOD.sugar.question,
         BotData.NEW_FOOD.fibre.question]
-    
-    /*
-     BotData.NEW_FOOD.name.validation,
-     BotData.NEW_FOOD.producer.validation,
-     BotData.NEW_FOOD.serving_type.validation,
-     BotData.NEW_FOOD.calories.validation,
-     BotData.NEW_FOOD.fat.validation,
-     BotData.NEW_FOOD.saturated_fat.validation,
-     BotData.NEW_FOOD.carbohydrates.validation,
-     BotData.NEW_FOOD.sugar.validation,
-     BotData.NEW_FOOD.fibre.validation,
-     BotData.NEW_FOOD.protein.validation,
-     BotData.NEW_FOOD.food_type.validation,
-     BotData.NEW_FOOD.ending.validation]
-    */
-    
-    
     
     struct CellIdentifiers {
         static let Blue = "BlueCellIdentifier"

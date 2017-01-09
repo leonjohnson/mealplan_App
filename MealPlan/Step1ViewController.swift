@@ -433,7 +433,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //Alert for Name if char. length is less than 2 or empty.
         if (trimmed.characters.count < 2 || nameText.text == ""){
             // create the alert
-            let alert = UIAlertController(title: "", message: "Name is not valid", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "Please enter your name", preferredStyle: UIAlertControllerStyle.alert)
             
             // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -445,7 +445,6 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         //Alert for Name if having special chara. expect listed below.
             let regex = try! NSRegularExpression(pattern: ".*[^A-Za-z0-9. ].*", options: NSRegularExpression.Options())
             if regex.firstMatch(in: trimmed, options: NSRegularExpression.MatchingOptions(), range:NSMakeRange(0, trimmed.characters.count)) != nil {
-               // print("could not handle special characters")
                 
             // create the alert
             let alert = UIAlertController(title: "", message: "Name is not valid", preferredStyle: UIAlertControllerStyle.alert)
@@ -535,7 +534,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         bio.numberOfDailyMeals = eatTimeValue!
         bio.howLong = weekTimeValue!
         
-        //All the datas should be updated to Profile class
+        //All the datas should be updated to Bio class
         DataHandler.updateUser(user);
         DataHandler.updateStep1(bio);
         

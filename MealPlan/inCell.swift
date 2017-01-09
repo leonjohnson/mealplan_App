@@ -29,7 +29,9 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        #if debug
         print("/n PREPARING INCELL FOR REUSE!")
+        #endif
         
         /*
             self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x,
@@ -78,7 +80,6 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     }
     
     func rowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
-        print("row selected in INCELL: \(labelValue)")
         botDelegate?.originalrowSelected!(labelValue: labelValue, withQuestion: withQuestion, index:index, addOrDelete:addOrDelete)
     }
     

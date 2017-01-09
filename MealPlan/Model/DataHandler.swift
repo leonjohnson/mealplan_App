@@ -3,7 +3,7 @@ import RealmSwift
 
 class DataHandler: NSObject {
     
-    //MARK: Data Handler For Profile
+    //MARK: Data Handler For Biographical class
     
     static func userExists()->Bool?{
         let realm = try! Realm()
@@ -52,10 +52,9 @@ class DataHandler: NSObject {
                 
             }
         } else {
-            print("error updating weight.")
         }
     }
-    //MARK: Data Handler For Profile
+    //MARK: Data Handler For Foods
     static func getLikeFoods()->FoodsLiked{
         let realm = try! Realm()
         let profile = realm.objects(FoodsLiked.self).first
@@ -70,7 +69,7 @@ class DataHandler: NSObject {
         }
     }
     
-    //MARK: Data Handler For Profile
+    //MARK: Data Handler For Foods
     static func getDisLikedFoods()->FoodsDisliked{
         let realm = try! Realm()
         let profile = realm.objects(FoodsDisliked.self).first
@@ -138,7 +137,6 @@ class DataHandler: NSObject {
             profile.numberOfDailyMeals         = bio.numberOfDailyMeals
             profile.looseFat.value          = bio.looseFat.value
             profile.gainMuscle.value        = bio.gainMuscle.value
-            profile.addMoreDefinition.value = bio.addMoreDefinition.value
             profile.howLong           = bio.howLong
             
             profile.heightMeasurement = bio.heightMeasurement
@@ -214,7 +212,6 @@ class DataHandler: NSObject {
     }
     
     static func deleteFutureMealPlans(){
-        print("about to delete future meal plans")
         let objectsToDelete = SetUpMealPlan.getThisWeekAndNext()
         let realm = try! Realm()
         try! realm.write {
@@ -225,7 +222,6 @@ class DataHandler: NSObject {
     static func deleteThisWeeksMealPlan(){
         
         if let objectsToDelete = SetUpMealPlan.getThisWeekAndNext().first {
-            print("about to this weeks meal plans with start date: \(objectsToDelete.start_date)")
             let realm = try! Realm()
             try! realm.write {
                 realm.delete(objectsToDelete)
@@ -258,12 +254,10 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             realm.add(meal)
-            //print("creating Meal \(meal.name )")
         }
     }
     
     static func addFoodItemToMeal(_ meal:Meal,foodItem:FoodItem){
-        print("addFoodItemToMeal called")
         
         // Check if meal contains food from foodItem
         
@@ -276,7 +270,6 @@ class DataHandler: NSObject {
         }
         
         if foodItemToUpdate != nil{
-            print(" found the same item in this meal. Going to update instead to: \((foodItemToUpdate?.numberServing)! + foodItem.numberServing ))")
             updateFoodItem(foodItemToUpdate!,numberServing:((foodItemToUpdate?.numberServing)! + foodItem.numberServing ))
             return
         }
@@ -316,7 +309,6 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             realm.add(foodItem)
-            print("creating FoodItem \(foodItem.food!.name )")
         }
         
     }
@@ -324,7 +316,6 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             foodItem.numberServing = numberServing
-            print("updating FoodItem \(foodItem.food!.name )")
         }
     }
     
@@ -341,12 +332,11 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             lastWeek.feedback = feedback
-            print("updating lastWeeks feedback")
         }
     }
     
     
-    //MARK: Data Handler For Profile
+
     static func getFood(_ pk:Int)->Food?{
         let realm = try! Realm()
         let object = realm.objects(Food.self).filter("pk = "+pk.description).first
@@ -356,7 +346,6 @@ class DataHandler: NSObject {
             return  nil;
         }
     }
-    //MARK: Data Handler For Profile
     static func getFoodRandam(_ pk:Int)->Food?{
         let realm = try! Realm()
         let object = realm.objects(Food.self);
@@ -386,7 +375,6 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             realm.add(food)
-            print("creating Food \(food.name )")
         }
         return food
         

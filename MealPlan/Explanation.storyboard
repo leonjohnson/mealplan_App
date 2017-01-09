@@ -42,9 +42,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="b0s-Mh-d8K" secondAttribute="bottom" constant="40" id="2hn-Ds-hqh"/>
                             <constraint firstItem="34L-Oj-QbE" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7eD-5n-xZC"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="34L-Oj-QbE" secondAttribute="bottom" id="E0d-VZ-kwa"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="b0s-Mh-d8K" secondAttribute="bottom" constant="40" id="KiB-Px-cbx"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="34L-Oj-QbE" secondAttribute="bottom" id="K5w-ed-02E"/>
                             <constraint firstItem="b0s-Mh-d8K" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SGS-Aa-QTs"/>
                             <constraint firstAttribute="trailing" secondItem="34L-Oj-QbE" secondAttribute="trailing" id="bla-6m-LZi"/>
                             <constraint firstItem="34L-Oj-QbE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lON-8H-2ic"/>

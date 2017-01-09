@@ -74,7 +74,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             answers = BotData.FEEDBACK.answers
             validationType = BotData.FEEDBACK.validationType
         default:
-            print("no bot type sent")
             return
         }
         if botType == .addNewFood{
@@ -173,7 +172,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             if validateAnswer() == true{
                 addMessage(withId: self.senderId, name: "t", text: text)
             } else {
-                print("Not a valid answer")
             }
             
             if message.text.localizedLowercase.contains("go back") && messages.count > 3{
@@ -222,10 +220,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             case .addNewFood:
                 createNewFoodFromConversation()
             case .feedback:
-                print("feedback type of bot")
                 saveFeedbackForTheWeek()
             case .unstated:
-                print("this bot type is unknown")
                 return
             }
             takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
@@ -252,10 +248,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     
     func originalrowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
-        print("PING : originalrowSelected called.")
         
         guard var indexForAnswer = questions.index(of: withQuestion) else {
-            print("WIRING ERROR")
             return
         }
         
@@ -264,11 +258,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         if addOrDelete == UITableViewCellAccessoryType.none{
             answers[indexForAnswer].removeObject(labelValue)
-            print("deleted : \(labelValue)")
         }
         if addOrDelete == UITableViewCellAccessoryType.checkmark{
-            print("tapped checkmark")
-            
             if BotData.NEW_FOOD.food_type.question == withQuestion {
                 let indexOfSelectedOptionInFoodTypeList = BotData.NEW_FOOD.food_type.tableViewList.index(of: labelValue)
                 entryValue = Constants.FOOD_TYPES[indexOfSelectedOptionInFoodTypeList!]
@@ -288,11 +279,9 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 
             }
             
-            print("entryValue of selected item : \(entryValue)")
             answers[indexForAnswer].append(entryValue)
             answers[indexForAnswer].removeFirst()
         }
-        print("Operation = \(addOrDelete.rawValue))")
         
         if questionIndex == indexForAnswer{
             // we've tapped a row in a table that is the answer to the most progressed question yet
@@ -367,7 +356,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         cell.textView.textColor = UIColor.black
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             let tableViewRowData = options[row/2]
-            print("tableViewRowData: \(tableViewRowData)")
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "in", for: indexPath) as! inCell
             //cellWithTableview.table.delegate = self
             
@@ -377,7 +365,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
-            print("size of bubble: \(incomingBubbleImageView.messageBubbleImage.size) and size of cell : \(cellWithTableview.frame.size)")
             cellWithTableview.backgroundColor = UIColor.clear
             cellWithTableview.botDelegate = self
             
@@ -387,7 +374,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             
         } else if Constants.questionsThatRequireButtons.contains(message.text!) {
             let cellWithButton = collectionView.dequeueReusableCell(withReuseIdentifier: "button", for: indexPath) as! BotCellWithButton
-            print("buttonText: \(buttonText)")
             cellWithButton.button.setTitle(buttonText[row/2], for: .normal)
             cellWithButton.backgroundColor = UIColor.clear
             cellWithButton.botDelegate = self
@@ -396,7 +382,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             return cellWithButton
         }
           else {
-            print("Size of cell : \(cell.frame.size)")
         }
         
         
@@ -421,7 +406,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             return outgoingBubbleImageView
         }
         else {
-            print("returning incomingBubbleImageView\(incomingBubbleImageView.messageBubbleImage)")
             return incomingBubbleImageView
         }
     }
@@ -482,41 +466,27 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             
             feedback.weightMeasurement = Double(answers[0].first!)!
             // using subscript notation as the text to this question has been changed but I'm confident that it's the first one
-            print("about to add weightMeasurement of \(feedback.weightMeasurement)")
             
             if let hungerIndex = questions.index(of: BotData.FEEDBACK.howHungryWereYou.question) {
                 feedback.hungerLevels = answers[hungerIndex].first!
-                print("about to add hungerLevels")
             }
-            /*
-            if let didItHelpedIndex = questions.index(of: BotData.FEEDBACK.howWasLastWeek.question) {
-                feedback.didItHelped = (answers[didItHelpedIndex].first == "true") ? true : false
-                print("about to add didItHelped")
-            }
-             */
+
             
             if let easeOfFollowingIndex = questions.index(of: BotData.FEEDBACK.easeOfFollowingDiet.question) {
-                print("easeOfFollowingIndex - entered! With \(feedback.easeOfFollowingDiet)\n\n")
-                
-                print("answers entered! \(answers[easeOfFollowingIndex].first!) and easeOfFollowingIndex:\(easeOfFollowingIndex)\n\n")
-                print("I have: \(Constants.dietEase.ok.rawValue) and \(Constants.dietEase.ok)")
+
                 switch answers[easeOfFollowingIndex].first! {
                 
                 case Constants.dietEase.easy.rawValue:
                     feedback.easeOfFollowingDiet = Constants.dietEase.easy.rawValue
-                    print("hit easy")
                 
                 case Constants.dietEase.hard.rawValue:
                     feedback.easeOfFollowingDiet = Constants.dietEase.hard.rawValue
-                    print("hit hard")
                 
                 case Constants.dietEase.ok.rawValue:
                     feedback.easeOfFollowingDiet = Constants.dietEase.ok.rawValue
-                    print("hit ok")
                 
                 default:
                     feedback.easeOfFollowingDiet = Constants.dietEase.unstated.rawValue
-                    print("hit default")
                 }
             }
             
@@ -559,8 +529,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 
                 var newCaloriesAllowance = 0
                 if(Config.getBoolValue(Constants.STANDARD_CALORIE_CUT) == true){
-                    print("last weeks ease of diet: \(lastWeek?.feedback?.easeOfFollowingDiet)")
-                    print("last weeks ease of diet: \(lastWeek?.start_date)")
                     
                     newCaloriesAllowance = SetUpMealPlan.cutCalories(fromWeek: lastWeek!, userfoundDiet: Constants.dietEase(rawValue: feedback.easeOfFollowingDiet)!)
                 } else {
@@ -577,7 +545,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 takeUserToMealPlan(explainerScreenTypeIs: .congratulations)
                 return
             case 2:
-                print("2 weeks ahead")
                 return
             default:
                 return // this could be because the user is between the 8th day and 12th day of a meal plan.
@@ -588,7 +555,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     func takeUserToMealPlan(explainerScreenTypeIs:Constants.explainerScreenType){
         
-        print("takeUserToMealPlan: \(explainerScreenTypeIs)")
         
         if explainerScreenTypeIs == .none{
             //performSegue(withIdentifier: "showMealPlan", sender: explainerScreenTypeIs)
@@ -597,7 +563,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             self.navigationController?.isNavigationBarHidden = true
             
         } else {
-            print("about to go to explainer screen from bot controller with: \(explainerScreenTypeIs)")
             performSegue(withIdentifier: "giveUserFeedback", sender: explainerScreenTypeIs)
         }
     }
@@ -638,7 +603,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         
         if let caloriesIndex = questions.index(of: BotData.NEW_FOOD.calories.question) {
-            print("\(answers[caloriesIndex])")
             food.calories = Double(answers[caloriesIndex].first!)!
         }
         
@@ -685,13 +649,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         if let foodTypeIndex = questions.index(of: BotData.NEW_FOOD.food_type.question){
             let realm = try! Realm()
             let foodTypesSelected = answers[foodTypeIndex]
-            print("foodTypesSelected: \(foodTypesSelected)")
             let foodTypesFound = Set(realm.objects(FoodType.self).filter("name IN %@", foodTypesSelected))
-            print("realm objects found: \(foodTypesFound)")
             food.foodType.append(contentsOf: foodTypesFound)
         }
         
-        print("Food I want to create: \(food)")
         
         _ = DataHandler.createFood(food)
         

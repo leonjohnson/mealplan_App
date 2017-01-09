@@ -37,8 +37,9 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         addNewFoodButton.layer.cornerRadius = 15
         
                 
-        addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
+        //addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
         
+        addNewFoodButton.isHidden = true
     }
 
     
@@ -108,7 +109,6 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(filterdData?.count == indexPath.row){
-           // print( "Search online")
             searchOnline(filterText)
         }else{
             let food = filterdData![indexPath.row];
@@ -176,7 +176,6 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
                 //Move now
                 self.filterdData = items
                 self.searchTable?.reloadData()
-                print("inside search online: \(status)")
             }
             else{
                 // create the alert

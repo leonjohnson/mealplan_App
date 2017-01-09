@@ -5,15 +5,12 @@ class Biographical: Object {
     
     dynamic var numberOfDailyMeals: Int = 0
     dynamic var howLong: Int = 0
-    
-    dynamic var muscularity: String? = nil
     dynamic var activityLevelAtWork: String? = nil
     
     let dietaryRequirement = List<DietSuitability>()
     
     var looseFat = RealmOptional<Bool>()
     var gainMuscle = RealmOptional<Bool>()
-    var addMoreDefinition = RealmOptional<Bool>()
     
     dynamic var numberOfResistanceSessionsEachWeek = 0
     dynamic var numberOfCardioSessionsEachWeek = 0

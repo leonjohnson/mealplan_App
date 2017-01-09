@@ -44,9 +44,7 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     
             for item in arrayOfObjects {
             dislikeFoodValue.add(item)
-            print("added object....")
             }
-            print("count in arrayOfLikedObjects: %f", arrayOfLikedObjects.count)
             dislikeFoodValue.removeObjects(in: arrayOfLikedObjects)
         }
         

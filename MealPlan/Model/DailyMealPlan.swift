@@ -96,11 +96,9 @@ class DailyMealPlan: Object {
                          Constants.CARBOHYDRATES: abs((totalCarbs) - (macros[1].value)),
                          Constants.FATS: abs((totalFats) - (macros[2].value))]
  */
-        print("over Acceptable Limit By: \(overAcceptableLimitBy)")
         
         let significantVariance = (overAcceptableLimitBy[Constants.CARBOHYDRATES]! > 0.0 || overAcceptableLimitBy[Constants.PROTEINS]! > 0.0 || overAcceptableLimitBy[Constants.FATS]! > 0.0) ? true : false
         
-        print("returning with: \(significantVariance)")
         return (significantVariance, overAcceptableLimitBy)
     }
     

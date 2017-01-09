@@ -85,7 +85,6 @@ class ProfileTests: XCTestCase {
             
             let mealPlansTDEE = Float(SetUpMealPlan.calculateTDEE(bio: biographicalObject, user: userObject))
             
-            print(mealPlansTDEE)
             
             let AdjustedTDEE = (parsedObject as! NSMutableDictionary).value(forKey: "AdjustedTDEE") as! Float
             let TDEE =  (parsedObject as! NSMutableDictionary).value(forKey: "TDEE")  as! Float

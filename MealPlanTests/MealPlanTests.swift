@@ -96,7 +96,6 @@ class MealPlanTests: XCTestCase {
                     //var newCaloriesAllowance = 0
                     
                     guard currentWeek != nil else {
-                        print("Error at 2")
                         return
                     }
                     var STANDARD_CALORIE_CUT : Bool?
@@ -224,7 +223,10 @@ class MealPlanTests: XCTestCase {
             totalCalories = mealPlan.totalCalories()
         }
         
-        print("total carbs: \(totalCarbohydrates), total protein: \(totalProtein), total fats: \(totalFats)")
+        #if debug
+            print("total carbs: \(totalCarbohydrates), total protein: \(totalProtein), total fats: \(totalFats)")
+        #endif
+        
         totalProtein = totalProtein/Double(mealPlans.count)
         totalCarbohydrates = totalCarbohydrates/Double(mealPlans.count)
         totalFats = totalFats/Double(mealPlans.count)
