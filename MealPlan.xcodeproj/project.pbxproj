@@ -642,7 +642,7 @@
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 644582FWFB;
 						LastSwiftMigration = 0810;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1119,7 +1119,7 @@
 				CODE_SIGN_ENTITLEMENTS = MealPlan/MealPlan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Leon Johnson (644582FWFB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 644582FWFB;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1129,8 +1129,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "977437a7-19a4-455d-b8fd-f324c9058b9a";
-				PROVISIONING_PROFILE_SPECIFIER = mp;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MealPlan-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "MealPlan/JSQ-Bridging-Header.h";
@@ -1149,7 +1149,7 @@
 				CODE_SIGN_ENTITLEMENTS = MealPlan/MealPlan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Leon Johnson (644582FWFB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 644582FWFB;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1159,8 +1159,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "977437a7-19a4-455d-b8fd-f324c9058b9a";
-				PROVISIONING_PROFILE_SPECIFIER = mp;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MealPlan-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "MealPlan/JSQ-Bridging-Header.h";

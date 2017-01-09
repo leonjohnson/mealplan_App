@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             
             let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
             let mealPlanExistsForThisWeek = response.yayNay
-            let testCurrentWeek = Week().currentWeek()
             
             if mealPlanExistsForThisWeek == false{
                 askForNewDetails(doesMealPlanExistForThisWeek: response)
@@ -99,6 +98,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        //Notifications
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
+        UIApplication.shared.registerForRemoteNotifications()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
@@ -106,6 +109,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         //Fabric.with([Crashlytics.self])
         return true
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        FBSDKAppEvents.logPushNotificationOpen(userInfo)
+    }
+    
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
+        FBSDKAppEvents.logPushNotificationOpen(userInfo, action: identifier)
+    }
+    
+    
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        FBSDKAppEvents.setPushNotificationsDeviceToken(deviceToken)
+        
+        //let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        //print("APNs device token: \(deviceTokenString)")
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("APNs registration failed: \(error)")
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
