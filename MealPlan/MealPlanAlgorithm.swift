@@ -1018,9 +1018,11 @@ class MealPlanAlgorithm : NSObject{
                     let highFatOilPredicate = NSPredicate(format: "fats > 80 AND ANY SELF.oftenEatenWith IN %@", dailyMealPlan.foods())
                     
                     
-                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates:[ highFatOilPredicate, superHighFatPredicate, /*notCondiment*/ dietaryRequirementPredicate])
+                    let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates:[ highFatOilPredicate, superHighFatPredicate, /*notCondiment*/])
                     
                     let extraFatFoods = realm.objects(Food.self).filter(fPredicate).sorted(byProperty: Constants.FATS.lowercased(), ascending: true)
+                    
+                    let extraFatFoodsConsideringMyDiet = extraFatFoods.filter(dietaryRequirementPredicate)
                     
                     //TODO: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
                     
@@ -1036,7 +1038,7 @@ class MealPlanAlgorithm : NSObject{
                         break breakLabel
                     }
                     else if deficient < 20{
-                        for fo in extraFatFoods{
+                        for fo in extraFatFoodsConsideringMyDiet{
                             if fo.alwaysEatenWithOneOf.count == 0 && [Constants.ml, Constants.grams].contains((fo.servingSize?.name)!){
                                 //food = fo //TODO - THIS IS NOT A RANDOM SELECTION
                                 //print("LESS than 20g of FAT. \n")
@@ -1045,7 +1047,7 @@ class MealPlanAlgorithm : NSObject{
                             }
                         }
                     } else {
-                        for fo in extraFatFoods.reversed(){
+                        for fo in extraFatFoodsConsideringMyDiet.reversed(){
                             if fo.alwaysEatenWithOneOf.count == 0 && [Constants.ml, Constants.grams].contains((fo.servingSize?.name)!){
                                 //food = fo //TO - THIS IS NOT A RANDOM SELECTION
                                 //break
