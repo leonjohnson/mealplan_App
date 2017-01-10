@@ -97,6 +97,13 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.inputToolbar.contentView?.rightBarButtonItemWidth = CGFloat(34.0)
         self.inputToolbar.contentView?.rightBarButtonItem = rightButton
         
+        // MARK: ### SET SEND BUTTON AS IMAGE
+        sideButton = UIButton(frame: CGRect.zero)
+        let keyBoardImage = UIImage(named: "keyboard_filled")
+        sideButton?.setImage(keyBoardImage, for: UIControlState.normal)
+        self.inputToolbar.contentView?.leftBarButtonItemWidth = CGFloat(34.0)
+        self.inputToolbar.contentView?.leftBarButtonItem = sideButton
+        
         
         // MARK: ### DISABLE COPY/PASTE
         // 1. add gesture recognizer to know when text view is tapped
@@ -121,8 +128,11 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         //sideButton = UIButton(type: .custom)
         //sideButton?.setImage(image, for: .normal)
         //sideButton?.frame = CGRect(x: 0, y: 0, width: (sideButton?.frame.width)!, height: (sideButton?.frame.height)!)
+        /*
+        sideButton = UIButton()
         sideButton?.imageView?.image = UIImage(named:"keyboard")
         sideButton?.sizeToFit()
+         */
         
         
         
@@ -233,15 +243,16 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         let newKeyboardType = (currentKeyboard == .default) ? UIKeyboardType.decimalPad : UIKeyboardType.default
         //page1Content.imageView.image = UIImage(named:"winner")
-        
+        var newKeyboardImage : UIImage = UIImage()
         if currentKeyboard == .decimalPad{
-            sideButton?.imageView?.image = UIImage(named:"keyboard")
+            newKeyboardImage = UIImage(named: "number_keypad")!
+            
         }
         if currentKeyboard == .default{
-            sideButton?.imageView?.image = UIImage(named:"number_keypad")
+            newKeyboardImage = UIImage(named: "keyboard_filled")!
         }
         
-        //sideButton?.imageView.im == UIImage(named:"winner") ? UIImage(named: "keyboard") : UIImage(named: "number_keypad")
+        sideButton?.setImage(newKeyboardImage, for: UIControlState.normal)
         self.inputToolbar.contentView.textView.keyboardType = newKeyboardType
         self.inputToolbar.contentView.textView.reloadInputViews()
     }

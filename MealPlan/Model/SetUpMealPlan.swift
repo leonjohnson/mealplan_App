@@ -300,7 +300,7 @@ class SetUpMealPlan: NSObject {
         
         
         //BMI
-        let upperLimitBMI : Double = 25.0
+        let upperLimitBMI : Double = 22
         let proxyForFatFreeMassInkg = heightInMetres * heightInMetres * upperLimitBMI
         #if DEBUG
             print("proxy is: \(proxyForFatFreeMassInkg)")
@@ -384,7 +384,7 @@ class SetUpMealPlan: NSObject {
             sessionsCount = 7 //min 0, max 7
         }
         let jobIntensity = Double(Constants.activityLevelsAtWork.index(of: bio.activityLevelAtWork!)!) + 1.0 //min 1, max 4
-        let workOutIntensity = 3.0 //Upper end of between 1 and 4
+        let workOutIntensity = 2.0 //Upper end of between 1 and 4
         let n = Int(ceil((sessionsCount * workOutIntensity) + (jobIntensity))) //min 1, max 22
         
         assert(n > 0 && n < 28, "Error in the \(#function) as number of ")

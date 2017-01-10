@@ -4,8 +4,8 @@ class Introduction: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Constants.MP_BLUE
-        drawGradient()
+        //self.view = launchBkgrd()
+        //self.view.backgroundColor = Constants.MP_BLUE
     }
     
     override var prefersStatusBarHidden : Bool {

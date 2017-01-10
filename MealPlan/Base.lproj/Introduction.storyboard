@@ -38,7 +38,7 @@
                         <viewControllerLayoutGuide type="top" id="OKd-JD-nqf"/>
                         <viewControllerLayoutGuide type="bottom" id="ksU-zw-fNi"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="z7P-xY-hCb">
+                    <view key="view" contentMode="scaleToFill" id="z7P-xY-hCb" customClass="launchBkgrd" customModule="MealPlan" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

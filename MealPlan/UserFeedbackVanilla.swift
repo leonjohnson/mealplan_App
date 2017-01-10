@@ -118,18 +118,6 @@ class UserFeedbackVanilla: UIViewController, UIScrollViewDelegate, UIPageViewCon
         frame.origin.x = (frame.size.width * (page * 1.0))
         frame.origin.y = 0
         self.scrollView.scrollRectToVisible(frame, animated: true)
-        //if Int(page) == pageControl.numberOfPages{}
-        if pageControl.currentPage == pageControl.numberOfPages - 1 {
-            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            UIApplication.shared.registerUserNotificationSettings(settings)
-            UIApplication.shared.registerForRemoteNotifications()
-            #if debug
-                print("on the notification screen")
-            #endif
-        }
-        
-
-        
     }
 
 }

@@ -25,6 +25,7 @@
 		F74F96DB1E083A2B009ADA2D /* ExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74F96DA1E083A2B009ADA2D /* ExplanationViewController.swift */; };
 		F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */; };
 		F75F3E641E23C30E00B596E8 /* FoodChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75F3E631E23C30E00B596E8 /* FoodChange.swift */; };
+		F75F3E661E24778A00B596E8 /* launchBkgrd.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75F3E651E24778A00B596E8 /* launchBkgrd.swift */; };
 		F78AB72C1DBE6DA400BB40EA /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */; };
 		F78AB72D1DBE6DA400BB40EA /* ActivityLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */; };
 		F78AB72E1DBE6DA400BB40EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6E31DBE6DA400BB40EA /* AppDelegate.swift */; };
@@ -158,6 +159,7 @@
 		F74F96DA1E083A2B009ADA2D /* ExplanationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplanationViewController.swift; sourceTree = "<group>"; };
 		F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProgressMaster.swift; sourceTree = "<group>"; };
 		F75F3E631E23C30E00B596E8 /* FoodChange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodChange.swift; sourceTree = "<group>"; };
+		F75F3E651E24778A00B596E8 /* launchBkgrd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = launchBkgrd.swift; sourceTree = "<group>"; };
 		F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		F78AB6E21DBE6DA400BB40EA /* ActivityLevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLevelViewController.swift; sourceTree = "<group>"; };
 		F78AB6E31DBE6DA400BB40EA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 			children = (
 				F74F96DC1E083A9D009ADA2D /* ExplanationScreens */,
 				F78AB6ED1DBE6DA400BB40EA /* bkgrd.swift */,
+				F75F3E651E24778A00B596E8 /* launchBkgrd.swift */,
 				F7A61B6B1E12E2D70099DE42 /* MP_Button.swift */,
 				F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */,
 				F7E3C5571DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift */,
@@ -883,6 +886,7 @@
 				F78AB75B1DBE6DA400BB40EA /* Week.swift in Sources */,
 				F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */,
 				F78AB7381DBE6DA400BB40EA /* Config.swift in Sources */,
+				F75F3E661E24778A00B596E8 /* launchBkgrd.swift in Sources */,
 				F7E3C55E1DE5F6EF00DA2696 /* String+Size.swift in Sources */,
 				F78AB73D1DBE6DA400BB40EA /* MealPlanAlgorithm.swift in Sources */,
 				F78AB72F1DBE6DA400BB40EA /* ArrayExtension.swift in Sources */,

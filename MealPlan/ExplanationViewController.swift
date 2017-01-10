@@ -15,7 +15,7 @@ extension ExplanationScreens {
 
 
 
-class ExplanationViewController: UIViewController,UIScrollViewDelegate{
+class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageViewControllerDelegate{
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var pageControl: UIPageControl!
@@ -124,27 +124,32 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         self.pageControl.currentPage = 0
         self.pageControl.currentPageIndicatorTintColor = Constants.MP_GREEN
         self.pageControl.pageIndicatorTintColor = Constants.MP_DARK_GREY
+        
+        
     }
-
+    
+    
     
  
     
     @IBAction func pageChanged(_ sender: UIPageControl) {
-    
+        print("insdier")
         let page : CGFloat = CGFloat(sender.currentPage);
         var frame = self.scrollView.frame;
         frame.origin.x = (frame.size.width * (page * 1.0))
         frame.origin.y = 0
         self.scrollView.scrollRectToVisible(frame, animated: true)
         //if Int(page) == pageControl.numberOfPages{}
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         
-        if Int(page) == pageControl.numberOfPages - 1 {
-            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        #if debug
+            print("on the notification screen")
+        #endif
+        
+        if UIApplication.shared.responds(to:#selector(getter: UIApplication.isRegisteredForRemoteNotifications)) {
+            print("yep.")
             UIApplication.shared.registerUserNotificationSettings(settings)
             UIApplication.shared.registerForRemoteNotifications()
-            #if debug
-                print("on the notification screen")
-            #endif
         }
     
     }
