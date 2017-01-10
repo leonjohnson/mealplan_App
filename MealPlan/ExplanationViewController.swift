@@ -41,7 +41,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
         page1Content.imageView.image = UIImage(named:"winner")
 
         page1Content.textView.attributedText = page1Content.screen1Text
-        page1Content.subText.attributedText = NSAttributedString(string: "You don’t need to count calories or macronutrients, it’s all been done for you. You simply follow the meal plan", attributes:attributes)
+        page1Content.subText.attributedText = NSAttributedString(string: "You don’t need to count calories or macronutrients, it’s all been done for you, simply follow the meal plan", attributes:attributes)
         let page1 = UIView(frame: CGRect(x:0, y:0,width:scrollViewWidth, height:scrollViewHeight))
         page1.addSubview(page1Content)
         
@@ -90,7 +90,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
         // Page 6 of scroll view
         let page6Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
         page6Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
-        page6Content.imageView.image = UIImage(named:"running")
+        page6Content.imageView.image = UIImage(named:"notification")
         page6Content.textView.attributedText = page6Content.screen6Text
         page6Content.subText.attributedText = page6Content.screen6SubText
         let page6 = UIView(frame: CGRect(x:scrollViewWidth*5, y:0,width:scrollViewWidth*3, height:scrollViewHeight))
@@ -133,38 +133,39 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
  
     
     @IBAction func pageChanged(_ sender: UIPageControl) {
-        print("insdier")
         let page : CGFloat = CGFloat(sender.currentPage);
         var frame = self.scrollView.frame;
         frame.origin.x = (frame.size.width * (page * 1.0))
         frame.origin.y = 0
         self.scrollView.scrollRectToVisible(frame, animated: true)
         //if Int(page) == pageControl.numberOfPages{}
-        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         
-        #if debug
-            print("on the notification screen")
-        #endif
-        
-        if UIApplication.shared.responds(to:#selector(getter: UIApplication.isRegisteredForRemoteNotifications)) {
-            print("yep.")
-            UIApplication.shared.registerUserNotificationSettings(settings)
-            UIApplication.shared.registerForRemoteNotifications()
-        }
-    
     }
     
     
     //MARK: UIScrollView Delegate
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
+        
         // Test the offset and calculate the current page after scrolling ends
         let pageWidth:CGFloat = scrollView.frame.width
         let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
         // Change the indicator
         self.pageControl.currentPage = Int(currentPage)
+        
+        if pageControl.currentPage == pageControl.numberOfPages - 1{
+            
+        }
     }
     
     func showmp(_ sender: UIButton){
+        #if debug
+            print("on the notification screen")
+        #endif
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        if UIApplication.shared.responds(to:#selector(getter: UIApplication.isRegisteredForRemoteNotifications)) {
+            UIApplication.shared.registerUserNotificationSettings(settings)
+            UIApplication.shared.registerForRemoteNotifications()
+        }
         let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
         SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
         SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
@@ -173,17 +174,6 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
         appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
     }
     
-    
-    func takeMeToMyMealPlan(_ sender: UIButton){        
-        let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
-        SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
-        SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
-        
-        AppEventsLogger.log(.completedRegistration())
-        
-        
-        
-    }
     
     
 

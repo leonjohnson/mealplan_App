@@ -47,7 +47,7 @@ class UserFeedbackVanilla: UIViewController, UIScrollViewDelegate, UIPageViewCon
         if explainType == .congratulations {
             let page1Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
             page1Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
-            page1Content.imageView.image = UIImage(named:"notification")
+            page1Content.imageView.image = UIImage(named:"winner")
             page1Content.textView.attributedText = congratulationsText
             page1Content.subText.attributedText = congratulationsSubText
             let page1 = UIView(frame: CGRect(x:0, y:0,width:scrollViewWidth, height:scrollViewHeight))
