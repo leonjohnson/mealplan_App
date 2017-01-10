@@ -1,12 +1,5 @@
-//
-//  Calories&MacrosViewController.swift
-//  DailyMeals
-//
-//  Created by Jithu on 3/17/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
-//TO DO COMMENDTS (Add proper comments for all method)
 import UIKit
+import FacebookCore
 
 class CaloriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -78,6 +71,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         //To display Regestered Users name on Meal Plan's page
         namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().name.capitalized + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
         super.viewWillAppear(true)
+        AppEventsLogger.log("CaloriesViewController viewed")
     }
 
     //MARK - Table Delagte & DataSource

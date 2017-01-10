@@ -1,6 +1,6 @@
 import UIKit
 
-class UserFeedbackVanilla: UIViewController {
+class UserFeedbackVanilla: UIViewController, UIScrollViewDelegate, UIPageViewControllerDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var pageControl: UIPageControl!
@@ -42,15 +42,18 @@ class UserFeedbackVanilla: UIViewController {
         
         let page2Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
         
+        
+        
         if explainType == .congratulations {
             let page1Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
             page1Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
-            page1Content.imageView.image = UIImage(named:"winner")
+            page1Content.imageView.image = UIImage(named:"notification")
             page1Content.textView.attributedText = congratulationsText
             page1Content.subText.attributedText = congratulationsSubText
             let page1 = UIView(frame: CGRect(x:0, y:0,width:scrollViewWidth, height:scrollViewHeight))
             page1.addSubview(page1Content)
             
+            self.scrollView.addSubview(page1)
             page2Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
             page2Content.imageView.image = UIImage(named:"winner")
             page2Content.textView.textAlignment = .center
@@ -58,6 +61,7 @@ class UserFeedbackVanilla: UIViewController {
             page2Content.subText.attributedText = strictDietSubText
             let page2 = UIView(frame: CGRect(x:scrollViewWidth, y:0,width:scrollViewWidth, height:scrollViewHeight))
             page2.addSubview(page2Content)
+            self.scrollView.addSubview(page2)
         } else {
             page2Content.frame = CGRect(x:0, y:0,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
             page2Content.imageView.image = UIImage(named:"winner")
@@ -66,6 +70,7 @@ class UserFeedbackVanilla: UIViewController {
             page2Content.subText.attributedText = startOverSubText
             let page2 = UIView(frame: CGRect(x:0, y:0,width:scrollViewWidth, height:scrollViewHeight))
             page2.addSubview(page2Content)
+            self.scrollView.addSubview(page2)
             
             
             
@@ -85,12 +90,46 @@ class UserFeedbackVanilla: UIViewController {
             NSParagraphStyleAttributeName:paragraphStyle])
         page2Content.doneButton.setAttributedTitle(att, for: .normal)
         
+        
+        
+        
+        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 2, height:self.scrollView.frame.height)
+        
+        
+        self.scrollView.delegate = self
+        self.pageControl.currentPage = 0
+        self.pageControl.currentPageIndicatorTintColor = Constants.MP_GREEN
+        self.pageControl.pageIndicatorTintColor = Constants.MP_DARK_GREY
+        
     }
 
     @IBAction func showMealPlan(_ sender: UIButton) {
         //performSegue(withIdentifier: "thanksImDone", sender: nil)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
+    }
+    
+
+    
+    @IBAction func pageChanged(_ sender: UIPageControl) {
+        print("page changed")
+        let page : CGFloat = CGFloat(sender.currentPage)
+        var frame = self.scrollView.frame
+        frame.origin.x = (frame.size.width * (page * 1.0))
+        frame.origin.y = 0
+        self.scrollView.scrollRectToVisible(frame, animated: true)
+        //if Int(page) == pageControl.numberOfPages{}
+        if pageControl.currentPage == pageControl.numberOfPages - 1 {
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+            UIApplication.shared.registerForRemoteNotifications()
+            #if debug
+                print("on the notification screen")
+            #endif
+        }
+        
+
+        
     }
 
 }

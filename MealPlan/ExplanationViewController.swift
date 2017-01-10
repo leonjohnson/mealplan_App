@@ -72,7 +72,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         page4Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
         page4Content.imageView.image = UIImage(named:"scales")
         page4Content.textView.attributedText = page4Content.screen4Text
-        page4Content.subText.attributedText = NSAttributedString(string: "To know how much you’re eating, you’ll need to weigh your food. For this reason you’ll need some scales.", attributes:attributes)
+        page4Content.subText.attributedText = page4Content.screen4SubText
         let page4 = UIView(frame: CGRect(x:scrollViewWidth*3, y:0,width:scrollViewWidth*3, height:scrollViewHeight))
         page4.addSubview(page4Content)
         
@@ -136,11 +136,19 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate{
         frame.origin.x = (frame.size.width * (page * 1.0))
         frame.origin.y = 0
         self.scrollView.scrollRectToVisible(frame, animated: true)
-        if Int(page) == pageControl.numberOfPages{
-        }
+        //if Int(page) == pageControl.numberOfPages{}
         
+        if Int(page) == pageControl.numberOfPages - 1 {
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+            UIApplication.shared.registerForRemoteNotifications()
+            #if debug
+                print("on the notification screen")
+            #endif
+        }
     
     }
+    
     
     //MARK: UIScrollView Delegate
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){

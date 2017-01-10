@@ -42,15 +42,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             } else {
                 switch response.weeksAheadIncludingCurrent.count {
                 case 0:
-                    print("Case 0")
                     askForNewDetails(doesMealPlanExistForThisWeek: response)
                     break
                 case 1:
+                    #if DEBUG
                     print("Case 1")
+                    #endif
                     askForNewDetails(doesMealPlanExistForThisWeek: response)
                     return
                 case 2:
+                    #if DEBUG
                     print("Case 2")
+                    #endif
                     return //we're good so return to your meal plan
                 default:
                     // this could be because the user is between the 8th day and 12th day of a meal plan.
@@ -101,9 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         //Notifications
-        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(settings)
-        UIApplication.shared.registerForRemoteNotifications()
+        
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         if(Config.getBoolValue(Constants.HAS_PROFILE)){

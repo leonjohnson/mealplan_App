@@ -309,9 +309,9 @@ class SetUpMealPlan: NSObject {
         
         var proteinRequirement : Double = 0.0
         if aim.looseFat.value == true{
-            proteinRequirement = weeksOnProgram < 3 ? (2.0 * proxyForFatFreeMassInkg) : (2.2 * proxyForFatFreeMassInkg)
+            proteinRequirement = weeksOnProgram < 3 ? (2.2 * proxyForFatFreeMassInkg) : (2.2 * proxyForFatFreeMassInkg)
         } else {
-            proteinRequirement = weeksOnProgram < 3 ? (2.0 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
+            proteinRequirement = weeksOnProgram < 3 ? (2.3 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
         }
         
         protein.name = Constants.PROTEINS

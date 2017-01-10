@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import FacebookCore
 
 class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFMailComposeViewControllerDelegate {
     
@@ -21,6 +22,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     override func viewDidLoad() {
         super.viewDidLoad()
         settingsLabel.attributedText = NSAttributedString(string: "Settings", attributes: [NSFontAttributeName:Constants.STANDARD_FONT_BOLD, NSForegroundColorAttributeName:Constants.MP_BLACK])
+        AppEventsLogger.log("more page")
         
         
     }
@@ -90,6 +92,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
             present(mail, animated: true)
         } else {
             // show failure alert
+            
         }
     }
     
@@ -98,13 +101,13 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
         
         switch result {
         case .cancelled:
-            print("Mail cancelled")
+            AppEventsLogger.log("cancelled sending email")
         case .saved:
-            print("Mail saved")
+            AppEventsLogger.log("saving email for later")
         case .sent:
-            print("Mail sent")
+            AppEventsLogger.log("email sent!")
         case .failed:
-            print("Mail sent failure: \(error?.localizedDescription)")
+            AppEventsLogger.log("error sending mail: \(error?.localizedDescription)")
         }
         controller.dismiss(animated: true)
     }

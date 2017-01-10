@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gpy-uJ-Mu4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gpy-uJ-Mu4">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,9 +43,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKO-cb-6u5" customClass="MPButton" customModule="MealPlan" customModuleProvider="target">
-                                <rect key="frame" x="20" y="652" width="374" height="40"/>
+                                <rect key="frame" x="20" y="652" width="374" height="55"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ozR-Cj-dWz"/>
+                                    <constraint firstAttribute="height" constant="55" id="kuQ-zc-Qj7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="LET'S GET STARTED">
@@ -65,18 +65,18 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="0Cr-FC-feR">
-                                <rect key="frame" x="107.66666666666669" y="152" width="200" height="52"/>
+                                <rect key="frame" x="107" y="152" width="200" height="52"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0Cr-FC-feR" firstAttribute="top" secondItem="OKd-JD-nqf" secondAttribute="bottom" constant="132" id="0Z7-RT-EeC"/>
+                            <constraint firstItem="lKO-cb-6u5" firstAttribute="leading" secondItem="z7P-xY-hCb" secondAttribute="leadingMargin" id="2PP-nQ-nZU"/>
+                            <constraint firstItem="lKO-cb-6u5" firstAttribute="trailing" secondItem="IrY-AU-gN8" secondAttribute="trailing" id="2SU-X6-ZWJ"/>
                             <constraint firstItem="0Cr-FC-feR" firstAttribute="centerX" secondItem="z7P-xY-hCb" secondAttribute="centerX" id="7wm-XX-IZd"/>
-                            <constraint firstItem="IrY-AU-gN8" firstAttribute="leading" secondItem="lKO-cb-6u5" secondAttribute="leading" id="BN4-3g-JLe"/>
-                            <constraint firstItem="IrY-AU-gN8" firstAttribute="trailing" secondItem="lKO-cb-6u5" secondAttribute="trailing" id="J03-R9-OL8"/>
+                            <constraint firstItem="lKO-cb-6u5" firstAttribute="leading" secondItem="IrY-AU-gN8" secondAttribute="leading" id="CBa-ic-srj"/>
                             <constraint firstItem="IrY-AU-gN8" firstAttribute="centerX" secondItem="0Cr-FC-feR" secondAttribute="centerX" id="X1L-3O-q1n"/>
-                            <constraint firstItem="lKO-cb-6u5" firstAttribute="leading" secondItem="z7P-xY-hCb" secondAttribute="leadingMargin" id="Z0a-77-9zE"/>
-                            <constraint firstItem="ksU-zw-fNi" firstAttribute="top" secondItem="lKO-cb-6u5" secondAttribute="bottom" constant="44" id="pTH-AY-Nie"/>
+                            <constraint firstItem="ksU-zw-fNi" firstAttribute="top" secondItem="lKO-cb-6u5" secondAttribute="bottom" constant="29" id="dK6-hr-Xv9"/>
                             <constraint firstItem="IrY-AU-gN8" firstAttribute="top" secondItem="0Cr-FC-feR" secondAttribute="bottom" constant="22" id="q09-cb-E7S"/>
                         </constraints>
                     </view>

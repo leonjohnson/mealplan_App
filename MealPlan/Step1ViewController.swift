@@ -423,7 +423,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             user.birthdate   = Date(timeIntervalSinceNow: Double(years * -1));
             
         }
-        user.name  = nameText.text!
+        user.name  = nameText.text!.localizedCapitalized
         
         let trimmed =  user.name.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines)
