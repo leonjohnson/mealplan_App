@@ -97,11 +97,21 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
         page6.addSubview(page6Content)
         
         
-        let doneButton = page6Content.doneButton!
+        // Page 7 of scroll view
+        let page7Content = ExplanationScreens.loadFromNibNamed(nibNamed: "FirstView")!
+        page7Content.frame = CGRect(x:40, y:30,width:scrollViewWidth - 80, height:scrollViewHeight - 60)
+        page7Content.imageView.image = UIImage(named:"running")
+        page7Content.textView.attributedText = page7Content.screen7Text
+        page7Content.subText.attributedText = page7Content.screen7SubText
+        let page7 = UIView(frame: CGRect(x:scrollViewWidth*6, y:0,width:scrollViewWidth*3, height:scrollViewHeight))
+        page7.addSubview(page7Content)
+        
+        
+        let doneButton = page7Content.doneButton!
         doneButton.backgroundColor = Constants.MP_GREEN
         doneButton.layer.cornerRadius = 25
         doneButton.addTarget(self, action: #selector(ExplanationViewController.showmp(_:)), for: .touchUpInside)
-        let att = NSAttributedString(string: "Let's get started", attributes:[
+        let att = NSAttributedString(string: "OK, Let's get started", attributes:[
             NSFontAttributeName:Constants.STANDARD_FONT_BOLD, 
             NSForegroundColorAttributeName:Constants.MP_WHITE,
             NSParagraphStyleAttributeName:paragraphStyle])
@@ -117,7 +127,8 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
         self.scrollView.addSubview(page4)
         self.scrollView.addSubview(page5)
         self.scrollView.addSubview(page6)
-        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 6, height:self.scrollView.frame.height)
+        self.scrollView.addSubview(page7)
+        self.scrollView.contentSize = CGSize(width:self.scrollView.frame.width * 7, height:self.scrollView.frame.height)
         
         
         self.scrollView.delegate = self
@@ -153,25 +164,28 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
         self.pageControl.currentPage = Int(currentPage)
         
         if pageControl.currentPage == pageControl.numberOfPages - 1{
-            
+            #if debug
+                print("on the notification screen")
+            #endif
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            if UIApplication.shared.responds(to:#selector(getter: UIApplication.isRegisteredForRemoteNotifications)) {
+                UIApplication.shared.registerUserNotificationSettings(settings)
+                UIApplication.shared.registerForRemoteNotifications()
+            }
         }
     }
     
     func showmp(_ sender: UIButton){
-        #if debug
-            print("on the notification screen")
-        #endif
-        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        if UIApplication.shared.responds(to:#selector(getter: UIApplication.isRegisteredForRemoteNotifications)) {
-            UIApplication.shared.registerUserNotificationSettings(settings)
-            UIApplication.shared.registerForRemoteNotifications()
-        }
+        
         let calRequirements = SetUpMealPlan.calculateInitialCalorieAllowance() // generate new calorie requirements
         SetUpMealPlan.createWeek(daysUntilCommencement: 0, calorieAllowance: calRequirements)
         SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
+        
+        let gender = DataHandler.getActiveUser().gender
+        AppEventsLogger.log("\(gender) completed walkthrough")
     }
     
     

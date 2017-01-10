@@ -31,6 +31,10 @@ class ExplanationScreens: UIView {
     var screen6SubText : NSAttributedString?
     let screen6Image : UIImage = UIImage()
     
+    var screen7Text : NSAttributedString?
+    var screen7SubText : NSAttributedString?
+    let screen7Image : UIImage = UIImage()
+    
     var congratulationsText : NSAttributedString?
     var congratulationsSubText : NSAttributedString?
     var congratulationsImage : UIImage = UIImage()
@@ -82,13 +86,16 @@ class ExplanationScreens: UIView {
         let gentlySubTitle = "For the first week you need to eat all of the foods in the meal plan plus any extra foods you want. Just add them in the app."
         
         let preparationTitle = "Preparation will help you to succeed."
-        let preparationSubTitle = "You can see the following week's meals in advance so that you can buy and prepare the food you'll need. To know how much you're eating, you'll need scales to weigh your food"
+        let preparationSubTitle = "You can see the following week's meals in advance to help you prepare for them. To know how much you're eating, you'll need scales to weigh your food."
         
         let stayactiveTitle = "You have got to stay active!"
         let stayactiveSubTitle = "Ensure you stick with all of the physical activities that you told us about during the sign up process."
         
         let notificationTitle = "We'd like to occasionally send you notifications."
         let notificationSubTitle = "You're more likely to stick with a plan if you have reminders."
+        
+        let leaglTitle = "Your meal plan does not constitue medical advice."
+        let legalSubTitle = " Consult with your doctore before changing your diet. By using these meal plans you accept all responsibility to any impact it has upon your health."
         
         
         screen1Text = NSAttributedString(string: congratulationsTitle, attributes:title_attributes )
@@ -108,6 +115,9 @@ class ExplanationScreens: UIView {
         
         screen6Text = NSMutableAttributedString(string: notificationTitle, attributes: title_attributes)
         screen6SubText = NSAttributedString(string: notificationSubTitle, attributes:sub_text_attributes)
+        
+        screen7Text = NSMutableAttributedString(string: leaglTitle, attributes: title_attributes)
+        screen7SubText = NSAttributedString(string: legalSubTitle, attributes:sub_text_attributes)
         
         
         

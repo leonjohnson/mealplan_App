@@ -300,7 +300,7 @@ class SetUpMealPlan: NSObject {
         
         
         //BMI
-        let upperLimitBMI : Double = 22
+        let upperLimitBMI : Double = 23
         let proxyForFatFreeMassInkg = heightInMetres * heightInMetres * upperLimitBMI
         #if DEBUG
             print("proxy is: \(proxyForFatFreeMassInkg)")
@@ -309,7 +309,7 @@ class SetUpMealPlan: NSObject {
         
         var proteinRequirement : Double = 0.0
         if aim.looseFat.value == true{
-            proteinRequirement = weeksOnProgram < 3 ? (2.2 * proxyForFatFreeMassInkg) : (2.2 * proxyForFatFreeMassInkg)
+            proteinRequirement = weeksOnProgram < 3 ? (2.1 * proxyForFatFreeMassInkg) : (2.1 * proxyForFatFreeMassInkg)
         } else {
             proteinRequirement = weeksOnProgram < 3 ? (2.3 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
         }
@@ -376,7 +376,13 @@ class SetUpMealPlan: NSObject {
             weightInKg = bio.weightMeasurement * Constants.POUND_TO_KG_CONSTANT
         }
         
-        let k = kConstant + (heightInCm * heightCoefficient) + (weightInKg * weightCoeffecient) + (Double(DataHandler.getAge()) * ageCoefficient)
+        //BMI
+        let heightInMetres = heightInCm/100
+        let upperLimitBMI : Double = 23
+        let proxyForFatFreeMassInkg = heightInMetres * heightInMetres * upperLimitBMI
+        
+        
+        let k = kConstant + (heightInCm * heightCoefficient) + (proxyForFatFreeMassInkg * weightCoeffecient) + (Double(DataHandler.getAge()) * ageCoefficient)
         
         
         var sessionsCount = Double(bio.numberOfCardioSessionsEachWeek + bio.numberOfResistanceSessionsEachWeek)
@@ -395,6 +401,9 @@ class SetUpMealPlan: NSObject {
         let tdee = distribution[n] * k
         //The number of workouts multiplied by 2.5, and then adds the index of job intensity plus one to get A(n)
         
+        #if DEBUG
+            print("proxy in TDEE is: \(proxyForFatFreeMassInkg) AND TDEE: \(Int(tdee))")
+        #endif
         return Int(tdee)
     }
     

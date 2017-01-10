@@ -1009,8 +1009,6 @@ class MealPlanAlgorithm : NSObject{
                     
                     let extraFatFoods = realm.objects(Food.self).filter(fPredicate).sorted(byProperty: Constants.FATS.lowercased(), ascending: true)
                     
-                    for foundFood in extraFatFoods{
-                    }
                     //TODO: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
                     
                     

@@ -285,7 +285,7 @@ struct Constants {
     static let HAS_PROFILE = "hasProfile"
     static let FIRST_CALORIE_CUT = "firstCalorieCut"
     static let STANDARD_CALORIE_CUT = "standardCalorieCut"
-    static let standard_calorie_increase_for_muscle = 1.075
+    static let standard_calorie_increase_for_muscle = 1.15
     static let standard_calorie_reduction_for_weightloss = 0.96
     static let small_calorie_reduction_for_weightloss = 0.97
     

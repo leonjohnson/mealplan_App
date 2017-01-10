@@ -56,7 +56,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
     var selcetedGender = 2;
     
     //Goals Array
-    var goalsValues = ["Gain Muscle", "Lose Fat"]
+    var goalsValues = ["Lose Fat", "Gain Muscle"]
     var selectedGoal:NSMutableArray = NSMutableArray();
    
     //For SettingsTab bar
@@ -322,7 +322,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         }else if (tableView == goalsTable){
             let item = goalsValues[indexPath.row];
             let cell = tableView.dequeueReusableCell(withIdentifier: "goalsCell", for: indexPath)
-            cell.textLabel?.text = item;
+            cell.textLabel?.text = item
             cell.textLabel?.font = Constants.STANDARD_FONT
             
             if(selectedGoal.contains(item)){
