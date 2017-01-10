@@ -102,7 +102,7 @@ class SetUpMealPlan: NSObject {
     
     
     static func cutCalories(fromWeek :Week, userfoundDiet: Constants.dietEase)->Int{
-        #if debug
+        #if DEBUG
         print("cutCalories: \(userfoundDiet.rawValue)")
         #endif
         switch userfoundDiet {
