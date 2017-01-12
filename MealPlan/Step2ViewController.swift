@@ -17,7 +17,6 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
     @IBOutlet var backButton : UIButton!
     @IBOutlet var step2NextButton : MPButton!
     @IBOutlet var closeButton : UIButton!
-    @IBOutlet var areYouLabel : UILabel!
     @IBOutlet var dietRequirementTable : UITableView!
     
     
@@ -54,7 +53,6 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
         
         }
 
-        areYouLabel.font = Constants.GENERAL_LABEL
         dietRequirementTable.setContentOffset(CGPoint(x: 0, y: 5), animated: false)
         dietRequirementTable.frame.size = CGSize(width: dietRequirementTable.frame.size.width, 
                                                  height: CGFloat(34 * Constants.dietTypes.count))

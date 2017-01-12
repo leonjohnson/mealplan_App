@@ -91,11 +91,13 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         
         // MARK: ### SET SEND BUTTON AS IMAGE
+        /*
         let rightButton = UIButton(frame: CGRect.zero)
         let sendImage = UIImage(named: "Sent")
         rightButton.setImage(sendImage, for: UIControlState.normal)
         self.inputToolbar.contentView?.rightBarButtonItemWidth = CGFloat(34.0)
         self.inputToolbar.contentView?.rightBarButtonItem = rightButton
+         */
         
         // MARK: ### SET SEND BUTTON AS IMAGE
         sideButton = UIButton(frame: CGRect.zero)

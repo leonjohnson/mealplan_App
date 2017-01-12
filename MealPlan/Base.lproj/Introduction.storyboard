@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gpy-uJ-Mu4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Gpy-uJ-Mu4">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -38,7 +38,7 @@
                         <viewControllerLayoutGuide type="top" id="OKd-JD-nqf"/>
                         <viewControllerLayoutGuide type="bottom" id="ksU-zw-fNi"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="z7P-xY-hCb" customClass="launchBkgrd" customModule="MealPlan" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="z7P-xY-hCb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

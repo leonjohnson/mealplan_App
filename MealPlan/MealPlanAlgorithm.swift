@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-class MealPlanAlgorithm : NSObject{
+class MealPlanAlgorithm : Object{
     
     
     static func createOverFlowStructure(_ numberOfMealsRemaining:Int,macrosAllocatedToday:[String:Double], macrosDesiredToday:[String:Double]) -> [Double]{
@@ -98,7 +98,7 @@ class MealPlanAlgorithm : NSObject{
         
         
         
-        
+        let maximumNumberOfGramsToIgnore = 2.0
         let macros = thisWeek.macroAllocation
         let kcal = Double(thisWeek.calorieAllowance)
         let bio = DataHandler.getActiveBiographical()
@@ -124,7 +124,7 @@ class MealPlanAlgorithm : NSObject{
         //http://stackoverflow.com/questions/6169121/how-to-write-a-bool-predicate-in-core-data
         let vegetarianPredicate = NSPredicate(format: "ANY SELF.dietSuitability.name == [c] %@", Constants.vegetarian)
         
-        let dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitability IN %@", dietRequirements)
+        var dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitability IN %@", dietRequirements)
         
         /*
         let noPretFood = NSPredicate(format: "NOT name CONTAINS[c] 'PRET'")
@@ -168,11 +168,20 @@ class MealPlanAlgorithm : NSObject{
         
         
         // CREATE PREDICATES
-        let compoundPredForCarbs = NSCompoundPredicate(andPredicateWithSubpredicates: [carbTreatPredicate, dislikedFoodsPredicate, notCondiment, dietaryRequirementPredicate/* notOnlyBreakfastPredicate, readyToEatPredicate, */])
         
-        let compoundPredForProteins = NSCompoundPredicate(andPredicateWithSubpredicates: [lightProteinTreat, dislikedFoodsPredicate, vegetarianPredicate, notCondiment, dietaryRequirementPredicate]) /*notOnlyBreakfastPredicate*/
+        var c1 = [carbTreatPredicate, dislikedFoodsPredicate, notCondiment/* notOnlyBreakfastPredicate, readyToEatPredicate, */]
+        var c2 = [lightProteinTreat, dislikedFoodsPredicate, vegetarianPredicate, notCondiment]
+        var c3 = [highProteinPredicate, dislikedFoodsPredicate, notCondiment /*notOnlyBreakfastPredicate*/]
         
-        let compoundPredForHeavyProteins = NSCompoundPredicate(andPredicateWithSubpredicates: [highProteinPredicate, dislikedFoodsPredicate, notCondiment, dietaryRequirementPredicate /*notOnlyBreakfastPredicate*/])
+        if dietRequirements.count > 0 {
+            c1.append(dietaryRequirementPredicate)
+            c2.append(dietaryRequirementPredicate)
+            c3.append(dietaryRequirementPredicate)
+        }
+        let compoundPredForCarbs = NSCompoundPredicate(andPredicateWithSubpredicates:c1)
+        let compoundPredForProteins = NSCompoundPredicate(andPredicateWithSubpredicates: c2) /*notOnlyBreakfastPredicate*/
+        let compoundPredForHeavyProteins = NSCompoundPredicate(andPredicateWithSubpredicates:c3)
+        
         
         let extraCarbTreats = realm.objects(Food.self).filter(compoundPredForCarbs)
         var lightProteins = realm.objects(Food.self).filter(compoundPredForProteins)
@@ -206,7 +215,10 @@ class MealPlanAlgorithm : NSObject{
                 var sortedFoodItemBasket : [[FoodItem]] = [ [], [], [], [] ]
                 
                 listOfAndPredicates = []
-                listOfAndPredicates.append(contentsOf: [dietaryRequirementPredicate, dislikedFoodsPredicate, notCondiment, highProteinPredicate])
+                if dietRequirements.count > 0 {
+                    listOfAndPredicates.append(dietaryRequirementPredicate)
+                }
+                listOfAndPredicates.append(contentsOf: [dislikedFoodsPredicate, notCondiment, highProteinPredicate])
                 
                 if mealIndex == 1{
                     _ = listOfAndPredicates.popLast()
@@ -236,7 +248,11 @@ class MealPlanAlgorithm : NSObject{
                 let p = foodResults[Int(randomNumber)]
                 foodBasket[proteinIndex].append(p)
                 if p.alwaysEatenWithOneOf.count > 0{
-                    let aCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [dislikedFoodsPredicate,dietaryRequirementPredicate])
+                    var listOfPreds = [dislikedFoodsPredicate]
+                    if dietRequirements.count > 0 {
+                        listOfPreds.append(dietaryRequirementPredicate)
+                    }
+                    let aCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: listOfPreds)
                     let options = p.alwaysEatenWithOneOf.filter(aCompoundPredicate)
                     randomNumber = arc4random_uniform(UInt32(options.count))
                     //TODO: Place this AEWOO in the right basket
@@ -311,7 +327,10 @@ class MealPlanAlgorithm : NSObject{
                 }
                 
                 //let carbsApportionatedSoFar = dailyMealPlan.totalCarbohydrates() + carbsSoFarFromFoodBasket
-                var carbPredicateList = [dietaryRequirementPredicate, dislikedFoodsPredicate, highCarbPredicate, notCondiment]
+                var carbPredicateList = [dislikedFoodsPredicate, highCarbPredicate, notCondiment]
+                if dietRequirements.count > 0 {
+                    carbPredicateList.append(dietaryRequirementPredicate)
+                }
                 if mealIndex == 1{
                     carbPredicateList.append(eatenAtBreakfastPredicate)
                 }
@@ -396,7 +415,10 @@ class MealPlanAlgorithm : NSObject{
 
                 
                 //fats if required FOR THIS MEAL!
-                var fatPredicateList = [dietaryRequirementPredicate, dislikedFoodsPredicate, highFatPredicate]
+                var fatPredicateList = [dislikedFoodsPredicate, highFatPredicate]
+                if fatPredicateList.count > 0 {
+                    fatPredicateList.append(dietaryRequirementPredicate)
+                }
                 if mealIndex == 1{
                     fatPredicateList.append(eatenAtBreakfastPredicate)
                 }
@@ -455,8 +477,12 @@ class MealPlanAlgorithm : NSObject{
                 
                 //vegetables or fruit
                 if mealIndex > 1{
-                    var vegetableOptions = realm.objects(Food.self).filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
-                    let OEWvegetableOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]))
+                    var subPredicate = [dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]
+                    if dietRequirements.count > 0 {
+                        subPredicate.append(dietaryRequirementPredicate)
+                    }
+                    var vegetableOptions = realm.objects(Food.self).filter(NSCompoundPredicate(andPredicateWithSubpredicates: subPredicate))
+                    let OEWvegetableOptions = p.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: subPredicate))
                     if OEWvegetableOptions.count > 0{
                         vegetableOptions = OEWvegetableOptions
                     }
@@ -685,7 +711,14 @@ class MealPlanAlgorithm : NSObject{
                     break
                 }
                 deficient = macrosDesiredToday[macro]! - macrosAllocatedToday[macro]!
-                let allFoodCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates: [dietaryRequirementPredicate, dislikedFoodsPredicate, notCondiment])
+                
+                var listOfPreds = [dislikedFoodsPredicate, notCondiment]
+                if dietRequirements.count > 0 {
+                    listOfPreds.append(dietaryRequirementPredicate)
+                }
+                
+                let allFoodCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates: listOfPreds)
+                
                 
                 let allFoods = realm.objects(Food.self).filter(allFoodCompoundPred).sorted(byProperty: macro.lowercased(), ascending: true)
                 var array = [Food]()
@@ -824,7 +857,7 @@ class MealPlanAlgorithm : NSObject{
                         break breakLabel
                     }
                     
-                    if deficient < Constants.maximumNumberOfGramsToIgnore {
+                    if deficient < maximumNumberOfGramsToIgnore {
                         break breakLabel
                     }
                     else if deficient >= 20{
@@ -929,7 +962,7 @@ class MealPlanAlgorithm : NSObject{
                     var food :Food = Food()
                     var foodOptions : [Food] = [Food]()
                     
-                    if deficient < Constants.maximumNumberOfGramsToIgnore {
+                    if deficient < maximumNumberOfGramsToIgnore{
                         break breakLabel
                     }
                     else if deficient < 20{
@@ -1020,9 +1053,12 @@ class MealPlanAlgorithm : NSObject{
                     
                     let fPredicate : NSCompoundPredicate = NSCompoundPredicate(type: .or, subpredicates:[ highFatOilPredicate, superHighFatPredicate, /*notCondiment*/])
                     
-                    let extraFatFoods = realm.objects(Food.self).filter(fPredicate).sorted(byProperty: Constants.FATS.lowercased(), ascending: true)
+                    var extraFatFoods = realm.objects(Food.self).filter(fPredicate).sorted(byProperty: Constants.FATS.lowercased(), ascending: true)
                     
-                    let extraFatFoodsConsideringMyDiet = extraFatFoods.filter(dietaryRequirementPredicate)
+                    if dietRequirements.count > 0 {
+                        extraFatFoods = extraFatFoods.filter(dietaryRequirementPredicate)
+                    }
+                    
                     
                     //TODO: Ensure the foods selected are related (OEWOO) to the foods already in the basket OR do not have AEWOF unless it's already in the basket
                     
@@ -1034,11 +1070,11 @@ class MealPlanAlgorithm : NSObject{
                     guard deficient > 0  else {
                         break breakLabel
                     }
-                    if deficient < Constants.maximumNumberOfGramsToIgnore {
+                    if deficient < maximumNumberOfGramsToIgnore {
                         break breakLabel
                     }
                     else if deficient < 20{
-                        for fo in extraFatFoodsConsideringMyDiet{
+                        for fo in extraFatFoods{
                             if fo.alwaysEatenWithOneOf.count == 0 && [Constants.ml, Constants.grams].contains((fo.servingSize?.name)!){
                                 //food = fo //TODO - THIS IS NOT A RANDOM SELECTION
                                 //print("LESS than 20g of FAT. \n")
@@ -1047,7 +1083,7 @@ class MealPlanAlgorithm : NSObject{
                             }
                         }
                     } else {
-                        for fo in extraFatFoodsConsideringMyDiet.reversed(){
+                        for fo in extraFatFoods.reversed(){
                             if fo.alwaysEatenWithOneOf.count == 0 && [Constants.ml, Constants.grams].contains((fo.servingSize?.name)!){
                                 //food = fo //TO - THIS IS NOT A RANDOM SELECTION
                                 //break
@@ -1869,10 +1905,10 @@ class MealPlanAlgorithm : NSObject{
             let foodCountMinusLoop = Double(foods.count) - Double(loopCount)
             fooditem.numberServing = (requiredAmount/foodCountMinusLoop)/foodAttributeAmount // so its divided amongst the # of foods for this macro
             
-            
+            let maximumNumberOfGramsToIgnore = 2.0
             if attribute == Constants.PROTEINS {
                 
-                if leftOverForThisMeal[1] > Constants.maximumNumberOfGramsToIgnore && leftOverForThisMeal[2] > Constants.maximumNumberOfGramsToIgnore && lastMealFlag == false{
+                if leftOverForThisMeal[1] > maximumNumberOfGramsToIgnore && leftOverForThisMeal[2] > maximumNumberOfGramsToIgnore && lastMealFlag == false{
                     // because everything has a little bit of protein and by the time I get to carbs, fats, and veg, it will up to 100% or more
                     cushionForFats = 7.0
                 }

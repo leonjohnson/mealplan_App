@@ -18,14 +18,17 @@ class DietSuitability: Object {
         let dietSuitability4 = DietSuitability();
         dietSuitability4.name = "Lactose free"
         
+        let dietSuitability5 = DietSuitability();
+        dietSuitability5.name = "Nut free"
 
         
         let realm = try! Realm()
         try! realm.write {
-            realm.add(dietSuitability1);
-            realm.add(dietSuitability2);
-            realm.add(dietSuitability3);
-            realm.add(dietSuitability4);
+            realm.add(dietSuitability1)
+            realm.add(dietSuitability2)
+            realm.add(dietSuitability3)
+            realm.add(dietSuitability4)
+            realm.add(dietSuitability5)
         }
         
         

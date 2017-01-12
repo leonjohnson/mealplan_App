@@ -1,6 +1,6 @@
 import UIKit
-import Fabric
-import Crashlytics
+//import Fabric
+//import Crashlytics
 import RealmSwift
 import FBSDKCoreKit
 import FacebookCore
@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             takeUserToMealPlan(shouldShowExplainerScreen: false)
         }
-        Fabric.with([Crashlytics.self])
+        //Fabric.with([Crashlytics.self])
         return true
     }
     

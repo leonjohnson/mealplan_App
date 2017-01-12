@@ -88,7 +88,6 @@
 		F78B6EE51DFC51360033A456 /* BotCellWithButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78B6EE41DFC51360033A456 /* BotCellWithButton.xib */; };
 		F78EDFE01DEDDCD000AC1AF7 /* SetUpMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */; };
 		F78EDFE31DF212B500AC1AF7 /* initialLoad4.json in Resources */ = {isa = PBXBuildFile; fileRef = F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */; };
-		F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */; };
 		F7A61B651E1195CB0099DE42 /* Introduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A61B641E1195CB0099DE42 /* Introduction.swift */; };
 		F7A61B671E12DBAF0099DE42 /* inCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A61B661E12DBAF0099DE42 /* inCell.swift */; };
@@ -225,7 +224,6 @@
 		F78B6EE41DFC51360033A456 /* BotCellWithButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BotCellWithButton.xib; sourceTree = "<group>"; };
 		F78EDFDF1DEDDCD000AC1AF7 /* SetUpMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetUpMealPlan.swift; path = Model/SetUpMealPlan.swift; sourceTree = "<group>"; };
 		F78EDFE21DF212B500AC1AF7 /* initialLoad4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = initialLoad4.json; sourceTree = "<group>"; };
-		F78EDFE41DF328AE00AC1AF7 /* jsq_messages_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = jsq_messages_sample.m4a; path = Model/jsq_messages_sample.m4a; sourceTree = "<group>"; };
 		F78EDFEA1DF73E2D00AC1AF7 /* MacrosTallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosTallyView.swift; sourceTree = "<group>"; };
 		F7A61B641E1195CB0099DE42 /* Introduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
 		F7A61B661E12DBAF0099DE42 /* inCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inCell.swift; sourceTree = "<group>"; };
@@ -370,7 +368,6 @@
 				F78AB71D1DBE6DA400BB40EA /* Picker */,
 				F78AB7171DBE6DA400BB40EA /* Network */,
 				F7C480441DBF61D100572706 /* Payment */,
-				F78EDFE41DF328AE00AC1AF7 /* jsq_messages_sample.m4a */,
 				F7C480451DBF61DF00572706 /* Settings */,
 				F78AB6E51DBE6DA400BB40EA /* Assets.xcassets */,
 				F78AB6FB1DBE6DA400BB40EA /* IconImages.xcassets */,
@@ -629,7 +626,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Meals;
 				TargetAttributes = {
 					4ADE43441DF6874B00491005 = {
@@ -846,7 +843,6 @@
 				F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */,
 				F75F3E641E23C30E00B596E8 /* FoodChange.swift in Sources */,
 				F70694781E15730500A3B6C6 /* UserFeedbackVanilla.swift in Sources */,
-				F78EDFE51DF5FCD100AC1AF7 /* (null) in Sources */,
 				F7E3C5501DDB897D00DA2696 /* outCells.swift in Sources */,
 				F78AB7611DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift in Sources */,
 				F78AB7401DBE6DA400BB40EA /* FoodSearchViewController.swift in Sources */,
@@ -978,6 +974,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9C7F0F67D0C29C6F82F01118 /* Pods-MealPlanTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -999,6 +996,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 371C4A5106D13B51256EE33E /* Pods-MealPlanTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1034,8 +1032,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -1086,11 +1084,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1103,6 +1101,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "MealPlan-Bridging-Header.h";
@@ -1110,6 +1109,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};
