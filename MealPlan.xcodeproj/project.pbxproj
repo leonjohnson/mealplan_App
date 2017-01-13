@@ -95,6 +95,8 @@
 		F7A61B6C1E12E2D70099DE42 /* MP_Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A61B6B1E12E2D70099DE42 /* MP_Button.swift */; };
 		F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4804A1DBFFB0000572706 /* RealmString.swift */; };
 		F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */; };
+		F7DAD57A1E27B96A004656FC /* Macros.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7DAD5791E27B96A004656FC /* Macros.storyboard */; };
+		F7DAD57C1E27CC8D004656FC /* ChangeMacros.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DAD57B1E27CC8D004656FC /* ChangeMacros.swift */; };
 		F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5411DD2225E00DA2696 /* BotController.swift */; };
 		F7E3C5441DD4AF0F00DA2696 /* Bot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */; };
 		F7E3C5461DD4AF6E00DA2696 /* SearchForFood.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */; };
@@ -231,6 +233,8 @@
 		F7A61B6B1E12E2D70099DE42 /* MP_Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP_Button.swift; sourceTree = "<group>"; };
 		F7C4804A1DBFFB0000572706 /* RealmString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmString.swift; sourceTree = "<group>"; };
 		F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotCellWithButton.swift; sourceTree = "<group>"; };
+		F7DAD5791E27B96A004656FC /* Macros.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Macros.storyboard; sourceTree = "<group>"; };
+		F7DAD57B1E27CC8D004656FC /* ChangeMacros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeMacros.swift; sourceTree = "<group>"; };
 		F7E3C5411DD2225E00DA2696 /* BotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotController.swift; sourceTree = "<group>"; };
 		F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bot.storyboard; sourceTree = "<group>"; };
 		F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchForFood.storyboard; sourceTree = "<group>"; };
@@ -468,6 +472,7 @@
 				F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */,
 				F78AB6E91DBE6DA400BB40EA /* LaunchScreen.storyboard */,
 				F78AB6EB1DBE6DA400BB40EA /* Main.storyboard */,
+				F7DAD5791E27B96A004656FC /* Macros.storyboard */,
 				F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */,
 				F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */,
 				F7FB34FF1DC95F0B00CAB6B7 /* TrackingUsersProgress.storyboard */,
@@ -486,8 +491,11 @@
 				4A504E991DF6A9AC00719B0B /* UpdateController */,
 				F74F96DD1E083ADC009ADA2D /* ExplanationController */,
 				F78AB6E11DBE6DA400BB40EA /* AboutUsViewController.swift */,
+				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
+				F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */,
 				F78AB6EE1DBE6DA400BB40EA /* CaloriesTableViewCell.swift */,
 				F78AB6EF1DBE6DA400BB40EA /* CaloriesViewController.swift */,
+				F7DAD57B1E27CC8D004656FC /* ChangeMacros.swift */,
 				F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */,
 				F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */,
 				F78AB6F81DBE6DA400BB40EA /* FoodListTableViewCell.swift */,
@@ -499,8 +507,6 @@
 				F78AB7001DBE6DA400BB40EA /* LastWeekViewController.swift */,
 				F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */,
 				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
-				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
-				F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */,
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
 				F7A61B661E12DBAF0099DE42 /* inCell.swift */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
@@ -706,6 +712,7 @@
 				F78EDFE31DF212B500AC1AF7 /* initialLoad4.json in Resources */,
 				F74F96D31E0839E2009ADA2D /* Explanation.storyboard in Resources */,
 				F78AB7301DBE6DA400BB40EA /* Assets.xcassets in Resources */,
+				F7DAD57A1E27B96A004656FC /* Macros.storyboard in Resources */,
 				F78AB74B1DBE6DA400BB40EA /* Media.xcassets in Resources */,
 				F78AB7421DBE6DA400BB40EA /* IconImages.xcassets in Resources */,
 			);
@@ -892,6 +899,7 @@
 				F78AB7531DBE6DA400BB40EA /* FoodsDisliked.swift in Sources */,
 				F78AB75D1DBE6DA400BB40EA /* Connect.swift in Sources */,
 				F78AB73E1DBE6DA400BB40EA /* DetailViewController.swift in Sources */,
+				F7DAD57C1E27CC8D004656FC /* ChangeMacros.swift in Sources */,
 				F78AB74A1DBE6DA400BB40EA /* MPTableViewCell.swift in Sources */,
 				F7E3C5581DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift in Sources */,
 				F78AB7351DBE6DA400BB40EA /* bkgrd.swift in Sources */,

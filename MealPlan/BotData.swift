@@ -1,4 +1,3 @@
-//import Foundation
 import Foundation
 
 
@@ -40,6 +39,7 @@ class BotData: NSObject {
             BotData.NEW_FOOD.fibre.question,
             BotData.NEW_FOOD.protein.question,
             BotData.NEW_FOOD.food_type.question,
+            BotData.NEW_FOOD.number_of_servings.question,
             BotData.NEW_FOOD.ending.question]
         
         static let options : [[String]]  = [
@@ -54,6 +54,7 @@ class BotData: NSObject {
             BotData.NEW_FOOD.fibre.tableViewList,
             BotData.NEW_FOOD.protein.tableViewList,
             BotData.NEW_FOOD.food_type.tableViewList,
+            BotData.NEW_FOOD.number_of_servings.tableViewList,
             BotData.NEW_FOOD.ending.tableViewList]
         
         static let buttonText : [String]  = [
@@ -68,9 +69,11 @@ class BotData: NSObject {
             BotData.NEW_FOOD.fibre.buttonText,
             BotData.NEW_FOOD.protein.buttonText,
             BotData.NEW_FOOD.food_type.buttonText,
+            BotData.NEW_FOOD.number_of_servings.buttonText,
             BotData.NEW_FOOD.ending.buttonText]
         
         static let answers : [[String]] = [
+            [String()],
             [String()],
             [String()],
             [String()],
@@ -96,6 +99,7 @@ class BotData: NSObject {
             BotData.NEW_FOOD.fibre.validation,
             BotData.NEW_FOOD.protein.validation,
             BotData.NEW_FOOD.food_type.validation,
+            BotData.NEW_FOOD.number_of_servings.validation,
             BotData.NEW_FOOD.ending.validation]
         
             struct name {
@@ -113,7 +117,23 @@ class BotData: NSObject {
                 static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.text
             }
-            
+        
+            struct food_type {
+                static let question = "Please help me categorise this item:"
+                static let tableViewList = ["It's a drink",
+                                            "It's a fizzy drink",
+                                            "It's a fruit",
+                                            "It's a vegetable",
+                                            "I would eat this at breakfast",
+                                            "I would only eat this at breakfast",
+                                            "This is a type of fish",
+                                            "This is a condiment",
+                                            "None of the above"]
+                static let buttonText : String = ""
+                static let tips : String = ""
+                static let validation = Constants.botValidationEntryType.none
+            }
+        
             struct serving_type {
                 static let question = "For the nutritional information you're going to enter is it per:"
                 static let tableViewList = [Constants.grams,
@@ -180,25 +200,15 @@ class BotData: NSObject {
                 static let tips : String = ""
                 static let validation = Constants.botValidationEntryType.decimal
             }
-            
-            struct food_type {
-                static let question = "Please help me categorise this item:"
-                static let tableViewList = ["It's a drink",
-                                            "It's a fizzy drink",
-                                            "It's a fruit",
-                                            "It's a vegetable",
-                                            "I would eat this at breakfast",
-                                            "I would only eat this at breakfast",
-                                            "This is a type of fish",
-                                            "This is a condiment",
-                                            "None of the above"]
+        
+            struct number_of_servings {
+                static let question = "How many servings would you like to eat:"
+                static let tableViewList : [String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.none
+                static let validation = Constants.botValidationEntryType.decimal
             }
-            
-            
-            
+        
             struct ending {
                 static let question = "Thanks! You're all done. 👍"
                 static let tableViewList:[String] = []

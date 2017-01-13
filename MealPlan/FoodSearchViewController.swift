@@ -37,9 +37,9 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         addNewFoodButton.layer.cornerRadius = 15
         
                 
-        //addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
+        addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
         
-        addNewFoodButton.isHidden = true
+        //addNewFoodButton.isHidden = true
     }
 
     
@@ -198,16 +198,13 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         let storyboard = Constants.BOT_STORYBOARD
         let scene = storyboard.instantiateViewController(withIdentifier: "bot") as! BotController
         scene.botType = .addNewFood
+        scene.meal = meal
         
         if((self.navigationController) != nil){
             scene.hidesBottomBarWhenPushed = true
             self.navigationController?.setNavigationBarHidden(false, animated: false)
             self.navigationController?.navigationBar.frame.size = CGSize(width: (self.navigationController?.navigationBar.frame.width)!, height: 35)
-            
             self.navigationController?.pushViewController(scene, animated: true);
-            
-            
-            //self.hidesBottomBarWhenPushed = false;
         }else{
             self.present(scene, animated: true, completion: nil)
         }

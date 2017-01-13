@@ -8,7 +8,6 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var caloriesListTable : UITableView!
     @IBOutlet var namelabel : UILabel!
     @IBOutlet var caloriesCountLabel : UILabel!
-    @IBOutlet var showMealButton : UIButton!
     @IBOutlet var closeButton : UIButton!
     @IBOutlet var percentToggle: UISegmentedControl!
     
@@ -38,12 +37,6 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.view.backgroundColor = UIColor.groupTableViewBackground
         caloriesListTable.delegate = self
-        
-        // For hiding back button if view loads from TabBar controller:
-        if (fromController != "step4Identifier"){
-            showMealButton.isHidden = true
-            closeButton.isHidden = true
-        }
         
         let attributes = [NSFontAttributeName:Constants.STANDARD_FONT]
         let newAttributes = [NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]
@@ -143,18 +136,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
         
     }
-    
-    @IBAction func mealPalnButtonClick(_ sender: AnyObject){
-        let storyboard = Constants.MAIN_STORYBOARD
-        let destination = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
-        navigationController?.pushViewController(destination, animated: true)
-    }
 
-    @IBAction func closeButtonAction (_ sender : AnyObject){
-        _ = self.navigationController?.popViewController(animated: true)
-
-    }
-    
     
     @IBAction func changeUnitOfMacroMeasurement(_ segmentedControl:UISegmentedControl)
     {

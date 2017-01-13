@@ -50,7 +50,9 @@ class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
         super.init(frame: frame)
     }
     
-    @IBAction func buttonTapped(button: UIButton) {
+    @IBAction func noValueSelected(sender: UIButton) {
+        print("noValueSelected")
+        botDelegate?.buttonTapped!(forQuestion: question)
     }
     
 

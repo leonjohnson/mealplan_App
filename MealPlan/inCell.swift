@@ -23,15 +23,15 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
         self.messageBubbleTopLabel.textAlignment = .center
         self.tapGestureRecognizer.cancelsTouchesInView = false
         self.cellBottomLabel.textAlignment = .right
-        
     }
     
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        #if debug
+        #if DEBUG
         print("/n PREPARING INCELL FOR REUSE!")
         #endif
+        
         
         /*
             self.messageBubbleContainerView.frame = CGRect(x: self.messageBubbleContainerView.frame.origin.x,
@@ -40,6 +40,7 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
                                                        height: CGFloat((data.options.count * Int(Constants.TABLE_ROW_HEIGHT_SMALL))))
         */
         //var rowsSelected : [Int] = []
+        /*
         if beenTappedBefore == false {
             for row in 0...data.options.count {
                 /*
@@ -51,7 +52,7 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
                 
             }
         }
-        
+        */
         
         //table.contentInset = Constants.TABLE_INSETS
     }
@@ -88,18 +89,15 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("data.options: \(data.options)")
         return data.options.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! miniTableViewCell
         cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
-        //cell.textLabel?.text = data.options[indexPath.row]
         cell.textLabel?.textColor = UIColor.black
         cell.incomingCellDelegate = self
         

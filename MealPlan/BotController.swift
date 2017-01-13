@@ -35,6 +35,9 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     var validationType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.validationType
     var sideButton : UIButton?
     
+    var meal : Meal? = Meal()
+    var returningCustomer : Bool? = Bool()
+    
     var mealPlanExistsForThisWeek : (yayNay:Bool, weeksAheadIncludingCurrent:[Week])?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,11 +103,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
          */
         
         // MARK: ### SET SEND BUTTON AS IMAGE
-        sideButton = UIButton(frame: CGRect.zero)
-        let keyBoardImage = UIImage(named: "keyboard_filled")
-        sideButton?.setImage(keyBoardImage, for: UIControlState.normal)
-        self.inputToolbar.contentView?.leftBarButtonItemWidth = CGFloat(34.0)
-        self.inputToolbar.contentView?.leftBarButtonItem = sideButton
+        
         
         
         // MARK: ### DISABLE COPY/PASTE
@@ -120,8 +119,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.senderDisplayName = user.name
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
-        //self.inputToolbar.contentView.leftBarButtonItem = nil
-        //miniCellViewController.incomingCellDelegate = self
         inComingCellViewController.botDelegate = self
         
         
@@ -142,16 +139,24 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.finishSendingMessage(animated: true)
         
         
-        // Set the keyboard type
+        // Set the keyboard type and icon
+        sideButton = UIButton(frame: CGRect.zero)
+        var keyBoardImage = UIImage()
+        
         switch validationType[0] {
         case .decimal:
             self.inputToolbar.contentView.textView.keyboardType = .decimalPad
+            keyBoardImage = UIImage(named: "keyboard_filled")!
         case .text:
             self.inputToolbar.contentView.textView.keyboardType = .default
+            keyBoardImage = UIImage(named: "number_keypad")!
         case .none:
             self.inputToolbar.contentView.textView.keyboardType = .default
+            keyBoardImage = UIImage(named: "number_keypad")!
         }
-        
+        sideButton?.setImage(keyBoardImage, for: UIControlState.normal)
+        self.inputToolbar.contentView?.leftBarButtonItemWidth = CGFloat(34.0)
+        self.inputToolbar.contentView?.leftBarButtonItem = sideButton
         
         
         
@@ -197,6 +202,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             
             answers[questionIndex].append(text)
             answers[questionIndex].removeFirst()
+            print("answers in didpressend: \(answers)")
         }
         progressToNextQuestion()
         
@@ -227,17 +233,12 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             self.inputToolbar.contentView.textView.reloadInputViews()
         }
         
-        if questionIndex == (questions.count-1) {
-            switch botType {
-            case .addNewFood:
-                createNewFoodFromConversation()
-            case .feedback:
-                saveFeedbackForTheWeek()
-            case .unstated:
-                return
-            }
-            takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
-        }
+        
+    }
+    
+    func closeConversation(){
+        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+        self.finishSendingMessage(animated: true)
     }
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
@@ -257,6 +258,30 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         sideButton?.setImage(newKeyboardImage, for: UIControlState.normal)
         self.inputToolbar.contentView.textView.keyboardType = newKeyboardType
         self.inputToolbar.contentView.textView.reloadInputViews()
+    }
+    
+    func buttonTapped(forQuestion: String) {
+        
+        if questionIndex == (questions.count-1) {
+            switch botType {
+            case .addNewFood:
+                createNewFoodFromConversation()
+            case .feedback:
+                saveFeedbackForTheWeek()
+            case .unstated:
+                return
+            }
+            takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
+            return
+        }
+        
+        print("question tapped: \(forQuestion)")
+        guard let indexForAnswer = questions.index(of: forQuestion) else {
+            return
+        }
+        answers[indexForAnswer].removeAll()
+        print("passed")
+        progressToNextQuestion()
     }
     
     
@@ -356,38 +381,54 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     }
     
     
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
-        
-        var row = indexPath.row
-        if (indexPath.row % 2) != 0{
-            row = indexPath.row + 1
-        }
-        
+
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         cell.textView.textColor = UIColor.black
+        
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
-            let tableViewRowData = options[row/2]
+            let questionIndex = questions.index(of: message.text)
+            let tableViewRowData = options[questionIndex!]
+            //let tableViewRowData = options[row/2]
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "in", for: indexPath) as! inCell
             //cellWithTableview.table.delegate = self
             
             cellWithTableview.question = message.text
             cellWithTableview.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
             cellWithTableview.data.question = message.text
+            print("table data: \(tableViewRowData)")
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
             cellWithTableview.backgroundColor = UIColor.clear
             cellWithTableview.botDelegate = self
             
+            for row in 0...tableViewRowData.count{
+                cellWithTableview.table.cellForRow(at: [0,row])?.accessoryType = .none
+            }
+            var answersIndex : Int = 0
+            var answer = answers[questionIndex!].first
+            if (answer?.characters.count)! > 0 {
+                if message.text == BotData.NEW_FOOD.food_type.question {
+                    answersIndex = Constants.FOOD_TYPES.index(of: answer!)!
+                } else {
+                    answersIndex = Int(tableViewRowData.index(of: answer!)!)
+                }
+                cellWithTableview.table.cellForRow(at: [0,Int(answersIndex)])?.accessoryType = .checkmark
+                print("gonna check this answer")
+            }
             
-
             return cellWithTableview
             
         } else if Constants.questionsThatRequireButtons.contains(message.text!) {
             let cellWithButton = collectionView.dequeueReusableCell(withReuseIdentifier: "button", for: indexPath) as! BotCellWithButton
-            cellWithButton.button.setTitle(buttonText[row/2], for: .normal)
+            cellWithButton.question = message.text
+            let questionIndex = questions.index(of: message.text)
+            let buttonTitle = buttonText[questionIndex!]
+            
+            print("button title: \(buttonText)")
+            cellWithButton.button.setTitle(buttonTitle, for: .normal)
             cellWithButton.backgroundColor = UIColor.clear
             cellWithButton.botDelegate = self
             cellWithButton.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
@@ -538,8 +579,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 }
                 let daysUntilExpiry = currentWeek?.daysUntilWeekExpires()
                 
-                
-                
                 var newCaloriesAllowance = 0
                 if(Config.getBoolValue(Constants.STANDARD_CALORIE_CUT) == true){
                     
@@ -567,14 +606,9 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     
     func takeUserToMealPlan(explainerScreenTypeIs:Constants.explainerScreenType){
-        
-        
         if explainerScreenTypeIs == .none{
-            //performSegue(withIdentifier: "showMealPlan", sender: explainerScreenTypeIs)
-            
-             _ = self.navigationController?.popToRootViewController(animated: false)
-            self.navigationController?.isNavigationBarHidden = true
-            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
         } else {
             performSegue(withIdentifier: "giveUserFeedback", sender: explainerScreenTypeIs)
         }
@@ -589,22 +623,25 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     }
 
     
-    private func createNewFoodFromConversation(){
+    func createNewFoodFromConversation(){
         let food = Food()
-        if let pk = DataHandler.getNewPKForFood() {
-            food.pk = pk
+        guard let pk = DataHandler.getNewPKForFood() else {
+            return
         }
+        food.pk = pk
         
         //["item", "pot", "slice", "cup", "tablet", "heaped teaspoon", "pinch", "100ml", "100g"]
         
         let foodNameIndex = 0
         let foodName : String = answers[foodNameIndex].first!
         food.name = foodName
+        print("food2: \(food.name)")
         
         if let foodProducerIndex = questions.index(of: BotData.NEW_FOOD.producer.question) {
             food.producer = answers[foodProducerIndex].first!
+            
         }
-
+       
         
         if let servingTypeIndex = questions.index(of: BotData.NEW_FOOD.serving_type.question) {
             var servingSizeName = answers[servingTypeIndex].first!
@@ -626,8 +663,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         
         if let satFatsIndex = questions.index(of: BotData.NEW_FOOD.fat.question) {
-            if let satFats = Double(answers[satFatsIndex].first!) {
-                food.sat_fats = RealmOptional<Double>(satFats)
+            if let satFats = answers[satFatsIndex].first {
+                food.sat_fats = RealmOptional<Double>(Double(satFats))
             }
         }
         
@@ -639,22 +676,22 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         
         if let sugarIndex = questions.index(of: BotData.NEW_FOOD.sugar.question) {
-            if let sugar = Double(answers[sugarIndex].first!) {
-                food.sugars = RealmOptional<Double>(sugar)
+            if let sugar = answers[sugarIndex].first {
+                food.sugars = RealmOptional<Double>(Double(sugar))
             }
         }
         
         
         if let fibreIndex = questions.index(of: BotData.NEW_FOOD.fibre.question){
-            if let fibre = Double(answers[fibreIndex].first!){
-                food.fibre = RealmOptional<Double>(fibre)
+            if let fibre = answers[fibreIndex].first{
+                food.fibre = RealmOptional<Double>(Double(fibre))
             }
         }
         
         
         if let proteinIndex = questions.index(of: BotData.NEW_FOOD.protein.question){
-            if let proteins = Double(answers[proteinIndex].first!){
-                food.proteins = proteins
+            if let proteins = answers[proteinIndex].first{
+                food.proteins = Double(proteins)!
             }
         }
         
@@ -666,10 +703,17 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             food.foodType.append(contentsOf: foodTypesFound)
         }
         
+        //_ = DataHandler.createFood(fooditem.food!)
         
-        _ = DataHandler.createFood(food)
         
+        let fooditem = FoodItem()
+        fooditem.food = food
         
+        if let servingAmountIndex = questions.index(of: BotData.NEW_FOOD.number_of_servings.question) {
+            fooditem.numberServing = Double(answers[servingAmountIndex].first!)!
+        }
+        
+        print("food item object: \(fooditem)")
         
         /*
          

@@ -236,7 +236,8 @@ struct Constants {
     static let questionsThatRequireButtons = [
         BotData.NEW_FOOD.saturated_fat.question,
         BotData.NEW_FOOD.sugar.question,
-        BotData.NEW_FOOD.fibre.question]
+        BotData.NEW_FOOD.fibre.question,
+        BotData.NEW_FOOD.ending.question]
     
     struct CellIdentifiers {
         static let Blue = "BlueCellIdentifier"

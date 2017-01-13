@@ -4,32 +4,29 @@ import JSQMessagesViewController
 class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
     
     var incomingBubbleMask = UIImageView()
-    
-    
-    
     override func messageBubbleSizeForItem(at indexPath: IndexPath!) -> CGSize {
         
         var superSize = super.messageBubbleSizeForItem(at: indexPath)
         let currentMessageText = self.collectionView.dataSource.collectionView(self.collectionView, messageDataForItemAt: indexPath).text!()
+        
         
 
         //let op = ox?.collectionView(self.collectionView, cellForItemAt: indexPath) as! outCells
         
 
         if Constants.questionsThatRequireTableViews.contains(currentMessageText!){
-            
-            let rows = (4 * 45) + (4*23)
+            let questionIndex = BotData.NEW_FOOD.questions.index(of: currentMessageText!)
+            let options = BotData.NEW_FOOD.options
+            let numRows = options[questionIndex!].count
+            let rows = (Double(Constants.TABLE_ROW_HEIGHT_SMALL) * Double(numRows + 2))
             superSize.height = CGFloat(rows)
             superSize.width = superSize.width + 40
             return superSize
- 
         }
         
         if Constants.questionsThatRequireButtons.contains(currentMessageText!){
-            
             superSize.height = 80
             superSize.width = superSize.width + 40
-            
             return superSize
             
         }
