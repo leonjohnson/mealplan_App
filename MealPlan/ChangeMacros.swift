@@ -61,7 +61,7 @@ class ChangeMacros: UIViewController, UIPickerViewDataSource, UIPickerViewDelega
         
         let fats = Macronutrient()
         fats.name = Constants.FATS
-        fats.value = Double(fatsValueSelected)
+        fats.value = Double(fatsValueSelected) 
         
         DataHandler.updateMacrosAndCalories(thisWeek, calories: Int(caloriesField.text!)!, macros: [protein, carbs, fats])
         SetUpMealPlan.updateFutureWeeksWithNewMealPlans()// find all future weeks and reset their meal plan
