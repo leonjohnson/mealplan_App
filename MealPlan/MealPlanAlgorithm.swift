@@ -77,7 +77,7 @@ class MealPlanAlgorithm : Object{
      
      
      */
-    static func createMealPlans(_ thisWeek:Week) -> [DailyMealPlan]{
+    static func createMealPlans(_ thisWeek:Week, withFoodBasket:[Food]?) -> [DailyMealPlan]{
         
         #if DEBUG
             print("BEGINING")
@@ -193,9 +193,14 @@ class MealPlanAlgorithm : Object{
             
         for dayIndex in 1...7 {
             var dailyMealPlan = DailyMealPlan()
+            #if DEBUG
+                print("2PRREDS OVER")
+            #endif
             dailyMealPlan.dayId = dayIndex
             var numberOfMealsRemaining = Int(desiredNumberOfDailyMeals)
-            
+            #if DEBUG
+                print("3PRREDS OVER")
+            #endif
             
             //divide kcal required by number of meals, each one should not be +-20% of this
             let macrosDesiredToday : [String:Double] = [Constants.CALORIES:kcal,

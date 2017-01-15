@@ -15,7 +15,7 @@ class ServingSize: Object {
     static func get(_ name:String)->ServingSize{
         
         let realm = try! Realm()
-        let obj = realm.objects(ServingSize).filter("name = '" + name + "' ").first
+        let obj = realm.objects(ServingSize.self).filter("name = '" + name + "' ").first
         if((obj) != nil){
             return obj!
         }else{

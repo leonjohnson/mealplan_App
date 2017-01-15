@@ -205,52 +205,40 @@ class SetUpMealPlan: NSObject {
         let bio = DataHandler.getActiveBiographical()
         let user = DataHandler.getActiveUser()
         newWeek.TDEE = calculateTDEE(bio: bio, user: user)
-        newWeek.dailyMeals.append(objectsIn: MealPlanAlgorithm.createMealPlans(newWeek))
+        let meals = MealPlanAlgorithm.createMealPlans(newWeek, withFoodBasket:nil)
+        newWeek.dailyMeals.append(objectsIn: meals)
         newWeek.caloriesEaten = newWeek.calculateCalorieConsumptionForMeal()
         try! realm.write {
             realm.add(newWeek)
         }
     }
     
+    static func createNewDailyMeaPlanslFor(week: Week)->[DailyMealPlan]{
+        let meals = MealPlanAlgorithm.createMealPlans(week, withFoodBasket:nil)
+        return meals
+    }
     
     
-    /*
-     static func createThisWeekAndNextWeek()
-     {
-     
-     print("createThisWeekAndNextWeek CALLED.")
-     let realm = try! Realm()
-     let calender = Calendar.current
-     let aWeekAgo = (calender as NSCalendar).date(byAdding: .day, value: -6, to: calender.startOfDay(for: Date()), options: [.matchFirst])
-     
-     let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo! as CVarArg)
-     let weeks = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true).count
-     
-     switch weeks {
-     case 0:
-     createWeeks([0, 1])
-     case 1:
-     createWeeks([1])
-     default:
-     print("No weeks need to be created")
-     return
-     }
-     }
-     */
+    static func updateFutureWeeksWithNewMealPlans(){
+        // find all future weeks and reset their meal plan
+        let realm = try! Realm()
+        let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
+        if response.weeksAheadIncludingCurrent.count == 0{
+            return
+        }
+        let weeks = response.weeksAheadIncludingCurrent
+        
+        for week in weeks {
+            let meals = SetUpMealPlan.createNewDailyMeaPlanslFor(week: week)
+            try! realm.write {
+                week.dailyMeals.removeAll()
+                week.dailyMeals.append(objectsIn:meals)
+                week.caloriesEaten = week.calculateCalorieConsumptionForMeal()
+            }
+        }
+    }
     
-    // get the current week, which is the week ordered by start_date and the last object.
-    // get todays date and find out how many days have lapsed since the start_date, = x
-    // if x == 2 then get the second dailymeal in this weeks list of daily meals
-    // display that on screen.
-    
-    
-    /**
-     This function gets all future week objects or creates them along with their meal plan.
-     
-     - Return Results<Week>
-     
-     */
-    
+
     
     static func getThisWeekAndNext()-> Results<Week>
     {

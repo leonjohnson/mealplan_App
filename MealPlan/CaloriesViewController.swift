@@ -2,9 +2,7 @@ import UIKit
 import FacebookCore
 
 class CaloriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    var fromController = NSString()
-    
+        
     @IBOutlet var caloriesListTable : UITableView!
     @IBOutlet var namelabel : UILabel!
     @IBOutlet var caloriesCountLabel : UILabel!
@@ -35,7 +33,6 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
 
          */
         
-        self.view.backgroundColor = UIColor.groupTableViewBackground
         caloriesListTable.delegate = self
         
         let attributes = [NSFontAttributeName:Constants.STANDARD_FONT]
@@ -45,26 +42,28 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         percentToggle.selectedSegmentIndex = 1
         changeUnitOfMacroMeasurement(percentToggle)
 
-        //Format the number:
         
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        let largeNumber = NSNumber(value: (thisWeek?.calorieAllowance)!) as NSNumber
-        let string = numberFormatter.string(from: largeNumber)
-        
-        
-        caloriesCountLabel.attributedText = NSMutableAttributedString(string:string! + " calories", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
     }
     
 
     override func viewWillAppear(_ animated: Bool) {
         
         caloriesListTable.reloadData()
+        reloadCaloriesView()
         
         //To display Regestered Users name on Meal Plan's page
         namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().name.capitalized + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
         super.viewWillAppear(true)
         AppEventsLogger.log("CaloriesViewController viewed")
+    }
+    
+    func reloadCaloriesView(){
+        //Format the number:
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        let largeNumber = NSNumber(value: (thisWeek?.calorieAllowance)!) as NSNumber
+        let string = numberFormatter.string(from: largeNumber)
+        caloriesCountLabel.attributedText = NSMutableAttributedString(string:string! + " calories", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
     }
 
     //MARK - Table Delagte & DataSource
@@ -74,9 +73,20 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let p = (thisWeek?.macroAllocation[0].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
+        var pPercent = Int(p * 100)
+        
+        let c = (thisWeek?.macroAllocation[1].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
+        let cPercent = Int(c * 100)
+        
+        let f = (thisWeek?.macroAllocation[2].value)! * 9 / Double((thisWeek?.calorieAllowance)!)
+        let fPercent = Int(f * 100)
+        
+        let difference = 100 - (pPercent + cPercent + fPercent)
+        pPercent = difference > 0 ? pPercent + difference : pPercent
+        
         var cell:UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as? CaloriesTableViewCell
-        if(cell == nil)
-        {
+        if(cell == nil){
             /**
              Dynamic cell creation .
              It Should be changed base on the future scenario
@@ -94,18 +104,15 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
             case 0:
                 macroName = (thisWeek?.macroAllocation[1].name)!//proteins
                 macroValue = String(Int((thisWeek?.macroAllocation[1].value)!))+"g"
-                let a = (thisWeek?.macroAllocation[1].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
-                macroPercent = Int(a * 100)+1
+                macroPercent = cPercent
             case 1:
                 macroName = (thisWeek?.macroAllocation[0].name)! //carbs
                 macroValue = String(Int((thisWeek?.macroAllocation[0].value)!))+"g"
-                let a = (thisWeek?.macroAllocation[0].value)! * 4 / Double((thisWeek?.calorieAllowance)!)
-                macroPercent = Int(a * 100)
+                macroPercent = cPercent
             case 2:
                 macroName = (thisWeek?.macroAllocation[2].name)!//fats
                 macroValue = String(Int((thisWeek?.macroAllocation[2].value)!))+"g"
-                let a = (thisWeek?.macroAllocation[2].value)! * 9 / Double((thisWeek?.calorieAllowance)!)
-                macroPercent = Int(a * 100)
+                macroPercent = fPercent
             default:
                 macroName = "Fats"
                 let a = (thisWeek?.macroAllocation[0].value)! * 9 / Double((thisWeek?.calorieAllowance)!)
@@ -138,10 +145,15 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     
-    @IBAction func changeUnitOfMacroMeasurement(_ segmentedControl:UISegmentedControl)
-    {
+    @IBAction func changeUnitOfMacroMeasurement(_ segmentedControl:UISegmentedControl){
         showPercentOnly = segmentedControl.selectedSegmentIndex == 0 ? true : false
         caloriesListTable.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let controller = segue.destination as! ChangeMacros
+        controller.thisWeek = thisWeek!
+        //controller.navigationItem.rightBarButtonItem?.titleTextAttributes(for: .normal) = [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE]
     }
 
     

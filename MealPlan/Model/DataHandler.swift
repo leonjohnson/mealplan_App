@@ -278,7 +278,6 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             meal.foodItems.append(foodItem)
-            //print("creating Meal \(foodItem.food?.name )")
         }
     }
     
@@ -332,6 +331,15 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             lastWeek.feedback = feedback
+        }
+    }
+    
+    static func updateMacrosAndCalories(_ theWeek:Week, calories:Int, macros:[Macronutrient]){
+        let realm = try! Realm()
+        try! realm.write {
+            theWeek.calorieAllowance = calories
+            theWeek.macroAllocation.removeAll()
+            theWeek.macroAllocation.append(objectsIn: macros)
         }
     }
     
