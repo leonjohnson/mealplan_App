@@ -46,6 +46,8 @@ class Food: Object {
     
     var max_number_of_servings = RealmOptional<Double>()
     var min_number_of_servings = RealmOptional<Double>()
+    dynamic var country = ""
+    
     
     dynamic var doNotReduceToZero : Bool = false
     

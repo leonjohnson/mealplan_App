@@ -16,13 +16,18 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     @IBOutlet var settingsTable : UITableView!
     @IBOutlet var settingsLabel : UILabel!
     let imagesForSettings = ["AboutUs", "ContactUs"]
+    let delegate = MailComposeDelegate()
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingsLabel.attributedText = NSAttributedString(string: "Settings", attributes: [NSFontAttributeName:Constants.STANDARD_FONT_BOLD, NSForegroundColorAttributeName:Constants.MP_BLACK])
+        if settingsLabel != nil {
+            settingsLabel.attributedText = NSAttributedString(string: "Settings", attributes: [NSFontAttributeName:Constants.STANDARD_FONT_BOLD, NSForegroundColorAttributeName:Constants.MP_BLACK])
+        }
+        
         AppEventsLogger.log("more page")
+        
         
         
     }
@@ -85,7 +90,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
+            mail.mailComposeDelegate = delegate
             mail.setToRecipients(["feedback@mealplanapp.com"])
             mail.setSubject("Feedback")
             
@@ -96,21 +101,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
         }
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        
-        
-        switch result {
-        case .cancelled:
-            AppEventsLogger.log("cancelled sending email")
-        case .saved:
-            AppEventsLogger.log("saving email for later")
-        case .sent:
-            AppEventsLogger.log("email sent!")
-        case .failed:
-            AppEventsLogger.log("error sending mail: \(error?.localizedDescription)")
-        }
-        controller.dismiss(animated: true)
-    }
+
 
 
 

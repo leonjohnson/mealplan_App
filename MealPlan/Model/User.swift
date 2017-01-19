@@ -9,5 +9,6 @@ class User: Object {
     dynamic var email = ""
     dynamic var birthdate = Date(timeIntervalSince1970: 1)
     dynamic var gender = ""
+    dynamic var country = ""
     
 }

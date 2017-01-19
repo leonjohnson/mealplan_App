@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         #if DEBUG
             print("The realm file is here :\(Realm.Configuration.defaultConfiguration.fileURL)")
          #endif
-        //UpdateController.checkUpdate()
+        UpdateController.checkUpdate()
         SetUpMealPlan.loadDatabaseWithData()
         
         AppEventsLogger.activate(application)
@@ -94,6 +94,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if shouldShowExplainerScreen == true{
             (initialViewController.selectedViewController as! MealPlanViewController).showExplainerScreen = true
         }
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
+        UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+    }
+    
+    func takeUserToSettings(){
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = Constants.MAIN_STORYBOARD
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "loggedinTabBar") as! UITabBarController
+        (initialViewController.selectedViewController as! settings)
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")

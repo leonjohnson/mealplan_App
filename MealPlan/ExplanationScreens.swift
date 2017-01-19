@@ -95,7 +95,7 @@ class ExplanationScreens: UIView {
         let notificationSubTitle = "You're more likely to stick with a plan if you have reminders."
         
         let leaglTitle = "Your meal plan does not constitue medical advice."
-        let legalSubTitle = " Consult with your doctore before changing your diet. By using these meal plans you accept all responsibility to any impact it has upon your health."
+        let legalSubTitle = " Consult with your doctore before changing your diet. By using these meal plans you accept all responsibility for any impact it has upon your health."
         
         
         screen1Text = NSAttributedString(string: congratulationsTitle, attributes:title_attributes )

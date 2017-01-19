@@ -41,6 +41,8 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         percentToggle.setTitleTextAttributes(newAttributes, for: .selected)
         percentToggle.selectedSegmentIndex = 1
         changeUnitOfMacroMeasurement(percentToggle)
+        
+        //navigationItem.rightBarButtonItem?.isEnabled = false
 
         
     }
@@ -82,6 +84,8 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         let f = (thisWeek?.macroAllocation[2].value)! * 9 / Double((thisWeek?.calorieAllowance)!)
         let fPercent = Int(f * 100)
         
+        print("p: \(pPercent), c: \(cPercent), f: \(fPercent)")
+        
         let difference = 100 - (pPercent + cPercent + fPercent)
         pPercent = difference > 0 ? pPercent + difference : pPercent
         
@@ -108,7 +112,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
             case 1:
                 macroName = (thisWeek?.macroAllocation[0].name)! //carbs
                 macroValue = String(Int((thisWeek?.macroAllocation[0].value)!))+"g"
-                macroPercent = cPercent
+                macroPercent = pPercent
             case 2:
                 macroName = (thisWeek?.macroAllocation[2].name)!//fats
                 macroValue = String(Int((thisWeek?.macroAllocation[2].value)!))+"g"

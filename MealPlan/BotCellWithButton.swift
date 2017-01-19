@@ -38,9 +38,12 @@ class BotCellWithButton: JSQMessagesCollectionViewCellIncoming, BotDelegate {
     }
     
     override class func mediaCellReuseIdentifier() -> String {
-        return "CustomMessagesCollectionViewCellIncoming"
+        return "CustomMessagesCollectionViewCellIncomingButton"
     }
     
+    override class func cellReuseIdentifier() -> String {
+        return "button"
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

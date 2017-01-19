@@ -5,13 +5,14 @@ struct Constants {
     static let BOT_NAME = "BOT"
     static let LOCALISATION_NEEDED = "LOCALISATION_NEEDED"
 
-    static let URL_VERSION_CHECK = "http://echo.jsontest.com/version/1.0.1/"
+    
     static let API_VERSION  = "version"
-    static let URL_UPDATE_URL = "itms://itunes.apple.com/de/app/mealsapp/id8001010"
+    static let URL_UPDATE_URL = "itms://itunes.apple.com/app/id1168714900"
     static let ABOUT_US_URL = "https://www.mealplanapp.com/about/"
 
     static let API_URL  = BASE_URL + API_SEPERATOR + API_KEY + API_SEPERATOR
     static let BASE_URL = "https://mp0.herokuapp.com"
+    static let URL_VERSION_CHECK = BASE_URL + API_SEPERATOR + "appversion" + API_SEPERATOR
     static let API_SEARCH_LIMIT = 9
     static let API_SEARCH_OFSET = 0
     static let API_SEPERATOR = "/"
@@ -257,6 +258,7 @@ struct Constants {
     enum botValidationEntryType {
         case text
         case decimal
+        case number
         case none
     }
     
@@ -298,6 +300,16 @@ struct Constants {
     /*
      MARK:  EXPLAINER SCREEN VARS
      */
-
+    
+    enum botValidationType {
+        case maxCharacter
+        case minCharacter
+        case mustContain
+        case mustSumWithin10Percent
+        case mustNotExist
+        case integer
+        case skipNextQuestionIfEmptyOrZero
+        case none
+    }
     
     }

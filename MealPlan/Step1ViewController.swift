@@ -423,9 +423,9 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             user.birthdate   = Date(timeIntervalSinceNow: Double(years * -1));
             
         }
-        user.name  = nameText.text!.localizedCapitalized
+        user.first_name  = nameText.text!.localizedCapitalized
         
-        let trimmed =  user.name.trimmingCharacters(
+        let trimmed =  user.first_name.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines)
     
         

@@ -3,28 +3,15 @@ import Foundation
 
 class BotData: NSObject {
     
-    var usersName : String?
-    var objective : Biographical?
-    
-    override init(){
-        usersName = DataHandler.getActiveUser().name
-        objective = DataHandler.getActiveBiographical()
+    var usersName : String? {
+        return DataHandler.getActiveUser().name
+    }
+    var objective : Biographical? {
+        return DataHandler.getActiveBiographical()
     }
     
     
-    //var questions = BotData.THE_QUESTIONS.questions
-    //var options = BotData.THE_QUESTIONS.options
-    //var answers = BotData.THE_QUESTIONS.answers
-    //var validationType = BotData.THE_QUESTIONS.validationType
     
-    
-    
-    /*
-    struct THE_QUESTIONS {
-        
-        
-    }
-    */
     
     struct NEW_FOOD {
         static let questions : [String] = [
@@ -87,27 +74,28 @@ class BotData: NSObject {
             [String()],
             [String()]]
         
-        static let validationType : [Constants.botValidationEntryType]  = [
-            BotData.NEW_FOOD.name.validation,
-            BotData.NEW_FOOD.producer.validation,
-            BotData.NEW_FOOD.serving_type.validation,
-            BotData.NEW_FOOD.calories.validation,
-            BotData.NEW_FOOD.fat.validation,
-            BotData.NEW_FOOD.saturated_fat.validation,
-            BotData.NEW_FOOD.carbohydrates.validation,
-            BotData.NEW_FOOD.sugar.validation,
-            BotData.NEW_FOOD.fibre.validation,
-            BotData.NEW_FOOD.protein.validation,
-            BotData.NEW_FOOD.food_type.validation,
-            BotData.NEW_FOOD.number_of_servings.validation,
-            BotData.NEW_FOOD.ending.validation]
+        //
+        static let keyboardType : [Constants.botValidationEntryType]  = [
+            BotData.NEW_FOOD.name.keyboardType,
+            BotData.NEW_FOOD.producer.keyboardType,
+            BotData.NEW_FOOD.serving_type.keyboardType,
+            BotData.NEW_FOOD.calories.keyboardType,
+            BotData.NEW_FOOD.fat.keyboardType,
+            BotData.NEW_FOOD.saturated_fat.keyboardType,
+            BotData.NEW_FOOD.carbohydrates.keyboardType,
+            BotData.NEW_FOOD.sugar.keyboardType,
+            BotData.NEW_FOOD.fibre.keyboardType,
+            BotData.NEW_FOOD.protein.keyboardType,
+            BotData.NEW_FOOD.food_type.keyboardType,
+            BotData.NEW_FOOD.number_of_servings.keyboardType,
+            BotData.NEW_FOOD.ending.keyboardType]
         
             struct name {
                 static let question = "Hi! What is the full name of the food?"
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.text
+                static let keyboardType = Constants.botValidationEntryType.text
             }
             
             struct producer {
@@ -115,7 +103,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.text
+                static let keyboardType = Constants.botValidationEntryType.text
             }
         
             struct food_type {
@@ -131,7 +119,7 @@ class BotData: NSObject {
                                             "None of the above"]
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.none
+                static let keyboardType = Constants.botValidationEntryType.none
             }
         
             struct serving_type {
@@ -142,7 +130,7 @@ class BotData: NSObject {
                                             "Item (such as per banana or per apple)?"]
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.none
+                static let keyboardType = Constants.botValidationEntryType.none
             }
             
             struct calories {
@@ -150,7 +138,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
             
             struct fat {
@@ -158,7 +146,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
             
             struct saturated_fat {
@@ -166,7 +154,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
             
             struct carbohydrates {
@@ -174,7 +162,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
             
             struct sugar {
@@ -182,7 +170,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
             
             struct fibre {
@@ -190,7 +178,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
             
             struct protein {
@@ -198,7 +186,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
         
             struct number_of_servings {
@@ -206,7 +194,7 @@ class BotData: NSObject {
                 static let tableViewList : [String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botValidationEntryType.decimal
             }
         
             struct ending {
@@ -214,12 +202,14 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = "Show me my meal plan"
                 static let tips : String = ""
-                static let validation = Constants.botValidationEntryType.none
+                static let keyboardType = Constants.botValidationEntryType.none
             }
     }
     
     struct FEEDBACK {
+        
         static let questions : [String] = [
+            BotData.FEEDBACK.greeting.question,
             BotData.FEEDBACK.howWasLastWeek.question,
             BotData.FEEDBACK.howHungryWereYou.question,
             BotData.FEEDBACK.easeOfFollowingDiet.question,
@@ -239,33 +229,33 @@ class BotData: NSObject {
             [String()],
             [String()]]
         
-        static let validationType  = [
-            BotData.FEEDBACK.howWasLastWeek.validation,
-            BotData.FEEDBACK.howHungryWereYou.validation,
-            BotData.FEEDBACK.anyComments.validation,
-            BotData.FEEDBACK.easeOfFollowingDiet.validation,
-            BotData.FEEDBACK.ending.validation]
+        static let keyboardType  = [
+            BotData.FEEDBACK.howWasLastWeek.keyboardType,
+            BotData.FEEDBACK.howHungryWereYou.keyboardType,
+            BotData.FEEDBACK.anyComments.keyboardType,
+            BotData.FEEDBACK.easeOfFollowingDiet.keyboardType,
+            BotData.FEEDBACK.ending.keyboardType]
         
         struct greeting {
-            
-            /*
-            var objectives = ""
-            if (objective.addMoreDefinition == true) {
-                objectives.append("adding more definition to your physique")
-            }
-            if objective.looseFat == true{
-                objectives.append("lose fat")
-            }
-            if objective.gainMuscle == true{
-                objectives.append("gain muscle")
-            }
-            if objective.looseFat == true && objective.gainMuscle == true{
-                objectives.append("lose fat and gain muscle")
-            }
-            */
-            let question = "Hey! It's meal plan check-in time! This won't take long and is done to ensure your meal plans are going accoridng to plan. I just need to know your weight and get a bit of feedback."
-            let tableViewList:[String] = []
-            let validation = Constants.botValidationEntryType.text
+            static let question = "Hey!"
+            static let tableViewList:[String] = []
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let partOfASeries = true
+        }
+        
+        struct update {
+            static let question = "Well done! You've completed another week of your new meal plan! 👏"
+            static let tableViewList:[String] = []
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let partOfASeries = true
+        }
+        
+        struct checkin {
+            static let question = "To make sure your meal plans are going accoridng to plan, we're going to quickly go over how last week went."
+            static let tableViewList:[String] = []
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let partOfASeries = true
+
         }
         
         struct howWasLastWeek {
@@ -273,7 +263,8 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let validation = Constants.botValidationEntryType.decimal
+            static let keyboardType = Constants.botValidationEntryType.decimal
+            static let partOfASeries = false
         }
         
         struct howHungryWereYou {
@@ -284,7 +275,8 @@ class BotData: NSObject {
                                                  Constants.hungerLevels.full.rawValue]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let validation = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let partOfASeries = false
         }
         
         struct easeOfFollowingDiet {
@@ -295,7 +287,8 @@ class BotData: NSObject {
                                                  Constants.dietEase.veryHard.rawValue]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let validation = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let partOfASeries = false
         }
         
         struct changeNumberOfMeals {
@@ -304,7 +297,8 @@ class BotData: NSObject {
                                                  "2","3","4","5","6","7"]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let validation = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let partOfASeries = false
         }
         
         struct anyComments {
@@ -312,7 +306,8 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let validation = Constants.botValidationEntryType.text
+            static let keyboardType = Constants.botValidationEntryType.text
+            static let partOfASeries = false
         }
         
         struct thankyou {
@@ -320,7 +315,8 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let validation = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let partOfASeries = true
         }
         
         struct ending {
@@ -328,85 +324,237 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = "Show me my meal plan"
             static let tips : String = ""
-            static let validation = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botValidationEntryType.none
+        }
+    }
+    
+    
+    struct ONBOARD {
+        static let questions : [String] = [
+            BotData.ONBOARD.greeting.question,
+            BotData.ONBOARD.firstName.question,
+            BotData.ONBOARD.gender.question,
+            BotData.ONBOARD.goals.question,
+            BotData.ONBOARD.age.question,
+            BotData.ONBOARD.weightUnit.question,
+            BotData.ONBOARD.weight.question,
+            BotData.ONBOARD.heightUnit.question,
+            BotData.ONBOARD.height.question,
+            BotData.ONBOARD.activityLevelAtWork.question,
+            BotData.ONBOARD.physicalActivity.question,
+            BotData.ONBOARD.duration.question,
+            BotData.ONBOARD.notification.question,
+            BotData.ONBOARD.ending.question]
+        
+        static let options : [[String]]  = [
+            BotData.ONBOARD.greeting.tableViewList,
+            BotData.ONBOARD.firstName.tableViewList,
+            BotData.ONBOARD.gender.tableViewList,
+            BotData.ONBOARD.goals.tableViewList,
+            BotData.ONBOARD.age.tableViewList,
+            BotData.ONBOARD.weightUnit.tableViewList,
+            BotData.ONBOARD.weight.tableViewList,
+            BotData.ONBOARD.heightUnit.tableViewList,
+            BotData.ONBOARD.height.tableViewList,
+            BotData.ONBOARD.activityLevelAtWork.tableViewList,
+            BotData.ONBOARD.physicalActivity.tableViewList,
+            BotData.ONBOARD.duration.tableViewList,
+            BotData.ONBOARD.notification.tableViewList,
+            BotData.ONBOARD.ending.tableViewList]
+        
+        static let answers : [[String]] = [
+            [String()],
+            [String()],
+            [String()],
+            [String()]]
+        
+        static let keyboardType  = [
+            BotData.ONBOARD.greeting.keyboardType,
+            BotData.ONBOARD.firstName.keyboardType,
+            BotData.ONBOARD.gender.keyboardType,
+            BotData.ONBOARD.goals.keyboardType,
+            BotData.ONBOARD.age.keyboardType,
+            BotData.ONBOARD.weightUnit.keyboardType,
+            BotData.ONBOARD.weight.keyboardType,
+            BotData.ONBOARD.heightUnit.keyboardType,
+            BotData.ONBOARD.height.keyboardType,
+            BotData.ONBOARD.activityLevelAtWork.keyboardType,
+            BotData.ONBOARD.physicalActivity.keyboardType,
+            BotData.ONBOARD.duration.keyboardType,
+            BotData.ONBOARD.notification.keyboardType,
+            BotData.ONBOARD.ending.keyboardType]
+        
+        static let validation = [
+            BotData.ONBOARD.greeting.validationTypes
+        
+        ]
+        
+        struct greeting {
+            static let question = "Hey! Thanks for trying our app, we hope you love it."
+            static let tableViewList:[String] = []
+            static let keyboardType = Constants.botValidationEntryType.text
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"5"]
+            ]
+        }
+        
+        struct firstName {
+            static let question = "What is your first name?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.text
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"5"]
+            ]
+        }
+        
+        
+        struct gender {
+            static let question = "What is your gender?"
+            static let tableViewList:[String] = [Constants.male,
+                                                 Constants.female]
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"5"]
+            ]
+        }
+        
+        struct goals {
+            static let question = "What are your goals?"
+            static let tableViewList:[String] = [Constants.dietEase.easy.rawValue,
+                                                 Constants.dietEase.ok.rawValue,
+                                                 Constants.dietEase.hard.rawValue,
+                                                 Constants.dietEase.veryHard.rawValue]
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"5"]
+            ]
+        }
+        
+        struct age {
+            static let question = "What is your age?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.number
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+            ]
+        }
+        
+        struct weightUnit {
+            static let question = "Do you normally weigh yourself in kg or pounds?"
+            static let tableViewList:[String] = [Constants.KILOGRAMS,
+                                                 Constants.POUNDS]
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let validationTypes : [[Constants.botValidationType:String]] = []
+        }
+        
+        struct weight {
+            static let question = "What is your weight?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.decimal
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"200"],
+                [.minCharacter:"40"],
+                ]
+        }
+        
+        struct heightUnit {
+            static let question = "How do you prefer to measure your height?"
+            static let tableViewList:[String] = ["feet and inches", "centimeters"]
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.decimal
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+                ]
+        }
+        
+        struct height {
+            static let question = "What is your height?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+                ]
+        }
+        
+        struct activityLevelAtWork {
+            static let question = "How active are you?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.decimal
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+                ]
+        }
+        
+        struct physicalActivity {
+            static let question = "How many hrs do you spend being active?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = "Show me my meal plan"
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+                ]
+        }
+        
+        struct duration {
+            static let question = "How many weeks would you like to do this for?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.number
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+                ]
+        }
+        
+        struct notification {
+            static let question = "Can we send you notifications to remind you?"
+            static let tableViewList:[String] = [Constants.BOOL_YES,
+                                                 Constants.BOOL_NO]
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+                ]
+        }
+        
+        struct ending {
+            static let question = "You're the best Leon. We're gonna work well together ☺️🙌"
+            static let tableViewList:[String] = []
+            static let buttonText : String = "Show me my meal plan"
+            static let tips : String = ""
+            static let keyboardType = Constants.botValidationEntryType.none
+            static let validationTypes : [[Constants.botValidationType:String]] = [
+                [.maxCharacter:"99"],
+                [.minCharacter:"14"],
+                ]
         }
     }
 
-        /*
-         static let BOT_QUESTION_NAME = "Hi! What is the full name of the food?" //name
-         static let BOT_QUESTION_PRODUCER = "Who makes this product?" // manufacter, don't know, blank, some other unuseful answer
-         static let BOT_QUESTION_SERVING_TYPE = "For the nutritional information you're going to enter is it per:\n1.100g \n2.100ml\n3.Slice\n4.Item (such as per banana or per apple)? \nPlease enter the relevant number" //1,2,3 or 4
-         static let BOT_QUESTION_CALORIES = "Thanks. How many calories are in it?"
-         static let BOT_QUESTION_FAT = "grams of fat?" //per 100g or 100ml
-         static let BOT_QUESTION_SATURATED_FAT = "grams of saturated fat?"
-         static let BOT_QUESTION_CARBOHYDRATES = "and carbohydrates?"
-         static let BOT_QUESTION_SUGAR = "of which are sugar? (type n/a if it's not labelled)"
-         static let BOT_QUESTION_FIBRE = "and fibre? (type n/a if it's not labelled)"
-         static let BOT_QUESTION_PROTEIN = "how much protein does this item have?"
-         static let BOT_QUESTION_FOOD_TYPE = "Please help me categorise this item. \n\nWhich of the following numbers apply to this item? \n\n1.It's a drink 2. It's a fizzy drink\n3.It's a fruit \n4.It's a vegetable \n5.I would eat this at breakfast \n6.I would only eat this at breakfast \n7.This is a type of fish \n8.This is a condiment \n9.None of the above "
-         static let BOT_QUESTION_DONE = "Thanks! You're all done now."
-         */
-    
-    
-    
-    /*
-     var questions : [String] = [
-     BotData.NEW_FOOD.name.question,
-     BotData.NEW_FOOD.producer.question,
-     BotData.NEW_FOOD.serving_type.question,
-     BotData.NEW_FOOD.calories.question,
-     BotData.NEW_FOOD.fat.question,
-     BotData.NEW_FOOD.saturated_fat.question,
-     BotData.NEW_FOOD.carbohydrates.question,
-     BotData.NEW_FOOD.sugar.question,
-     BotData.NEW_FOOD.fibre.question,
-     BotData.NEW_FOOD.protein.question,
-     BotData.NEW_FOOD.food_type.question,
-     BotData.NEW_FOOD.done.question]
-     
-     var options : [[String]] = [
-     BotData.NEW_FOOD.name.tableViewList,
-     BotData.NEW_FOOD.producer.tableViewList,
-     BotData.NEW_FOOD.serving_type.tableViewList,
-     BotData.NEW_FOOD.calories.tableViewList,
-     BotData.NEW_FOOD.fat.tableViewList,
-     BotData.NEW_FOOD.saturated_fat.tableViewList,
-     BotData.NEW_FOOD.carbohydrates.tableViewList,
-     BotData.NEW_FOOD.sugar.tableViewList,
-     BotData.NEW_FOOD.fibre.tableViewList,
-     BotData.NEW_FOOD.protein.tableViewList,
-     BotData.NEW_FOOD.food_type.tableViewList,
-     BotData.NEW_FOOD.done.tableViewList]
-     
-     
-     
-     var answers : [[String]] = [
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()],
-     [String()]]
-     
-     let validationType  = [
-     BotData.NEW_FOOD.name.validation,
-     BotData.NEW_FOOD.producer.validation,
-     BotData.NEW_FOOD.serving_type.validation,
-     BotData.NEW_FOOD.calories.validation,
-     BotData.NEW_FOOD.fat.validation,
-     BotData.NEW_FOOD.saturated_fat.validation,
-     BotData.NEW_FOOD.carbohydrates.validation,
-     BotData.NEW_FOOD.sugar.validation,
-     BotData.NEW_FOOD.fibre.validation,
-     BotData.NEW_FOOD.protein.validation,
-     BotData.NEW_FOOD.food_type.validation,
-     BotData.NEW_FOOD.done.validation]
-     */
     
 }

@@ -7,6 +7,7 @@
 import UIKit
 import RealmSwift
 import FacebookCore
+import MessageUI
 
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -47,7 +48,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var mealPlanDate: UILabel!
     @IBOutlet weak var backDateButton: UIButton!
     @IBOutlet weak var nextDateButton: UIButton!
-    @IBOutlet weak var mealPlanTally: MacrosTallyView!
+    var feedbackButton: UIButton = UIButton()
     
     var alertController : UIAlertController?
     var deleteSheetIndexSelected : Int = -1
@@ -57,6 +58,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     var nextWeek: Week = Week()
     var dateCount:Int = 0
     var lastDayVisitedBeforeLeavingPage:Int = 0
+    let delegate = MailComposeDelegate()
+    
+    var rowTapped : IndexPath = IndexPath()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,8 +72,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             stringWithName = stringWithName + "'s meal plan"
         }
         nameLabel.attributedText? = NSAttributedString(string:stringWithName, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
         
-        mealPlanTally.isHidden = true
         
         AppEventsLogger.log("MealPlanViewController view will appear")
     }
@@ -113,6 +118,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                                                            handler: {
                                                             (paramAction:UIAlertAction!) in
                                                             self.deleteSheetIndexSelected = 0
+                                                            self.processSheetSelection()
         })
         
         let dislikeAction : UIAlertAction = UIAlertAction(title: "Dislike this",
@@ -120,13 +126,16 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
                                                           handler: {
                                                             (paramAction:UIAlertAction!) in
                                                             self.deleteSheetIndexSelected = 1
+                                                            self.processSheetSelection()
         })
         
         let cancelAction : UIAlertAction = UIAlertAction(title: "Cancel",
                                                          style: .cancel,
                                                          handler: {
                                                             (paramAction:UIAlertAction!) in
-                                                            self.alertController?.dismiss(animated: true, completion: nil)
+                                                            self.deleteSheetIndexSelected = -1
+                                                            self.processSheetSelection()
+                                                            //self.alertController?.dismiss(animated: true, completion: nil)
         })
         
         
@@ -164,31 +173,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return thisWeek
     }
     
-    func updateMacroTally(forDay:Int){
-        var longString = ""
-        let variance = thisWeek.dailyMeals[forDay].calculateMacroDiscrepancy(macros: thisWeek.macroAllocation)
-        if variance.yesOrNo == false{
-            mealPlanTally.headline.attributedText = NSAttributedString(string: "The macros in your meal plan are looking good today.", attributes:[NSFontAttributeName:Constants.SMALL_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
-            if let checkMark = UIImage(named: "macroCheckMark") {
-                mealPlanTally.imageView.image = checkMark
-            }
-        } else {
-            if variance.amount[Constants.PROTEINS] > 0 {
-                longString.append("\n\(Constants.roundToPlaces(variance.amount[Constants.PROTEINS]!, decimalPlaces: 1))g of protein")
-            }
-            if variance.amount[Constants.CARBOHYDRATES] > 0 {
-                longString.append("\n\(Constants.roundToPlaces(variance.amount[Constants.CARBOHYDRATES]!, decimalPlaces: 1))g of carbohyrdates")
-            }
-            if variance.amount[Constants.FATS] > 0 {
-                longString.append("\n\(Constants.roundToPlaces(variance.amount[Constants.FATS]!, decimalPlaces: 1))g of fat")
-            }
-            mealPlanTally.headline.attributedText = NSAttributedString(string: "You need an extra: \(longString) today.", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
-            mealPlanTally.imageView.image = #imageLiteral(resourceName: "CrossMark")
-            
-            //"Out by: \(variance.amount[Constants.PROTEINS]), \(variance.amount[Constants.CARBOHYDRATES]), \(variance.amount[Constants.FATS])"
-        }
-    }
-
+    
     
     
     func setDate() -> (String?) {
@@ -533,22 +518,13 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         case 1:
             print("sheet 1")
         default:
-            print("")
+            print("original still stands")
         }
         
         switch editType {
         case Constants.DELETE:
-            self.present(alertController!, animated: true, completion: {
-                let foodItem = self.meals[indexPath.section].foodItems[indexPath.row]
-                DataHandler.removeFoodItem(foodItem)
-                DataHandler.updateCalorieConsumption(thisWeek: self.thisWeek)
-                //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
-                //mealPlanListTable.reloadData()
-                //self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)
-                //http://stackoverflow.com/questions/14576921/uitableview-reloaddata-with-animation
-                let sections = NSIndexSet(index: indexPath.section)
-                self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)
-            })
+            self.present(alertController!, animated: true, completion: nil)
+            rowTapped = indexPath
          case Constants.EDIT:
             let fi = meals[indexPath.section].foodItems[indexPath.row]
             DataHandler.updateFoodItem(fi, eaten: true)
@@ -559,9 +535,45 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func processSheetSelection(){
+
+        
+        if self.deleteSheetIndexSelected >= 0 {
+            let foodItem = self.meals[rowTapped.section].foodItems[rowTapped.row]
+            DataHandler.removeFoodItem(foodItem)
+            DataHandler.updateCalorieConsumption(thisWeek: self.thisWeek)
+            //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
+            //mealPlanListTable.reloadData()
+            //self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)
+            //http://stackoverflow.com/questions/14576921/uitableview-reloaddata-with-animation
+            let sections = NSIndexSet(index: rowTapped.section)
+            self.mealPlanListTable.reloadSections(sections as IndexSet, with: .automatic)
+            rowTapped = IndexPath()
+            self.deleteSheetIndexSelected = -1
+        }
+        
+    }
     
     func displayDeleteSheet(_ reason: String) {
         self.present(alertController!, animated: true, completion: nil)
+    }
+    
+    @IBAction func askFeedback(_ sender : UIButton){
+        sendEmail()
+    }
+    
+    func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = delegate
+            mail.setToRecipients(["feedback@mealplanapp.com"])
+            mail.setSubject("Feedback from \(DataHandler.getActiveUser().first_name) 👋")
+            
+            present(mail, animated: true)
+        } else {
+            // show failure alert
+            
+        }
     }
     
     

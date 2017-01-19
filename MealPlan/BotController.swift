@@ -32,7 +32,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     var options : [[String]] = BotData.NEW_FOOD.options
     var buttonText : [String] = BotData.NEW_FOOD.buttonText
     var answers : [[String]] = BotData.NEW_FOOD.answers
-    var validationType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.validationType
+    var keyBoardType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.keyboardType
     var sideButton : UIButton?
     
     var meal : Meal? = Meal()
@@ -69,13 +69,13 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             questions[0] = "Hey \(user.name)! What is the full name of the food you want to record?"
             options = BotData.NEW_FOOD.options
             answers = BotData.NEW_FOOD.answers
-            validationType = BotData.NEW_FOOD.validationType
+            keyBoardType = BotData.NEW_FOOD.keyboardType
         case .feedback:
             questions = BotData.FEEDBACK.questions
             questions[0] = "Hey \(user.name)! I'm checking in with you to see how things have been going?\nWhat was your weight this morning (in \(weightUnit)s)?"
             options = BotData.FEEDBACK.options
             answers = BotData.FEEDBACK.answers
-            validationType = BotData.FEEDBACK.validationType
+            keyBoardType = BotData.FEEDBACK.keyboardType
         default:
             return
         }
@@ -143,7 +143,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         sideButton = UIButton(frame: CGRect.zero)
         var keyBoardImage = UIImage()
         
-        switch validationType[0] {
+        switch keyBoardType[0] {
+        case .number:
+            self.inputToolbar.contentView.textView.keyboardType = .numberPad
+            keyBoardImage = UIImage(named: "keyboard_filled")!
         case .decimal:
             self.inputToolbar.contentView.textView.keyboardType = .decimalPad
             keyBoardImage = UIImage(named: "keyboard_filled")!
@@ -173,6 +176,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
          let message2 = JSQMessage(senderId: "121", displayName: "Leon", media: photo)
          messages.append(message2!)
          */
+        
+        
     }
 
     
@@ -183,8 +188,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     // MARK: - DELEGATE METHODS
     */
     
-    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!)
-    {
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!){
         if let message = JSQMessage(senderId: self.senderId, displayName: self.senderDisplayName, text: text) {
             if validateAnswer() == true{
                 addMessage(withId: self.senderId, name: "t", text: text)
@@ -221,8 +225,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.finishSendingMessage(animated: true)
         
         // Set the keyboard type
-        if validationType[questionIndex - 1] != validationType[questionIndex]{
-            switch validationType[questionIndex] {
+        if keyBoardType[questionIndex - 1] != keyBoardType[questionIndex]{
+            switch keyBoardType[questionIndex] {
+            case .number:
+                self.inputToolbar.contentView.textView.keyboardType = .numberPad
             case .decimal:
                 self.inputToolbar.contentView.textView.keyboardType = .decimalPad
             case .text:
@@ -359,22 +365,40 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
     }
     */
+    
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        let when = DispatchTime.now() + delay
+        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
+    }
+    
 
     private func validateAnswer()->Bool{
         return true
     }
     
     private func addMessage(withId id: String, name: String, text: String) {
-        if let message = JSQMessage(senderId: id, displayName: name, text: text) {
-            messages.append(message)
-        }
+        self.showTypingIndicator = true
+        delay(2.0, closure: {
+            if let message = JSQMessage(senderId: id, displayName: name, text: text) {
+                // Typing
+                self.scrollToBottom(animated: true)
+                
+                
+                self.messages.append(message)
+                self.showTypingIndicator = false
+                
+                self.finishSendingMessage(animated: true)
+            }
+        })
+        
     }
-    
+
+    /*
    private func addMessage(withId id: String, name: String, media: JSQMessageMediaData) {
         if let message = JSQMessage(senderId: id, displayName: name, media: media) {
             messages.append(message)
         }
-    }
+    }*/
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return messages.count
@@ -382,7 +406,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
-
+        
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         cell.textView.textColor = UIColor.black
@@ -741,12 +765,15 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         if text.characters.count == 0 {
             return true //if the delete key is pressed then length of the text variable is not increase so return true
         }
-        switch validationType[questionIndex] {
+        switch keyBoardType[questionIndex] {
         case  Constants.botValidationEntryType.text:
             return text.isDecimal() ? false : true
             
         case  Constants.botValidationEntryType.decimal:
             return text.isDecimal() ? true : false
+        
+        case  Constants.botValidationEntryType.number:
+            return text.isNumber() ? true : false
             
         case  Constants.botValidationEntryType.none:
             return text.isDecimal() ? false : true // users should be allowed to type in 'go back' even though the keyboard will be minimised.

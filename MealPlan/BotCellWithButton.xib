@@ -39,11 +39,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rKM-fI-zd5" userLabel="Bubble container">
-                        <rect key="frame" x="28" y="40" width="244" height="302"/>
+                        <rect key="frame" x="0.0" y="40" width="244" height="302"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7QR-fw-czf">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7QR-fw-czf">
                                 <rect key="frame" x="0.0" y="0.0" width="244" height="302"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="J2F-tw-H1o">
@@ -65,6 +64,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BON-fH-ikk" customClass="MPButton" customModule="MealPlan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="252" width="224" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="QBE-Cb-bKz"/>
+                                        </constraints>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="noValueSelectedWithSender:" destination="YKP-dV-AKb" eventType="touchUpInside" id="whd-bA-6A1"/>
@@ -76,9 +78,14 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="J2F-tw-H1o" firstAttribute="centerX" secondItem="7QR-fw-czf" secondAttribute="centerX" id="2eD-Ov-FBn"/>
+                            <constraint firstItem="J2F-tw-H1o" firstAttribute="centerX" secondItem="rKM-fI-zd5" secondAttribute="centerX" id="7vl-M3-eua"/>
                             <constraint firstAttribute="width" constant="244" id="C4a-Uc-3HE"/>
+                            <constraint firstItem="7QR-fw-czf" firstAttribute="leading" secondItem="rKM-fI-zd5" secondAttribute="leading" id="NMt-I1-MjJ"/>
+                            <constraint firstItem="7QR-fw-czf" firstAttribute="top" secondItem="rKM-fI-zd5" secondAttribute="top" id="RDC-sc-dUi"/>
                             <constraint firstAttribute="trailing" secondItem="J2F-tw-H1o" secondAttribute="trailing" constant="10" id="VoT-2K-EUc"/>
                             <constraint firstAttribute="bottom" secondItem="J2F-tw-H1o" secondAttribute="bottom" constant="10" id="oNW-nE-fzK"/>
+                            <constraint firstItem="J2F-tw-H1o" firstAttribute="centerY" secondItem="7QR-fw-czf" secondAttribute="centerY" id="osq-lU-DmS"/>
                             <constraint firstItem="J2F-tw-H1o" firstAttribute="top" secondItem="rKM-fI-zd5" secondAttribute="top" constant="10" id="ycG-nj-wj8"/>
                         </constraints>
                     </view>
@@ -125,7 +132,7 @@
                 <constraint firstItem="QF2-9b-ond" firstAttribute="top" secondItem="YKP-dV-AKb" secondAttribute="top" id="bWE-Kh-7qx"/>
                 <constraint firstAttribute="trailing" secondItem="sYe-4x-oM5" secondAttribute="trailing" id="ffz-qe-uyx"/>
                 <constraint firstItem="P1j-mq-QlY" firstAttribute="leading" secondItem="YKP-dV-AKb" secondAttribute="leading" id="gq7-f9-crI"/>
-                <constraint firstItem="sYe-4x-oM5" firstAttribute="leading" secondItem="rKM-fI-zd5" secondAttribute="trailing" constant="70" id="is1-Gc-c7w"/>
+                <constraint firstItem="rKM-fI-zd5" firstAttribute="leading" secondItem="XsP-on-c48" secondAttribute="leading" id="hcK-N6-W3b"/>
             </constraints>
             <size key="customSize" width="373" height="453"/>
             <connections>

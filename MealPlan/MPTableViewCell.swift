@@ -96,6 +96,7 @@ class MPTableViewCell: UITableViewCell {
                 if delegate != nil && foodItemIndexPath != nil {
                     // notify the delegate that this item should be deleted
                     delegate!.editFoodItemAtIndexPath(foodItemIndexPath!, editType: Constants.DELETE)
+                    UIView.animate(withDuration: 0.2, animations: {self.frame = originalFrame})
                 }
             }
             else if completeOnDragRelease {

@@ -97,6 +97,7 @@
 		F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */; };
 		F7DAD57A1E27B96A004656FC /* Macros.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7DAD5791E27B96A004656FC /* Macros.storyboard */; };
 		F7DAD57C1E27CC8D004656FC /* ChangeMacros.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DAD57B1E27CC8D004656FC /* ChangeMacros.swift */; };
+		F7DAD5801E30E210004656FC /* MailComposeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DAD57F1E30E210004656FC /* MailComposeDelegate.swift */; };
 		F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5411DD2225E00DA2696 /* BotController.swift */; };
 		F7E3C5441DD4AF0F00DA2696 /* Bot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */; };
 		F7E3C5461DD4AF6E00DA2696 /* SearchForFood.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */; };
@@ -235,6 +236,7 @@
 		F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotCellWithButton.swift; sourceTree = "<group>"; };
 		F7DAD5791E27B96A004656FC /* Macros.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Macros.storyboard; sourceTree = "<group>"; };
 		F7DAD57B1E27CC8D004656FC /* ChangeMacros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeMacros.swift; sourceTree = "<group>"; };
+		F7DAD57F1E30E210004656FC /* MailComposeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailComposeDelegate.swift; sourceTree = "<group>"; };
 		F7E3C5411DD2225E00DA2696 /* BotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotController.swift; sourceTree = "<group>"; };
 		F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bot.storyboard; sourceTree = "<group>"; };
 		F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchForFood.storyboard; sourceTree = "<group>"; };
@@ -372,7 +374,6 @@
 				F78AB71D1DBE6DA400BB40EA /* Picker */,
 				F78AB7171DBE6DA400BB40EA /* Network */,
 				F7C480441DBF61D100572706 /* Payment */,
-				F7C480451DBF61DF00572706 /* Settings */,
 				F78AB6E51DBE6DA400BB40EA /* Assets.xcassets */,
 				F78AB6FB1DBE6DA400BB40EA /* IconImages.xcassets */,
 				F78AB7041DBE6DA400BB40EA /* Media.xcassets */,
@@ -501,6 +502,7 @@
 				F78AB6F81DBE6DA400BB40EA /* FoodListTableViewCell.swift */,
 				F78AB6F91DBE6DA400BB40EA /* FoodSearchViewController.swift */,
 				F78AB7021DBE6DA400BB40EA /* MealPlanViewController.swift */,
+				F7DAD57F1E30E210004656FC /* MailComposeDelegate.swift */,
 				F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */,
 				F78AB7031DBE6DA400BB40EA /* MPTableViewCell.swift */,
 				F78AB6FA1DBE6DA400BB40EA /* Height&WeightListViewController.swift */,
@@ -510,6 +512,7 @@
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
 				F7A61B661E12DBAF0099DE42 /* inCell.swift */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
+				F78AB7221DBE6DA400BB40EA /* settings.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
 				F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */,
 			);
@@ -552,14 +555,6 @@
 				F78AB71C1DBE6DA400BB40EA /* PayemtControllerImageTableViewCell.swift */,
 			);
 			name = Payment;
-			sourceTree = "<group>";
-		};
-		F7C480451DBF61DF00572706 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				F78AB7221DBE6DA400BB40EA /* settings.swift */,
-			);
-			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -859,6 +854,7 @@
 				F78AB72D1DBE6DA400BB40EA /* ActivityLevelViewController.swift in Sources */,
 				F7E3C5551DDBC44300DA2696 /* miniTableViewCell.swift in Sources */,
 				F78AB7691DBE6DA400BB40EA /* Step3TableViewCell.swift in Sources */,
+				F7DAD5801E30E210004656FC /* MailComposeDelegate.swift in Sources */,
 				F78AB7361DBE6DA400BB40EA /* CaloriesTableViewCell.swift in Sources */,
 				F78AB73A1DBE6DA400BB40EA /* ContactUsViewController.swift in Sources */,
 				F74E3C7A1DF8FAA8004B0259 /* BotData.swift in Sources */,
