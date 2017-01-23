@@ -191,7 +191,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         if revertToOriginal == true{
-            print("original serving size: \(originalDetailItemNumberOfServing)")
             //updateFoodItem(numOfServing: originalDetailItemNumberOfServing)
         }
         

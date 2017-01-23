@@ -11,6 +11,7 @@ import UIKit
 protocol MPTableViewCellDelegate {
     // indicates that the given item has been deleted
     func editFoodItemAtIndexPath(_ indexPath: IndexPath, editType: String)
+    func makeTableEditable(answer: Bool)
 }
 
 class MPTableViewCell: UITableViewCell {
@@ -35,8 +36,12 @@ class MPTableViewCell: UITableViewCell {
         
         // add a pan recognizer
         let recognizer = UIPanGestureRecognizer(target: self, action: #selector(MPTableViewCell.handlePan(_:)))
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MPTableViewCell.handleLongPress(_:)))
         recognizer.delegate = self
         addGestureRecognizer(recognizer)
+        addGestureRecognizer(longPressRecognizer)
+        
+        
         
         // tick and cross labels for context cues
         tickLabel = createCueLabel()
@@ -64,6 +69,19 @@ class MPTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    func handleLongPress(_ recognizer: UILongPressGestureRecognizer) {
+        if recognizer.state == .ended{
+            delegate?.makeTableEditable(answer: false)
+        } else {
+            delegate?.makeTableEditable(answer: true)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("ended")
+        delegate?.makeTableEditable(answer: false)
     }
     
     

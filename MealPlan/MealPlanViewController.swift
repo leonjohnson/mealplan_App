@@ -34,6 +34,25 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
+extension UIView {
+    func getSubviewByName(name:String) -> UIView? {
+        
+        if (object_getClassName(self) == name._bridgeToObjectiveC().utf8String) {
+            return self
+        }
+        
+        for v in (self.subviews as Array<UIView>) {
+            var child = v.getSubviewByName(name: name)
+            
+            if (child != nil) {
+                return child
+            }
+        }
+        
+        return nil
+    }
+}
+
 
 class MealPlanViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MPTableViewCellDelegate, MPViewControllerDelegate {
     
@@ -59,13 +78,12 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     var dateCount:Int = 0
     var lastDayVisitedBeforeLeavingPage:Int = 0
     let delegate = MailComposeDelegate()
-    
     var rowTapped : IndexPath = IndexPath()
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        var stringWithName = DataHandler.getActiveUser().name
+        var stringWithName = DataHandler.getActiveUser().first_name
         if stringWithName.uppercased().characters.last == "S"{
             stringWithName = stringWithName + "' meal plan"
         } else{
@@ -75,6 +93,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         
+        mealPlanListTable.isEditing = false
         
         AppEventsLogger.log("MealPlanViewController view will appear")
     }
@@ -173,6 +192,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return thisWeek
     }
     
+    func makeTableEditable(answer: Bool){
+        mealPlanListTable.isEditing = answer
+    }
     
     
     
@@ -380,26 +402,15 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return .none
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            //let fitem = meals[indexPath.section].foodItems[indexPath.row];
-            //DataHandler.removeFoodItemFromMeal(meals[indexPath.section], index: indexPath.row)
-            //DataHandler.removeFoodItem(fitem);
-            
-            /*
-            self.presentViewController(alertController!, animated: true, completion: {
-                
-            })
-            */
-            
-            //tableView.deleteRows(at: [indexPath], with: .fade)
-            //tableView.reloadData();
-            
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let vheadView = UIView()
@@ -450,6 +461,12 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 44
     }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        return
+    }
+    
+    
     
     
     

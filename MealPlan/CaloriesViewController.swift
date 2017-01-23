@@ -54,7 +54,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         reloadCaloriesView()
         
         //To display Regestered Users name on Meal Plan's page
-        namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().name.capitalized + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
+        namelabel.attributedText = NSAttributedString(string:DataHandler.getActiveUser().first_name.capitalized + ", you need ", attributes:[NSFontAttributeName:Constants.GENERAL_LABEL, NSForegroundColorAttributeName:Constants.MP_BLUE])
         super.viewWillAppear(true)
         AppEventsLogger.log("CaloriesViewController viewed")
     }
@@ -83,9 +83,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let f = (thisWeek?.macroAllocation[2].value)! * 9 / Double((thisWeek?.calorieAllowance)!)
         let fPercent = Int(f * 100)
-        
-        print("p: \(pPercent), c: \(cPercent), f: \(fPercent)")
-        
+                
         let difference = 100 - (pPercent + cPercent + fPercent)
         pPercent = difference > 0 ? pPercent + difference : pPercent
         
