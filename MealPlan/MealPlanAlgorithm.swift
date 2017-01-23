@@ -1170,6 +1170,40 @@ class MealPlanAlgorithm : Object{
                 }
             }
             
+            
+            // - PackageFoodsNicely - at the end - ensure no duplicates in meal, and ensure the ordering is nice 👌
+            var total : [String:[Double]] = [:]
+            for meal in dailyMealPlan.meals {
+                for fi in meal.foodItems {
+                    let foodName = fi.food?.name
+                    if let existingNums : [Double] = total[foodName!] {
+                        var updatedNums : [Double] = existingNums
+                        updatedNums.append(fi.numberServing)
+                        total.updateValue(updatedNums, forKey: (fi.food?.name)!)
+                    } else {
+                        total.updateValue([fi.numberServing], forKey: (fi.food?.name)!)
+                    }
+                }
+            }
+            
+            #if DEBUG
+            print("total : \(total)")
+            #endif
+            
+            for meal in dailyMealPlan.meals {
+                for fi in meal.foodItems {
+                    if let key = total[(fi.food?.name)!] {
+                        if key.count > 1 {
+                            let sum = total[(fi.food?.name)!]!.reduce(0, +)
+                            let numbers = total[(fi.food?.name)!]
+                            #if DEBUG
+                                print("changing \(total[(fi.food?.name)!]) from \(fi.numberServing) to: \(sum/Double((numbers?.count)!))")
+                            #endif
+                            fi.numberServing = sum/Double((numbers?.count)!)
+                        }
+                    }
+                }
+            }
                 
                 
             //TODO: Ensure that proteins has -10 by the time I get to the first pass of proteing in meal 4
@@ -1182,7 +1216,7 @@ class MealPlanAlgorithm : Object{
             #endif
             //dailyMealPlan = removeDuplicatesFromMeal(plan: dailyMealPlan)
             
-            // - PackageFoodsNicely - at the end - ensure no duplicates in meal, and ensure the ordering is nice 👌
+            
 
             
 
