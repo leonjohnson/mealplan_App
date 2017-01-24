@@ -5,6 +5,13 @@ class DataHandler: NSObject {
     
     //MARK: Data Handler For Biographical class
     
+    static func foodsThatRequireRating()-> [Food] {
+        let predicate = NSPredicate(format: "SELF.name IN %@", Constants.foods_that_require_rating)
+        let realm = try! Realm()
+        let foods = realm.objects(Food.self).filter(predicate)
+        return foods.map({$0})
+    }
+    
     static func userExists()->Bool?{
         let realm = try! Realm()
         let user = realm.objects(User.self)
@@ -164,7 +171,7 @@ class DataHandler: NSObject {
             
         }
     }
-    static func updateLikeFoods(_ newData:NSMutableArray){
+    static func updateLikeFoods(_ newData:[Food]){
         let profile = getLikeFoods()
         let realm = try! Realm()
         
@@ -179,7 +186,7 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateDisLikeFoods(_ newData:NSMutableArray){
+    static func updateDisLikeFoods(_ newData:[Food]){
         let profile = getDisLikedFoods()
         let realm = try! Realm()
         try! realm.write {

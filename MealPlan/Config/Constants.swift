@@ -143,6 +143,18 @@ struct Constants {
     
     static let max_number_of_servings = "max_number_of_servings"
     static let min_number_of_servings = "min_number_of_servings"
+    
+    static let foods_that_require_rating = ["Spinach",
+                                            "Broccoli",
+                                            "brussel sprouts",
+                                            "mushrooms",
+                                            "Chicken Breast",
+                                            "Beef Fillet Steak",
+                                            "salmon fillet",
+                                            "cod fillet",
+                                            "Cashews",
+                                            "Avocado"]
+    
 
     
     
@@ -262,12 +274,25 @@ struct Constants {
         case none
     }
     
+    enum botNextSteps {
+        case requestNotificationPermission
+        case createMealPlans
+        case quit
+        case hurryAlong
+        case awaitResponse
+    }
+    
     enum dietEase: String {
         case unstated = "unstated"
         case easy = "easy"
         case ok = "ok"
         case hard = "hard"
         case veryHard = "very hard"
+    }
+    
+    enum goals: String {
+        case gainMuscle = "Gain muscle"
+        case looseWeight = "Loose weight"
     }
     
     enum hungerLevels: String {
@@ -302,13 +327,17 @@ struct Constants {
      */
     
     enum botValidationType {
-        case maxCharacter
-        case minCharacter
+        case maxCharacterCount
+        case minCharacterCount
+        case minValue
+        case maxValue
         case mustContain
         case mustSumWithin10Percent
         case mustNotExist
         case integer
+        case decimalOne
         case skipNextQuestionIfEmptyOrZero
+        case maxNumberOfOptionsSelected
         case none
     }
     

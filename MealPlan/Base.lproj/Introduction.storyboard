@@ -86,6 +86,68 @@
             </objects>
             <point key="canvasLocation" x="-4265.217391304348" y="450.81521739130437"/>
         </scene>
+        <!--Like Or Dislike-->
+        <scene sceneID="IFo-7f-Epm">
+            <objects>
+                <viewController id="3uX-SS-Q3w" customClass="LikeOrDislike" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LfJ-eB-TcM"/>
+                        <viewControllerLayoutGuide type="bottom" id="jcJ-gQ-dw6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bfE-bn-GDY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cV4-yC-uPf">
+                                <rect key="frame" x="87" y="101" width="240" height="128"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FFD-JY-Dtf">
+                                <rect key="frame" x="67" y="371" width="280" height="110"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QIk-KF-pLd">
+                                        <rect key="frame" x="190" y="20" width="70" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyB-Ux-hq3">
+                                        <rect key="frame" x="20" y="20" width="70" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vez-YI-SSq">
+                                <rect key="frame" x="114" y="155" width="187" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jcJ-gQ-dw6" firstAttribute="top" secondItem="cV4-yC-uPf" secondAttribute="bottom" constant="507" id="0Ed-o3-6wD"/>
+                            <constraint firstItem="cV4-yC-uPf" firstAttribute="top" secondItem="LfJ-eB-TcM" secondAttribute="bottom" constant="81" id="9Bf-Sb-0Ej"/>
+                            <constraint firstItem="FFD-JY-Dtf" firstAttribute="leading" secondItem="bfE-bn-GDY" secondAttribute="leadingMargin" constant="47" id="AZF-5E-wzB"/>
+                            <constraint firstItem="FFD-JY-Dtf" firstAttribute="top" secondItem="bfE-bn-GDY" secondAttribute="top" constant="371" id="Jti-Xo-UoA"/>
+                            <constraint firstItem="jcJ-gQ-dw6" firstAttribute="top" secondItem="FFD-JY-Dtf" secondAttribute="bottom" constant="255" id="ZMK-bw-o5n"/>
+                            <constraint firstItem="cV4-yC-uPf" firstAttribute="leading" secondItem="bfE-bn-GDY" secondAttribute="leadingMargin" constant="67" id="eE7-Zx-sNr"/>
+                            <constraint firstItem="cV4-yC-uPf" firstAttribute="centerX" secondItem="bfE-bn-GDY" secondAttribute="centerX" id="fsA-7d-evu"/>
+                            <constraint firstItem="FFD-JY-Dtf" firstAttribute="centerX" secondItem="bfE-bn-GDY" secondAttribute="centerX" id="lF3-5B-7XG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dislikeButton" destination="QIk-KF-pLd" id="Bf9-xn-Czy"/>
+                        <outlet property="foodLabel" destination="Vez-YI-SSq" id="4RD-wM-pIh"/>
+                        <outlet property="likeButton" destination="pyB-Ux-hq3" id="isQ-CI-5bm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dfo-nJ-NwG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3510.144927536232" y="451.63043478260875"/>
+        </scene>
         <!--step1StoryBoardID-->
         <scene sceneID="RVA-oB-jCC">
             <objects>

@@ -16,8 +16,8 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
     var filterdData:[Food]?
     var resultSearchController = UISearchController()
     //Deafult Value setting
-    var dislikeFoodValue = NSMutableArray()
-    var likedFoods = NSMutableArray()
+    var dislikeFoodValue : [Food] = [Food]()
+    var likedFoods : [Food] = [Food]()
     
     //For SettingsTab bar
     var settingsControl : Bool?
@@ -43,9 +43,9 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
         let arrayOfLikedObjects = Array(DataHandler.getLikeFoods().foods);
     
             for item in arrayOfObjects {
-            dislikeFoodValue.add(item)
+            dislikeFoodValue.append(item)
             }
-            dislikeFoodValue.removeObjects(in: arrayOfLikedObjects)
+            dislikeFoodValue.removeObjectsInArray(arrayOfLikedObjects)
         }
         
         filterdData = localData
@@ -119,11 +119,11 @@ class Step4ViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.cellForRow(at: indexPath)
         
         if( dislikeFoodValue.contains(filterdData![indexPath.row])){
-            dislikeFoodValue.remove(filterdData![indexPath.row])
+            dislikeFoodValue.removeObject(filterdData![indexPath.row])
             cell!.accessoryType = UITableViewCellAccessoryType.none
         }else{
             if dislikeFoodValue.count < 5 {
-                dislikeFoodValue.add(filterdData![indexPath.row])
+                dislikeFoodValue.append(filterdData![indexPath.row])
                 cell!.accessoryType = UITableViewCellAccessoryType.checkmark
             }
         }

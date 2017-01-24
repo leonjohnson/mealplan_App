@@ -27,8 +27,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet var nutritionTable: UITableView!
     
-    var originalLikedFoods = NSMutableArray()
-    var likedFoods = NSMutableArray()
+    var originalLikedFoods : [Food] = [Food]()
+    var likedFoods : [Food] = [Food]()
     var revertToOriginal :Bool = true
     var newItemMode :Bool = true
     
@@ -69,13 +69,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let list = DataHandler.getLikeFoods().foods
         for food in list {
-            likedFoods.add(food.name)
-            originalLikedFoods.add(food.name)
+            likedFoods.append(food)
+            originalLikedFoods.append(food)
         }
         
         
         // Set the like image
-        if likedFoods.contains((detailItem.food?.name)!){
+        if likedFoods.contains((detailItem.food)!){
             likeButton.setImage(UIImage(named: "likeImage")!, for: UIControlState())
             likeButton.tag = 0
         }
@@ -187,7 +187,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func onBackClick(_ sender: AnyObject) {
         
         if originalLikedFoods != likedFoods{
-            DataHandler.updateLikeFoods(likedFoods)
+            DataHandler.updateLikeFoods(likedFoods as [Food])
         }
         
         if revertToOriginal == true{
@@ -268,11 +268,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if sender.tag == 1 {
             sender.setImage(UIImage(named: "likeImage")!, for: UIControlState())
             sender.tag = 0
-            likedFoods.add((detailItem.food)!)
+            likedFoods.append((detailItem.food)!)
         } else {
             sender.setImage(UIImage(named: "UnlikeImage")!, for: UIControlState())
             sender.tag = 1
-            likedFoods.remove((detailItem.food)!)
+            likedFoods.removeObject((detailItem.food)!)
         }
         
     }

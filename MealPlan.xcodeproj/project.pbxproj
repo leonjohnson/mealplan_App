@@ -15,6 +15,7 @@
 		F41E48A11DF9439300421CEC /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E48A01DF9439300421CEC /* ProfileTests.swift */; };
 		F70694781E15730500A3B6C6 /* UserFeedbackVanilla.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */; };
 		F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */; };
+		F712C4631E364F5A003117DE /* LikeOrDislike.swift in Sources */ = {isa = PBXBuildFile; fileRef = F712C4621E364F5A003117DE /* LikeOrDislike.swift */; };
 		F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */; };
 		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
 		F74E3C7A1DF8FAA8004B0259 /* BotData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74E3C791DF8FAA8004B0259 /* BotData.swift */; };
@@ -151,6 +152,7 @@
 		F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFeedbackVanilla.swift; sourceTree = "<group>"; };
 		F70694791E1FC15300A3B6C6 /* MealPlan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MealPlan.entitlements; sourceTree = "<group>"; };
 		F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
+		F712C4621E364F5A003117DE /* LikeOrDislike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeOrDislike.swift; sourceTree = "<group>"; };
 		F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
 		F74E3C791DF8FAA8004B0259 /* BotData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BotData.swift; path = ../BotData.swift; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				F78AB7221DBE6DA400BB40EA /* settings.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
 				F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */,
+				F712C4621E364F5A003117DE /* LikeOrDislike.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -899,6 +902,7 @@
 				F78AB74A1DBE6DA400BB40EA /* MPTableViewCell.swift in Sources */,
 				F7E3C5581DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift in Sources */,
 				F78AB7351DBE6DA400BB40EA /* bkgrd.swift in Sources */,
+				F712C4631E364F5A003117DE /* LikeOrDislike.swift in Sources */,
 				F78AB7501DBE6DA400BB40EA /* FeedBack.swift in Sources */,
 				F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */,
 				F78AB7371DBE6DA400BB40EA /* CaloriesViewController.swift in Sources */,
