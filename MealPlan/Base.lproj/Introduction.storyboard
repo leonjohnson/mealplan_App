@@ -89,7 +89,7 @@
         <!--Like Or Dislike-->
         <scene sceneID="IFo-7f-Epm">
             <objects>
-                <viewController id="3uX-SS-Q3w" customClass="LikeOrDislike" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="likeordislike" id="3uX-SS-Q3w" customClass="LikeOrDislike" customModule="MealPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LfJ-eB-TcM"/>
                         <viewControllerLayoutGuide type="bottom" id="jcJ-gQ-dw6"/>
@@ -148,10 +148,10 @@
             </objects>
             <point key="canvasLocation" x="-3510.144927536232" y="451.63043478260875"/>
         </scene>
-        <!--step1StoryBoardID-->
+        <!--bot-->
         <scene sceneID="RVA-oB-jCC">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="step1StoryBoardID" id="Eg5-GE-jqI" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Bot" referencedIdentifier="bot" id="Eg5-GE-jqI" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zZM-CG-G2Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4265" y="869"/>

@@ -242,7 +242,14 @@ struct Constants {
     static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, 
                                                  BotData.NEW_FOOD.food_type.question, 
                                                  BotData.FEEDBACK.howHungryWereYou.question,
-                                                 BotData.FEEDBACK.easeOfFollowingDiet.question]
+                                                 BotData.FEEDBACK.easeOfFollowingDiet.question,
+                                                 BotData.ONBOARD.greeting3.question,
+                                                 BotData.ONBOARD.gender.question,
+                                                 BotData.ONBOARD.goals.question,
+                                                 BotData.ONBOARD.heightUnit.question,
+                                                 BotData.ONBOARD.weightUnit.question,
+                                                 BotData.ONBOARD.activityLevelAtWork.question,
+                                                 BotData.ONBOARD.notification.question]
     
     
     
@@ -250,7 +257,8 @@ struct Constants {
         BotData.NEW_FOOD.saturated_fat.question,
         BotData.NEW_FOOD.sugar.question,
         BotData.NEW_FOOD.fibre.question,
-        BotData.NEW_FOOD.ending.question]
+        BotData.NEW_FOOD.ending.question,
+        BotData.ONBOARD.ending.question]
     
     struct CellIdentifiers {
         static let Blue = "BlueCellIdentifier"
@@ -267,10 +275,25 @@ struct Constants {
         case delete
     }
     
-    enum botValidationEntryType {
+    enum botKeyboardValidationType {
         case text
         case decimal
         case number
+        case none
+    }
+    
+    enum botContentValidationType {
+        case maxCharacterCount
+        case minCharacterCount
+        case minValue
+        case maxValue
+        case mustContain
+        case mustSumWithin10Percent
+        case mustNotExist
+        case integer
+        case decimalOne
+        case skipNextQuestionIfEmptyOrZero
+        case maxNumberOfOptionsSelected
         case none
     }
     
@@ -326,19 +349,6 @@ struct Constants {
      MARK:  EXPLAINER SCREEN VARS
      */
     
-    enum botValidationType {
-        case maxCharacterCount
-        case minCharacterCount
-        case minValue
-        case maxValue
-        case mustContain
-        case mustSumWithin10Percent
-        case mustNotExist
-        case integer
-        case decimalOne
-        case skipNextQuestionIfEmptyOrZero
-        case maxNumberOfOptionsSelected
-        case none
-    }
+    
     
     }

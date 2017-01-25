@@ -75,7 +75,7 @@ class BotData: NSObject {
             [String()]]
         
         //
-        static let keyboardType : [Constants.botValidationEntryType]  = [
+        static let keyboardType : [Constants.botKeyboardValidationType]  = [
             BotData.NEW_FOOD.name.keyboardType,
             BotData.NEW_FOOD.producer.keyboardType,
             BotData.NEW_FOOD.serving_type.keyboardType,
@@ -95,7 +95,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.text
+                static let keyboardType = Constants.botKeyboardValidationType.text
             }
             
             struct producer {
@@ -103,7 +103,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.text
+                static let keyboardType = Constants.botKeyboardValidationType.text
             }
         
             struct food_type {
@@ -119,7 +119,7 @@ class BotData: NSObject {
                                             "None of the above"]
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.none
+                static let keyboardType = Constants.botKeyboardValidationType.none
             }
         
             struct serving_type {
@@ -130,7 +130,7 @@ class BotData: NSObject {
                                             "Item (such as per banana or per apple)?"]
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.none
+                static let keyboardType = Constants.botKeyboardValidationType.none
             }
             
             struct calories {
@@ -138,7 +138,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
             
             struct fat {
@@ -146,7 +146,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
             
             struct saturated_fat {
@@ -154,7 +154,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
             
             struct carbohydrates {
@@ -162,7 +162,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
             
             struct sugar {
@@ -170,7 +170,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
             
             struct fibre {
@@ -178,7 +178,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = Constants.no_value_stated
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
             
             struct protein {
@@ -186,7 +186,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
         
             struct number_of_servings {
@@ -194,7 +194,7 @@ class BotData: NSObject {
                 static let tableViewList : [String] = []
                 static let buttonText : String = ""
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.decimal
+                static let keyboardType = Constants.botKeyboardValidationType.decimal
             }
         
             struct ending {
@@ -202,7 +202,7 @@ class BotData: NSObject {
                 static let tableViewList:[String] = []
                 static let buttonText : String = "Show me my meal plan"
                 static let tips : String = ""
-                static let keyboardType = Constants.botValidationEntryType.none
+                static let keyboardType = Constants.botKeyboardValidationType.none
             }
     }
     
@@ -223,7 +223,13 @@ class BotData: NSObject {
             BotData.FEEDBACK.anyComments.tableViewList,
             BotData.FEEDBACK.ending.tableViewList]
  
-        static let answers : [[String]] = [] // NOT NECESSARY FOR STRUCT, BUT USEFUL FOR DESIGN/PROTOCOL PURPOSES.
+        static let answers : [[String]] = [[String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()]
+                                           ]
         
         static let keyboardType  = [
             BotData.FEEDBACK.howWasLastWeek.keyboardType,
@@ -235,21 +241,21 @@ class BotData: NSObject {
         struct greeting {
             static let question = "Hey!"
             static let tableViewList:[String] = []
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
             static let partOfASeries = true
         }
         
         struct update {
             static let question = "Well done! You've completed another week of your new meal plan! 👏"
             static let tableViewList:[String] = []
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
             static let partOfASeries = true
         }
         
         struct checkin {
             static let question = "To make sure your meal plans are going accoridng to plan, we're going to quickly go over how last week went."
             static let tableViewList:[String] = []
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
             static let partOfASeries = true
 
         }
@@ -259,7 +265,7 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.decimal
+            static let keyboardType = Constants.botKeyboardValidationType.decimal
             static let partOfASeries = false
         }
         
@@ -271,7 +277,7 @@ class BotData: NSObject {
                                                  Constants.hungerLevels.full.rawValue]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
             static let partOfASeries = false
         }
         
@@ -283,7 +289,7 @@ class BotData: NSObject {
                                                  Constants.dietEase.veryHard.rawValue]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
             static let partOfASeries = false
         }
         
@@ -293,7 +299,7 @@ class BotData: NSObject {
                                                  "2","3","4","5","6","7"]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
             static let partOfASeries = false
         }
         
@@ -302,7 +308,7 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.text
+            static let keyboardType = Constants.botKeyboardValidationType.text
             static let partOfASeries = false
         }
         
@@ -311,7 +317,7 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
             static let partOfASeries = true
         }
         
@@ -320,7 +326,7 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = "Show me my meal plan"
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
+            static let keyboardType = Constants.botKeyboardValidationType.none
         }
     }
     
@@ -332,17 +338,21 @@ class BotData: NSObject {
             BotData.ONBOARD.greeting3.question,
             BotData.ONBOARD.wellDone.question,
             BotData.ONBOARD.firstName.question,
+            BotData.ONBOARD.firstNameGreeting.question,
             BotData.ONBOARD.gender.question,
             BotData.ONBOARD.goals.question,
             BotData.ONBOARD.age.question,
             BotData.ONBOARD.weightUnit.question,
             BotData.ONBOARD.weight.question,
             BotData.ONBOARD.heightUnit.question,
+            BotData.ONBOARD.thanks.question,
             BotData.ONBOARD.height.question,
+            BotData.ONBOARD.nearlyThere.question,
             BotData.ONBOARD.activityLevelAtWork.question,
             BotData.ONBOARD.physicalActivity.question,
             BotData.ONBOARD.duration.question,
             BotData.ONBOARD.notification.question,
+            BotData.ONBOARD.notificationWillAppear.question,
             BotData.ONBOARD.ending.question]
         
         static let options : [[String]]  = [
@@ -351,57 +361,90 @@ class BotData: NSObject {
             BotData.ONBOARD.greeting3.tableViewList,
             BotData.ONBOARD.wellDone.tableViewList,
             BotData.ONBOARD.firstName.tableViewList,
+            BotData.ONBOARD.firstNameGreeting.tableViewList,
             BotData.ONBOARD.gender.tableViewList,
             BotData.ONBOARD.goals.tableViewList,
             BotData.ONBOARD.age.tableViewList,
             BotData.ONBOARD.weightUnit.tableViewList,
             BotData.ONBOARD.weight.tableViewList,
             BotData.ONBOARD.heightUnit.tableViewList,
+            BotData.ONBOARD.thanks.tableViewList,
             BotData.ONBOARD.height.tableViewList,
+            BotData.ONBOARD.nearlyThere.tableViewList,
             BotData.ONBOARD.activityLevelAtWork.tableViewList,
             BotData.ONBOARD.physicalActivity.tableViewList,
             BotData.ONBOARD.duration.tableViewList,
             BotData.ONBOARD.notification.tableViewList,
+            BotData.ONBOARD.notificationWillAppear.tableViewList,
             BotData.ONBOARD.ending.tableViewList]
         
-        static let answers : [[String]] = []
+        static let answers : [[String]] = [[String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()]
+        ]
         
-        static let keyboardType  = [
+        static let keyboardType : [Constants.botKeyboardValidationType]  = [
             BotData.ONBOARD.greeting.keyboardType,
             BotData.ONBOARD.greeting2.keyboardType,
             BotData.ONBOARD.greeting3.keyboardType,
             BotData.ONBOARD.wellDone.keyboardType,
             BotData.ONBOARD.firstName.keyboardType,
+            BotData.ONBOARD.firstNameGreeting.keyboardType,
             BotData.ONBOARD.gender.keyboardType,
             BotData.ONBOARD.goals.keyboardType,
             BotData.ONBOARD.age.keyboardType,
             BotData.ONBOARD.weightUnit.keyboardType,
             BotData.ONBOARD.weight.keyboardType,
             BotData.ONBOARD.heightUnit.keyboardType,
+            BotData.ONBOARD.thanks.keyboardType,
             BotData.ONBOARD.height.keyboardType,
+            BotData.ONBOARD.nearlyThere.keyboardType,
             BotData.ONBOARD.activityLevelAtWork.keyboardType,
             BotData.ONBOARD.physicalActivity.keyboardType,
             BotData.ONBOARD.duration.keyboardType,
             BotData.ONBOARD.notification.keyboardType,
+            BotData.ONBOARD.notificationWillAppear.keyboardType,
             BotData.ONBOARD.ending.keyboardType]
         
-        static let validation = [
+        static let validation : [[[Constants.botContentValidationType:String?]]] = [
             BotData.ONBOARD.greeting.validationTypes,
             BotData.ONBOARD.greeting2.validationTypes,
             BotData.ONBOARD.greeting3.validationTypes,
             BotData.ONBOARD.wellDone.validationTypes,
             BotData.ONBOARD.firstName.validationTypes,
+            BotData.ONBOARD.firstNameGreeting.validationTypes,
             BotData.ONBOARD.gender.validationTypes,
             BotData.ONBOARD.goals.validationTypes,
             BotData.ONBOARD.age.validationTypes,
             BotData.ONBOARD.weightUnit.validationTypes,
             BotData.ONBOARD.weight.validationTypes,
             BotData.ONBOARD.heightUnit.validationTypes,
+            BotData.ONBOARD.thanks.validationTypes,
             BotData.ONBOARD.height.validationTypes,
+            BotData.ONBOARD.nearlyThere.validationTypes,
             BotData.ONBOARD.activityLevelAtWork.validationTypes,
             BotData.ONBOARD.physicalActivity.validationTypes,
             BotData.ONBOARD.duration.validationTypes,
             BotData.ONBOARD.notification.validationTypes,
+            BotData.ONBOARD.notificationWillAppear.validationTypes,
             BotData.ONBOARD.ending.validationTypes]
         
         static let nextSteps = [
@@ -410,25 +453,29 @@ class BotData: NSObject {
             BotData.ONBOARD.greeting3.nextSteps,
             BotData.ONBOARD.wellDone.nextSteps,
             BotData.ONBOARD.firstName.nextSteps,
+            BotData.ONBOARD.firstNameGreeting.nextSteps,
             BotData.ONBOARD.gender.nextSteps,
             BotData.ONBOARD.goals.nextSteps,
             BotData.ONBOARD.age.nextSteps,
             BotData.ONBOARD.weightUnit.nextSteps,
             BotData.ONBOARD.weight.nextSteps,
             BotData.ONBOARD.heightUnit.nextSteps,
+            BotData.ONBOARD.thanks.nextSteps,
             BotData.ONBOARD.height.nextSteps,
+            BotData.ONBOARD.nearlyThere.nextSteps,
             BotData.ONBOARD.activityLevelAtWork.nextSteps,
             BotData.ONBOARD.physicalActivity.nextSteps,
             BotData.ONBOARD.duration.nextSteps,
             BotData.ONBOARD.notification.nextSteps,
-            BotData.ONBOARD.ending.nextSteps,
+            BotData.ONBOARD.notificationWillAppear.nextSteps,
+            BotData.ONBOARD.ending.nextSteps
         ]
         
         struct greeting {
             static let question = "Hey there!"
             static let tableViewList:[String] = []
-            static let keyboardType = Constants.botValidationEntryType.text
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.text
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
             static let nextSteps : Constants.botNextSteps = .hurryAlong
         }
@@ -436,8 +483,8 @@ class BotData: NSObject {
         struct greeting2 {
             static let question = "Thanks for trying the Meal Plan app, we hope you enjoy it."
             static let tableViewList:[String] = []
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
             static let nextSteps : Constants.botNextSteps = .hurryAlong
         }
@@ -446,19 +493,19 @@ class BotData: NSObject {
             static let question = "To create your customised meal plan I need to ask you a few questions. If you see a button that appears tap one of the options 👇"
             static let tableViewList:[String] = ["Option 1", "Option 2"]
             static let buttonText : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
             ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
         struct wellDone {
-            static let question = "Nice! If you need to type an answer, the keyboard will appear and you can type away."
+            static let question = "Nice, you're a pro! If you need to type an answer to a question, then the keyboard will appear and you can type away."
             static let tableViewList:[String] = []
             static let buttonText : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
             ]
             static let nextSteps : Constants.botNextSteps = .hurryAlong
@@ -469,51 +516,62 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.text
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.text
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.minCharacterCount:"2"]
             ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
+        struct firstNameGreeting {
+            static let question = "Nice to meet you "
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
         
         struct gender {
-            static let question = "What is your gender?"
+            static let question = "Let's get started, what is your gender?"
             static let tableViewList:[String] = [Constants.male,
                                                  Constants.female]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
             ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
+        
         struct goals {
-            static let question = "What are your goals?"
-            static let tableViewList:[String] = [Constants.dietEase.easy.rawValue,
-                                                 Constants.dietEase.ok.rawValue,
-                                                 Constants.dietEase.hard.rawValue,
-                                                 Constants.dietEase.veryHard.rawValue]
+            static let question = "and what are your goals?"
+            static let tableViewList:[String] = [Constants.goals.looseWeight.rawValue,
+                                                 Constants.goals.gainMuscle.rawValue]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
             ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
         struct age {
-            static let question = "What is your age?"
+            static let question = "Great! What is your age?"
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.number
-            static let validationTypes : [[Constants.botValidationType:String]] = [
-                [.maxCharacterCount:"2"],
-                [.minCharacterCount:"2"],
+            static let keyboardType = Constants.botKeyboardValidationType.number
+            static let validationTypes : [[Constants.botContentValidationType:String]] = [
+                [.maxValue:"99"],
+                [.minValue:"14"],
             ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
@@ -524,20 +582,20 @@ class BotData: NSObject {
                                                  Constants.POUNDS]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
             ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
         struct weight {
-            static let question = "What is your weight?"
+            static let question = "What is your current weight?"
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.decimal
-            static let validationTypes : [[Constants.botValidationType:String]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.decimal
+            static let validationTypes : [[Constants.botContentValidationType:String]] = [
                 [.maxValue:"400"],
                 [.minCharacterCount:"40"]
                 ]
@@ -545,15 +603,27 @@ class BotData: NSObject {
         }
         
         struct heightUnit {
-            static let question = "How do you prefer to measure your height?"
+            static let question = "and how do you prefer to measure your height?"
             static let tableViewList:[String] = ["feet and inches", "centimeters"]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.decimal
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.decimal
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
                 ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
+        }
+        
+        struct thanks {
+            static let question = "Thanks "
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
         }
         
         struct height {
@@ -561,11 +631,23 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.decimal
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.decimal
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
                 ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
+        }
+        
+        struct nearlyThere {
+            static let question = "we're nearly done! I just need to ask a few more questions and then I'll set up meal plans 😊🤗"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.decimal
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
         }
         
         struct activityLevelAtWork {
@@ -573,8 +655,8 @@ class BotData: NSObject {
             static let tableViewList:[String] = Constants.activityLevelsAtWork
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.decimal
-            static let validationTypes : [[Constants.botValidationType:String]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.decimal
+            static let validationTypes : [[Constants.botContentValidationType:String]] = [
                 [.maxCharacterCount:"99"],
                 [.minCharacterCount:"14"],
                 ]
@@ -582,52 +664,64 @@ class BotData: NSObject {
         }
         
         struct physicalActivity {
-            static let question = "How many hrs do you spend being active?"
+            static let question = "How many hours per week do you spend being active? This includes anything that leaves you out of breath such as jogging, lifting weights, gym classes, or playing sports"
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.decimal
-            static let validationTypes : [[Constants.botValidationType:String]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.decimal
+            static let validationTypes : [[Constants.botContentValidationType:String]] = [
                 [.maxValue:"14"],
                 [.minValue:"0"],
                 ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
-        struct duration {
-            static let question = "How many weeks would you like to do this for?"
+        struct durationExplanation {
+            static let question = "I'd recommend that you stay on this meal plan for anywhere between 8 - 20 weeks, it all depends on your preferences"
             static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.number
-            static let validationTypes : [[Constants.botValidationType:String]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+                ]
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct duration {
+            static let question = "So how many weeks would you like to do this for?"
+            static let tableViewList:[String] = []
+            static let buttonText : String = ""
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.number
+            static let validationTypes : [[Constants.botContentValidationType:String]] = [
                 [.maxCharacterCount:"26"],
                 [.minCharacterCount:"6"],
                 ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
+        
         struct notification {
-            static let question = "We can send you the occassional notification to help you with your meal plan. It's customisable and you can stop them whenever you like. Is that OK?"
+            static let question = "Lastly, we can send you the occassional notification to help you with your meal plan. It's customisable and you can stop them whenever you like. Is that OK?"
             static let tableViewList:[String] = [Constants.BOOL_YES,
                                                  Constants.BOOL_NO]
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
                 ]
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
         struct notificationWillAppear {
-            static let question = "Great. In a moment you should see a pop-up asking for permission"
-            static let tableViewList:[String] = [Constants.BOOL_YES,
-                                                 Constants.BOOL_NO]
+            static let question = "Great. In a moment you should see a pop-up asking for permission. Please tap 'OK' "
+            static let tableViewList:[String] = []
             static let buttonText : String = ""
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
             ]
             static let nextSteps : Constants.botNextSteps = .requestNotificationPermission
@@ -638,8 +732,8 @@ class BotData: NSObject {
             static let tableViewList:[String] = []
             static let buttonText : String = "Show me my meal plan"
             static let tips : String = ""
-            static let keyboardType = Constants.botValidationEntryType.none
-            static let validationTypes : [[Constants.botValidationType:String?]] = [
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
                 ]
             static let nextSteps : Constants.botNextSteps = .createMealPlans // next steps is what happens once the bubble and its data is displayed.

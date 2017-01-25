@@ -20,6 +20,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         case unstated
         case addNewFood
         case feedback // Used when creating Bot page to provide it with some context of task.
+        case onBoarding
     }
     
     enum explainerScreenType {
@@ -27,12 +28,15 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         case congratulations
         case startingOver // Used when creating Bot page to provide it with some context of task.
     }
-    var botType : botTypeEnum = .unstated
-    var questions : [String] = BotData.NEW_FOOD.questions
-    var options : [[String]] = BotData.NEW_FOOD.options
-    var buttonText : [String] = BotData.NEW_FOOD.buttonText
-    var answers : [[String]] = BotData.NEW_FOOD.answers
-    var keyBoardType : [Constants.botValidationEntryType] = BotData.NEW_FOOD.keyboardType
+    var botType : botTypeEnum = .onBoarding // default state
+    var questions : [String] = []
+    var options : [[String]] = []
+    var buttonText : [String] = []
+    var answers : [[String]] = []
+    var keyBoardType : [Constants.botKeyboardValidationType] = []
+    var validationType : [Constants.botContentValidationType] = []
+    var nextSteps : [Constants.botNextSteps] = []
+    var usersName : String = ""
     var sideButton : UIButton?
     
     var meal : Meal? = Meal()
@@ -76,12 +80,17 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             options = BotData.FEEDBACK.options
             answers = BotData.FEEDBACK.answers
             keyBoardType = BotData.FEEDBACK.keyboardType
-        default:
+        case .onBoarding:
+            questions = BotData.ONBOARD.questions
+            options = BotData.ONBOARD.options
+            answers = BotData.ONBOARD.answers
+            keyBoardType = BotData.ONBOARD.keyboardType
+            nextSteps = BotData.ONBOARD.nextSteps
+        case .unstated:
             return
         }
-        if botType == .addNewFood{
-            
-        }
+        
+
         
         self.automaticallyScrollsToMostRecentMessage = true
         self.collectionView.collectionViewLayout = CustomCollectionViewFlowLayout()
@@ -102,8 +111,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.inputToolbar.contentView?.rightBarButtonItem = rightButton
          */
         
-        // MARK: ### SET SEND BUTTON AS IMAGE
-        
         
         
         // MARK: ### DISABLE COPY/PASTE
@@ -120,23 +127,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         inComingCellViewController.botDelegate = self
-        
-        
-        //let height = self.inputToolbar.contentView.leftBarButtonContainerView.frame.size.height
-        //let image = UIImage(named:"keyboard")
-        //sideButton = UIButton(type: .custom)
-        //sideButton?.setImage(image, for: .normal)
-        //sideButton?.frame = CGRect(x: 0, y: 0, width: (sideButton?.frame.width)!, height: (sideButton?.frame.height)!)
-        /*
-        sideButton = UIButton()
-        sideButton?.imageView?.image = UIImage(named:"keyboard")
-        sideButton?.sizeToFit()
-         */
+
         
         
         
-        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
-        self.finishSendingMessage(animated: true)
         
         
         // Set the keyboard type and icon
@@ -161,7 +155,9 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.inputToolbar.contentView?.leftBarButtonItemWidth = CGFloat(34.0)
         self.inputToolbar.contentView?.leftBarButtonItem = sideButton
         
-        
+        //Send the first message
+        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+        self.finishSendingMessage(animated: true)
         
         /*
         sideButton.frame =
@@ -179,6 +175,72 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         
     }
+    
+    
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        let when = DispatchTime.now() + delay
+        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
+    }
+    
+    
+    private func validateAnswer()->Bool{
+        return true
+    }
+    
+    private func addMessage(withId id: String, name: String, text: String) {
+        
+        //Consider whether to show the typing indicator
+        var delayDuration : Double
+        if nextSteps[questionIndex] == .hurryAlong {
+            delayDuration = (questionIndex == 0) ? 3.0 : 1.0
+        } else {
+            delayDuration = 3.0
+        }
+        if name != Constants.BOT_NAME {
+            delayDuration = 0.0
+        }
+        
+        
+        //create closure
+        let addingClosure = {
+            if let message = JSQMessage(senderId: id, displayName: name, text: text) {
+                self.scrollToBottom(animated: true)
+                self.messages.append(message)
+                self.finishSendingMessage(animated: true)
+                self.showTypingIndicator = false
+                self.performFollowUpAction(delayDuration: delayDuration)
+            }
+        }
+        
+        
+        if name != Constants.BOT_NAME {
+            addingClosure()
+        } else {
+            //Show the message on screen
+            self.showTypingIndicator = true
+            delay(delayDuration, closure: addingClosure) // if the bot is typing add a delay
+        }
+    }
+    
+    
+    
+    func performFollowUpAction(delayDuration:Double = 0.0){
+        // perform the follow up action
+        switch nextSteps[questionIndex] {
+        case .awaitResponse:
+            return
+        case .createMealPlans:
+            return
+        case .hurryAlong:
+            delay(delayDuration, closure: {
+                self.progressToNextQuestionAfterDelay(delay: delayDuration) // this is so that the next question isn't fired until the last one has finished
+            })
+        case .quit:
+            print("requested to quit")
+        case .requestNotificationPermission:
+            print("requested notification permission")
+        }
+    }
 
     
     
@@ -192,7 +254,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         if let message = JSQMessage(senderId: self.senderId, displayName: self.senderDisplayName, text: text) {
             if validateAnswer() == true{
                 addMessage(withId: self.senderId, name: "t", text: text)
-            } else {
             }
             
             if message.text.localizedLowercase.contains("go back") && messages.count > 3{
@@ -200,15 +261,24 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 questionIndex -= 1
                 let nextQuestion = questions[questionIndex]
                 addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
-                self.finishSendingMessage(animated: true);
+                self.finishSendingMessage(animated: true)
                 return
             }
             
             answers[questionIndex].append(text)
             answers[questionIndex].removeFirst()
+            
+            if questions[questionIndex] == BotData.ONBOARD.firstName.question {
+                usersName = text
+                questions[questionIndex+1].append("\(usersName) 😀")
+            }
+            
+            if questions[questionIndex] == BotData.ONBOARD.thanks.question {
+                questions[questionIndex].append("\(usersName)!😀")
+            }
             print("answers in didpressend: \(answers)")
         }
-        progressToNextQuestion()
+        progressToNextQuestionAfterDelay(delay: 0.0)
         
         // MARK: ### PLAY SOUND FOR SENT MESSAGE
         // 1. add JSQSystemSoundPlayer pod
@@ -218,7 +288,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     }
     
     
-    func progressToNextQuestion(){
+    func progressToNextQuestionAfterDelay(delay:Double){
         questionIndex += 1
         let nextQuestion = questions[questionIndex]
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
@@ -274,6 +344,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
                 createNewFoodFromConversation()
             case .feedback:
                 saveFeedbackForTheWeek()
+            case .onBoarding:
+                createUserAndProfile()
             case .unstated:
                 return
             }
@@ -287,7 +359,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         }
         answers[indexForAnswer].removeAll()
         print("passed")
-        progressToNextQuestion()
+        progressToNextQuestionAfterDelay(delay: 0.0)
     }
     
     
@@ -329,7 +401,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         
         if questionIndex == indexForAnswer{
             // we've tapped a row in a table that is the answer to the most progressed question yet
-            progressToNextQuestion()
+            progressToNextQuestionAfterDelay(delay: 0.0)
         }
     }
     
@@ -366,39 +438,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     }
     */
     
-    func delay(_ delay:Double, closure:@escaping ()->()) {
-        let when = DispatchTime.now() + delay
-        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
-    }
     
-
-    private func validateAnswer()->Bool{
-        return true
-    }
-    
-    private func addMessage(withId id: String, name: String, text: String) {
-        self.showTypingIndicator = true
-        delay(2.0, closure: {
-            if let message = JSQMessage(senderId: id, displayName: name, text: text) {
-                // Typing
-                self.scrollToBottom(animated: true)
-                
-                
-                self.messages.append(message)
-                self.showTypingIndicator = false
-                
-                self.finishSendingMessage(animated: true)
-            }
-        })
-        
-    }
-
-    /*
-   private func addMessage(withId id: String, name: String, media: JSQMessageMediaData) {
-        if let message = JSQMessage(senderId: id, displayName: name, media: media) {
-            messages.append(message)
-        }
-    }*/
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return messages.count
@@ -431,18 +471,22 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             for row in 0...tableViewRowData.count{
                 cellWithTableview.table.cellForRow(at: [0,row])?.accessoryType = .none
             }
-            var answersIndex : Int = 0
-            var answer = answers[questionIndex!].first
-            if (answer?.characters.count)! > 0 {
-                if message.text == BotData.NEW_FOOD.food_type.question {
-                    answersIndex = Constants.FOOD_TYPES.index(of: answer!)!
-                } else {
-                    answersIndex = Int(tableViewRowData.index(of: answer!)!)
-                }
-                cellWithTableview.table.cellForRow(at: [0,Int(answersIndex)])?.accessoryType = .checkmark
-                print("gonna check this answer")
-            }
+            let answersIndex : Int
             
+            if answers.count > questionIndex!{
+                let answer = answers[questionIndex!].first
+                if (answer?.characters.count)! > 0 {
+                    if message.text == BotData.NEW_FOOD.food_type.question {
+                        answersIndex = Constants.FOOD_TYPES.index(of: answer!)!
+                    } else {
+                        answersIndex = Int(tableViewRowData.index(of: answer!)!)
+                    }
+                    cellWithTableview.table.cellForRow(at: [0,Int(answersIndex)])?.accessoryType = .checkmark
+                    print("gonna check this answer")
+                }
+            } else {
+                print("no answer at this stage")
+            }
             return cellWithTableview
             
         } else if Constants.questionsThatRequireButtons.contains(message.text!) {
@@ -645,8 +689,101 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             controller.explainType = (sender as? Constants.explainerScreenType)!
         }
     }
-
     
+    func createUserAndProfile(){
+        let user = User()
+        user.first_name = usersName.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).localizedCapitalized
+        
+        // Birthdate
+        if let ageIndex = questions.index(of: BotData.ONBOARD.age.question) {
+            let age = answers[ageIndex].first!
+            let years : Int = Int(age)! * 365 * 24 * 60 * 60
+            user.birthdate = Date(timeIntervalSinceNow: Double(years * -1))
+        }
+        
+        //numberOfDailyMeals
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //howLong
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //activityLevelAtWork
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //dietaryRequirement
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //objectives
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //Gender
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //numberOfResistanceSessionsEachWeek
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //heightMeasurement
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //heightUnit
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //weightMeasurement
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        //waistUnit
+        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
+            user.gender = Double(answers[genderIndex].first!)!
+        }
+        
+        /*
+         dynamic var numberOfDailyMeals: Int = 0
+         dynamic var howLong: Int = 0
+         dynamic var activityLevelAtWork: String? = nil
+         
+         let dietaryRequirement = List<DietSuitability>()
+         
+         var looseFat = RealmOptional<Bool>()
+         var gainMuscle = RealmOptional<Bool>()
+         
+         dynamic var numberOfResistanceSessionsEachWeek = 0
+         dynamic var numberOfCardioSessionsEachWeek = 0
+         
+         dynamic var heightMeasurement = 0.0
+         dynamic var heightUnit = ""
+         
+         dynamic var weightMeasurement = 0.0
+         dynamic var weightUnit = ""
+         
+         dynamic var waistMeasurement = 0.0
+         dynamic var waistUnit = ""
+        */
+        
+    }
+    
+
+
+
     func createNewFoodFromConversation(){
         let food = Food()
         guard let pk = DataHandler.getNewPKForFood() else {
@@ -766,16 +903,16 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             return true //if the delete key is pressed then length of the text variable is not increase so return true
         }
         switch keyBoardType[questionIndex] {
-        case  Constants.botValidationEntryType.text:
+        case  Constants.botKeyboardValidationType.text:
             return text.isDecimal() ? false : true
             
-        case  Constants.botValidationEntryType.decimal:
+        case  Constants.botKeyboardValidationType.decimal:
             return text.isDecimal() ? true : false
         
-        case  Constants.botValidationEntryType.number:
+        case  Constants.botKeyboardValidationType.number:
             return text.isNumber() ? true : false
             
-        case  Constants.botValidationEntryType.none:
+        case  Constants.botKeyboardValidationType.none:
             return text.isDecimal() ? false : true // users should be allowed to type in 'go back' even though the keyboard will be minimised.
         }
     }
