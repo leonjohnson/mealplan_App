@@ -4,7 +4,7 @@ import JSQMessagesViewController
 import JSQSystemSoundPlayer
 import FacebookCore
 
-final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
+final class BotController: JSQMessagesViewController, BotDelegate, screenDismissed, dismissedFoodPreferences, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     var messages:[JSQMessage] = [JSQMessage]();
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
@@ -39,11 +39,11 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     var didTap : [Constants.botDidTap?] = []
     var usersName : String = ""
     var sideButton : UIButton?
-    
     var meal : Meal? = Meal()
     var returningCustomer : Bool? = Bool()
-    
     var mealPlanExistsForThisWeek : (yayNay:Bool, weeksAheadIncludingCurrent:[Week])?
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         //self.navigationController?.hidesBottomBarWhenPushed = true
@@ -56,6 +56,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     override func viewWillDisappear(_ animated : Bool) {
         super.viewWillDisappear(animated)
+        
         if (self.isMovingFromParentViewController){
             // Your code...
             self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -231,6 +232,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     func performFollowUpAction(delayDuration:Double = 0.0){
         // perform the follow up action
+        
         switch nextSteps[questionIndex] {
         case .hurryAlong:
             delay(delayDuration, closure: {
@@ -241,7 +243,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         }
     }
 
-    
     
     
 
@@ -288,6 +289,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     
     func progressToNextQuestionAfterDelay(delay:Double){
+        print("progressing...")
         questionIndex += 1
         let nextQuestion = questions[questionIndex]
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
@@ -337,8 +339,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     
     
     func buttonTapped(forQuestion: String) {
-        if let didTapIndex = didTap[questionIndex] {
-            switch didTapIndex {
+        if let tapAction = didTap[questionIndex] {
+            switch tapAction {
             case .noValueSelected:
                 guard let indexForAnswer = questions.index(of: forQuestion) else {
                     return
@@ -359,15 +361,34 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             case .quit:
                 if DataHandler.userExists() == false {
                     createUserAndProfile()
+                    //takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
                 }
-                //takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
-                //return
+            case .openHeightWeightScreen:
+                let storyboard : UIStoryboard = Constants.BOT_STORYBOARD
+                let  hw = storyboard.instantiateViewController(withIdentifier: "hw") as! Height_WeightListViewController
+                hw.delegate = self
+                UIApplication.shared.keyWindow?.rootViewController?.present(hw, animated: true, completion: {
+                    
+                })
+            
+            case .openFoodPreferencesScreen:
+                let storyboard : UIStoryboard = Constants.BOT_STORYBOARD
+                let foodPreferencesScreen = storyboard.instantiateViewController(withIdentifier: "likeordislike") as! LikeOrDislike
+                foodPreferencesScreen.delegate = self
+                UIApplication.shared.keyWindow?.rootViewController?.present(foodPreferencesScreen, animated: true, completion: {
+                    
+                })
             }
+            
   
         }
-            }
+    }
     
-    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        dismiss(animated: true)
+        print("okay, big vc did the dismissing")
+        progressToNextQuestionAfterDelay(delay: 0.0)
+    }
     
     func originalrowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
         
@@ -920,9 +941,22 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.inputToolbar.contentView?.addSubview(blockView)
     }
     
+    func testfunction(height:String, weight:String){
+        print("test worked")
+        guard let indexForAnswer = questions.index(of: questions[questionIndex]) else {
+            return
+        }
+        answers[indexForAnswer].removeAll()
+        answers[indexForAnswer].append("")
+        print("pass - no value selected")
+        progressToNextQuestionAfterDelay(delay: 0.0)
+    }
     
+    func foodPreferencesDone() {
+        progressToNextQuestionAfterDelay(delay: 0.0)
+    }
 
 
 }
-    
+
 

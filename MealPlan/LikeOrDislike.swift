@@ -1,5 +1,7 @@
 import UIKit
-
+protocol dismissedFoodPreferences {
+    func foodPreferencesDone()
+}
 class LikeOrDislike: UIViewController {
     
     enum outcome {
@@ -15,6 +17,7 @@ class LikeOrDislike: UIViewController {
     var index = 0
     var foodsLiked : [Food] = []
     var foodsDisliked : [Food] = []
+    var delegate : dismissedFoodPreferences? = nil
     
     
     override func viewDidLoad() {
@@ -61,11 +64,17 @@ class LikeOrDislike: UIViewController {
     
 
     
-    func hadEnough(){
+    @IBAction func hadEnough(){
         DataHandler.updateLikeFoods(foodsLiked)
         DataHandler.updateDisLikeFoods(foodsDisliked)
         print("had enough called")
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func close(){
+        self.dismiss(animated: true, completion: nil)
+        self.delegate?.foodPreferencesDone()
+        print("wanna pass this down")
     }
 
 }

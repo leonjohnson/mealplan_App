@@ -246,7 +246,6 @@ struct Constants {
                                                  BotData.ONBOARD.greeting3.question,
                                                  BotData.ONBOARD.gender.question,
                                                  BotData.ONBOARD.goals.question,
-                                                 //BotData.ONBOARD.weightHeight.question,
                                                  BotData.ONBOARD.activityLevelAtWork.question,
                                                  BotData.ONBOARD.notification.question,
                                                  BotData.ONBOARD.dietType.question]
@@ -258,6 +257,8 @@ struct Constants {
         BotData.NEW_FOOD.sugar.question,
         BotData.NEW_FOOD.fibre.question,
         BotData.NEW_FOOD.ending.question,
+        BotData.ONBOARD.weightHeight.question,
+        BotData.ONBOARD.foodPreferences.question,
         BotData.ONBOARD.ending.question]
     
     struct CellIdentifiers {
@@ -307,6 +308,8 @@ struct Constants {
         case requestNotificationPermission
         case createMealPlans
         case saveEndOfWeekFeedback
+        case openHeightWeightScreen
+        case openFoodPreferencesScreen
         case quit
     }
     

@@ -33,6 +33,7 @@ class DataHandler: NSObject {
             return  pr;
         }
     }
+    
     static func getActiveBiographical()->Biographical{
         let realm = try! Realm()
         let profile = realm.objects(Biographical.self).first
@@ -132,6 +133,19 @@ class DataHandler: NSObject {
             
         }
     }
+    
+    static func updateHeightWeight(_ bio:Biographical){
+        let profile = getActiveBiographical()
+        let realm = try! Realm()
+        try! realm.write {
+            profile.heightMeasurement = bio.heightMeasurement
+            profile.weightMeasurement = bio.weightMeasurement
+            profile.weightUnit = bio.weightUnit
+            profile.heightUnit = bio.heightUnit
+            
+        }
+    }
+    
     static func updateStep1(_ bio:Biographical){
         let profile = getActiveBiographical()
         let realm = try! Realm()
@@ -179,7 +193,7 @@ class DataHandler: NSObject {
             profile.foods.removeAll()
             for data in newData {
                 
-                if let item = data as? Food {
+                if let item = data as Food? {
                     profile.foods.append(item);                    
                 }
             }
@@ -192,7 +206,7 @@ class DataHandler: NSObject {
         try! realm.write {
             profile.foods.removeAll()
             for data in newData {
-                if let item = data as? Food {
+                if let item = data as Food? {
                     profile.foods.append(item);
                 }
             }

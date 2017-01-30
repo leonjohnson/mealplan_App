@@ -403,6 +403,7 @@ class BotData: NSObject {
             BotData.ONBOARD.thanks.question,
             BotData.ONBOARD.numberOfMeals.question,
             BotData.ONBOARD.dietType.question,
+            BotData.ONBOARD.foodPreferences.question,
             BotData.ONBOARD.nearlyThere.question,
             BotData.ONBOARD.activityLevelAtWork.question,
             BotData.ONBOARD.physicalActivity.question,
@@ -427,6 +428,7 @@ class BotData: NSObject {
             BotData.ONBOARD.thanks.tableViewList,
             BotData.ONBOARD.numberOfMeals.tableViewList,
             BotData.ONBOARD.dietType.tableViewList,
+            BotData.ONBOARD.foodPreferences.tableViewList,
             BotData.ONBOARD.nearlyThere.tableViewList,
             BotData.ONBOARD.activityLevelAtWork.tableViewList,
             BotData.ONBOARD.physicalActivity.tableViewList,
@@ -437,6 +439,7 @@ class BotData: NSObject {
             BotData.ONBOARD.ending.tableViewList]
         
         static let answers : [[String]] = [[String()],
+                                           [String()],
                                            [String()],
                                            [String()],
                                            [String()],
@@ -475,11 +478,12 @@ class BotData: NSObject {
             BotData.ONBOARD.thanks.keyboardType,
             BotData.ONBOARD.numberOfMeals.keyboardType,
             BotData.ONBOARD.dietType.keyboardType,
+            BotData.ONBOARD.foodPreferences.keyboardType,
             BotData.ONBOARD.nearlyThere.keyboardType,
             BotData.ONBOARD.activityLevelAtWork.keyboardType,
             BotData.ONBOARD.physicalActivity.keyboardType,
-            BotData.ONBOARD.duration.keyboardType,
             BotData.ONBOARD.durationExplanation.keyboardType,
+            BotData.ONBOARD.duration.keyboardType,
             BotData.ONBOARD.notification.keyboardType,
             BotData.ONBOARD.notificationWillAppear.keyboardType,
             BotData.ONBOARD.ending.keyboardType]
@@ -499,11 +503,12 @@ class BotData: NSObject {
             BotData.ONBOARD.thanks.validationTypes,
             BotData.ONBOARD.numberOfMeals.validationTypes,
             BotData.ONBOARD.dietType.validationTypes,
+            BotData.ONBOARD.foodPreferences.validationTypes,
             BotData.ONBOARD.nearlyThere.validationTypes,
             BotData.ONBOARD.activityLevelAtWork.validationTypes,
             BotData.ONBOARD.physicalActivity.validationTypes,
-            BotData.ONBOARD.duration.validationTypes,
             BotData.ONBOARD.durationExplanation.validationTypes,
+            BotData.ONBOARD.duration.validationTypes,
             BotData.ONBOARD.notification.validationTypes,
             BotData.ONBOARD.notificationWillAppear.validationTypes,
             BotData.ONBOARD.ending.validationTypes]
@@ -523,6 +528,7 @@ class BotData: NSObject {
             BotData.ONBOARD.thanks.buttonText,
             BotData.ONBOARD.numberOfMeals.buttonText,
             BotData.ONBOARD.dietType.buttonText,
+            BotData.ONBOARD.foodPreferences.buttonText,
             BotData.ONBOARD.nearlyThere.buttonText,
             BotData.ONBOARD.activityLevelAtWork.buttonText,
             BotData.ONBOARD.physicalActivity.buttonText,
@@ -547,6 +553,7 @@ class BotData: NSObject {
             BotData.ONBOARD.thanks.nextSteps,
             BotData.ONBOARD.numberOfMeals.nextSteps,
             BotData.ONBOARD.dietType.nextSteps,
+            BotData.ONBOARD.foodPreferences.nextSteps,
             BotData.ONBOARD.nearlyThere.nextSteps,
             BotData.ONBOARD.activityLevelAtWork.nextSteps,
             BotData.ONBOARD.physicalActivity.nextSteps,
@@ -572,6 +579,7 @@ class BotData: NSObject {
             BotData.ONBOARD.thanks.didTap,
             BotData.ONBOARD.numberOfMeals.didTap,
             BotData.ONBOARD.dietType.didTap,
+            BotData.ONBOARD.foodPreferences.didTap,
             BotData.ONBOARD.nearlyThere.didTap,
             BotData.ONBOARD.activityLevelAtWork.didTap,
             BotData.ONBOARD.physicalActivity.didTap,
@@ -701,13 +709,13 @@ class BotData: NSObject {
         struct weightHeight {
             static let question = "Please enter your height and weight"
             static let tableViewList:[String] = []
-            static let buttonText : String? = nil
+            static let buttonText : String? = "Click here"
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]
             ]
-            static let didTap : Constants.botDidTap? = nil
+            static let didTap : Constants.botDidTap? = .openHeightWeightScreen
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
@@ -750,6 +758,19 @@ class BotData: NSObject {
                 [.none:nil]
             ]
             static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .awaitResponse
+        }
+        
+        struct foodPreferences {
+            static let question = "Please select the foods that you like or dislike"
+            static let tableViewList:[String] = Constants.dietTypes
+            static let buttonText : String? = "Let's start"
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let didTap : Constants.botDidTap? = .openFoodPreferencesScreen
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
         
