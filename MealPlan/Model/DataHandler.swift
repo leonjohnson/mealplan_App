@@ -118,7 +118,7 @@ class DataHandler: NSObject {
         let realm = try! Realm()
         try! realm.write {
             
-            profile.name = newData.name.trimmingCharacters(in: NSCharacterSet.whitespaces)
+            profile.first_name = newData.first_name.trimmingCharacters(in: NSCharacterSet.whitespaces)
             profile.email               = newData.email.trimmingCharacters(in: NSCharacterSet.whitespaces)
             profile.gender              = newData.gender
             profile.birthdate           = newData.birthdate
@@ -135,7 +135,7 @@ class DataHandler: NSObject {
             profile.numberOfResistanceSessionsEachWeek = bio.numberOfResistanceSessionsEachWeek
             
             profile.numberOfDailyMeals         = bio.numberOfDailyMeals
-            profile.looseFat.value          = bio.looseFat.value
+            profile.loseFat.value          = bio.loseFat.value
             profile.gainMuscle.value        = bio.gainMuscle.value
             profile.howLong           = bio.howLong
             

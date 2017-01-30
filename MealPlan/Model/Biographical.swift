@@ -9,7 +9,7 @@ class Biographical: Object {
     
     let dietaryRequirement = List<DietSuitability>()
     
-    var looseFat = RealmOptional<Bool>()
+    var loseFat = RealmOptional<Bool>()
     var gainMuscle = RealmOptional<Bool>()
     
     dynamic var numberOfResistanceSessionsEachWeek = 0

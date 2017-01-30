@@ -149,7 +149,7 @@ class SetUpMealPlan: NSObject {
         if aim.gainMuscle.value == true {
             return Int(tdee * Constants.standard_calorie_increase_for_muscle)
         }
-        if aim.looseFat.value == true {
+        if aim.loseFat.value == true {
             return Int(tdee * Constants.standard_calorie_reduction_for_weightloss)
         }
         return Int(tdee * Constants.standard_calorie_reduction_for_weightloss)
@@ -296,8 +296,8 @@ class SetUpMealPlan: NSObject {
         
         
         var proteinRequirement : Double = 0.0
-        if aim.looseFat.value == true{
-            proteinRequirement = weeksOnProgram < 3 ? (2.1 * proxyForFatFreeMassInkg) : (2.1 * proxyForFatFreeMassInkg)
+        if aim.loseFat.value == true{
+            proteinRequirement = weeksOnProgram < 3 ? (1.9 * proxyForFatFreeMassInkg) : (1.9 * proxyForFatFreeMassInkg)
         } else {
             proteinRequirement = weeksOnProgram < 3 ? (2.3 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
         }

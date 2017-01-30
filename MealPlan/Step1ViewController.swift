@@ -162,7 +162,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             
             setUpDefaltValues()
             
-            if((pickerDBVal.looseFat.value) == true){
+            if((pickerDBVal.loseFat.value) == true){
                 selectedGoal.add(goalsValues[0])
             }
             if(pickerDBVal.gainMuscle.value == true){
@@ -428,7 +428,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         let trimmed =  user.first_name.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines)
     
-        
+        print("user: \(user), field:\(nameText.text), field:\(nameText.text!.localizedCapitalized)")
        
         //Alert for Name if char. length is less than 2 or empty.
         if (trimmed.characters.count < 2 || nameText.text == ""){
@@ -528,13 +528,14 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
        
         //Saving to DB Class:
-        bio.looseFat.value   =  (selectedGoal.contains(goalsValues[0]))
+        bio.loseFat.value   =  (selectedGoal.contains(goalsValues[0]))
         bio.gainMuscle.value =   (selectedGoal.contains(goalsValues[1]))
         
         bio.numberOfDailyMeals = eatTimeValue!
         bio.howLong = weekTimeValue!
         
         //All the datas should be updated to Bio class
+        print("user: \(user)")
         DataHandler.updateUser(user);
         DataHandler.updateStep1(bio);
         

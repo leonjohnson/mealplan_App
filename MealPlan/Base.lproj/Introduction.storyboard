@@ -38,14 +38,14 @@
                         <viewControllerLayoutGuide type="top" id="OKd-JD-nqf"/>
                         <viewControllerLayoutGuide type="bottom" id="ksU-zw-fNi"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="z7P-xY-hCb">
+                    <view key="view" contentMode="scaleToFill" id="z7P-xY-hCb" customClass="bkgrd" customModule="MealPlan" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKO-cb-6u5" customClass="MPButton" customModule="MealPlan" customModuleProvider="target">
-                                <rect key="frame" x="20" y="652" width="374" height="55"/>
+                                <rect key="frame" x="20" y="652" width="374" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="kuQ-zc-Qj7"/>
+                                    <constraint firstAttribute="height" constant="45" id="kuQ-zc-Qj7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="LET'S GET STARTED">
@@ -55,29 +55,37 @@
                                     <segue destination="Eg5-GE-jqI" kind="show" id="ZnC-xc-zmn"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="We create customised meal plans to help you loose weight or gain muscle." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrY-AU-gN8">
-                                <rect key="frame" x="20" y="226" width="374" height="128"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrY-AU-gN8">
+                                <rect key="frame" x="20" y="156" width="374" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="iUc-G3-qmt"/>
+                                    <constraint firstAttribute="height" constant="128" id="zjg-I5-OyM"/>
                                 </constraints>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="We create customised meal plans to help you lose weight or gain muscle.">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="16" name=".SFNSDisplay"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="0Cr-FC-feR">
-                                <rect key="frame" x="107" y="152" width="200" height="52"/>
+                                <rect key="frame" x="20" y="78" width="156" height="37"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="0Cr-FC-feR" firstAttribute="top" secondItem="OKd-JD-nqf" secondAttribute="bottom" constant="132" id="0Z7-RT-EeC"/>
                             <constraint firstItem="lKO-cb-6u5" firstAttribute="leading" secondItem="z7P-xY-hCb" secondAttribute="leadingMargin" id="2PP-nQ-nZU"/>
-                            <constraint firstItem="lKO-cb-6u5" firstAttribute="trailing" secondItem="IrY-AU-gN8" secondAttribute="trailing" id="2SU-X6-ZWJ"/>
-                            <constraint firstItem="0Cr-FC-feR" firstAttribute="centerX" secondItem="z7P-xY-hCb" secondAttribute="centerX" id="7wm-XX-IZd"/>
-                            <constraint firstItem="lKO-cb-6u5" firstAttribute="leading" secondItem="IrY-AU-gN8" secondAttribute="leading" id="CBa-ic-srj"/>
-                            <constraint firstItem="IrY-AU-gN8" firstAttribute="centerX" secondItem="0Cr-FC-feR" secondAttribute="centerX" id="X1L-3O-q1n"/>
-                            <constraint firstItem="ksU-zw-fNi" firstAttribute="top" secondItem="lKO-cb-6u5" secondAttribute="bottom" constant="29" id="dK6-hr-Xv9"/>
-                            <constraint firstItem="IrY-AU-gN8" firstAttribute="top" secondItem="0Cr-FC-feR" secondAttribute="bottom" constant="22" id="q09-cb-E7S"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="top" secondItem="0Cr-FC-feR" secondAttribute="bottom" constant="41" id="COZ-Vx-kXf"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="leading" secondItem="lKO-cb-6u5" secondAttribute="leading" id="SjV-Gb-eJM"/>
+                            <constraint firstItem="0Cr-FC-feR" firstAttribute="leading" secondItem="IrY-AU-gN8" secondAttribute="leading" id="XEG-of-zev"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="trailing" secondItem="lKO-cb-6u5" secondAttribute="trailing" id="cJj-qV-n15"/>
+                            <constraint firstItem="ksU-zw-fNi" firstAttribute="top" secondItem="lKO-cb-6u5" secondAttribute="bottom" constant="39" id="dK6-hr-Xv9"/>
+                            <constraint firstItem="lKO-cb-6u5" firstAttribute="centerX" secondItem="z7P-xY-hCb" secondAttribute="centerX" id="vxg-Tf-edf"/>
+                            <constraint firstItem="IrY-AU-gN8" firstAttribute="top" secondItem="z7P-xY-hCb" secondAttribute="top" constant="156" id="xm8-jM-Fjs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MuM-uh-krR"/>
@@ -113,6 +121,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="200" height="52"/>
+        <image name="logo" width="156" height="37"/>
     </resources>
 </document>

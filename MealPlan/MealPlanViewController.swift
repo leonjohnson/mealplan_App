@@ -65,7 +65,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        var stringWithName = DataHandler.getActiveUser().name
+        var stringWithName = DataHandler.getActiveUser().first_name
         if stringWithName.uppercased().characters.last == "S"{
             stringWithName = stringWithName + "' meal plan"
         } else{
