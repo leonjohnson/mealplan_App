@@ -119,7 +119,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
             
         }
         if Constants.dietTypes[selectedPath] != Constants.NONE_OF_THE_ABOVE{
-            DataHandler.updateProfileDiet([Constants.dietTypes[selectedPath]])
+            DataHandler.addDietTypeFollowed([Constants.dietTypes[selectedPath]])
         }
         
         

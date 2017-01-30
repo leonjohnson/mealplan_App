@@ -14,6 +14,7 @@ class Biographical: Object {
     
     dynamic var numberOfResistanceSessionsEachWeek = 0
     dynamic var numberOfCardioSessionsEachWeek = 0
+    dynamic var hoursOfActivity : Double = 0
     
     dynamic var heightMeasurement = 0.0
     dynamic var heightUnit = ""

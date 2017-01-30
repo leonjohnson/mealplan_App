@@ -15,6 +15,7 @@
 		F41E48A11DF9439300421CEC /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E48A01DF9439300421CEC /* ProfileTests.swift */; };
 		F70694781E15730500A3B6C6 /* UserFeedbackVanilla.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */; };
 		F70D76A41DE8B9B500B721C1 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */; };
+		F712C4631E364F5A003117DE /* LikeOrDislike.swift in Sources */ = {isa = PBXBuildFile; fileRef = F712C4621E364F5A003117DE /* LikeOrDislike.swift */; };
 		F74130C11E034348007F8AAA /* JSQ-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */; };
 		F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F746AE471DE7609800076B53 /* BotDelegate.swift */; };
 		F74E3C7A1DF8FAA8004B0259 /* BotData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74E3C791DF8FAA8004B0259 /* BotData.swift */; };
@@ -40,7 +41,6 @@
 		F78AB7381DBE6DA400BB40EA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F11DBE6DA400BB40EA /* Config.swift */; };
 		F78AB7391DBE6DA400BB40EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F21DBE6DA400BB40EA /* Constants.swift */; };
 		F78AB73A1DBE6DA400BB40EA /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */; };
-		F78AB73B1DBE6DA400BB40EA /* createMealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */; };
 		F78AB73C1DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F51DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift */; };
 		F78AB73D1DBE6DA400BB40EA /* MealPlanAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F61DBE6DA400BB40EA /* MealPlanAlgorithm.swift */; };
 		F78AB73E1DBE6DA400BB40EA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */; };
@@ -101,7 +101,6 @@
 		F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5411DD2225E00DA2696 /* BotController.swift */; };
 		F7E3C5441DD4AF0F00DA2696 /* Bot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */; };
 		F7E3C5461DD4AF6E00DA2696 /* SearchForFood.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */; };
-		F7E3C54E1DDA3A7E00DA2696 /* customBotMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */; };
 		F7E3C5501DDB897D00DA2696 /* outCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C54F1DDB897D00DA2696 /* outCells.swift */; };
 		F7E3C5521DDB8FF700DA2696 /* outCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E3C5511DDB8FF700DA2696 /* outCell.xib */; };
 		F7E3C5551DDBC44300DA2696 /* miniTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */; };
@@ -151,6 +150,7 @@
 		F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFeedbackVanilla.swift; sourceTree = "<group>"; };
 		F70694791E1FC15300A3B6C6 /* MealPlan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MealPlan.entitlements; sourceTree = "<group>"; };
 		F70D76A31DE8B9B500B721C1 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
+		F712C4621E364F5A003117DE /* LikeOrDislike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeOrDislike.swift; sourceTree = "<group>"; };
 		F74130C01E033F85007F8AAA /* JSQ-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSQ-Bridging-Header.h"; sourceTree = "<group>"; };
 		F746AE471DE7609800076B53 /* BotDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotDelegate.swift; sourceTree = "<group>"; };
 		F74E3C791DF8FAA8004B0259 /* BotData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BotData.swift; path = ../BotData.swift; sourceTree = "<group>"; };
@@ -177,7 +177,6 @@
 		F78AB6F11DBE6DA400BB40EA /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		F78AB6F21DBE6DA400BB40EA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
-		F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = createMealPlan.swift; sourceTree = "<group>"; };
 		F78AB6F51DBE6DA400BB40EA /* MealPlanAlgorithm+methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MealPlanAlgorithm+methods.swift"; sourceTree = "<group>"; };
 		F78AB6F61DBE6DA400BB40EA /* MealPlanAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealPlanAlgorithm.swift; sourceTree = "<group>"; };
 		F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -240,7 +239,6 @@
 		F7E3C5411DD2225E00DA2696 /* BotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotController.swift; sourceTree = "<group>"; };
 		F7E3C5431DD4AF0F00DA2696 /* Bot.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bot.storyboard; sourceTree = "<group>"; };
 		F7E3C5451DD4AF6E00DA2696 /* SearchForFood.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchForFood.storyboard; sourceTree = "<group>"; };
-		F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customBotMessage.swift; sourceTree = "<group>"; };
 		F7E3C54F1DDB897D00DA2696 /* outCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = outCells.swift; sourceTree = "<group>"; };
 		F7E3C5511DDB8FF700DA2696 /* outCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = outCell.xib; sourceTree = "<group>"; };
 		F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = miniTableViewCell.swift; sourceTree = "<group>"; };
@@ -495,26 +493,25 @@
 				F7E3C5411DD2225E00DA2696 /* BotController.swift */,
 				F7C4C2071E01EE2A00DD2000 /* BotCellWithButton.swift */,
 				F78AB6EE1DBE6DA400BB40EA /* CaloriesTableViewCell.swift */,
-				F78AB6EF1DBE6DA400BB40EA /* CaloriesViewController.swift */,
 				F7DAD57B1E27CC8D004656FC /* ChangeMacros.swift */,
 				F78AB6F31DBE6DA400BB40EA /* ContactUsViewController.swift */,
-				F78AB6F41DBE6DA400BB40EA /* createMealPlan.swift */,
 				F78AB6F81DBE6DA400BB40EA /* FoodListTableViewCell.swift */,
 				F78AB6F91DBE6DA400BB40EA /* FoodSearchViewController.swift */,
+				F78AB7031DBE6DA400BB40EA /* MPTableViewCell.swift */,
 				F78AB7021DBE6DA400BB40EA /* MealPlanViewController.swift */,
 				F7DAD57F1E30E210004656FC /* MailComposeDelegate.swift */,
 				F78AB6F71DBE6DA400BB40EA /* DetailViewController.swift */,
-				F78AB7031DBE6DA400BB40EA /* MPTableViewCell.swift */,
 				F78AB6FA1DBE6DA400BB40EA /* Height&WeightListViewController.swift */,
 				F78AB7001DBE6DA400BB40EA /* LastWeekViewController.swift */,
 				F75297751DC9624E009BD0B9 /* UsersProgressMaster.swift */,
-				F7E3C54D1DDA3A7E00DA2696 /* customBotMessage.swift */,
 				F7E3C54F1DDB897D00DA2696 /* outCells.swift */,
 				F7A61B661E12DBAF0099DE42 /* inCell.swift */,
 				F7E3C5531DDBC44300DA2696 /* miniTableViewCell.swift */,
 				F78AB7221DBE6DA400BB40EA /* settings.swift */,
+				F78AB6EF1DBE6DA400BB40EA /* CaloriesViewController.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
 				F70694771E15730500A3B6C6 /* UserFeedbackVanilla.swift */,
+				F712C4621E364F5A003117DE /* LikeOrDislike.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -867,7 +864,6 @@
 				4A504E9B1DF6A9D400719B0B /* UpdateController.swift in Sources */,
 				F78AB75E1DBE6DA400BB40EA /* Network.swift in Sources */,
 				F746AE481DE7609800076B53 /* BotDelegate.swift in Sources */,
-				F7E3C54E1DDA3A7E00DA2696 /* customBotMessage.swift in Sources */,
 				F78AB7641DBE6DA400BB40EA /* MultiTag.swift in Sources */,
 				F7A61B651E1195CB0099DE42 /* Introduction.swift in Sources */,
 				F78AB74D1DBE6DA400BB40EA /* DailyMealPlan.swift in Sources */,
@@ -881,7 +877,6 @@
 				F78AB7571DBE6DA400BB40EA /* Meal.swift in Sources */,
 				F78EDFEB1DF73E2D00AC1AF7 /* MacrosTallyView.swift in Sources */,
 				F7E3C55C1DDE4B7C00DA2696 /* tb.swift in Sources */,
-				F78AB73B1DBE6DA400BB40EA /* createMealPlan.swift in Sources */,
 				F78AB75B1DBE6DA400BB40EA /* Week.swift in Sources */,
 				F7C4C2081E01EE2A00DD2000 /* BotCellWithButton.swift in Sources */,
 				F78AB7381DBE6DA400BB40EA /* Config.swift in Sources */,
@@ -899,6 +894,7 @@
 				F78AB74A1DBE6DA400BB40EA /* MPTableViewCell.swift in Sources */,
 				F7E3C5581DDCB3EB00DA2696 /* CustomCollectionViewFlowLayout.swift in Sources */,
 				F78AB7351DBE6DA400BB40EA /* bkgrd.swift in Sources */,
+				F712C4631E364F5A003117DE /* LikeOrDislike.swift in Sources */,
 				F78AB7501DBE6DA400BB40EA /* FeedBack.swift in Sources */,
 				F75297761DC9624E009BD0B9 /* UsersProgressMaster.swift in Sources */,
 				F78AB7371DBE6DA400BB40EA /* CaloriesViewController.swift in Sources */,

@@ -1,14 +1,8 @@
-//
-//  Height&WeightListViewController.swift
-//  DailyMeals
-//
-//  Created by Jithu on 3/16/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
-//TO DO COMMENDTS (Add proper comments for all method)
 import UIKit
-
-class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
+protocol screenDismissed {
+    func testfunction(height:String, weight:String)
+}
+class Height_WeightListViewController: UIViewController, AKPickerViewDelegate {
     
         
     @IBOutlet var backButton : UIButton!
@@ -31,6 +25,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
     @IBOutlet var heightLabel : UILabel!
     
     var parentView:Step1ViewController?
+    var delegate : screenDismissed? = nil
     
     //Default Values for Pickers
     var weightVal:Double?
@@ -43,7 +38,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
     
     override func viewDidLoad() {
         
-        super.viewDidLoad()
+        super.viewDidLoad()            
         weightPickerValue.delegate = self;
         heightPickerValue.delegate = self;
         //wesitPickerValue.delegate = self;
@@ -52,7 +47,8 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
         scrollView.setContentOffset(CGPoint(x: 0, y: 100), animated: true)
         
         //Assiginig values to variable
-        if (parentView?.bio.weightMeasurement != 0.0){
+        
+        if parentView != nil && (parentView?.bio.weightMeasurement != 0.0){
             
             weightValActual       = parentView?.bio.weightMeasurement
             heightValActual = parentView?.bio.heightMeasurement
@@ -81,7 +77,7 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
         }else{
             
             //Default Weight in kg & Height in Inch
-            weightPickerValue.selectItem(70);
+            weightPickerValue.selectItem(70)
             heightPickerValue.selectItem(60)
             
         }
@@ -300,21 +296,39 @@ class Height_WeightListViewController: UIViewController,AKPickerViewDelegate {
     //Method for adding values and Providing Alerts
     @IBAction func doneButtonClicked(_ sender : AnyObject) {
         
-        parentView?.bio.weightMeasurement  = weightValActual!
-        parentView?.bio.weightUnit   =  (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs");
-        parentView?.bio.heightMeasurement  = heightValActual!
-        parentView?.bio.heightUnit   =  (heightSegment.selectedSegmentIndex == 0 ? "inch" : "cm");
+        if parentView != nil{
+            parentView?.bio.weightMeasurement  = weightValActual!
+            parentView?.bio.weightUnit   =  (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs");
+            parentView?.bio.heightMeasurement  = heightValActual!
+            parentView?.bio.heightUnit   =  (heightSegment.selectedSegmentIndex == 0 ? "inch" : "cm");
+        } else {
+            let bio = Biographical()
+            bio.weightMeasurement = weightValActual!
+            bio.weightUnit = (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs")
+            bio.heightUnit = (heightSegment.selectedSegmentIndex == 0 ? "inch" : "cm")
+            bio.heightMeasurement = heightValActual!
+            DataHandler.updateHeightWeight(bio)
+        }
+        
         
         //parentView?.bio.waistMeasurement   = waistVal!
+        let weight = String(weightValActual!) + (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs")
+        let height = String(heightValActual!) + (heightSegment.selectedSegmentIndex == 0 ? "inch" : "cm")
         
-        self.navigationController?.popViewController(animated: true)
+        self.delegate?.testfunction(height: height, weight: weight)
+        dismiss(animated: true, completion: nil)
+        
+        //_ = self.navigationController?.popViewController(animated: true)
     }
     
     
     //Method for Navigating back to previous ViewController.
     @IBAction func BackAction(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+        //_ = self.navigationController?.popViewController(animated: true)
     }
+    
+    
     
     
 }

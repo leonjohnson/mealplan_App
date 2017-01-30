@@ -143,6 +143,18 @@ struct Constants {
     
     static let max_number_of_servings = "max_number_of_servings"
     static let min_number_of_servings = "min_number_of_servings"
+    
+    static let foods_that_require_rating = ["Spinach",
+                                            "Broccoli",
+                                            "Brussel sprouts",
+                                            "Mushrooms",
+                                            "Chicken Breast",
+                                            "Beef Fillet Steak",
+                                            "Salmon fillet",
+                                            "Cod fillet",
+                                            "Cashews",
+                                            "Avocado"]
+    
 
     
     
@@ -230,7 +242,13 @@ struct Constants {
     static let questionsThatRequireTableViews = [BotData.NEW_FOOD.serving_type.question, 
                                                  BotData.NEW_FOOD.food_type.question, 
                                                  BotData.FEEDBACK.howHungryWereYou.question,
-                                                 BotData.FEEDBACK.easeOfFollowingDiet.question]
+                                                 BotData.FEEDBACK.easeOfFollowingDiet.question,
+                                                 BotData.ONBOARD.greeting3.question,
+                                                 BotData.ONBOARD.gender.question,
+                                                 BotData.ONBOARD.goals.question,
+                                                 BotData.ONBOARD.activityLevelAtWork.question,
+                                                 BotData.ONBOARD.notification.question,
+                                                 BotData.ONBOARD.dietType.question]
     
     
     
@@ -238,7 +256,10 @@ struct Constants {
         BotData.NEW_FOOD.saturated_fat.question,
         BotData.NEW_FOOD.sugar.question,
         BotData.NEW_FOOD.fibre.question,
-        BotData.NEW_FOOD.ending.question]
+        BotData.NEW_FOOD.ending.question,
+        BotData.ONBOARD.weightHeight.question,
+        BotData.ONBOARD.foodPreferences.question,
+        BotData.ONBOARD.ending.question]
     
     struct CellIdentifiers {
         static let Blue = "BlueCellIdentifier"
@@ -255,11 +276,41 @@ struct Constants {
         case delete
     }
     
-    enum botValidationEntryType {
+    enum botKeyboardValidationType {
         case text
         case decimal
         case number
         case none
+    }
+    
+    enum botContentValidationType {
+        case maxCharacterCount
+        case minCharacterCount
+        case minValue
+        case maxValue
+        case mustContain
+        case mustSumWithin10Percent
+        case mustNotExist
+        case integer
+        case decimalOne
+        case skipNextQuestionIfEmptyOrZero
+        case maxNumberOfOptionsSelected
+        case none
+    }
+    
+    enum botNextSteps {
+        case hurryAlong
+        case awaitResponse
+    }
+    
+    enum botDidTap {
+        case noValueSelected
+        case requestNotificationPermission
+        case createMealPlans
+        case saveEndOfWeekFeedback
+        case openHeightWeightScreen
+        case openFoodPreferencesScreen
+        case quit
     }
     
     enum dietEase: String {
@@ -268,6 +319,11 @@ struct Constants {
         case ok = "ok"
         case hard = "hard"
         case veryHard = "very hard"
+    }
+    
+    enum goals: String {
+        case gainMuscle = "Gain muscle"
+        case loseWeight = "Lose weight"
     }
     
     enum hungerLevels: String {
@@ -301,15 +357,6 @@ struct Constants {
      MARK:  EXPLAINER SCREEN VARS
      */
     
-    enum botValidationType {
-        case maxCharacter
-        case minCharacter
-        case mustContain
-        case mustSumWithin10Percent
-        case mustNotExist
-        case integer
-        case skipNextQuestionIfEmptyOrZero
-        case none
-    }
+    
     
     }

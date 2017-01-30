@@ -149,7 +149,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             closeButton.isHidden = false
             
             //For Name:
-            nameText.text! = profileDBVal.name
+            nameText.text! = profileDBVal.first_name
             
             //For Gender:
             activeGenderValue = profileDBVal.gender

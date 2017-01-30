@@ -19,6 +19,10 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
             questionIndex = BotData.FEEDBACK.questions.index(of: currentMessageText!)!
             options = BotData.FEEDBACK.options
         }
+        if BotData.ONBOARD.questions.contains(currentMessageText!){
+            questionIndex = BotData.ONBOARD.questions.index(of: currentMessageText!)!
+            options = BotData.ONBOARD.options
+        }
         
         
 

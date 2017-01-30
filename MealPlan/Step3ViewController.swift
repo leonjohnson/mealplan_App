@@ -23,7 +23,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
     let profile = DataHandler.getLikeFoods()
     
     //Deafult Value setting
-    var likeFoodValue = NSMutableArray()
+    var likeFoodValue : [Food] = [Food]()
 
     
     var localData = DataHandler.readFoodsData("");
@@ -49,7 +49,7 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
             let arrayOfObjects = Array(DataHandler.getLikeFoods().foods);
             
             for item in arrayOfObjects{
-                likeFoodValue.add(item)
+                likeFoodValue.append(item)
             }
           
             
@@ -109,11 +109,11 @@ class Step3ViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.cellForRow(at: indexPath)
         
             if(likeFoodValue.contains(filterdData![indexPath.row])){
-                likeFoodValue.remove(filterdData![indexPath.row])
+                likeFoodValue.removeObject(filterdData![indexPath.row])
                 cell!.accessoryType = UITableViewCellAccessoryType.none
             }else{
                 if likeFoodValue.count < 5 {
-                    likeFoodValue.add(filterdData![indexPath.row])
+                    likeFoodValue.append(filterdData![indexPath.row])
                     cell!.accessoryType = UITableViewCellAccessoryType.checkmark
                 }
             }

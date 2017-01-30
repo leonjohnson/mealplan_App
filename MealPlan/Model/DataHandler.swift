@@ -5,6 +5,13 @@ class DataHandler: NSObject {
     
     //MARK: Data Handler For Biographical class
     
+    static func foodsThatRequireRating()-> [Food] {
+        let predicate = NSPredicate(format: "SELF.name IN %@", Constants.foods_that_require_rating)
+        let realm = try! Realm()
+        let foods = realm.objects(Food.self).filter(predicate)
+        return foods.map({$0})
+    }
+    
     static func userExists()->Bool?{
         let realm = try! Realm()
         let user = realm.objects(User.self)
@@ -26,6 +33,7 @@ class DataHandler: NSObject {
             return  pr;
         }
     }
+    
     static func getActiveBiographical()->Biographical{
         let realm = try! Realm()
         let profile = realm.objects(Biographical.self).first
@@ -125,6 +133,19 @@ class DataHandler: NSObject {
             
         }
     }
+    
+    static func updateHeightWeight(_ bio:Biographical){
+        let profile = getActiveBiographical()
+        let realm = try! Realm()
+        try! realm.write {
+            profile.heightMeasurement = bio.heightMeasurement
+            profile.weightMeasurement = bio.weightMeasurement
+            profile.weightUnit = bio.weightUnit
+            profile.heightUnit = bio.heightUnit
+            
+        }
+    }
+    
     static func updateStep1(_ bio:Biographical){
         let profile = getActiveBiographical()
         let realm = try! Realm()
@@ -148,7 +169,7 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateProfileDiet(_ dietsSelected:[String]){
+    static func addDietTypeFollowed(_ dietsSelected:[String]){
         let profile = getActiveBiographical()
         let realm = try! Realm()
         var dietsTypesUserSubscribesTo : [DietSuitability] = []
@@ -164,7 +185,7 @@ class DataHandler: NSObject {
             
         }
     }
-    static func updateLikeFoods(_ newData:NSMutableArray){
+    static func updateLikeFoods(_ newData:[Food]){
         let profile = getLikeFoods()
         let realm = try! Realm()
         
@@ -172,20 +193,20 @@ class DataHandler: NSObject {
             profile.foods.removeAll()
             for data in newData {
                 
-                if let item = data as? Food {
+                if let item = data as Food? {
                     profile.foods.append(item);                    
                 }
             }
         }
     }
     
-    static func updateDisLikeFoods(_ newData:NSMutableArray){
+    static func updateDisLikeFoods(_ newData:[Food]){
         let profile = getDisLikedFoods()
         let realm = try! Realm()
         try! realm.write {
             profile.foods.removeAll()
             for data in newData {
-                if let item = data as? Food {
+                if let item = data as Food? {
                     profile.foods.append(item);
                 }
             }

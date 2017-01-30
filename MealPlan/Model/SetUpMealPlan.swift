@@ -299,8 +299,9 @@ class SetUpMealPlan: NSObject {
         if aim.loseFat.value == true{
             proteinRequirement = weeksOnProgram < 3 ? (1.9 * proxyForFatFreeMassInkg) : (1.9 * proxyForFatFreeMassInkg)
         } else {
-            proteinRequirement = weeksOnProgram < 3 ? (2.3 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
+            proteinRequirement = weeksOnProgram < 4 ? (2.3 * proxyForFatFreeMassInkg) : (2.3 * proxyForFatFreeMassInkg)
         }
+        //Protein is based on predicated amount of lean mass. 1.9 seems sensible, not too high like a bodybuilder.
         
         protein.name = Constants.PROTEINS
         protein.value = ceil(proteinRequirement) //grams
@@ -373,7 +374,7 @@ class SetUpMealPlan: NSObject {
         let k = kConstant + (heightInCm * heightCoefficient) + (proxyForFatFreeMassInkg * weightCoeffecient) + (Double(DataHandler.getAge()) * ageCoefficient)
         
         
-        var sessionsCount = Double(bio.numberOfCardioSessionsEachWeek + bio.numberOfResistanceSessionsEachWeek)
+        var sessionsCount = bio.hoursOfActivity
         if sessionsCount > 7{
             sessionsCount = 7 //min 0, max 7
         }

@@ -83,9 +83,7 @@ class CaloriesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let f = (thisWeek?.macroAllocation[2].value)! * 9 / Double((thisWeek?.calorieAllowance)!)
         let fPercent = Int(f * 100)
-        
-        print("p: \(pPercent), c: \(cPercent), f: \(fPercent)")
-        
+                
         let difference = 100 - (pPercent + cPercent + fPercent)
         pPercent = difference > 0 ? pPercent + difference : pPercent
         
