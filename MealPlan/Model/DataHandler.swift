@@ -142,7 +142,7 @@ class DataHandler: NSObject {
             profile.numberOfResistanceSessionsEachWeek = bio.numberOfResistanceSessionsEachWeek
             
             profile.numberOfDailyMeals         = bio.numberOfDailyMeals
-            profile.looseFat.value          = bio.looseFat.value
+            profile.loseFat.value          = bio.loseFat.value
             profile.gainMuscle.value        = bio.gainMuscle.value
             profile.howLong           = bio.howLong
             
@@ -155,7 +155,7 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateProfileDiet(_ dietsSelected:[String]){
+    static func addDietTypeFollowed(_ dietsSelected:[String]){
         let profile = getActiveBiographical()
         let realm = try! Realm()
         var dietsTypesUserSubscribesTo : [DietSuitability] = []

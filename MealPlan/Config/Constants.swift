@@ -146,12 +146,12 @@ struct Constants {
     
     static let foods_that_require_rating = ["Spinach",
                                             "Broccoli",
-                                            "brussel sprouts",
-                                            "mushrooms",
+                                            "Brussel sprouts",
+                                            "Mushrooms",
                                             "Chicken Breast",
                                             "Beef Fillet Steak",
-                                            "salmon fillet",
-                                            "cod fillet",
+                                            "Salmon fillet",
+                                            "Cod fillet",
                                             "Cashews",
                                             "Avocado"]
     
@@ -246,10 +246,10 @@ struct Constants {
                                                  BotData.ONBOARD.greeting3.question,
                                                  BotData.ONBOARD.gender.question,
                                                  BotData.ONBOARD.goals.question,
-                                                 BotData.ONBOARD.heightUnit.question,
-                                                 BotData.ONBOARD.weightUnit.question,
+                                                 //BotData.ONBOARD.weightHeight.question,
                                                  BotData.ONBOARD.activityLevelAtWork.question,
-                                                 BotData.ONBOARD.notification.question]
+                                                 BotData.ONBOARD.notification.question,
+                                                 BotData.ONBOARD.dietType.question]
     
     
     
@@ -298,11 +298,16 @@ struct Constants {
     }
     
     enum botNextSteps {
-        case requestNotificationPermission
-        case createMealPlans
-        case quit
         case hurryAlong
         case awaitResponse
+    }
+    
+    enum botDidTap {
+        case noValueSelected
+        case requestNotificationPermission
+        case createMealPlans
+        case saveEndOfWeekFeedback
+        case quit
     }
     
     enum dietEase: String {
@@ -315,7 +320,7 @@ struct Constants {
     
     enum goals: String {
         case gainMuscle = "Gain muscle"
-        case looseWeight = "Loose weight"
+        case loseWeight = "Lose weight"
     }
     
     enum hungerLevels: String {

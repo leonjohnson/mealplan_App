@@ -19,12 +19,17 @@ class LikeOrDislike: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        foodLabel.text = data.first?.name
+        showNextFood()
+        
         let tap = UITapGestureRecognizer(target: self, action:  #selector(LikeOrDislike.likeThisFood))
         likeButton.addGestureRecognizer(tap)
+        likeButton.layer.cornerRadius = dislikeButton.frame.width/2
+        likeButton.clipsToBounds = true
         
         let tap2 = UITapGestureRecognizer(target: self, action:  #selector(LikeOrDislike.dislikeThisFood))
         dislikeButton.addGestureRecognizer(tap2)
+        dislikeButton.layer.cornerRadius = dislikeButton.frame.width/2
+        dislikeButton.clipsToBounds = true
     }
     
     
@@ -45,7 +50,12 @@ class LikeOrDislike: UIViewController {
         if index > data.count - 1 {
             hadEnough()
         } else {
-            foodLabel.text = data[index].name
+            let name = data[index].name
+            if let first_word = name.components(separatedBy: " ").first {
+                foodLabel.text = first_word + "?"
+            } else {
+                foodLabel.text = data[index].name + "?"
+            }
         }
     }
     
@@ -54,6 +64,7 @@ class LikeOrDislike: UIViewController {
     func hadEnough(){
         DataHandler.updateLikeFoods(foodsLiked)
         DataHandler.updateDisLikeFoods(foodsDisliked)
+        print("had enough called")
         self.dismiss(animated: true, completion: nil)
     }
 

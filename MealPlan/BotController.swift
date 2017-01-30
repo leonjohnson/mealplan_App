@@ -31,11 +31,12 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     var botType : botTypeEnum = .onBoarding // default state
     var questions : [String] = []
     var options : [[String]] = []
-    var buttonText : [String] = []
+    var buttonText : [String?] = []
     var answers : [[String]] = []
     var keyBoardType : [Constants.botKeyboardValidationType] = []
     var validationType : [Constants.botContentValidationType] = []
     var nextSteps : [Constants.botNextSteps] = []
+    var didTap : [Constants.botDidTap?] = []
     var usersName : String = ""
     var sideButton : UIButton?
     
@@ -50,7 +51,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.navigationController?.toolbar.isUserInteractionEnabled = false
         self.inputToolbar.contentView.textView.autocorrectionType = .no
         self.inputToolbar.contentView.textView.becomeFirstResponder()
-        self.collectionView.backgroundColor = Constants.MP_BLUEGREY
+        self.collectionView.backgroundColor = Constants.MP_WHITE
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -74,18 +75,22 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
             options = BotData.NEW_FOOD.options
             answers = BotData.NEW_FOOD.answers
             keyBoardType = BotData.NEW_FOOD.keyboardType
+            didTap = BotData.NEW_FOOD.didTAP
         case .feedback:
             questions = BotData.FEEDBACK.questions
             questions[0] = "Hey \(user.name)! I'm checking in with you to see how things have been going?\nWhat was your weight this morning (in \(weightUnit)s)?"
             options = BotData.FEEDBACK.options
             answers = BotData.FEEDBACK.answers
             keyBoardType = BotData.FEEDBACK.keyboardType
+            didTap = BotData.ONBOARD.didTAP
         case .onBoarding:
             questions = BotData.ONBOARD.questions
             options = BotData.ONBOARD.options
             answers = BotData.ONBOARD.answers
             keyBoardType = BotData.ONBOARD.keyboardType
+            buttonText = BotData.ONBOARD.buttonText
             nextSteps = BotData.ONBOARD.nextSteps
+            didTap = BotData.ONBOARD.didTAP
         case .unstated:
             return
         }
@@ -227,18 +232,12 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     func performFollowUpAction(delayDuration:Double = 0.0){
         // perform the follow up action
         switch nextSteps[questionIndex] {
-        case .awaitResponse:
-            return
-        case .createMealPlans:
-            return
         case .hurryAlong:
             delay(delayDuration, closure: {
                 self.progressToNextQuestionAfterDelay(delay: delayDuration) // this is so that the next question isn't fired until the last one has finished
             })
-        case .quit:
-            print("requested to quit")
-        case .requestNotificationPermission:
-            print("requested notification permission")
+        case .awaitResponse:
+            break
         }
     }
 
@@ -336,31 +335,38 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         self.inputToolbar.contentView.textView.reloadInputViews()
     }
     
+    
     func buttonTapped(forQuestion: String) {
-        
-        if questionIndex == (questions.count-1) {
-            switch botType {
-            case .addNewFood:
+        if let didTapIndex = didTap[questionIndex] {
+            switch didTapIndex {
+            case .noValueSelected:
+                guard let indexForAnswer = questions.index(of: forQuestion) else {
+                    return
+                }
+                answers[indexForAnswer].removeAll()
+                print("pass - no value selected")
+                progressToNextQuestionAfterDelay(delay: 0.0)
+                
+            case .createMealPlans:
                 createNewFoodFromConversation()
-            case .feedback:
+                
+            case .requestNotificationPermission:
+                break
+                
+            case .saveEndOfWeekFeedback:
                 saveFeedbackForTheWeek()
-            case .onBoarding:
-                createUserAndProfile()
-            case .unstated:
-                return
+                
+            case .quit:
+                if DataHandler.userExists() == false {
+                    createUserAndProfile()
+                }
+                //takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
+                //return
             }
-            takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
-            return
+  
         }
-        
-        print("question tapped: \(forQuestion)")
-        guard let indexForAnswer = questions.index(of: forQuestion) else {
-            return
-        }
-        answers[indexForAnswer].removeAll()
-        print("passed")
-        progressToNextQuestionAfterDelay(delay: 0.0)
-    }
+            }
+    
     
     
     func originalrowSelected(labelValue: String, withQuestion: String, index:IndexPath, addOrDelete:UITableViewCellAccessoryType) {
@@ -405,38 +411,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         }
     }
     
-    /*
-    func rowSelected(labelValue: String, withQuestion: String, index: IndexPath, addOrDelete:UITableViewCellAccessoryType){
-        print("PING : rowSelected called.")
-        
-        print("row \(labelValue) selected called from BotController")
-        
-        if BotData.NEW_FOOD.serving_type.question == withQuestion {
-            //serving size table
-            let servingSizeType = Constants.servingSizeBotQuestionMapping[withQuestion]
-            if let servingSizeTypeIndex = questions.index(of: BotData.NEW_FOOD.serving_type.question){
-                if addOrDelete == .checkmark{
-                    answers[servingSizeTypeIndex].append(servingSizeType!)
-                } else {
-                    answers[servingSizeTypeIndex].removeObject(servingSizeType!)
-                }
-            }
-        }
-        
-        if BotData.NEW_FOOD.food_type.question == withQuestion {
-            //food type size table
-            let foodType = Constants.foodTypeBotQuestionMapping[withQuestion]
-            if let foodTypeIndex = questions.index(of: BotData.NEW_FOOD.food_type.question){
-                if addOrDelete == .checkmark{
-                    answers[foodTypeIndex].append(foodType!)
-                } else {
-                    answers[foodTypeIndex].removeObject(foodType!)
-                }
-            }
-        }
-        
-    }
-    */
     
     
     
@@ -691,6 +665,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
     }
     
     func createUserAndProfile(){
+        let bio = Biographical()
         let user = User()
         user.first_name = usersName.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).localizedCapitalized
         
@@ -702,59 +677,69 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
         }
         
         //numberOfDailyMeals
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        if let numberOfDailyMealsIndex = questions.index(of: BotData.ONBOARD.numberOfMeals.question) {
+            user.gender = answers[numberOfDailyMealsIndex].first!
         }
         
         //howLong
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        if let genderIndex = questions.index(of: BotData.ONBOARD.duration.question) {
+            bio.howLong = Int(answers[genderIndex].first!)!
         }
         
         //activityLevelAtWork
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        if let genderIndex = questions.index(of: BotData.ONBOARD.activityLevelAtWork.question) {
+            bio.activityLevelAtWork = answers[genderIndex].first!
         }
         
         //dietaryRequirement
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        if let dietaryIndex = questions.index(of: BotData.ONBOARD.dietType.question) {
+            var diets : [String] = []
+            for diet in answers[dietaryIndex]{
+                if diet != Constants.NONE_OF_THE_ABOVE {
+                    diets.append(diet)
+                }
+            }
+            DataHandler.addDietTypeFollowed(diets)
         }
         
         //objectives
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        if let objectivesIndex = questions.index(of: BotData.ONBOARD.gender.question) {
+            //bio.gainMuscle = Double(answers[objectivesIndex].first!)!
+            
+            if let loseWeight = answers[objectivesIndex].first {
+                if loseWeight  == Constants.goals.loseWeight.rawValue {
+                    bio.loseFat.value = true
+                }
+            }
+            
+            if answers[objectivesIndex].count > 1{
+                let gainMuscle = answers[objectivesIndex][1]
+                if gainMuscle  == Constants.goals.gainMuscle.rawValue {
+                bio.loseFat.value = true
+                }
+            }
+            
         }
         
         //Gender
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        if let genderIndex = questions.index(of: BotData.ONBOARD.gender.question) {
+            user.gender = answers[genderIndex].first!
         }
         
-        //numberOfResistanceSessionsEachWeek
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        //hoursOfActivity
+        if let activityHoursIndex = questions.index(of: BotData.ONBOARD.gender.question) {
+            bio.hoursOfActivity = Double(answers[activityHoursIndex].first!)!
         }
         
         //heightMeasurement
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
+        if let weightHeightIndex = questions.index(of: BotData.ONBOARD.weightHeight.question) {
+            
+            //bio.heightMeasurement = Double(answers[weightHeightIndex].first!)!
+            //bio.heightUnit = answers[heightUnitIndex].first!
+            //bio.weightMeasurement = Double(answers[weightMeasurementIndex].first!)!
+            //bio.weightUnit = answers[weightUnitIndex].first!
         }
         
-        //heightUnit
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
-        }
-        
-        //weightMeasurement
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
-        }
-        
-        //waistUnit
-        if let genderIndex = questions.index(of: BotData.NEW_FOOD.gender.question) {
-            user.gender = Double(answers[genderIndex].first!)!
-        }
         
         /*
          dynamic var numberOfDailyMeals: Int = 0
@@ -763,7 +748,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
          
          let dietaryRequirement = List<DietSuitability>()
          
-         var looseFat = RealmOptional<Bool>()
+         var loseFat = RealmOptional<Bool>()
          var gainMuscle = RealmOptional<Bool>()
          
          dynamic var numberOfResistanceSessionsEachWeek = 0
@@ -778,6 +763,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, UITableViewDe
          dynamic var waistMeasurement = 0.0
          dynamic var waistUnit = ""
         */
+        
+        print("user: \(user) and bio: \(bio)")
         
     }
     

@@ -162,7 +162,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             
             setUpDefaltValues()
             
-            if((pickerDBVal.looseFat.value) == true){
+            if((pickerDBVal.loseFat.value) == true){
                 selectedGoal.add(goalsValues[0])
             }
             if(pickerDBVal.gainMuscle.value == true){
@@ -528,7 +528,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
        
         //Saving to DB Class:
-        bio.looseFat.value   =  (selectedGoal.contains(goalsValues[0]))
+        bio.loseFat.value   =  (selectedGoal.contains(goalsValues[0]))
         bio.gainMuscle.value =   (selectedGoal.contains(goalsValues[1]))
         
         bio.numberOfDailyMeals = eatTimeValue!
