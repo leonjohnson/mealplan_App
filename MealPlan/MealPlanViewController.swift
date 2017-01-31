@@ -270,41 +270,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     
-    
-    
-    func handleNotification(){
-        let notifications =  UIApplication.shared.scheduledLocalNotifications
-        if(notifications?.count > 0)
-        {
-            // Cancel existing one
-            fireNotification();
-        }else
-        {
-            fireNotification();
-        }
-    }
-    
-    //For local Notification Alert:
-    func enableLocalNotification(){
-        let settings = UIUserNotificationSettings(types: [.alert, .badge , .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(settings)
-    }
-    
-    
-    func fireNotification(){
-        let localNotification = UILocalNotification();
-        localNotification.fireDate = Date(timeIntervalSinceNow: 60*60*24*7 );
-        localNotification.alertTitle = "Share How "
-        
-        localNotification.alertBody = "Wow its a week again ";
-        localNotification.timeZone = TimeZone.current;
-        UIApplication.shared.scheduleLocalNotification(localNotification);
-    }
-    
-    
-    
-    
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
         return 70
     }
