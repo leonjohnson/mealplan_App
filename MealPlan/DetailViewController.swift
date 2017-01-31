@@ -145,7 +145,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if (newItemMode == false) { // existing food
             if(numServing > 0){
-                DataHandler.updateFoodItem(answer.1!, numberServing: (numServing + (answer.1?.numberServing)!))
+                if answer.1?.food == detailItem.food{ // if it's the detailItem being edited
+                    DataHandler.updateFoodItem(detailItem, numberServing: numServing)
+                } else {
+                    DataHandler.updateFoodItem(answer.1!, numberServing: (numServing + (answer.1?.numberServing)!)) // if it's a food item not yet in a meal yet
+                }
                 DataHandler.updateCalorieConsumption(thisWeek: currentWeek!)
                 
             } else {
@@ -343,7 +347,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func hideKeyboard(textfield:UITextField) {
         valServingSize.resignFirstResponder()
-        
+        updateFoodItem(numOfServing: Double(valServingSize.text!))
         
         
         //valServingSize.resignFirstResponder()

@@ -308,24 +308,25 @@ class Height_WeightListViewController: UIViewController, AKPickerViewDelegate {
             bio.heightUnit = (heightSegment.selectedSegmentIndex == 0 ? "inch" : "cm")
             bio.heightMeasurement = heightValActual!
             DataHandler.updateHeightWeight(bio)
+            
+            let weight = String(weightValActual!) + (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs")
+            let height = String(heightValActual!) + (heightSegment.selectedSegmentIndex == 0 ? "inch" : "cm")
+            
+            self.delegate?.testfunction(height: height, weight: weight)
         }
         
         
-        //parentView?.bio.waistMeasurement   = waistVal!
-        let weight = String(weightValActual!) + (weightSegment.selectedSegmentIndex == 0 ? "kg" : "lbs")
-        let height = String(heightValActual!) + (heightSegment.selectedSegmentIndex == 0 ? "inch" : "cm")
         
-        self.delegate?.testfunction(height: height, weight: weight)
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
         
-        //_ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     
     //Method for Navigating back to previous ViewController.
     @IBAction func BackAction(_ sender: AnyObject) {
-        dismiss(animated: true, completion: nil)
-        //_ = self.navigationController?.popViewController(animated: true)
+        //dismiss(animated: true, completion: nil)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     

@@ -288,7 +288,7 @@ class SetUpMealPlan: NSObject {
         
         
         //BMI
-        let upperLimitBMI : Double = 23
+        let upperLimitBMI : Double = 24
         let proxyForFatFreeMassInkg = heightInMetres * heightInMetres * upperLimitBMI
         #if DEBUG
             print("proxy is: \(proxyForFatFreeMassInkg)")
@@ -367,7 +367,7 @@ class SetUpMealPlan: NSObject {
         
         //BMI
         let heightInMetres = heightInCm/100
-        let upperLimitBMI : Double = 23
+        let upperLimitBMI : Double = 24
         let proxyForFatFreeMassInkg = heightInMetres * heightInMetres * upperLimitBMI
         
         

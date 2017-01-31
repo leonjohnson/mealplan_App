@@ -10,8 +10,8 @@ import UIKit
 
 protocol MPTableViewCellDelegate {
     // indicates that the given item has been deleted
-    func editFoodItemAtIndexPath(_ indexPath: IndexPath, editType: String)
-    func makeTableEditable(answer: Bool)
+    //func editFoodItemAtIndexPath(_ indexPath: IndexPath, editType: String)
+    //func makeTableEditable(answer: Bool)
 }
 
 class MPTableViewCell: UITableViewCell {
@@ -35,11 +35,11 @@ class MPTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         
         // add a pan recognizer
-        let recognizer = UIPanGestureRecognizer(target: self, action: #selector(MPTableViewCell.handlePan(_:)))
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MPTableViewCell.handleLongPress(_:)))
-        recognizer.delegate = self
-        addGestureRecognizer(recognizer)
-        addGestureRecognizer(longPressRecognizer)
+        //let recognizer = UIPanGestureRecognizer(target: self, action: #selector(MPTableViewCell.handlePan(_:)))
+        //let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MPTableViewCell.handleLongPress(_:)))
+        //recognizer.delegate = self
+        //addGestureRecognizer(recognizer)
+        //addGestureRecognizer(longPressRecognizer)
         
         
         
@@ -70,7 +70,7 @@ class MPTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
-    
+    /*
     func handleLongPress(_ recognizer: UILongPressGestureRecognizer) {
         if recognizer.state == .ended{
             delegate?.makeTableEditable(answer: false)
@@ -80,8 +80,8 @@ class MPTableViewCell: UITableViewCell {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("ended")
-        delegate?.makeTableEditable(answer: false)
+        //print("ended")
+        //delegate?.makeTableEditable(answer: false)
     }
     
     
@@ -140,7 +140,7 @@ class MPTableViewCell: UITableViewCell {
         return false
     }
     
-    
+    */
     
 
 }
