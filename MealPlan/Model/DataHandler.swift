@@ -2,9 +2,7 @@ import Foundation
 import RealmSwift
 
 class DataHandler: NSObject {
-    
-    //MARK: Data Handler For Biographical class
-    
+
     static func foodsThatRequireRating()-> [Food] {
         let predicate = NSPredicate(format: "SELF.name IN %@", Constants.foods_that_require_rating)
         let realm = try! Realm()
@@ -34,10 +32,11 @@ class DataHandler: NSObject {
         }
     }
     
+    //MARK: Biographical
     static func getActiveBiographical()->Biographical{
         let realm = try! Realm()
-        //let profile = realm.objects(Biographical.self).sorted(byKeyPath: "date", ascending: true).last
-        let profile = realm.objects(Biographical.self).first
+        let profile = realm.objects(Biographical.self).sorted(byKeyPath: "date", ascending: true).last
+        ///let profile = realm.objects(Biographical.self).first
         if((profile) != nil){
             return profile!
         }else{
@@ -49,21 +48,89 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateWeight(newWeight:Int, unit:String?){
+    static func updateWeightForNewWeek(newWeight:Int, unit:String?){
         let realm = try! Realm()
-        let profile = realm.objects(Biographical.self).first
-        if((profile) != nil){
-            try! realm.write {
-                profile?.weightMeasurement = Double(newWeight)
-                if unit != nil{
-                    profile?.weightUnit = unit!
-                }
-                
-            }
-        } else {
+        let profile = getActiveBiographical()
+        let newProfile : Biographical = Biographical()
+        
+        newProfile.date = Calendar.current.startOfDay(for: Date())
+        newProfile.numberOfDailyMeals = profile.numberOfDailyMeals
+        newProfile.mealplanDuration = profile.mealplanDuration
+        newProfile.activityLevelAtWork = profile.activityLevelAtWork
+        
+        newProfile.dietaryRequirement.append(objectsIn: profile.dietaryRequirement)
+        newProfile.gainMuscle = profile.gainMuscle
+        newProfile.loseFat = profile.loseFat
+        
+        newProfile.numberOfResistanceSessionsEachWeek = profile.numberOfResistanceSessionsEachWeek
+        newProfile.numberOfCardioSessionsEachWeek = profile.numberOfCardioSessionsEachWeek
+        newProfile.hoursOfActivity = profile.hoursOfActivity
+        
+        newProfile.weightMeasurement = Double(newWeight)
+        newProfile.weightUnit = profile.weightUnit
+        newProfile.heightMeasurement = profile.heightMeasurement
+        newProfile.heightUnit = profile.heightUnit
+        
+        
+        try! realm.write {
+            realm.add(newProfile)
         }
     }
-    //MARK: Data Handler For Foods
+    
+    static func updateHeightWeight(_ bio:Biographical){
+        let profile = getActiveBiographical()
+        let realm = try! Realm()
+        try! realm.write {
+            profile.heightMeasurement = bio.heightMeasurement
+            profile.weightMeasurement = bio.weightMeasurement
+            profile.weightUnit = bio.weightUnit
+            profile.heightUnit = bio.heightUnit
+            
+        }
+    }
+    
+    static func updateStep1(_ bio:Biographical){
+        let profile = getActiveBiographical()
+        let realm = try! Realm()
+        try! realm.write {
+            
+            profile.activityLevelAtWork                = bio.activityLevelAtWork
+            profile.numberOfCardioSessionsEachWeek     = bio.numberOfCardioSessionsEachWeek
+            profile.numberOfResistanceSessionsEachWeek = bio.numberOfResistanceSessionsEachWeek
+            profile.hoursOfActivity = Double(bio.numberOfCardioSessionsEachWeek + bio.numberOfResistanceSessionsEachWeek)
+            
+            profile.numberOfDailyMeals         = bio.numberOfDailyMeals
+            profile.loseFat.value          = bio.loseFat.value
+            profile.gainMuscle.value        = bio.gainMuscle.value
+            profile.mealplanDuration           = bio.mealplanDuration
+            
+            profile.heightMeasurement = bio.heightMeasurement
+            profile.weightMeasurement = bio.weightMeasurement
+            
+            profile.weightUnit = bio.weightUnit;
+            profile.heightUnit = bio.heightUnit;
+            
+        }
+    }
+    
+    static func addDietTypeFollowed(_ dietsSelected:[String]){
+        let profile = getActiveBiographical()
+        let realm = try! Realm()
+        var dietsTypesUserSubscribesTo : [DietSuitability] = []
+        dietsTypesUserSubscribesTo = dietsSelected.map({
+            realm.objects(DietSuitability.self).filter("name = %@", $0).first!
+        })
+        
+        
+        try! realm.write {
+            for each in dietsTypesUserSubscribesTo {
+                profile.dietaryRequirement.append(each)
+            }
+            
+        }
+    }
+
+    //MARK: Foods
     static func getLikeFoods()->FoodsLiked{
         let realm = try! Realm()
         let profile = realm.objects(FoodsLiked.self).first
@@ -78,7 +145,6 @@ class DataHandler: NSObject {
         }
     }
     
-    //MARK: Data Handler For Foods
     static func getDisLikedFoods()->FoodsDisliked{
         let realm = try! Realm()
         let profile = realm.objects(FoodsDisliked.self).first
@@ -115,7 +181,7 @@ class DataHandler: NSObject {
         return foodNames
     }
 
-    
+    //MARK: User
     static func createUser(_ user:User){
         let realm = try! Realm()
         try! realm.write {
@@ -135,59 +201,7 @@ class DataHandler: NSObject {
         }
     }
     
-    static func updateHeightWeight(_ bio:Biographical){
-        let profile = getActiveBiographical()
-        let realm = try! Realm()
-        try! realm.write {
-            profile.heightMeasurement = bio.heightMeasurement
-            profile.weightMeasurement = bio.weightMeasurement
-            profile.weightUnit = bio.weightUnit
-            profile.heightUnit = bio.heightUnit
-            
-        }
-    }
-    
-    static func updateStep1(_ bio:Biographical){
-        let profile = getActiveBiographical()
-        let realm = try! Realm()
-        try! realm.write {
-            
-            profile.activityLevelAtWork                = bio.activityLevelAtWork
-            profile.numberOfCardioSessionsEachWeek     = bio.numberOfCardioSessionsEachWeek
-            profile.numberOfResistanceSessionsEachWeek = bio.numberOfResistanceSessionsEachWeek
-            profile.hoursOfActivity = Double(bio.numberOfCardioSessionsEachWeek + bio.numberOfResistanceSessionsEachWeek)
-            
-            profile.numberOfDailyMeals         = bio.numberOfDailyMeals
-            profile.loseFat.value          = bio.loseFat.value
-            profile.gainMuscle.value        = bio.gainMuscle.value
-            profile.howLong           = bio.howLong
-            
-            profile.heightMeasurement = bio.heightMeasurement
-            profile.weightMeasurement = bio.weightMeasurement
-            
-            profile.weightUnit = bio.weightUnit;
-            profile.heightUnit = bio.heightUnit;
-            
-        }
-    }
-    
-    static func addDietTypeFollowed(_ dietsSelected:[String]){
-        let profile = getActiveBiographical()
-        let realm = try! Realm()
-        var dietsTypesUserSubscribesTo : [DietSuitability] = []
-        dietsTypesUserSubscribesTo = dietsSelected.map({
-            realm.objects(DietSuitability.self).filter("name = %@", $0).first!
-        })
-        
-        
-        try! realm.write {
-            for each in dietsTypesUserSubscribesTo {
-                profile.dietaryRequirement.append(each)
-            }
-            
-        }
-    }
-    static func updateLikeFoods(_ newData:[Food]){
+        static func updateLikeFoods(_ newData:[Food]){
         let profile = getLikeFoods()
         let realm = try! Realm()
         
@@ -216,13 +230,9 @@ class DataHandler: NSObject {
     }
     
     
-    //MARK:
     
-    //MARK: Data Handler For Food
-    
-    
-    
-    static func deleteFutureMealPlansWeeksAndFoodItems(){
+    //MARK: Mealplans
+static func deleteFutureMealPlansWeeksAndFoodItems(){
         let realm = try! Realm()
         let fooditems = realm.objects(FoodItem.self)
         let plans = realm.objects(DailyMealPlan.self)
@@ -532,12 +542,12 @@ class DataHandler: NSObject {
      * return   : Week integer value
      */
     static func getWeek(_ today:Date)->Int {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
-    let myCalendar = Calendar(identifier: Calendar.Identifier.iso8601)
-    let myComponents = (myCalendar as NSCalendar).components(.weekday, from: today)
-    let weekNumber = myComponents.weekday
-    return weekNumber!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let myCalendar = Calendar(identifier: Calendar.Identifier.iso8601)
+        let myComponents = (myCalendar as NSCalendar).components(.weekday, from: today)
+        let weekNumber = myComponents.weekday
+        return weekNumber!
     }
     
     static func createFoodItem(_ item:Food,numberServing:Double)->FoodItem{
@@ -589,7 +599,7 @@ class DataHandler: NSObject {
             var dailyCarbs = 0.0
             var dailyFats = 0.0
             
-            print(" Week \(week.name)")
+            print(" Week \(week.number)")
             for dailyMealPlan in week.dailyMeals{
                 dailyProtein = dailyProtein + dailyMealPlan.totalProteins()
                 dailyCarbs = dailyCarbs + dailyMealPlan.totalCarbohydrates()

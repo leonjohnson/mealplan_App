@@ -31,6 +31,15 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
         }
         
         /*
+        let weekNumber = SetUpMealPlan.getThisWeekAndNext().first?.number
+        if currentMessageText == BotData.FEEDBACK.firstWeekNotice.question && (weekNumber == 2) {
+            print("before : \(questionIndex)")
+            questionIndex = questionIndex + 1
+            print("after collection : \(questionIndex)")
+        }
+ */
+        
+        /*
         let constraintRect = CGSize(width: superSize.width, height: .greatestFiniteMagnitude)
         let botLeading : NSMutableParagraphStyle = NSMutableParagraphStyle()
         botLeading.lineSpacing = 9.33
@@ -67,7 +76,7 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
             let buttonAttString = NSAttributedString(string: buttonText[questionIndex]!, attributes: [NSFontAttributeName: Constants.STANDARD_FONT])
             let buttonBoundingBox = buttonAttString.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
             
-            superSize.height = 80
+            superSize.height = 160
             superSize.width = (boundingBox.width > buttonBoundingBox.width) ? boundingBox.width : buttonBoundingBox.width
             superSize.width = superSize.width + 20
             //superSize.width = superSize.width + 40

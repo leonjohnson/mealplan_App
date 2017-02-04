@@ -72,15 +72,15 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
         switch botType {
         case .addNewFood:
             questions = BotData.NEW_FOOD.questions
-            questions[0] = "Hey \(user.name)! What is the full name of the food you want to record?"
+            questions[0] = "Hey \(user.first_name)! What is the full name of the food you want to record?"
             options = BotData.NEW_FOOD.options
             answers = BotData.NEW_FOOD.answers
             keyBoardType = BotData.NEW_FOOD.keyboardType
             didTap = BotData.NEW_FOOD.didTAP
         case .feedback:
             questions = BotData.FEEDBACK.questions
-            questions[0] = "Hey \(user.name)!"
-            questions[3] = questions[3] + "(in \(weightUnit)s)?"
+            questions[0] = "Hey \(user.first_name)!"
+            questions[3] = questions[3] + ",in \(weightUnit)s?"
             options = BotData.FEEDBACK.options
             answers = BotData.FEEDBACK.answers
             keyBoardType = BotData.FEEDBACK.keyboardType
@@ -112,6 +112,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
         self.collectionView.register(UINib(nibName: "BotCellWithButton", bundle: nil), forCellWithReuseIdentifier: "button")
         self.collectionView.isUserInteractionEnabled = true
         self.collectionView.collectionViewLayout.messageBubbleFont = Constants.STANDARD_FONT
+        self.inputToolbar.contentView?.leftBarButtonItemWidth = CGFloat(34.0)
         
         
         // MARK: ### SET SEND BUTTON AS IMAGE
@@ -134,57 +135,17 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
         self.inputToolbar.contentView?.textView?.addGestureRecognizer(tap)
         
         
-        self.senderId = user.name
-        self.senderDisplayName = user.name
+        self.senderId = user.first_name
+        self.senderDisplayName = user.first_name
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         inComingCellViewController.botDelegate = self
 
-        
-        
-        
-        
-        
-        // Set the keyboard type and icon
-        sideButton = UIButton(frame: CGRect.zero)
-        var keyBoardImage = UIImage()
-        
-        switch keyBoardType[0] {
-        case .number:
-            self.inputToolbar.contentView.textView.keyboardType = .numberPad
-            keyBoardImage = UIImage(named: "keyboard_filled")!
-        case .decimal:
-            self.inputToolbar.contentView.textView.keyboardType = .decimalPad
-            keyBoardImage = UIImage(named: "keyboard_filled")!
-        case .text:
-            self.inputToolbar.contentView.textView.keyboardType = .default
-            keyBoardImage = UIImage(named: "number_keypad")!
-        case .none:
-            self.inputToolbar.contentView.textView.keyboardType = .default
-            keyBoardImage = UIImage(named: "number_keypad")!
-        }
-        sideButton?.setImage(keyBoardImage, for: UIControlState.normal)
-        self.inputToolbar.contentView?.leftBarButtonItemWidth = CGFloat(34.0)
-        self.inputToolbar.contentView?.leftBarButtonItem = sideButton
+        updateKeyboard()
         
         //Send the first message
         addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
         self.finishSendingMessage(animated: true)
-        
-        /*
-        sideButton.frame =
-         UIImage *image = [UIImage imageNamed:@"smileButton"];
-         UIButton* smileButton = [UIButton buttonWithType:UIButtonTypeCustom];
-         [smileButton setImage:image forState:UIControlStateNormal];
-         [smileButton addTarget:self action:@selector(smileButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-         [smileButton setFrame:CGRectMake(0, 0, 25, height)];
-        
-         let image = UIImage(named: "Intro1")
-         let photo = JSQPhotoMediaItem(image: image)
-         let message2 = JSQMessage(senderId: "121", displayName: "Leon", media: photo)
-         messages.append(message2!)
-         */
-        
         
     }
     
@@ -200,7 +161,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     }
     
     private func addMessage(withId id: String, name: String, text: String) {
-        
         //Consider whether to show the typing indicator
         var delayDuration : Double = 3.0
         switch nextSteps[questionIndex] {
@@ -208,17 +168,18 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             delayDuration = (questionIndex == 0) ? 3.0 : 1.0
             
         case .createMealPlans:
+            updateKeyboard()
             break
             
         case .awaitResponse:
+            updateKeyboard()
             delayDuration = 3.0
         }
         
         if name != Constants.BOT_NAME {
             delayDuration = 0.0
         }
-        
-        
+
         //create closure
         let addingClosure = {
             if let message = JSQMessage(senderId: id, displayName: name, text: text) {
@@ -244,7 +205,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     
     func performFollowUpAction(delayDuration:Double = 0.0){
         // perform the follow up action
-        
         switch nextSteps[questionIndex] {
         case .hurryAlong:
             delay(delayDuration, closure: {
@@ -312,33 +272,50 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     
     
     func progressToNextQuestionAfterDelay(delay:Double){
-        print("progressing...")
-        questionIndex += 1
+        let lastIndex : Int = (questionIndex > 0) ? questionIndex - 1 : questionIndex
+        let weekNumber = SetUpMealPlan.getThisWeekAndNext().first?.number
+        if questions[questionIndex + 1] == BotData.FEEDBACK.firstWeekNotice.question && weekNumber != 1 {
+            questionIndex += 2
+            lastIndex = questionIndex - 2
+        } else {
+            questionIndex += 1
+            lastIndex = questionIndex - 1
+        }
         let nextQuestion = questions[questionIndex]
         addMessage(withId: "foo", name: Constants.BOT_NAME, text: nextQuestion)
         self.finishSendingMessage(animated: true)
-        
-        // Set the keyboard type
-        if keyBoardType[questionIndex - 1] != keyBoardType[questionIndex]{
-            switch keyBoardType[questionIndex] {
-            case .number:
-                self.inputToolbar.contentView.textView.keyboardType = .numberPad
-            case .decimal:
-                self.inputToolbar.contentView.textView.keyboardType = .decimalPad
-            case .text:
-                self.inputToolbar.contentView.textView.keyboardType = .default
-            case .none:
-                self.inputToolbar.contentView.textView.keyboardType = .default
-            }
-            self.inputToolbar.contentView.textView.reloadInputViews()
-        }
-        
-        
     }
     
-    func closeConversation(){
-        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
-        self.finishSendingMessage(animated: true)
+    
+    func updateKeyboard(){
+        // Set the keyboard type and icon
+        sideButton = UIButton(frame: CGRect.zero)
+        var keyBoardImage = UIImage()
+        let newKeyboardType : UIKeyboardType
+        
+        switch keyBoardType[questionIndex] {
+        case .number:
+            newKeyboardType = UIKeyboardType.numberPad
+            keyBoardImage = UIImage(named: "keyboard_filled")!
+            print("number keyboard")
+        case .decimal:
+            newKeyboardType = UIKeyboardType.decimalPad
+            keyBoardImage = UIImage(named: "keyboard_filled")!
+            print("decimal keyboard")
+        case .text:
+            newKeyboardType = UIKeyboardType.alphabet
+            keyBoardImage = UIImage(named: "number_keypad")!
+            print("text keyboard")
+        case .none:
+            newKeyboardType = UIKeyboardType.default
+            keyBoardImage = UIImage(named: "number_keypad")!
+            print("none keyboard")
+        }
+        sideButton?.setImage(keyBoardImage, for: UIControlState.normal)
+        self.inputToolbar.contentView.textView.keyboardType = newKeyboardType
+        self.inputToolbar.contentView.textView.reloadInputViews()
+        
+        self.inputToolbar.contentView?.leftBarButtonItem = sideButton
     }
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
@@ -361,6 +338,15 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     }
     
     
+    func closeConversation(){
+        addMessage(withId: Constants.BOT_NAME, name: "\(Constants.BOT_NAME)", text: questions[questionIndex])
+        self.finishSendingMessage(animated: true)
+    }
+    
+    
+    
+    
+    
     func buttonTapped(forQuestion: String) {
         if let tapAction = didTap[questionIndex] {
             switch tapAction {
@@ -369,7 +355,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                     return
                 }
                 answers[indexForAnswer].removeAll()
-                print("pass - no value selected")
                 progressToNextQuestionAfterDelay(delay: 0.0)
                 
             case .createMealPlans:
@@ -410,7 +395,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         dismiss(animated: true)
-        print("okay, big vc did the dismissing")
         progressToNextQuestionAfterDelay(delay: 0.0)
     }
     
@@ -498,7 +482,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                 NSParagraphStyleAttributeName:botLeading])
             
             cellWithTableview.data.question = message.text
-            print("table data: \(tableViewRowData)")
             cellWithTableview.data.options = tableViewRowData
             cellWithTableview.table.reloadData()
             cellWithTableview.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
@@ -519,7 +502,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                         answersIndex = Int(tableViewRowData.index(of: answer!)!)
                     }
                     cellWithTableview.table.cellForRow(at: [0,Int(answersIndex)])?.accessoryType = .checkmark
-                    print("gonna check this answer")
                 }
             } else {
                 print("no answer at this stage")
@@ -624,7 +606,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             
             
             feedback.weightUnit = DataHandler.getActiveBiographical().weightUnit
-            
             feedback.weightMeasurement = Double(answers[3].first!)!
             // using subscript notation as the text to this question has been changed but I'm confident that it's the first one
             
@@ -632,7 +613,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                 feedback.hungerLevels = answers[hungerIndex].first!
             }
 
-            
             if let easeOfFollowingIndex = questions.index(of: BotData.FEEDBACK.easeOfFollowingDiet.question) {
 
                 switch answers[easeOfFollowingIndex].first! {
@@ -654,13 +634,11 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             if let notesIndex = questions.index(of: BotData.FEEDBACK.anyComments.question) {
                 feedback.notes = answers[notesIndex].first
             }
-            
             DataHandler.updateMealPlanFeedback(weekJustFinished, feedback: feedback)
-            DataHandler.updateWeight(newWeight: Int(feedback.weightMeasurement), unit: nil)
+            DataHandler.updateWeightForNewWeek(newWeight: Int(feedback.weightMeasurement), unit: nil)
             
             
         }
-        
         guard mealPlanExistsForThisWeek != nil else {
             return
         }
@@ -676,12 +654,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
         } else {
             switch mealPlanExistsForThisWeek!.weeksAheadIncludingCurrent.count {
             case 1:
-                print("Case 1")
                 let currentWeek = Week().currentWeek()
                 let lastWeek = currentWeek?.lastWeek()
                 
                 guard currentWeek != nil && lastWeek != nil else {
-                    print("Error at 2")
                     return
                 }
                 let daysUntilExpiry = currentWeek?.daysUntilWeekExpires()
@@ -737,9 +713,9 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             user.gender = answers[numberOfDailyMealsIndex].first!
         }
         
-        //howLong
+        //mealplanDuration
         if let genderIndex = questions.index(of: BotData.ONBOARD.duration.question) {
-            bio.howLong = Int(answers[genderIndex].first!)!
+            bio.mealplanDuration = Int(answers[genderIndex].first!)!
         }
         
         //activityLevelAtWork
@@ -799,7 +775,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
         
         /*
          dynamic var numberOfDailyMeals: Int = 0
-         dynamic var howLong: Int = 0
+         dynamic var mealplanDuration: Int = 0
          dynamic var activityLevelAtWork: String? = nil
          
          let dietaryRequirement = List<DietSuitability>()
@@ -820,8 +796,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
          dynamic var waistUnit = ""
         */
         
-        print("user: \(user) and bio: \(bio)")
-        
     }
     
 
@@ -839,7 +813,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
         let foodNameIndex = 0
         let foodName : String = answers[foodNameIndex].first!
         food.name = foodName
-        print("food2: \(food.name)")
         
         if let foodProducerIndex = questions.index(of: BotData.NEW_FOOD.producer.question) {
             food.producer = answers[foodProducerIndex].first!
@@ -917,8 +890,6 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             fooditem.numberServing = Double(answers[servingAmountIndex].first!)!
         }
         
-        print("food item object: \(fooditem)")
-        
         /*
          
          if let value = (pdt!.value(forKey: "dietSuitability") as! NSArray?){
@@ -977,13 +948,11 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     }
     
     func testfunction(height:String, weight:String){
-        print("test worked")
         guard let indexForAnswer = questions.index(of: questions[questionIndex]) else {
             return
         }
         answers[indexForAnswer].removeAll()
         answers[indexForAnswer].append("")
-        print("pass - no value selected")
         progressToNextQuestionAfterDelay(delay: 0.0)
     }
     

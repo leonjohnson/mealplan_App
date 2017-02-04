@@ -158,7 +158,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             
             //For eatTime & WeekTime Values
             eatTimeValue      = pickerDBVal.numberOfDailyMeals
-            weekTimeValue     = pickerDBVal.howLong
+            weekTimeValue     = pickerDBVal.mealplanDuration
             
             setUpDefaltValues()
             
@@ -402,7 +402,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         else{
             
             weekTimeValue = numberOfweeks[row]
-            //bio.howLong = weekTimeValue!
+            //bio.mealplanDuration = weekTimeValue!
         }
     }
     
@@ -428,9 +428,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         
         let trimmed =  user.first_name.trimmingCharacters(
             in: CharacterSet.whitespacesAndNewlines)
-    
-        print("user: \(user), field:\(nameText.text), field:\(nameText.text!.localizedCapitalized)")
-       
+        
         //Alert for Name if char. length is less than 2 or empty.
         if (trimmed.characters.count < 2 || nameText.text == ""){
             // create the alert
@@ -533,10 +531,9 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         bio.gainMuscle.value =   (selectedGoal.contains(goalsValues[1]))
         
         bio.numberOfDailyMeals = eatTimeValue!
-        bio.howLong = weekTimeValue!
+        bio.mealplanDuration = weekTimeValue!
         
         //All the datas should be updated to Bio class
-        print("user: \(user)")
         DataHandler.updateUser(user);
         DataHandler.updateStep1(bio);
         

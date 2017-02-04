@@ -190,7 +190,7 @@ class SetUpMealPlan: NSObject {
         let numberOfWeeks = realm.objects(Week.self).count + 1 // be careful, what if the user stops and restarts
         let calender = Calendar.current
         let newWeek = Week()
-        newWeek.name = String(numberOfWeeks)
+        newWeek.number = numberOfWeeks
         let futureWeekStartDate = (calender as NSCalendar).date(
             byAdding: .day,
             value: daysUntilCommencement,

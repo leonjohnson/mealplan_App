@@ -111,7 +111,7 @@ class ExplanationViewController: UIViewController,UIScrollViewDelegate,UIPageVie
         doneButton.backgroundColor = Constants.MP_GREEN
         doneButton.layer.cornerRadius = 25
         doneButton.addTarget(self, action: #selector(ExplanationViewController.showmp(_:)), for: .touchUpInside)
-        let att = NSAttributedString(string: "OK, Let's get started", attributes:[
+        let att = NSAttributedString(string: "OK, let's get started", attributes:[
             NSFontAttributeName:Constants.STANDARD_FONT_BOLD, 
             NSForegroundColorAttributeName:Constants.MP_WHITE,
             NSParagraphStyleAttributeName:paragraphStyle])

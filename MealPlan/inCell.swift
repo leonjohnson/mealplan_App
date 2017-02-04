@@ -38,9 +38,6 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        #if DEBUG
-        print("/n PREPARING INCELL FOR REUSE!")
-        #endif
         
         
         /*
@@ -99,7 +96,6 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("data.options: \(data.options)")
         return data.options.count
     }
     

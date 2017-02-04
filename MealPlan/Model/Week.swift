@@ -3,7 +3,7 @@ import RealmSwift
 
 class Week: Object {
     
-    dynamic var name = "" // 1,2,3 etc but this may include strings at a later date
+    dynamic var number: Int = 0 // 1,2,3 etc but this may reset to one if the user stops and restarts
     dynamic var start_date = Calendar.current.startOfDay(for: Date())
     let dailyMeals = List<DailyMealPlan>()
     let macroAllocation = List<Macronutrient>()
