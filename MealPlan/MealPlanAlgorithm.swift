@@ -777,7 +777,7 @@ class MealPlanAlgorithm : Object{
                             food.proteins <= food.carbohydrates*(overflow[0]/overflow[1])*1.05
                     )
                 }
-                
+                /*
                 let extraFoodsFromDynamicPredicate = (array as NSArray).filtered(using: dynamicPredicate) as! [Food]
                 
                 if extraFoodsFromDynamicPredicate.count > 0{
@@ -842,7 +842,7 @@ class MealPlanAlgorithm : Object{
                     break thecomebackBreak
                     
                 }
-                
+                */
                 
                 
                 //TO-DO: Need to sort foods using a custom sort function

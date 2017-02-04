@@ -42,14 +42,14 @@
                         <rect key="frame" x="0.0" y="40" width="244" height="302"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7QR-fw-czf">
-                                <rect key="frame" x="0.0" y="0.0" width="244" height="302"/>
+                                <rect key="frame" x="0.0" y="0.0" width="249" height="302"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="J2F-tw-H1o">
-                                <rect key="frame" x="10" y="10" width="224" height="282"/>
+                                <rect key="frame" x="15" y="10" width="219" height="282"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IvN-AG-DLq" customClass="JSQMessagesCellTextView">
-                                        <rect key="frame" x="0.0" y="0.0" width="224" height="242"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="219" height="242"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -62,7 +62,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BON-fH-ikk" customClass="MPButton" customModule="MealPlan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="252" width="224" height="30"/>
+                                        <rect key="frame" x="0.0" y="252" width="219" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="QBE-Cb-bKz"/>
@@ -79,11 +79,11 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="J2F-tw-H1o" firstAttribute="centerX" secondItem="7QR-fw-czf" secondAttribute="centerX" id="2eD-Ov-FBn"/>
-                            <constraint firstItem="J2F-tw-H1o" firstAttribute="centerX" secondItem="rKM-fI-zd5" secondAttribute="centerX" id="7vl-M3-eua"/>
                             <constraint firstAttribute="width" constant="244" id="C4a-Uc-3HE"/>
                             <constraint firstItem="7QR-fw-czf" firstAttribute="leading" secondItem="rKM-fI-zd5" secondAttribute="leading" id="NMt-I1-MjJ"/>
                             <constraint firstItem="7QR-fw-czf" firstAttribute="top" secondItem="rKM-fI-zd5" secondAttribute="top" id="RDC-sc-dUi"/>
                             <constraint firstAttribute="trailing" secondItem="J2F-tw-H1o" secondAttribute="trailing" constant="10" id="VoT-2K-EUc"/>
+                            <constraint firstItem="J2F-tw-H1o" firstAttribute="leading" secondItem="rKM-fI-zd5" secondAttribute="leading" constant="15" id="WFH-DI-chk"/>
                             <constraint firstAttribute="bottom" secondItem="J2F-tw-H1o" secondAttribute="bottom" constant="10" id="oNW-nE-fzK"/>
                             <constraint firstItem="J2F-tw-H1o" firstAttribute="centerY" secondItem="7QR-fw-czf" secondAttribute="centerY" id="osq-lU-DmS"/>
                             <constraint firstItem="J2F-tw-H1o" firstAttribute="top" secondItem="rKM-fI-zd5" secondAttribute="top" constant="10" id="ycG-nj-wj8"/>

@@ -180,6 +180,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             bio.activityLevelAtWork = pickerDBVal.activityLevelAtWork
             bio.numberOfResistanceSessionsEachWeek = pickerDBVal.numberOfResistanceSessionsEachWeek
             bio.numberOfCardioSessionsEachWeek = pickerDBVal.numberOfCardioSessionsEachWeek
+            bio.hoursOfActivity = Double(pickerDBVal.numberOfCardioSessionsEachWeek + pickerDBVal.numberOfResistanceSessionsEachWeek)
             
         }
         

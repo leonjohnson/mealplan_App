@@ -273,7 +273,10 @@ class BotData: NSObject {
             BotData.FEEDBACK.easeOfFollowingDiet.question,
             BotData.FEEDBACK.anyComments.question,
             BotData.FEEDBACK.thankyou.question,
-            BotData.FEEDBACK.ending.question]
+            BotData.FEEDBACK.mealplanCreated.question,
+            BotData.FEEDBACK.firstWeekNotice.question,
+            BotData.FEEDBACK.ending.question,
+            BotData.FEEDBACK.bye.question]
         
         static let options : [[String]]  = [
             BotData.FEEDBACK.greeting.tableViewList,
@@ -284,9 +287,15 @@ class BotData: NSObject {
             BotData.FEEDBACK.easeOfFollowingDiet.tableViewList,
             BotData.FEEDBACK.anyComments.tableViewList,
             BotData.FEEDBACK.thankyou.tableViewList,
-            BotData.FEEDBACK.ending.tableViewList]
+            BotData.FEEDBACK.mealplanCreated.tableViewList,
+            BotData.FEEDBACK.firstWeekNotice.tableViewList,
+            BotData.FEEDBACK.ending.tableViewList,
+            BotData.FEEDBACK.bye.tableViewList]
  
         static let answers : [[String]] = [[String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
                                            [String()],
                                            [String()],
                                            [String()],
@@ -306,7 +315,10 @@ class BotData: NSObject {
             BotData.FEEDBACK.easeOfFollowingDiet.keyboardType,
             BotData.FEEDBACK.anyComments.keyboardType,
             BotData.FEEDBACK.thankyou.keyboardType,
-            BotData.FEEDBACK.ending.keyboardType]
+            BotData.FEEDBACK.mealplanCreated.keyboardType,
+            BotData.FEEDBACK.firstWeekNotice.keyboardType,
+            BotData.FEEDBACK.ending.keyboardType,
+            BotData.FEEDBACK.bye.keyboardType]
         
         static let nextSteps : [Constants.botNextSteps] = [
             BotData.FEEDBACK.greeting.nextSteps,
@@ -317,7 +329,24 @@ class BotData: NSObject {
             BotData.FEEDBACK.easeOfFollowingDiet.nextSteps,
             BotData.FEEDBACK.anyComments.nextSteps,
             BotData.FEEDBACK.thankyou.nextSteps,
-            BotData.FEEDBACK.ending.nextSteps]
+            BotData.FEEDBACK.mealplanCreated.nextSteps,
+            BotData.FEEDBACK.firstWeekNotice.nextSteps,
+            BotData.FEEDBACK.ending.nextSteps,
+            BotData.FEEDBACK.bye.nextSteps]
+        
+        static let buttonText : [String?] = [
+            BotData.FEEDBACK.greeting.buttonText,
+            BotData.FEEDBACK.update.buttonText,
+            BotData.FEEDBACK.checkin.buttonText,
+            BotData.FEEDBACK.howWasLastWeek.buttonText,
+            BotData.FEEDBACK.howHungryWereYou.buttonText,
+            BotData.FEEDBACK.easeOfFollowingDiet.buttonText,
+            BotData.FEEDBACK.anyComments.buttonText,
+            BotData.FEEDBACK.thankyou.buttonText,
+            BotData.FEEDBACK.mealplanCreated.buttonText,
+            BotData.FEEDBACK.firstWeekNotice.buttonText,
+            BotData.FEEDBACK.ending.buttonText,
+            BotData.FEEDBACK.bye.buttonText]
         
         static let didTAP : [Constants.botDidTap?] = [
             BotData.FEEDBACK.greeting.didTap,
@@ -328,14 +357,18 @@ class BotData: NSObject {
             BotData.FEEDBACK.easeOfFollowingDiet.didTap,
             BotData.FEEDBACK.anyComments.didTap,
             BotData.FEEDBACK.thankyou.didTap,
-            BotData.FEEDBACK.ending.didTap]
+            BotData.FEEDBACK.mealplanCreated.didTap,
+            BotData.FEEDBACK.firstWeekNotice.didTap,
+            BotData.FEEDBACK.ending.didTap,
+            BotData.FEEDBACK.bye.didTap]
         
         struct greeting {
-            static let question = "Hey healthy eater 😊"
+            static let question = "Hey "
             static let tableViewList:[String] = []
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .hurryAlong
         }
@@ -346,16 +379,18 @@ class BotData: NSObject {
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .hurryAlong
         }
         
         struct checkin {
-            static let question = "To make sure your meal plans are going accoridng to plan, we're going to briefly review how last week went."
+            static let question = "To make sure your meal plans are going according to plan, we're going to briefly review how last week went."
             static let tableViewList:[String] = []
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .hurryAlong
 
@@ -364,11 +399,11 @@ class BotData: NSObject {
         struct howWasLastWeek {
             static let question = "How much did you weigh this morning?"
             static let tableViewList:[String] = []
-            static let buttonText : String = ""
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.decimal
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
@@ -379,11 +414,11 @@ class BotData: NSObject {
                                                  Constants.hungerLevels.littleHungry.rawValue,
                                                  Constants.hungerLevels.aboutRight.rawValue,
                                                  Constants.hungerLevels.full.rawValue]
-            static let buttonText : String = ""
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
@@ -394,11 +429,11 @@ class BotData: NSObject {
                                                  Constants.dietEase.ok.rawValue,
                                                  Constants.dietEase.hard.rawValue,
                                                  Constants.dietEase.veryHard.rawValue]
-            static let buttonText : String = ""
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
@@ -407,11 +442,11 @@ class BotData: NSObject {
             static let question = "Last week you had 0 meals per day, how many would you like this week?"
             static let tableViewList:[String] = ["Keep the same",
                                                  "2","3","4","5","6","7"]
-            static let buttonText : String = ""
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.number
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
@@ -419,11 +454,11 @@ class BotData: NSObject {
         struct anyComments {
             static let question = "Do you have any feedback on how I can make your future meal plans better for you?"
             static let tableViewList:[String] = []
-            static let buttonText : String = ""
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.text
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
+            static let buttonText : String? = nil
             static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
@@ -431,19 +466,55 @@ class BotData: NSObject {
         struct thankyou {
             static let question = "Thanks for your input. I'll create a new meal plan for you now..."
             static let tableViewList:[String] = []
-            static let buttonText : String = ""
+            static let buttonText : String? = nil
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
                 [.none:nil]]
-            static let didTap : Constants.botDidTap? = .createMealPlans
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .createMealPlans
+        }
+        
+        struct mealplanCreated {
+            static let question = "Your meal plan has been created!"
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct firstWeekNotice {
+            static let question = "From now on, follow your meal plan to the letter. Try not to add or remove any foods."
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]]
+            static let didTap : Constants.botDidTap? = nil
             static let nextSteps : Constants.botNextSteps = .hurryAlong
         }
         
         struct ending {
-            static let question = "All done!"
+            static let question = "We've made a small cut to the amount of food in your meal plan this week. Keep up the good work. You're a week closer to achieving your goals."
             static let tableViewList:[String] = []
-            static let buttonText : String = "Show me my meal plan"
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]]
+            static let didTap : Constants.botDidTap? = .quit
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct bye {
+            static let question = ""
+            static let tableViewList:[String] = []
+            static let buttonText : String? = "Show me my meal plan"
             static let tips : String = ""
             static let keyboardType = Constants.botKeyboardValidationType.none
             static let validationTypes : [[Constants.botContentValidationType:String?]] = [
@@ -451,6 +522,7 @@ class BotData: NSObject {
             static let didTap : Constants.botDidTap? = .quit
             static let nextSteps : Constants.botNextSteps = .awaitResponse
         }
+        
     }
     
     

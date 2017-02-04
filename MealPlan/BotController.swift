@@ -79,11 +79,17 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             didTap = BotData.NEW_FOOD.didTAP
         case .feedback:
             questions = BotData.FEEDBACK.questions
-            questions[0] = "Hey \(user.name)! I'm checking in with you to see how things have been going?\nWhat was your weight this morning (in \(weightUnit)s)?"
+            questions[0] = "Hey \(user.name)!"
+            questions[3] = questions[3] + "(in \(weightUnit)s)?"
             options = BotData.FEEDBACK.options
             answers = BotData.FEEDBACK.answers
             keyBoardType = BotData.FEEDBACK.keyboardType
-            didTap = BotData.ONBOARD.didTAP
+            buttonText = BotData.FEEDBACK.buttonText
+            nextSteps = BotData.FEEDBACK.nextSteps
+            didTap = BotData.FEEDBACK.didTAP
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+            self.navigationController?.navigationBar.frame.size = CGSize(width: (self.navigationController?.navigationBar.frame.width)!, height: 35)
+            self.navigationItem.hidesBackButton = true
         case .onBoarding:
             questions = BotData.ONBOARD.questions
             options = BotData.ONBOARD.options
@@ -196,12 +202,18 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     private func addMessage(withId id: String, name: String, text: String) {
         
         //Consider whether to show the typing indicator
-        var delayDuration : Double
-        if nextSteps[questionIndex] == .hurryAlong {
+        var delayDuration : Double = 3.0
+        switch nextSteps[questionIndex] {
+        case .hurryAlong:
             delayDuration = (questionIndex == 0) ? 3.0 : 1.0
-        } else {
+            
+        case .createMealPlans:
+            break
+            
+        case .awaitResponse:
             delayDuration = 3.0
         }
+        
         if name != Constants.BOT_NAME {
             delayDuration = 0.0
         }
@@ -240,7 +252,18 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             })
         case .awaitResponse:
             break
+        
+        case .createMealPlans:
+            if botType == .feedback{
+                saveFeedbackForTheWeek()
+                progressToNextQuestionAfterDelay(delay: 0.0)
+            } else {
+                #if DEBUG
+                    print("Error in add message function ###")
+                #endif
+            }
         }
+        
     }
 
     
@@ -363,6 +386,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                     createUserAndProfile()
                     //takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
                 }
+                takeUserToMealPlan() // just posted the last response
             case .openHeightWeightScreen:
                 let storyboard : UIStoryboard = Constants.BOT_STORYBOARD
                 let  hw = storyboard.instantiateViewController(withIdentifier: "hw") as! Height_WeightListViewController
@@ -442,9 +466,21 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         
+        //Styling
+        let botLeading : NSMutableParagraphStyle = NSMutableParagraphStyle()
+        botLeading.lineSpacing = 4.33
+        
+        //Cell and message
         let message = messages[indexPath.item]
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         cell.textView.textColor = UIColor.black
+        //cell.textView.attributedText = NSAttributedString(string: message.text, attributes: [
+            //NSParagraphStyleAttributeName:botLeading,
+            //NSFontAttributeName:Constants.STANDARD_FONT])
+        
+        if cell.messageBubbleImageView == outgoingBubbleImageView.messageBubbleImage{
+            cell.textView.textColor = UIColor.black
+        }
         
         if Constants.questionsThatRequireTableViews.contains(message.text!) {
             let questionIndex = questions.index(of: message.text)
@@ -453,8 +489,14 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             let cellWithTableview = collectionView.dequeueReusableCell(withReuseIdentifier: "in", for: indexPath) as! inCell
             //cellWithTableview.table.delegate = self
             
+            
+            
             cellWithTableview.question = message.text
-            cellWithTableview.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
+            cellWithTableview.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[
+                NSFontAttributeName:Constants.STANDARD_FONT, 
+                NSForegroundColorAttributeName:UIColor.black,
+                NSParagraphStyleAttributeName:botLeading])
+            
             cellWithTableview.data.question = message.text
             print("table data: \(tableViewRowData)")
             cellWithTableview.data.options = tableViewRowData
@@ -495,7 +537,9 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             cellWithButton.backgroundColor = UIColor.clear
             cellWithButton.botDelegate = self
             cellWithButton.messageBubbleImageView.image = incomingBubbleImageView.messageBubbleImage
-            cellWithButton.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
+            cellWithButton.questionTextView?.attributedText = NSAttributedString(string: message.text, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, 
+                 NSForegroundColorAttributeName:Constants.MP_BLACK, 
+                 NSParagraphStyleAttributeName:botLeading])
             return cellWithButton
         }
           else {
@@ -564,12 +608,12 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     
     private func setupOutgoingBubble() -> JSQMessagesBubbleImage {
         let bubbleImageFactory = JSQMessagesBubbleImageFactory()
-        return bubbleImageFactory!.outgoingMessagesBubbleImage(with: Constants.MP_WHITE)
+        return bubbleImageFactory!.outgoingMessagesBubbleImage(with: Constants.MP_BRIGHT_BLUE)
     }
     
     private func setupIncomingBubble() -> JSQMessagesBubbleImage {
         let bubbleImageFactory = JSQMessagesBubbleImageFactory()
-        return bubbleImageFactory!.incomingMessagesBubbleImage(with: Constants.MP_GREEN.withAlphaComponent(0.5))
+        return bubbleImageFactory!.incomingMessagesBubbleImage(with: Constants.MP_MESSAGE_BUBBLE_GREY)
         }
     
     
@@ -581,7 +625,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             
             feedback.weightUnit = DataHandler.getActiveBiographical().weightUnit
             
-            feedback.weightMeasurement = Double(answers[0].first!)!
+            feedback.weightMeasurement = Double(answers[3].first!)!
             // using subscript notation as the text to this question has been changed but I'm confident that it's the first one
             
             if let hungerIndex = questions.index(of: BotData.FEEDBACK.howHungryWereYou.question) {
@@ -626,7 +670,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             SetUpMealPlan.createWeek(daysUntilCommencement: 7, calorieAllowance: calRequirements)
             //Eat TDEE plus what you want // create meal plan from today for the next two weeks (we're starting over)
             
-            takeUserToMealPlan(explainerScreenTypeIs: .startingOver)
+            //takeUserToMealPlan()
             return
             
         } else {
@@ -657,7 +701,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                 SetUpMealPlan.createWeek(daysUntilCommencement: daysUntilExpiry!, calorieAllowance: newCaloriesAllowance)
                 AppEventsLogger.log("updated meal plans")
                 
-                takeUserToMealPlan(explainerScreenTypeIs: .congratulations)
+                //takeUserToMealPlan()
                 return
             case 2:
                 return
@@ -668,23 +712,14 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     }
     
     
-    func takeUserToMealPlan(explainerScreenTypeIs:Constants.explainerScreenType){
-        if explainerScreenTypeIs == .none{
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
-        } else {
-            performSegue(withIdentifier: "giveUserFeedback", sender: explainerScreenTypeIs)
-        }
+    func takeUserToMealPlan(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.takeUserToMealPlan(shouldShowExplainerScreen: false)
+        //performSegue(withIdentifier: "showMealPlan", sender: nil)
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "giveUserFeedback" {
-            let controller = segue.destination as! UserFeedbackVanilla
-            controller.explainType = (sender as? Constants.explainerScreenType)!
-        }
-    }
-    
+
     func createUserAndProfile(){
         let bio = Biographical()
         let user = User()

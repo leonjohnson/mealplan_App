@@ -4,12 +4,17 @@ import JSQMessagesViewController
 class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
     
     var incomingBubbleMask = UIImageView()
+    
+    
+    
     override func messageBubbleSizeForItem(at indexPath: IndexPath!) -> CGSize {
         
         var superSize = super.messageBubbleSizeForItem(at: indexPath)
         let currentMessageText = self.collectionView.dataSource.collectionView(self.collectionView, messageDataForItemAt: indexPath).text!()
+        
         var questionIndex = 0
         var options : [[String]] = []
+        var buttonText : [String?] = []
         
         if BotData.NEW_FOOD.questions.contains(currentMessageText!){
             questionIndex = BotData.NEW_FOOD.questions.index(of: currentMessageText!)!
@@ -18,12 +23,28 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
         if BotData.FEEDBACK.questions.contains(currentMessageText!){
             questionIndex = BotData.FEEDBACK.questions.index(of: currentMessageText!)!
             options = BotData.FEEDBACK.options
+            buttonText = BotData.FEEDBACK.buttonText
         }
         if BotData.ONBOARD.questions.contains(currentMessageText!){
             questionIndex = BotData.ONBOARD.questions.index(of: currentMessageText!)!
             options = BotData.ONBOARD.options
         }
         
+        /*
+        let constraintRect = CGSize(width: superSize.width, height: .greatestFiniteMagnitude)
+        let botLeading : NSMutableParagraphStyle = NSMutableParagraphStyle()
+        botLeading.lineSpacing = 9.33
+        let attString = NSAttributedString(string: currentMessageText!, attributes: [
+            NSParagraphStyleAttributeName:botLeading,
+            NSFontAttributeName:Constants.STANDARD_FONT])
+        let boundingBox = attString.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
+        
+        print("\(superSize.height) vs. \(boundingBox.height)")
+        if superSize.height < boundingBox.height {
+            superSize.height = boundingBox.height + 60
+            print("width of this bubble: \(superSize.width)")
+        }
+        */
         
 
         //let op = ox?.collectionView(self.collectionView, cellForItemAt: indexPath) as! outCells
@@ -38,10 +59,19 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
         }
         
         if Constants.questionsThatRequireButtons.contains(currentMessageText!){
-            superSize.height = 80
-            superSize.width = superSize.width + 40
-            return superSize
+            let constraintRect = CGSize(width: superSize.width, height: .greatestFiniteMagnitude)
+            let attString = NSAttributedString(string: currentMessageText!, attributes: [NSFontAttributeName: Constants.STANDARD_FONT])
+            let boundingBox = attString.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
             
+            
+            let buttonAttString = NSAttributedString(string: buttonText[questionIndex]!, attributes: [NSFontAttributeName: Constants.STANDARD_FONT])
+            let buttonBoundingBox = buttonAttString.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
+            
+            superSize.height = 80
+            superSize.width = (boundingBox.width > buttonBoundingBox.width) ? boundingBox.width : buttonBoundingBox.width
+            superSize.width = superSize.width + 20
+            //superSize.width = superSize.width + 40
+            return superSize
         }
         
         return superSize

@@ -77,7 +77,8 @@ class ProfileTests: XCTestCase {
             biographicalObject.heightUnit = "cm"
             biographicalObject.weightUnit = "kg"
             biographicalObject.numberOfCardioSessionsEachWeek = (parsedObject as! NSMutableDictionary).value(forKey: "ExerciseCount")as! Int
-            biographicalObject.numberOfResistanceSessionsEachWeek = (parsedObject as! NSMutableDictionary).value(forKey: "ExerciseIntensity")as! Int
+            biographicalObject.numberOfResistanceSessionsEachWeek = (parsedObject as! NSMutableDictionary).value(forKey: "ExerciseCount")as! Int
+            biographicalObject.hoursOfActivity = Double((parsedObject as! NSMutableDictionary).value(forKey: "ExerciseCount")as! Int)
             biographicalObject.heightMeasurement = (parsedObject as! NSMutableDictionary).value(forKey: "Height")as! Double
             biographicalObject.weightMeasurement = (parsedObject as! NSMutableDictionary).value(forKey: "Weight")as! Double
             biographicalObject.activityLevelAtWork = (parsedObject as! NSMutableDictionary).value(forKey: "activityLevelAtWork")as? String

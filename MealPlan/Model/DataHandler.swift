@@ -36,6 +36,7 @@ class DataHandler: NSObject {
     
     static func getActiveBiographical()->Biographical{
         let realm = try! Realm()
+        //let profile = realm.objects(Biographical.self).sorted(byKeyPath: "date", ascending: true).last
         let profile = realm.objects(Biographical.self).first
         if((profile) != nil){
             return profile!
@@ -154,6 +155,7 @@ class DataHandler: NSObject {
             profile.activityLevelAtWork                = bio.activityLevelAtWork
             profile.numberOfCardioSessionsEachWeek     = bio.numberOfCardioSessionsEachWeek
             profile.numberOfResistanceSessionsEachWeek = bio.numberOfResistanceSessionsEachWeek
+            profile.hoursOfActivity = Double(bio.numberOfCardioSessionsEachWeek + bio.numberOfResistanceSessionsEachWeek)
             
             profile.numberOfDailyMeals         = bio.numberOfDailyMeals
             profile.loseFat.value          = bio.loseFat.value

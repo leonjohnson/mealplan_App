@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2659" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -42,14 +42,14 @@
                         <rect key="frame" x="0.0" y="40" width="239" height="302"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tFg-WA-fWa">
-                                <rect key="frame" x="0.0" y="0.0" width="244" height="302"/>
+                                <rect key="frame" x="0.0" y="0.0" width="259" height="302"/>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="buO-rD-gkw">
-                                <rect key="frame" x="10" y="10" width="224" height="282"/>
+                                <rect key="frame" x="25" y="10" width="209" height="282"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b9P-x8-PSO" customClass="JSQMessagesCellTextView">
-                                        <rect key="frame" x="0.0" y="0.0" width="224" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="209" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -68,7 +68,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="lLg-eV-2FO" customClass="tb" customModule="MealPlan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="40" width="224" height="242"/>
+                                        <rect key="frame" x="0.0" y="40" width="209" height="242"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
                                     </tableView>
@@ -79,13 +79,13 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="buO-rD-gkw" firstAttribute="centerY" secondItem="tFg-WA-fWa" secondAttribute="centerY" id="1ml-wE-hRT"/>
-                            <constraint firstItem="buO-rD-gkw" firstAttribute="leading" secondItem="HHq-If-NPC" secondAttribute="leading" constant="10" id="Bbd-X6-cZH"/>
+                            <constraint firstItem="buO-rD-gkw" firstAttribute="leading" secondItem="HHq-If-NPC" secondAttribute="leading" constant="25" id="Bbd-X6-cZH"/>
                             <constraint firstItem="buO-rD-gkw" firstAttribute="centerX" secondItem="tFg-WA-fWa" secondAttribute="centerX" id="Qi7-sZ-b7a"/>
                             <constraint firstItem="buO-rD-gkw" firstAttribute="top" secondItem="HHq-If-NPC" secondAttribute="top" constant="10" id="Qjn-3u-s7t"/>
-                            <constraint firstAttribute="trailing" secondItem="buO-rD-gkw" secondAttribute="trailing" constant="5" id="Y0N-6g-M1k"/>
                             <constraint firstAttribute="bottom" secondItem="buO-rD-gkw" secondAttribute="bottom" constant="10" id="YJO-DA-cjr"/>
                             <constraint firstItem="tFg-WA-fWa" firstAttribute="top" secondItem="HHq-If-NPC" secondAttribute="top" id="bqZ-KP-OLz"/>
                             <constraint firstAttribute="width" constant="239" id="dwn-aZ-nj3"/>
+                            <constraint firstAttribute="trailing" secondItem="buO-rD-gkw" secondAttribute="trailing" constant="5" id="jC5-iC-fj2"/>
                             <constraint firstItem="tFg-WA-fWa" firstAttribute="leading" secondItem="HHq-If-NPC" secondAttribute="leading" id="tnb-fg-cxd"/>
                         </constraints>
                     </view>

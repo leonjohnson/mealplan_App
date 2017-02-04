@@ -19,7 +19,17 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
         self.table.allowsSelection = true
         self.table.isUserInteractionEnabled = true
         self.table.allowsMultipleSelection = false
-        self.questionTextView?.attributedText = NSAttributedString(string: "", attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        self.table.layoutMargins = .zero
+        self.table.separatorInset = .zero
+        
+        /*
+        let botLeading : NSMutableParagraphStyle = NSMutableParagraphStyle()
+        botLeading.lineSpacing = 15
+        self.questionTextView?.attributedText = NSAttributedString(string: "", attributes:[
+            NSFontAttributeName:Constants.STANDARD_FONT, 
+            NSForegroundColorAttributeName:Constants.BLACK_COLOR,
+            NSParagraphStyleAttributeName:botLeading])
+        */
         self.messageBubbleTopLabel.textAlignment = .center
         self.tapGestureRecognizer.cancelsTouchesInView = false
         self.cellBottomLabel.textAlignment = .right
@@ -96,10 +106,21 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! miniTableViewCell
-        cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_BLACK])
-        cell.textLabel?.textColor = UIColor.black
+        cell.textLabel?.attributedText = NSAttributedString(string: data.options[indexPath.row], attributes:[NSFontAttributeName:Constants.STANDARD_FONT, 
+             NSForegroundColorAttributeName:Constants.MP_BRIGHT_BLUE,
+             NSParagraphStyleAttributeName: style])
         cell.incomingCellDelegate = self
+        cell.layoutMargins = .zero
+        
+        if cell.accessoryType ==  .checkmark{
+            cell.layoutMargins = UIEdgeInsetsMake(0, 40, 0, 10);
+        } else {
+            cell.layoutMargins = UIEdgeInsetsMake(0, 10, 0, 10);
+        }
+        
         
         return cell
     }
@@ -130,6 +151,8 @@ class inCell: JSQMessagesCollectionViewCellIncoming, UITableViewDelegate, UITabl
         
         tableView.cellForRow(at: indexPath)?.accessoryType = newRowAccessory
         (tableView.cellForRow(at: indexPath) as! miniTableViewCell).incomingCellDelegate?.rowSelected(labelValue: (currentCell?.textLabel?.text)!, withQuestion: question, index: indexPath, addOrDelete: newRowAccessory)
+        
+        
         
         tableView.deselectRow(at: indexPath, animated: true)
         

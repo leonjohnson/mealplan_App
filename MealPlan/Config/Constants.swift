@@ -54,6 +54,8 @@ struct Constants {
     //Styles
     static let ParagraphStyleAlignment = NSMutableParagraphStyle().alignment
     
+    
+    
     //TableView constants
     static let TABLE_ROW_HEIGHT = CGFloat(55)
     static let TABLE_ROW_HEIGHT_SMALL = CGFloat(40)
@@ -67,6 +69,8 @@ struct Constants {
     static let FOOD_LABEL_COLOR =  UIColor (red: 0/225, green: 141/225, blue: 198/225, alpha: 1)
     static let MP_PURPLE = UIColor(red: 0.447, green: 0.176, blue: 0.792, alpha: 0.83)
     static let MP_BLUE = UIColor(red: 0.176, green: 0.376, blue: 0.796, alpha: 0.88)
+    static let MP_BRIGHT_BLUE = UIColor(red: 0.141, green: 0.557, blue: 0.965, alpha: 1.000)
+    static let MP_MESSAGE_BUBBLE_GREY = UIColor(red: 0.898, green: 0.898, blue: 0.918, alpha: 1.000)
     static let MP_GREEN = UIColor(red:0.53, green:0.84, blue:0.78, alpha:1.0)
     static let MP_BEIGE = UIColor(red: 0.776, green: 0.796, blue: 0.176, alpha: 0.05)
     static let MP_WHITE = UIColor.white
@@ -259,7 +263,8 @@ struct Constants {
         BotData.NEW_FOOD.ending.question,
         BotData.ONBOARD.weightHeight.question,
         BotData.ONBOARD.foodPreferences.question,
-        BotData.ONBOARD.ending.question]
+        BotData.ONBOARD.ending.question,
+        BotData.FEEDBACK.ending.question]
     
     struct CellIdentifiers {
         static let Blue = "BlueCellIdentifier"
@@ -301,6 +306,7 @@ struct Constants {
     enum botNextSteps {
         case hurryAlong
         case awaitResponse
+        case createMealPlans
     }
     
     enum botDidTap {

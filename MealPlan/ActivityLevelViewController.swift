@@ -167,6 +167,7 @@ class ActivityLevelViewController: UIViewController, UIPickerViewDataSource, UIP
         //Adding values to constant Class
         parentView?.bio.numberOfResistanceSessionsEachWeek = traningSessionsValue!
         parentView?.bio.numberOfCardioSessionsEachWeek = cardioSessionValue!
+        parentView?.bio.hoursOfActivity = Double(traningSessionsValue! + cardioSessionValue!)
         
         //Alert for Work Active
         if(selectedWorkValue == 4){
