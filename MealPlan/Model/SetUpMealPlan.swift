@@ -347,7 +347,10 @@ class SetUpMealPlan: NSObject {
             ageCoefficient = Constants.femaleAgeCoefficient
             kConstant = Constants.femaleConstant
         default:
-            print("ERROR: gender not known")
+            #if DEBUG
+                print("ERROR: gender not known")
+            #endif
+            
         }
         
         
