@@ -421,7 +421,7 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         if(age > 0){
             
             let  years : Double = age! * 365 * 24 * 60 * 60;
-            user.birthdate   = Date(timeIntervalSinceNow: Double(years * -1));
+            user.birthdate = Date(timeIntervalSinceNow: Double(years * -1))
             
         }
         user.first_name  = nameText.text!.localizedCapitalized
@@ -534,8 +534,8 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
         bio.mealplanDuration = weekTimeValue!
         
         //All the datas should be updated to Bio class
-        DataHandler.updateUser(user);
-        DataHandler.updateStep1(bio);
+        DataHandler.updateUser(user)
+        DataHandler.updateStep1(bio)
         
         //if from Settings Tab bar View.
         if ((settingsControl) != nil){

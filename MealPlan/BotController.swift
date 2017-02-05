@@ -272,7 +272,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     
     
     func progressToNextQuestionAfterDelay(delay:Double){
-        let lastIndex : Int = (questionIndex > 0) ? questionIndex - 1 : questionIndex
+        var lastIndex : Int = (questionIndex > 0) ? questionIndex - 1 : questionIndex
         let weekNumber = SetUpMealPlan.getThisWeekAndNext().first?.number
         if questions[questionIndex + 1] == BotData.FEEDBACK.firstWeekNotice.question && weekNumber != 1 {
             questionIndex += 2

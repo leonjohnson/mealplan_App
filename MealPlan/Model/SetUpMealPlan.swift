@@ -374,6 +374,7 @@ class SetUpMealPlan: NSObject {
         let k = kConstant + (heightInCm * heightCoefficient) + (proxyForFatFreeMassInkg * weightCoeffecient) + (Double(DataHandler.getAge()) * ageCoefficient)
         
         
+        
         var sessionsCount = bio.hoursOfActivity
         if sessionsCount > 7{
             sessionsCount = 7 //min 0, max 7
