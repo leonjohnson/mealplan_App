@@ -1,11 +1,3 @@
-//
-//  Step1ViewController.swift
-//  DailyMeals
-//
-//  Created by Jithu on 3/10/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
-
 import UIKit
 import UnderKeyboard
 import RealmSwift

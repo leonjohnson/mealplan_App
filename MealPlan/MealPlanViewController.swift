@@ -62,7 +62,9 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     //@IBOutlet var workOutIcon: UIView!
     @IBOutlet var mealPlanListTable : UITableView!
     @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var editLabel: UIButton!
     @IBOutlet weak var bkgrd: UIView!
+    @IBOutlet var navigatorView : UIView!
     
     @IBOutlet weak var mealPlanDate: UILabel!
     @IBOutlet weak var backDateButton: UIButton!
@@ -90,11 +92,30 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             stringWithName = stringWithName + "'s meal plan"
         }
         nameLabel.attributedText? = NSAttributedString(string:stringWithName, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        let buttonLabel = NSAttributedString(string:"Edit", attributes:[NSFontAttributeName:Constants.EDIT_BUTTON, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        editLabel.setAttributedTitle(buttonLabel, for: .normal)
+        
+        let topLayer = CALayer()
+        topLayer.backgroundColor = UIColor.white.cgColor.copy(alpha: 0.5)
+        topLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.5)
+        let bottomLayer = CALayer()
+        bottomLayer.backgroundColor = UIColor.white.cgColor.copy(alpha: 0.5)
+        bottomLayer.frame = CGRect(x: 0, y: (navigatorView.frame.height), width: self.view.frame.width, height: 0.5)
+        
+        navigatorView.layer.addSublayer(topLayer)
+        navigatorView.layer.addSublayer(bottomLayer)
+        
+        //navigatorView.layer.borderColor = UIColor.white.cgColor
+        //navigatorView.layer.borderWidth = 0.5
+        
+        let sep = UIView(frame:CGRect(x: 0, y: 55, width: self.view.frame.size.width, height: 0.5) )
+        sep.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        //self.view.addSubview(sep)
+        
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
-        
         mealPlanListTable.isEditing = false
-        
         AppEventsLogger.log("MealPlanViewController view will appear")
     }
     

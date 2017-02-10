@@ -1,11 +1,3 @@
-//
-//  Step2ViewController.swift
-//  DailyMeals
-//
-//  Created by Jithu on 3/14/16.
-//  Copyright © 2016 Meals. All rights reserved.
-//
-//TO DO COMMENDTS (Add proper comments to all method)
 import UIKit
 
 class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
@@ -129,7 +121,7 @@ class Step2ViewController: UIViewController,UITableViewDataSource,UITableViewDel
             _ = self.navigationController?.popViewController(animated: true)
         }
         else{
-        self.performSegue(withIdentifier: "step2Identifier", sender: nil)
+        self.performSegue(withIdentifier: "showFoodPreferences", sender: nil)
         }
 
         

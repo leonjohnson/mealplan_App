@@ -136,16 +136,7 @@ class MealPlanAlgorithm : Object{
         let likedFoodsPredicate = NSPredicate(format: "self.name in %@", likedFoods)
         */
         let dislikedFoodsPredicate = NSPredicate(format: "NOT SELF.name IN %@", dislikedFoods)
- 
-        
-
         let eatenAtBreakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.eatenAtBreakfastFoodType)
-        
-        
- 
-         
-        
-        
         let mediumBreakfastProteinPredicate = NSPredicate(format: "(proteins >= 8) AND (fats <= 6) OR (proteins >= 21) AND (fats <= 21) OR (proteins >= 24) AND (fats <= 18)")
         
         
@@ -154,13 +145,6 @@ class MealPlanAlgorithm : Object{
         let carbIndex = Constants.MACRONUTRIENTS.index(of: Constants.CARBOHYDRATES)!
         let fatIndex = Constants.MACRONUTRIENTS.index(of: Constants.FATS)!
         let vegIndex = Constants.MACRONUTRIENTS.index(of: Constants.vegetableFoodType)!
-        
-        
-        
-        
-        if desiredNumberOfDailyMeals > 5 {
-            //return
-        }
         
         // Create the desiredNumberOfDailyMeals for 7 days
         // Put this week into a Week object.
@@ -185,11 +169,7 @@ class MealPlanAlgorithm : Object{
         
         let extraCarbTreats = realm.objects(Food.self).filter(compoundPredForCarbs)
         var lightProteins = realm.objects(Food.self).filter(compoundPredForProteins)
-        let highProteins = realm.objects(Food.self).filter(compoundPredForHeavyProteins).sorted(byProperty: Constants.PROTEINS.lowercased(), ascending: true)
-        
-        #if DEBUG
-            print("PRREDS OVER")
-        #endif
+        let highProteins = realm.objects(Food.self).filter(compoundPredForHeavyProteins).sorted(byKeyPath: Constants.PROTEINS.lowercased(), ascending: true)
             
         for dayIndex in 1...7 {
             var dailyMealPlan = DailyMealPlan()
@@ -226,7 +206,7 @@ class MealPlanAlgorithm : Object{
                 listOfAndPredicates.append(contentsOf: [dislikedFoodsPredicate, notCondiment, highProteinPredicate])
                 
                 if mealIndex == 1{
-                    _ = listOfAndPredicates.popLast()
+                    _ = listOfAndPredicates.popLast() // if breakfast leave out protein
                     listOfAndPredicates.append(contentsOf: [mediumBreakfastProteinPredicate, eatenAtBreakfastPredicate])
                 } else{
                     //listOfAndPredicates.append(notOnlyBreakfastPredicate)
@@ -533,6 +513,16 @@ class MealPlanAlgorithm : Object{
                 csv1 += "\n"
                 
                 sortedFoodBasket = [sortedFoodBasket[1], sortedFoodBasket[0], sortedFoodBasket[2], sortedFoodBasket[3]] //[[Food]]
+                
+                /*
+                 Rationale:
+                 The macronutrient with the second highest value in a predominately carbohyrdate food, is protein.
+                 The macronutrient with the second highest value in a predominately proteinous food, is fat.
+                 Therefore carbs should come before protein, which should come before fat.
+                 
+                 Fats should continue at least one oil and one non-oil food. Once non-oil can no longer be used then use oil.
+                */
+                
                 
                 
                 
@@ -1250,9 +1240,13 @@ class MealPlanAlgorithm : Object{
         
         
         for csv in [csv1]{
-            let destinationPath = NSTemporaryDirectory() + "testfly \(Date().timeIntervalSince1970*1000).csv"
-            try! csv.write(toFile: destinationPath, atomically: true, encoding: String.Encoding.utf8)
-            print("\nThe destination path is: \(destinationPath)\n")
+            let destinationPath2 = FileManager()
+            let csvData = csv.data(using: .utf8, allowLossyConversion: false)
+            destinationPath2.createFile(atPath: "/Users/leonjohnson/Desktop/data.csv", contents: csvData, attributes: nil)
+            
+            //let destinationPath = NSTemporaryDirectory() + "testfly \(Date().timeIntervalSince1970*1000).csv"
+            //try! csv.write(toFile: destinationPath, atomically: true, encoding: String.Encoding.utf8)
+            //print("\nThe destination path is: \(destinationPath)\n")
                 /*
                 file?.writeData(csv.dataUsingEncoding(NSUTF8StringEncoding)!) // Set the data we want to write, write it to the file
                 file?.closeFile() // Close the file

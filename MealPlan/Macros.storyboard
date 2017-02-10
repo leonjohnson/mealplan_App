@@ -115,7 +115,6 @@
                                 <items>
                                     <navigationItem title="Macros and calories" id="T9k-hx-3FB">
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Edit" id="aaU-nI-vHY">
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <segue destination="EwE-Tv-JIc" kind="presentation" id="dd4-Z2-Dwe"/>
                                             </connections>
@@ -168,14 +167,14 @@
                             <mask key="constraints">
                                 <exclude reference="MDw-tx-66j"/>
                                 <exclude reference="xks-7Q-7ie"/>
+                                <exclude reference="k9a-kG-Cpx"/>
+                                <exclude reference="y0q-nc-OL8"/>
                                 <exclude reference="8Ni-Hz-xXX"/>
                                 <exclude reference="ENv-SI-9Q1"/>
                                 <exclude reference="SRL-wM-AeP"/>
                                 <exclude reference="XQ4-np-7oS"/>
                                 <exclude reference="Xc0-eX-xxH"/>
                                 <exclude reference="jlK-qi-N2Z"/>
-                                <exclude reference="k9a-kG-Cpx"/>
-                                <exclude reference="y0q-nc-OL8"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -187,13 +186,13 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="xks-7Q-7ie"/>
+                                <include reference="k9a-kG-Cpx"/>
+                                <include reference="y0q-nc-OL8"/>
                                 <include reference="8Ni-Hz-xXX"/>
                                 <include reference="SRL-wM-AeP"/>
                                 <include reference="XQ4-np-7oS"/>
                                 <include reference="Xc0-eX-xxH"/>
                                 <include reference="jlK-qi-N2Z"/>
-                                <include reference="k9a-kG-Cpx"/>
-                                <include reference="y0q-nc-OL8"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
