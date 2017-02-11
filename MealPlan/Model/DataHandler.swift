@@ -323,6 +323,24 @@ static func deleteFutureMealPlansWeeksAndFoodItems(){
         }
     }
     
+    static func moveFood(meals:List<Meal>, from:IndexPath, to:IndexPath){
+        let realm = try! Realm()
+        try! realm.write {
+            
+            if from.section == to.section{
+                meals[from.section].foodItems.move(from: from.row, to: to.row)
+            } else {
+                let objectMoving = meals[from.section].foodItems[from.row]
+                meals[to.section].foodItems.insert(objectMoving, at: to.row) //destination
+                meals[from.section].foodItems.remove(objectAtIndex: from.row)
+            }
+            
+            
+            
+            //meals.move(from: from.row, to: to.row)
+        }
+    }
+    
     static func updateCalorieConsumption(thisWeek:Week){
         let realm = try! Realm()
         try! realm.write {

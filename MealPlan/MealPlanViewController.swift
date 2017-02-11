@@ -105,12 +105,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         navigatorView.layer.addSublayer(topLayer)
         navigatorView.layer.addSublayer(bottomLayer)
         
-        //navigatorView.layer.borderColor = UIColor.white.cgColor
-        //navigatorView.layer.borderWidth = 0.5
-        
-        let sep = UIView(frame:CGRect(x: 0, y: 55, width: self.view.frame.size.width, height: 0.5) )
-        sep.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        //self.view.addSubview(sep)
         
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -288,7 +282,30 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //updateMacroTally(forDay: index!)
     }
     
-    
+    @IBAction func toggleEditButton(){
+        mealPlanListTable.isEditing = !mealPlanListTable.isEditing
+        mealPlanListTable.reloadData()
+        switch editLabel.attributedTitle(for: .normal)!.string {
+        case "Edit":
+            let buttonLabel = NSAttributedString(string:"Cancel", attributes:[NSFontAttributeName:Constants.EDIT_BUTTON, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            editLabel.setAttributedTitle(buttonLabel, for: .normal)
+            
+            // check if any rows were moved
+            for meal in meals{
+                for fi in meal.foodItems {
+                    print("\(fi.food?.name)")
+                }
+                
+            }
+            
+            
+        case "Cancel":
+            let buttonLabel = NSAttributedString(string:"Edit", attributes:[NSFontAttributeName:Constants.EDIT_BUTTON, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            editLabel.setAttributedTitle(buttonLabel, for: .normal)
+        default:
+            break
+        }
+    }
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
@@ -304,7 +321,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (meals[section].foodItems).count;
+        return (meals[section].foodItems).count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -332,7 +349,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             label3?.text =  ""
             
         } else {
-            cell.backgroundColor = UIColor.clear;
+            cell.backgroundColor = UIColor.clear
             let label2 =  cell.viewWithTag(103) as? UILabel
             
             let q = ServingSize.getServingQuantityAsNumber((foodItem.food?.servingSize)!)
@@ -365,8 +382,14 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
 
             label2?.attributedText = NSAttributedString(string: amount.description + ending, attributes:[NSFontAttributeName:Constants.MEAL_PLAN_SERVINGSIZE_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE]);
             
+            //Calorie label
             let label3 =  cell.viewWithTag(101) as? UILabel
             label3?.attributedText = NSAttributedString(string: Int(foodItem.getTotalCal()).description, attributes:[NSFontAttributeName:Constants.STANDARD_FONT, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            if mealPlanListTable.isEditing{
+                label3?.isHidden = true
+            } else {
+                label3?.isHidden = false
+            }
             
             cell.delegate = self
             cell.foodItemIndexPath = indexPath
@@ -385,16 +408,23 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .none
+        return .delete
     }
     
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
+        return true
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
+    
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        print("moved row to : \(proposedDestinationIndexPath.row)")
+        
+        return proposedDestinationIndexPath
+    }
+    
     
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -449,15 +479,39 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        return
+        //moveRow(tableView: tableView, current: sourceIndexPath, future: destinationIndexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        print("\(editingStyle) called for row \(indexPath.row)")
+        
+        deleteRow(tableView: tableView, indexPath: indexPath)
+    }
+    
+    
+    func deleteRow(tableView:UITableView, indexPath:IndexPath){
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        
+        let foodItem = self.meals[indexPath.section].foodItems[indexPath.row]
+        DataHandler.removeFoodItem(foodItem)
+        DataHandler.updateCalorieConsumption(thisWeek: self.thisWeek)
+        self.mealPlanListTable.reloadSections([indexPath.section], with: .automatic)
+    }
+    
+    func moveRow(tableView:UITableView, current:IndexPath, future:IndexPath){
+        tableView.beginUpdates()
+        tableView.moveRow(at: current, to: future)
+        tableView.endUpdates()
+        
+        //let foodItems = meals[current.section].foodItems
+        //DataHandler.moveFood(meals:List(meals), from: current, to: future)
     }
     
     
     
-    
-    
     //IBAction for AddItemButton on Header view
-    
     func findFoodSearchAction(_ sender: UIButton){
         
         let storyboard = UIStoryboard(name: "SearchForFood", bundle: nil)
@@ -469,8 +523,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         }else{
             self.present(scene, animated: true, completion: nil)
         }
-        
     }
+    
     // MARK: - Segues
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let indexPath = self.mealPlanListTable.indexPathForSelectedRow {
