@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en_GB</string>
 	<key>CFBundleDisplayName</key>
-	<string>Meal Plan</string>
+	<string>Mealplan</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

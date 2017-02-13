@@ -478,14 +478,23 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         return 44
     }
     
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        //moveRow(tableView: tableView, current: sourceIndexPath, future: destinationIndexPath)
-    }
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         print("\(editingStyle) called for row \(indexPath.row)")
         
         deleteRow(tableView: tableView, indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        moveRow(tableView: tableView, current: sourceIndexPath, future: destinationIndexPath)
+    }
+    
+    func moveRow(tableView:UITableView, current:IndexPath, future:IndexPath){
+        //tableView.beginUpdates()
+        //tableView.moveRow(at: current, to: future)
+        //tableView.endUpdates()
+        
+        let foodItems = meals[current.section].foodItems
+        DataHandler.moveFood(meals:List(meals), from: current, to: future)
     }
     
     
@@ -500,14 +509,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         self.mealPlanListTable.reloadSections([indexPath.section], with: .automatic)
     }
     
-    func moveRow(tableView:UITableView, current:IndexPath, future:IndexPath){
-        tableView.beginUpdates()
-        tableView.moveRow(at: current, to: future)
-        tableView.endUpdates()
-        
-        //let foodItems = meals[current.section].foodItems
-        //DataHandler.moveFood(meals:List(meals), from: current, to: future)
-    }
+    
     
     
     
