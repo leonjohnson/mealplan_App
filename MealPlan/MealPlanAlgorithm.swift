@@ -84,7 +84,7 @@ class MealPlanAlgorithm : Object{
         #endif
         var csv1 : String = ""
         var csv2 : String = ""
-        var csv3 : String = ""
+        var csv3 : String = "Date," + "Meal name," + "Food name," + "Servings," + "Proteins," + "Carbs," + "Fats," + "Calories," + "\n"
         
         var plans : [DailyMealPlan] = []
         DataHandler.updateServingSizes()
@@ -546,73 +546,50 @@ class MealPlanAlgorithm : Object{
                     //let key = Constants.MACRONUTRIENTS[loop]
                     let key  = Constants.SPECIAL_MACRONUTRIENTS[loop]
                     
-
+                    func nested(desiredAmount:Double){
+                        let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false, beforeComeBackFlag: true, dietaryRequirements: dietRequirements)
+                        sortedFoodItemBasket.append(results)
+                        
+                        for fooditem in results{
+                            
+                            let ka = (fooditem.food?.calories)! * fooditem.numberServing
+                            let ca = (fooditem.food?.carbohydrates)! * fooditem.numberServing
+                            let pr = (fooditem.food?.proteins)! * fooditem.numberServing
+                            let fa = (fooditem.food?.fats)! * fooditem.numberServing
+                            
+                            leftOverForThisMeal[0] = (leftOverForThisMeal[0] - pr)
+                            leftOverForThisMeal[1] = (leftOverForThisMeal[1] - ca)
+                            leftOverForThisMeal[2] = (leftOverForThisMeal[2] - fa)
+                            
+                            macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
+                            macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
+                            macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
+                            macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
+                        }
+                    }
                     
                     if (foodArray.count > 0) && (key != Constants.vegetableFoodType) {
                         //Get the remaining amount left for today, for this macronutrient, and divide it amongst the remaining number of meals for today
                         let desiredToday = Double((macrosDesiredToday[key]!))
                         let allocatedtoday = Double((macrosAllocatedToday[key]!))
                         let desiredAmount = (desiredToday - allocatedtoday) / Double(numberOfMealsRemaining)
-                        
-                        
+
                         // Not negative and not tiny amounts
                         if desiredToday > 1 && leftOverForThisMeal[0] > -5 && leftOverForThisMeal[1] > -5 && leftOverForThisMeal[2] > -5{
                             //TO-DO: Consider a parameter for the split bewteen two proteins/carbs etc
-                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false, beforeComeBackFlag: true, dietaryRequirements: dietRequirements)
-                            sortedFoodItemBasket.append(results)
-                            
-                            for fi in results{
-                                let ka = (fi.food?.calories)! * fi.numberServing
-                                let ca = (fi.food?.carbohydrates)! * fi.numberServing
-                                let pr = (fi.food?.proteins)! * fi.numberServing
-                                let fa = (fi.food?.fats)! * fi.numberServing
-                                
-                                leftOverForThisMeal[0] = (leftOverForThisMeal[0] - pr)
-                                leftOverForThisMeal[1] = (leftOverForThisMeal[1] - ca)
-                                leftOverForThisMeal[2] = (leftOverForThisMeal[2] - fa)
-                                
-                                macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
-                                macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
-                                macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
-                                macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
-                            }
+                            nested(desiredAmount: desiredAmount)
                         }
                         
-                        
-
-                        
-                        
-                        
                     }
+                    
                     if key == Constants.vegetableFoodType{
                         let desiredAmount = eatNoMoreThanC * Constants.vegetablesAsPercentageOfCarbs
-                        
                         if desiredAmount > 5 {
-                            let results = apportionFoodToGetGivenAmountOfMacroWithoutOverFlow(foodArray, attribute: key, desiredQuantity: desiredAmount, overflowAmounts: leftOverForThisMeal, macrosAllocatedToday: macrosAllocatedToday, lastMealFlag: false, beforeComeBackFlag: true, dietaryRequirements: dietRequirements)
-                            sortedFoodItemBasket.append(results)
-                            
-                            for fooditem in results{
-                                
-                                let ka = (fooditem.food?.calories)! * fooditem.numberServing
-                                let ca = (fooditem.food?.carbohydrates)! * fooditem.numberServing
-                                let pr = (fooditem.food?.proteins)! * fooditem.numberServing
-                                let fa = (fooditem.food?.fats)! * fooditem.numberServing
-                                
-                                leftOverForThisMeal[0] = (leftOverForThisMeal[0] - pr)
-                                leftOverForThisMeal[1] = (leftOverForThisMeal[1] - ca)
-                                leftOverForThisMeal[2] = (leftOverForThisMeal[2] - fa)
-                                
-                                macrosAllocatedToday[Constants.CALORIES] = macrosAllocatedToday[Constants.CALORIES]! + ka
-                                macrosAllocatedToday[Constants.CARBOHYDRATES] = macrosAllocatedToday[Constants.CARBOHYDRATES]! + ca
-                                macrosAllocatedToday[Constants.PROTEINS] = macrosAllocatedToday[Constants.PROTEINS]! + pr
-                                macrosAllocatedToday[Constants.FATS] = macrosAllocatedToday[Constants.FATS]! + fa
-                            }
-                            
-                            
+                            nested(desiredAmount: desiredAmount)
                         }
- 
-                        
                     }
+                    
+                    
     
                     loop+=1
                 }
@@ -1217,13 +1194,26 @@ class MealPlanAlgorithm : Object{
             for foodArray in dailyMealPlan.meals{
                 for foodItem in foodArray.foodItems{
                     #if DEBUG
-                    csv3 += (foodItem.food?.name)! + ","
+                    csv3 += String(describing: foodArray.date) + ","
+                    csv3 += foodArray.name + ","
+                    csv3 += String("\(foodItem.food!.name)")!.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.init(charactersIn: ",").inverted)! + ","
+                    csv3 += String(Constants.roundToPlaces(foodItem.numberServing, decimalPlaces: 2)) + ","
+                    csv3 += String(describing: foodItem.food!.proteins) + ","
+                    csv3 += String(describing: foodItem.food!.carbohydrates) + ","
+                    csv3 += String(describing: foodItem.food!.fats) + ","
+                    csv3 += String(describing: foodItem.food!.calories) + ","
+                    csv3 += "\n"
                     #endif
                     foodItem.numberServing = Constants.roundToPlaces(foodItem.numberServing, decimalPlaces: 2) // rounding for customer use
                 }
                 
-                }
+            }
             #if DEBUG
+            csv3 += "," + "," + "," + ","
+            csv3 += String(describing: dailyMealPlan.totalProteins()) + ","
+            csv3 += String(describing: dailyMealPlan.totalCarbohydrates()) + ","
+            csv3 += String(describing: dailyMealPlan.totalFats()) + ","
+            csv3 += String(describing: dailyMealPlan.totalCalories()) + ","
             csv3 += "\n"
             #endif
         }
@@ -1239,7 +1229,7 @@ class MealPlanAlgorithm : Object{
         
         
         
-        for csv in [csv1]{
+        for csv in [csv3]{
             let destinationPath2 = FileManager()
             let csvData = csv.data(using: .utf8, allowLossyConversion: false)
             destinationPath2.createFile(atPath: "/Users/leonjohnson/Desktop/data.csv", contents: csvData, attributes: nil)

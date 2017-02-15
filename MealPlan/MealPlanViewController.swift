@@ -287,7 +287,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         mealPlanListTable.reloadData()
         switch editLabel.attributedTitle(for: .normal)!.string {
         case "Edit":
-            let buttonLabel = NSAttributedString(string:"Cancel", attributes:[NSFontAttributeName:Constants.EDIT_BUTTON, NSForegroundColorAttributeName:Constants.MP_WHITE])
+            let buttonLabel = NSAttributedString(string:"Done", attributes:[NSFontAttributeName:Constants.DONE_BUTTON, NSForegroundColorAttributeName:Constants.MP_WHITE])
             editLabel.setAttributedTitle(buttonLabel, for: .normal)
             
             // check if any rows were moved
@@ -299,7 +299,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             
-        case "Cancel":
+        case "Done":
             let buttonLabel = NSAttributedString(string:"Edit", attributes:[NSFontAttributeName:Constants.EDIT_BUTTON, NSForegroundColorAttributeName:Constants.MP_WHITE])
             editLabel.setAttributedTitle(buttonLabel, for: .normal)
         default:

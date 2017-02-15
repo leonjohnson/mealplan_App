@@ -34,6 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             
             let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
+            
+            #if DEBUG
+                SetUpMealPlan.createNewDailyMeaPlanslFor(week: response.weeksAheadIncludingCurrent[0])
+            #endif
+            
             let mealPlanExistsForThisWeek = response.yayNay
             
             if mealPlanExistsForThisWeek == false{

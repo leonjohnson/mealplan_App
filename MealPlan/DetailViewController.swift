@@ -18,6 +18,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     @IBOutlet var foodNameLabel: UILabel!
+    @IBOutlet var producerNameLabel: UILabel!
     @IBOutlet var weightHolder: UIView!
     @IBOutlet var valServingType: UILabel!
     @IBOutlet var valServingSize: UITextField!
@@ -118,6 +119,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         weightHolder.layer.borderWidth = 0.5
         
         foodNameLabel.attributedText = NSAttributedString(string: (detailItem.food?.name)!, attributes: [NSFontAttributeName:Constants.DETAIL_PAGE_FOOD_NAME_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        
+        if detailItem.food?.producer != "" && detailItem.food?.producer != nil {
+            producerNameLabel.attributedText = NSAttributedString(string: (detailItem.food?.producer)!, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        }
+        
  
         
         let servingSizeTextLabel =  self.view.viewWithTag(120) as? UILabel
