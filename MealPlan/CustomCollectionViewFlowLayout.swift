@@ -19,6 +19,7 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
         if BotData.NEW_FOOD.questions.contains(currentMessageText!){
             questionIndex = BotData.NEW_FOOD.questions.index(of: currentMessageText!)!
             options = BotData.NEW_FOOD.options
+            buttonText = BotData.NEW_FOOD.buttonText
         }
         if BotData.FEEDBACK.questions.contains(currentMessageText!){
             questionIndex = BotData.FEEDBACK.questions.index(of: currentMessageText!)!
@@ -76,9 +77,11 @@ class CustomCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout {
             let buttonAttString = NSAttributedString(string: buttonText[questionIndex]!, attributes: [NSFontAttributeName: Constants.STANDARD_FONT])
             let buttonBoundingBox = buttonAttString.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
             
-            superSize.height = 160
-            superSize.width = (boundingBox.width > buttonBoundingBox.width) ? boundingBox.width : buttonBoundingBox.width
-            superSize.width = superSize.width + 20
+            superSize.height = 120
+            print("1.\(boundingBox.width), 2.\(buttonBoundingBox.width)")
+            
+            //superSize.width = (boundingBox.width > buttonBoundingBox.width) ? boundingBox.width : buttonBoundingBox.width
+            superSize.width = 120
             //superSize.width = superSize.width + 40
             return superSize
         }

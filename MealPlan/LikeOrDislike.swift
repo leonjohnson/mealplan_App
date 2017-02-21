@@ -46,6 +46,7 @@ class LikeOrDislike: UIViewController {
     @IBAction func likeThisFood() {
         guard index < data.count else {
             dislikeButton.alpha = 0.3
+            likeButton.alpha = 0.3
             return
         }
         foodsLiked.append(data[index])
@@ -55,6 +56,7 @@ class LikeOrDislike: UIViewController {
     
     @IBAction func dislikeThisFood() {
         guard index < data.count else {
+            dislikeButton.alpha = 0.3
             likeButton.alpha = 0.3
             return
         }

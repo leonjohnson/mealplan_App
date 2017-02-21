@@ -76,6 +76,8 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
             options = BotData.NEW_FOOD.options
             answers = BotData.NEW_FOOD.answers
             keyBoardType = BotData.NEW_FOOD.keyboardType
+            buttonText = BotData.NEW_FOOD.buttonText
+            nextSteps = BotData.NEW_FOOD.nextSteps
             didTap = BotData.NEW_FOOD.didTAP
         case .feedback:
             questions = BotData.FEEDBACK.questions
@@ -163,6 +165,10 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     private func addMessage(withId id: String, name: String, text: String) {
         //Consider whether to show the typing indicator
         var delayDuration : Double = 3.0
+        print("questionIndex:\(questionIndex)")
+        
+        print("nextSteps:\(nextSteps)")
+        
         switch nextSteps[questionIndex] {
         case .hurryAlong:
             delayDuration = (questionIndex == 0) ? 3.0 : 1.0
@@ -174,7 +180,12 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
         case .awaitResponse:
             updateKeyboard()
             delayDuration = 3.0
+            
+        default:
+            print("default clause called")
         }
+        
+        
         
         if name != Constants.BOT_NAME {
             delayDuration = 0.0
@@ -350,14 +361,17 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
     func buttonTapped(forQuestion: String) {
         if let tapAction = didTap[questionIndex] {
             switch tapAction {
+            
             case .noValueSelected:
+                print("noValueSelected in")
                 guard let indexForAnswer = questions.index(of: forQuestion) else {
                     return
                 }
                 answers[indexForAnswer].removeAll()
                 progressToNextQuestionAfterDelay(delay: 0.0)
+                print("noValueSelected out")
                 
-            case .createMealPlans:
+            case .createNewFood:
                 createNewFoodFromConversation()
                 
             case .requestNotificationPermission:
@@ -372,6 +386,7 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                     //takeUserToMealPlan(explainerScreenTypeIs: .none) // just posted the last response
                 }
                 takeUserToMealPlan() // just posted the last response
+                
             case .openHeightWeightScreen:
                 let storyboard : UIStoryboard = Constants.BOT_STORYBOARD
                 let  hw = storyboard.instantiateViewController(withIdentifier: "hw") as! Height_WeightListViewController
@@ -387,6 +402,9 @@ final class BotController: JSQMessagesViewController, BotDelegate, screenDismiss
                 UIApplication.shared.keyWindow?.rootViewController?.present(foodPreferencesScreen, animated: true, completion: {
                     
                 })
+            
+            case .createMealPlans:
+                print("passing through")
             }
             
   

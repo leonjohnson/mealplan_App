@@ -198,7 +198,7 @@ class BotData: NSObject {
                 static let tips : String = ""
                 static let keyboardType = Constants.botKeyboardValidationType.decimal
                 static let nextSteps = Constants.botNextSteps.awaitResponse
-                static let didTap : Constants.botDidTap? = nil
+                static let didTap : Constants.botDidTap? = .noValueSelected
             }
             
             struct carbohydrates {
@@ -218,7 +218,7 @@ class BotData: NSObject {
                 static let tips : String = ""
                 static let keyboardType = Constants.botKeyboardValidationType.decimal
                 static let nextSteps = Constants.botNextSteps.awaitResponse
-                static let didTap : Constants.botDidTap? = nil
+                static let didTap : Constants.botDidTap? = .noValueSelected
             }
             
             struct fibre {
@@ -228,7 +228,7 @@ class BotData: NSObject {
                 static let tips : String = ""
                 static let keyboardType = Constants.botKeyboardValidationType.decimal
                 static let nextSteps = Constants.botNextSteps.awaitResponse
-                static let didTap : Constants.botDidTap? = nil
+                static let didTap : Constants.botDidTap? = .noValueSelected
             }
             
             struct protein {

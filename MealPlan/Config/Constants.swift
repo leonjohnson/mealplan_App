@@ -313,6 +313,7 @@ struct Constants {
     
     enum botDidTap {
         case noValueSelected
+        case createNewFood
         case requestNotificationPermission
         case createMealPlans
         case saveEndOfWeekFeedback

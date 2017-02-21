@@ -32,6 +32,74 @@ class DataHandler: NSObject {
         }
     }
     
+    //MARK: Algorithm
+    static func getInitialFoods()->[String:[Food]] {
+        let realm = try! Realm()
+        
+        // foods to consider in predicate
+        let dislikedFoods = DataHandler.getNamesOfDisLikedFoods()
+        let dislikedFoodsPredicate = NSPredicate(format: "NOT SELF.name IN %@", dislikedFoods)
+        let dietRequirements = DataHandler.getActiveBiographical().dietaryRequirement
+        let dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitability IN %@", dietRequirements)
+        let notCondiment = NSPredicate(format: "NONE SELF.foodType.name == [c] %@", Constants.condimentFoodType)
+        
+        
+        // get 3 breakfast protein sources:
+        //Protein foods
+        let breakfastProteinPredicate = NSPredicate(format: "(proteins >= 8) AND (fats <= 6) OR (proteins >= 21) AND (fats <= 21) OR (proteins >= 24) AND (fats <= 18)")
+        //Breakfast foods
+        let eatenAtBreakfastPredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.eatenAtBreakfastFoodType)
+        //Put them together
+        var preds = [breakfastProteinPredicate, eatenAtBreakfastPredicate, dislikedFoodsPredicate, notCondiment]
+        if dietRequirements.count > 0 {
+            preds.append(dietaryRequirementPredicate)
+        }
+        let breakfastCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates:preds)
+        let proteinBreakfastFoods = realm.objects(Food.self).filter(breakfastCompoundPred)
+        let breakfastProteins = getRandomSelection(fromFoods: Array(proteinBreakfastFoods), count: 3)
+        for food in breakfastProteins{
+            print("\(food.name)")
+        }
+        
+        
+        // get 3 breakfast foods other than proteins
+        let nonProteinBreakfastCompound = NSCompoundPredicate(andPredicateWithSubpredicates:[eatenAtBreakfastPredicate, dislikedFoodsPredicate, notCondiment])
+        let notProteinBreakfastFood = NSPredicate(format: "NOT SELF IN %@", proteinBreakfastFoods)
+        let nonProteinBreakfastFoods = realm.objects(Food.self).filter(nonProteinBreakfastCompound).filter(notProteinBreakfastFood)
+        let nonBreakfastProteins = getRandomSelection(fromFoods: Array(nonProteinBreakfastFoods), count: 3)
+        for food in nonBreakfastProteins{
+            print("\(food.name)")
+        }
+        
+        
+        // get 4 protein sources, non breakfast, that are within my diet style
+        let highProteinPredicate = NSPredicate(format: "(proteins > 17) AND (fats < 7) AND (carbohydrates < 7)")
+        var highProteinPreds = [highProteinPredicate, notProteinBreakfastFood, dislikedFoodsPredicate, notCondiment]
+        if dietRequirements.count > 0 {
+            preds.append(dietaryRequirementPredicate)
+        }
+        let nonBreakfastProteinCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates: highProteinPreds)
+        let foodResults = realm.objects(Food.self).filter(nonBreakfastProteinCompoundPred)
+        let fourProteins = getRandomSelection(fromFoods: Array(foodResults), count: 4)
+    
+        for food in breakfastProteins{
+            print("\(food.name)")
+        }
+        
+        // get all carbohydrates and fats associated with the proteins above and
+    
+    }
+    
+    static func getRandomSelection(fromFoods:[Food], count:Int)->[Food]{
+        var items = Set<Food>()
+        while items.count < count {
+            let randomNumber : UInt32 = arc4random_uniform(UInt32(fromFoods.count))
+            items.insert(fromFoods[Int(randomNumber)])
+        }
+        return Array(items)
+    }
+    
+    
     //MARK: Biographical
     static func getActiveBiographical()->Biographical{
         let realm = try! Realm()

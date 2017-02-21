@@ -178,9 +178,10 @@ class Connect: NSObject {
             itemFood.readyToEat = false
         }
         
-        if (pdt!.value(forKey: "producer") as! String) != "" {
-            itemFood.producer = (pdt!.value(forKey: "producer") as! String?)!
+        if let value :String = (pdt.value(forKey: "producer") as? String){
+            itemFood.producer = value
         }
+        
         
         if let maxAllowedValue : Double =  getDoubleValueForKey(Constants.max_number_of_servings, pdt: pdt!){
             itemFood.max_number_of_servings = RealmOptional<Double>(maxAllowedValue)
@@ -191,7 +192,7 @@ class Connect: NSObject {
         }
         
         
-        return itemFood;
+        return itemFood
         
         /*
 

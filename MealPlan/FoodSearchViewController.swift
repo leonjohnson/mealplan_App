@@ -37,9 +37,9 @@ class FoodSearchViewController: UIViewController, UITableViewDataSource, UITable
         addNewFoodButton.layer.cornerRadius = 15
         
                 
-        //addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
+        addNewFoodButton.addTarget(self, action: #selector(FoodSearchViewController.callBot), for: UIControlEvents.touchUpInside)
         
-        addNewFoodButton.isHidden = true
+        addNewFoodButton.isHidden = false
     }
 
     
