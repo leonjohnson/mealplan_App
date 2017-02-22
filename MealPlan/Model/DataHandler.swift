@@ -34,6 +34,15 @@ class DataHandler: NSObject {
     
     //MARK: Algorithm
     static func getInitialFoods()->[String:[Food]] {
+        
+        var foodBasket : [[Food]] = [ [], [], [], [] ]
+        
+        //Indices
+        let proteinIndex = Constants.MACRONUTRIENTS.index(of: Constants.PROTEINS)!
+        let carbIndex = Constants.MACRONUTRIENTS.index(of: Constants.CARBOHYDRATES)!
+        let fatIndex = Constants.MACRONUTRIENTS.index(of: Constants.FATS)!
+        let vegIndex = Constants.MACRONUTRIENTS.index(of: Constants.vegetableFoodType)!
+        
         let realm = try! Realm()
         
         // foods to consider in predicate
@@ -42,6 +51,8 @@ class DataHandler: NSObject {
         let dietRequirements = DataHandler.getActiveBiographical().dietaryRequirement
         let dietaryRequirementPredicate = NSPredicate(format: "ANY SELF.dietSuitability IN %@", dietRequirements)
         let notCondiment = NSPredicate(format: "NONE SELF.foodType.name == [c] %@", Constants.condimentFoodType)
+        let lowCarbPredicate = NSPredicate(format: "carbohydrates <= 5")
+        let vegetablePredicate = NSPredicate(format: "ANY SELF.foodType.name == [c] %@", Constants.vegetableFoodType)
         
         
         // get 3 breakfast protein sources:
@@ -57,17 +68,24 @@ class DataHandler: NSObject {
         let breakfastCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates:preds)
         let proteinBreakfastFoods = realm.objects(Food.self).filter(breakfastCompoundPred)
         let breakfastProteins = getRandomSelection(fromFoods: Array(proteinBreakfastFoods), count: 3)
+        var names : [String] = []
         for food in breakfastProteins{
             print("\(food.name)")
+            names.append(food.name)
         }
         
         
         // get 3 breakfast foods other than proteins
-        let nonProteinBreakfastCompound = NSCompoundPredicate(andPredicateWithSubpredicates:[eatenAtBreakfastPredicate, dislikedFoodsPredicate, notCondiment])
-        let notProteinBreakfastFood = NSPredicate(format: "NOT SELF IN %@", proteinBreakfastFoods)
-        let nonProteinBreakfastFoods = realm.objects(Food.self).filter(nonProteinBreakfastCompound).filter(notProteinBreakfastFood)
-        let nonBreakfastProteins = getRandomSelection(fromFoods: Array(nonProteinBreakfastFoods), count: 3)
-        for food in nonBreakfastProteins{
+        var preds2 = [eatenAtBreakfastPredicate, dislikedFoodsPredicate, notCondiment]
+        if dietRequirements.count > 0 {
+            preds2.append(dietaryRequirementPredicate)
+        }
+        let nonProteinBreakfastCompound = NSCompoundPredicate(andPredicateWithSubpredicates:preds2)
+        let notProteinBreakfastFood = NSPredicate(format: "NOT SELF.name IN %@", names)
+        let breakieResults = realm.objects(Food.self).filter(nonProteinBreakfastCompound).filter(notProteinBreakfastFood)
+        let nonProteinBreakfastFoods = getRandomSelection(fromFoods: Array(breakieResults), count: 3)
+        print("get 3 breakfast foods other than proteins:\n")
+        for food in nonProteinBreakfastFoods{
             print("\(food.name)")
         }
         
@@ -76,25 +94,72 @@ class DataHandler: NSObject {
         let highProteinPredicate = NSPredicate(format: "(proteins > 17) AND (fats < 7) AND (carbohydrates < 7)")
         var highProteinPreds = [highProteinPredicate, notProteinBreakfastFood, dislikedFoodsPredicate, notCondiment]
         if dietRequirements.count > 0 {
-            preds.append(dietaryRequirementPredicate)
+            highProteinPreds.append(dietaryRequirementPredicate)
         }
         let nonBreakfastProteinCompoundPred = NSCompoundPredicate(andPredicateWithSubpredicates: highProteinPreds)
         let foodResults = realm.objects(Food.self).filter(nonBreakfastProteinCompoundPred)
         let fourProteins = getRandomSelection(fromFoods: Array(foodResults), count: 4)
-    
-        for food in breakfastProteins{
+        foodBasket[proteinIndex].append(contentsOf: fourProteins)
+        print("get 4 protein sources, non breakfast, that are within my diet style:\n")
+        for food in fourProteins{
             print("\(food.name)")
         }
         
+        
+        
+        // get vegetables
+        var subPredicate = [dislikedFoodsPredicate, vegetablePredicate, lowCarbPredicate]
+        if dietRequirements.count > 0 {
+            subPredicate.append(dietaryRequirementPredicate)
+        }
+        var vegetableOptions = realm.objects(Food.self).filter(NSCompoundPredicate(andPredicateWithSubpredicates: subPredicate))
+        for food in fourProteins {
+            let OEWvegetableOptions = food.oftenEatenWith.filter(NSCompoundPredicate(andPredicateWithSubpredicates: subPredicate))
+            if OEWvegetableOptions.count > 0{
+                vegetableOptions = OEWvegetableOptions
+            }
+        }
+        for vegetableIndex in 1...vegetableOptions.count{
+            if vegetableIndex < 4{
+                foodBasket[vegIndex].append(vegetableOptions[vegetableIndex])
+            }
+        }
+        
         // get all carbohydrates and fats associated with the proteins above and
-    
+        
+        return ["breakfastProtein" : breakfastProteins,
+                "nonBreakfastProteins":nonProteinBreakfastFoods,
+                "fourProteins" : fourProteins]
     }
     
+    static func createPlans(foods : [Food]) {
+        //get food basket - getInitialFoods()
+        
+        // for each day, for each meal,solveLinearEquationWith food from above. If breakfast then use breakfast basket.
+        
+        // Add to the basket
+    }
+    /*
+    static func solveLinearEquationWith(foodOptions:[Food], desiredNutritionalOutcome:[String:Int])->[FoodItem]{
+        
+        
+        
+    }
+    */
+    
     static func getRandomSelection(fromFoods:[Food], count:Int)->[Food]{
+        var hasLiquid : Bool = false
         var items = Set<Food>()
         while items.count < count {
             let randomNumber : UInt32 = arc4random_uniform(UInt32(fromFoods.count))
-            items.insert(fromFoods[Int(randomNumber)])
+            let selectedFood = fromFoods[Int(randomNumber)]
+            if hasLiquid == false/* && selectedFood.alwaysEatenWithOneOf.count == 0*/ {
+                items.insert(selectedFood)
+            }
+            
+            if selectedFood.foodType.contains(DataHandler.getFoodType(Constants.drinkFoodType)) {
+                hasLiquid = true
+            }
         }
         return Array(items)
     }

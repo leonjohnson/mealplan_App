@@ -537,7 +537,14 @@ class MealPlanAlgorithm : Object{
                 
                 var leftOverForThisMeal = [eatNoMoreThan[0], eatNoMoreThan[1], eatNoMoreThan[2]]
                 
-                
+                #if DEBUG
+                for (index,foodArray) in sortedFoodBasket.enumerated(){
+                    for food in foodArray{
+                        print("\(food.name)\n")
+                    }
+                }
+                return [dailyMealPlan]
+                #endif
                 
                 //divide kcal required by number of meals, each one should not be +-20% of this
                 var loop = 0
