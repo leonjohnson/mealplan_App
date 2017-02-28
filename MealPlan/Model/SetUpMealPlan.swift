@@ -211,6 +211,7 @@ class SetUpMealPlan: NSObject {
         try! realm.write {
             realm.add(newWeek)
         }
+        NotificationController.createdNewMeal()
     }
     
     static func createNewDailyMeaPlanslFor(week: Week)->[DailyMealPlan]{

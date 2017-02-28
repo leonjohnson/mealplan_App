@@ -351,6 +351,7 @@ struct Constants {
     static let no_value_stated = "No value"
     
     static let HAS_PROFILE = "hasProfile"
+    static let NOTIFICATION_ALLOWED = "notificationAllowed"
     static let FIRST_CALORIE_CUT = "firstCalorieCut"
     static let STANDARD_CALORIE_CUT = "standardCalorieCut"
     static let standard_calorie_increase_for_muscle = 1.15

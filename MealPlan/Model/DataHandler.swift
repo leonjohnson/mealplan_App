@@ -295,8 +295,8 @@ class DataHandler: NSObject {
     static func getNamesOfDisLikedFoods()->[String]{
         let realm = try! Realm()
         let profile = realm.objects(FoodsDisliked.self).first
+        if (profile != nil && profile?.foods != nil &&   (profile?.foods.count)! > 0){
         let results : [String] = (profile?.foods.map {$0.name})!
-        if((profile) != nil){
             return results
         }else{
             return  [""];

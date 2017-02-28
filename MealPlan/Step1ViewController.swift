@@ -173,6 +173,10 @@ class Step1ViewController: UIViewController, UIPickerViewDataSource, UIPickerVie
             bio.numberOfResistanceSessionsEachWeek = pickerDBVal.numberOfResistanceSessionsEachWeek
             bio.numberOfCardioSessionsEachWeek = pickerDBVal.numberOfCardioSessionsEachWeek
             bio.hoursOfActivity = Double(pickerDBVal.numberOfCardioSessionsEachWeek + pickerDBVal.numberOfResistanceSessionsEachWeek)
+ 
+            if(settingsControl == true){
+                nextButton.setTitle("SAVE", for: UIControlState.normal);
+            }
             
         }
         

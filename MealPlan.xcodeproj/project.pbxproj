@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		4A504E9B1DF6A9D400719B0B /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A504E9A1DF6A9D400719B0B /* UpdateController.swift */; };
 		4A504E9D1DF6B79500719B0B /* UpdateController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */; };
+		4A512C3D1E655EB9006FBBD8 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A512C3C1E655EB9006FBBD8 /* Profile.storyboard */; };
+		4A512C3F1E656417006FBBD8 /* ProfileViewControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A512C3E1E656417006FBBD8 /* ProfileViewControllerTableViewController.swift */; };
+		4A69FB941E6428C10029E73D /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A69FB931E6428C10029E73D /* UserNotifications.framework */; };
+		4A6F656F1E640EAF0066B9BD /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6F656E1E640EAF0066B9BD /* NotificationController.swift */; };
 		4ADE43481DF6874B00491005 /* MealPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADE43471DF6874B00491005 /* MealPlanTests.swift */; };
 		5D0D828B2EFCEEDCF9A6AA8D /* Pods_MealPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3AF48C698D6F7E38C608B2 /* Pods_MealPlan.framework */; };
 		B93B729C44D3525F62D13B57 /* Pods_MealPlanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C566C2623EA159E5FA97288 /* Pods_MealPlanTests.framework */; };
@@ -135,6 +139,10 @@
 		3C566C2623EA159E5FA97288 /* Pods_MealPlanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MealPlanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A504E9A1DF6A9D400719B0B /* UpdateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UpdateController.storyboard; sourceTree = "<group>"; };
+		4A512C3C1E655EB9006FBBD8 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		4A512C3E1E656417006FBBD8 /* ProfileViewControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTableViewController.swift; sourceTree = "<group>"; };
+		4A69FB931E6428C10029E73D /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		4A6F656E1E640EAF0066B9BD /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		4ADE43451DF6874B00491005 /* MealPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MealPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ADE43471DF6874B00491005 /* MealPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanTests.swift; sourceTree = "<group>"; };
 		4ADE43491DF6874B00491005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -261,6 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A69FB941E6428C10029E73D /* UserNotifications.framework in Frameworks */,
 				5D0D828B2EFCEEDCF9A6AA8D /* Pods_MealPlan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +287,7 @@
 		0B9CF51514F79416B6331419 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A69FB931E6428C10029E73D /* UserNotifications.framework */,
 				ACFD24E8491873D32D6D5FC8 /* Pods_DailyMeals.framework */,
 				5E3AF48C698D6F7E38C608B2 /* Pods_MealPlan.framework */,
 				3C566C2623EA159E5FA97288 /* Pods_MealPlanTests.framework */,
@@ -478,6 +488,7 @@
 				F7E3C5541DDBC44300DA2696 /* miniTableViewCell.xib */,
 				4A504E9C1DF6B79500719B0B /* UpdateController.storyboard */,
 				F7A61B691E12E0240099DE42 /* inCell.xib */,
+				4A512C3C1E655EB9006FBBD8 /* Profile.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -509,6 +520,8 @@
 				F78AB6EF1DBE6DA400BB40EA /* CaloriesViewController.swift */,
 				F7E3C55B1DDE4B7C00DA2696 /* tb.swift */,
 				F712C4621E364F5A003117DE /* LikeOrDislike.swift */,
+				4A6F656E1E640EAF0066B9BD /* NotificationController.swift */,
+				4A512C3E1E656417006FBBD8 /* ProfileViewControllerTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -627,12 +640,12 @@
 					4ADE43441DF6874B00491005 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = YP6WP7PU57;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 965A5F0B1BFC48D00055ACA4;
 					};
 					965A5F0B1BFC48D00055ACA4 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 644582FWFB;
+						DevelopmentTeam = 67CQ5P77AH;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -646,6 +659,7 @@
 					};
 					965A5F2C1BFC48D00055ACA4 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = YP6WP7PU57;
 						LastSwiftMigration = 0810;
 						TestTargetID = 965A5F0B1BFC48D00055ACA4;
 					};
@@ -695,6 +709,7 @@
 				F74F96D71E0839F2009ADA2D /* FirstView.xib in Resources */,
 				F7E3C5561DDBC44300DA2696 /* miniTableViewCell.xib in Resources */,
 				F7E3C5441DD4AF0F00DA2696 /* Bot.storyboard in Resources */,
+				4A512C3D1E655EB9006FBBD8 /* Profile.storyboard in Resources */,
 				F78AB7461DBE6DA400BB40EA /* initialLoad3.json in Resources */,
 				F7FB35001DC95F0B00CAB6B7 /* TrackingUsersProgress.storyboard in Resources */,
 				F7E3C5461DD4AF6E00DA2696 /* SearchForFood.storyboard in Resources */,
@@ -884,6 +899,7 @@
 				F78AB7601DBE6DA400BB40EA /* PayemtAddsTableViewCell.swift in Sources */,
 				F7C4804B1DBFFB0000572706 /* RealmString.swift in Sources */,
 				F78AB7531DBE6DA400BB40EA /* FoodsDisliked.swift in Sources */,
+				4A6F656F1E640EAF0066B9BD /* NotificationController.swift in Sources */,
 				F78AB75D1DBE6DA400BB40EA /* Connect.swift in Sources */,
 				F78AB73E1DBE6DA400BB40EA /* DetailViewController.swift in Sources */,
 				F7DAD57C1E27CC8D004656FC /* ChangeMacros.swift in Sources */,
@@ -897,6 +913,7 @@
 				F78AB7551DBE6DA400BB40EA /* FoodType.swift in Sources */,
 				F78AB74C1DBE6DA400BB40EA /* Biographical.swift in Sources */,
 				F7E3C5421DD2225E00DA2696 /* BotController.swift in Sources */,
+				4A512C3F1E656417006FBBD8 /* ProfileViewControllerTableViewController.swift in Sources */,
 				F78AB76C1DBE6DA400BB40EA /* Step4ViewController.swift in Sources */,
 				F78AB7541DBE6DA400BB40EA /* FoodsLiked.swift in Sources */,
 				F78AB75F1DBE6DA400BB40EA /* PageItemController.swift in Sources */,
@@ -975,6 +992,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YP6WP7PU57;
 				INFOPLIST_FILE = MealPlanTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
@@ -997,6 +1015,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = YP6WP7PU57;
 				INFOPLIST_FILE = MealPlanTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
@@ -1049,7 +1068,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
@@ -1095,7 +1114,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
@@ -1116,9 +1135,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MealPlan/MealPlan.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Leon Johnson (644582FWFB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zalih@mail.com (3279KX877V)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 67CQ5P77AH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1127,7 +1146,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan.beta1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1147,9 +1166,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MealPlan/MealPlan.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Leon Johnson (644582FWFB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zalih@mail.com (3279KX877V)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 67CQ5P77AH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1158,7 +1177,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.meals.MealPlan.beta1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1173,6 +1192,7 @@
 		965A5F3D1BFC48D00055ACA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = YP6WP7PU57;
 				INFOPLIST_FILE = MealPlanUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMealsUITests;
@@ -1187,6 +1207,7 @@
 		965A5F3E1BFC48D00055ACA4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = YP6WP7PU57;
 				INFOPLIST_FILE = MealPlanUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.meals.DailyMealsUITests;
