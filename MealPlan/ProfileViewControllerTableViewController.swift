@@ -82,19 +82,19 @@ class ProfileViewControllerTableViewController: UITableViewController {
                 break
             case 1:
                 cell.textLabel?.text = "Hours of Cardio"
-                cell.detailTextLabel?.text = (String(describing: bio?.numberOfCardioSessionsEachWeek))
+                cell.detailTextLabel?.text = (bio?.numberOfCardioSessionsEachWeek.description)
                  break
             case 2:
                 cell.textLabel?.text = "Hours of Weights/Sports"
-                cell.detailTextLabel?.text = (String(describing: bio?.hoursOfActivity))
+                cell.detailTextLabel?.text = (bio?.hoursOfActivity.description)
                  break
             case 3:
                   cell.textLabel?.text = "Weight"
-                cell.detailTextLabel?.text = (String(describing: bio?.weightMeasurement) + " " + (bio?.weightUnit)!)
+                cell.detailTextLabel?.text = ((bio?.weightMeasurement.description)! + " " + (bio?.weightUnit)!)
                  break
             case 4:
                  cell.textLabel?.text = "Height"
-                cell.detailTextLabel?.text = (String(describing: bio?.heightMeasurement) + " " +  (bio?.heightUnit)!)
+                cell.detailTextLabel?.text = ((bio?.heightMeasurement.description)! + " " +  (bio?.heightUnit)!)
                  break
             case 5:
                  cell.textLabel?.text = "Age"
@@ -102,7 +102,7 @@ class ProfileViewControllerTableViewController: UITableViewController {
                  break
             case 6:
                  cell.textLabel?.text = "Weeks Remain"
-                cell.detailTextLabel?.text = String(describing: bio?.mealplanDuration)
+                cell.detailTextLabel?.text =  bio?.mealplanDuration.description
                  break
             case 7:
                  cell.textLabel?.text = "Activity levels at Work"
