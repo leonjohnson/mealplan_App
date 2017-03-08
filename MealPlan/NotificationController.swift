@@ -11,6 +11,8 @@ import UserNotifications
 
 class NotificationController:UIViewController  {
 
+    static let intervel = 6.5 * 24 * 60 * 60 ;
+
     @IBOutlet weak var btnswitch: UISwitch!
 
 
@@ -59,7 +61,7 @@ class NotificationController:UIViewController  {
         content.categoryIdentifier = "Messages"
 
         let trigger = UNTimeIntervalNotificationTrigger(
-            timeInterval: 10.0,
+            timeInterval: intervel,
             repeats: false)
 
         let request = UNNotificationRequest(
