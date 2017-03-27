@@ -14,6 +14,7 @@ class LikeOrDislike: UIViewController {
     @IBOutlet var likeButton : UIView!
     @IBOutlet var dislikeButton : UIView!
     @IBOutlet var doneButton : MPButton!
+    @IBOutlet var foodImageView : UIImageView!
     
     var data : [Food] = DataHandler.foodsThatRequireRating()
     var index = 0
@@ -72,9 +73,18 @@ class LikeOrDislike: UIViewController {
         } else {
             let name = data[index].name
             if let first_word = name.components(separatedBy: " ").first {
+                print("going to look for: \(first_word.lowercased())")
                 foodLabel.text = first_word + "?"
+                foodImageView.image = UIImage(named: first_word.localizedLowercase)
+                if UIImage(named: first_word.localizedLowercase) != nil {
+                }
             } else {
                 foodLabel.text = data[index].name + "?"
+                print("going to look for: \(data[index].name.lowercased())")
+                if UIImage(named: data[index].name.lowercased()) != nil {
+                    foodImageView.image = UIImage(named: data[index].name.localizedLowercase)
+                }
+                
             }
         }
     }

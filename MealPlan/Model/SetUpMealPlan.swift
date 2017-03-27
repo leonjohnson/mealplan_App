@@ -168,7 +168,7 @@ class SetUpMealPlan: NSObject {
         
         if mealPlanStartingToday != nil {
             let futureWeeksPredicate = NSPredicate(format: "start_date >= %@", today as NSDate)
-            let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
+            let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byKeyPath: "start_date", ascending: true)
             let weeksAheadArray : [Week] = weeksAhead.map {$0}
             return (true, weeksAheadArray)
         }
@@ -176,7 +176,7 @@ class SetUpMealPlan: NSObject {
         
         let futureWeeksPredicate = NSPredicate(format: "start_date > %@", aWeekAgo as NSDate)
         
-        let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byProperty: "start_date", ascending: true)
+        let weeksAhead = realm.objects(Week.self).filter(futureWeeksPredicate).sorted(byKeyPath: "start_date", ascending: true)
         let weeksAheadArray : [Week] = weeksAhead.map {$0}
         
         if weeksAheadArray.count == 0 {

@@ -8,6 +8,7 @@ import UIKit
 import RealmSwift
 import FacebookCore
 import MessageUI
+import Spring
 
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -83,6 +84,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
     var rowTapped : IndexPath = IndexPath()
     
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         var stringWithName = DataHandler.getActiveUser().first_name
@@ -95,15 +98,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let buttonLabel = NSAttributedString(string:"Edit", attributes:[NSFontAttributeName:Constants.EDIT_BUTTON, NSForegroundColorAttributeName:Constants.MP_WHITE])
         editLabel.setAttributedTitle(buttonLabel, for: .normal)
         
-        let topLayer = CALayer()
-        topLayer.backgroundColor = UIColor.white.cgColor.copy(alpha: 0.5)
-        topLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.5)
-        let bottomLayer = CALayer()
-        bottomLayer.backgroundColor = UIColor.white.cgColor.copy(alpha: 0.5)
-        bottomLayer.frame = CGRect(x: 0, y: (navigatorView.frame.height), width: self.view.frame.width, height: 0.5)
         
-        navigatorView.layer.addSublayer(topLayer)
-        navigatorView.layer.addSublayer(bottomLayer)
         
         
         
@@ -111,6 +106,8 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         paragraphStyle.alignment = .center
         mealPlanListTable.isEditing = false
         AppEventsLogger.log("MealPlanViewController view will appear")
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -193,6 +190,16 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //            }
         //        })
         // Do any additional setup after loading the view.
+        
+        let topLayer = CALayer()
+        topLayer.backgroundColor = UIColor.white.cgColor.copy(alpha: 0.5)
+        topLayer.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 0.5)
+        let bottomLayer = CALayer()
+        bottomLayer.backgroundColor = UIColor.white.cgColor.copy(alpha: 0.5)
+        bottomLayer.frame = CGRect(x: 0, y: (navigatorView.frame.height), width: self.view.frame.width, height: 0.5)
+        
+        navigatorView.layer.addSublayer(topLayer)
+        navigatorView.layer.addSublayer(bottomLayer)
     }
 
     
@@ -432,7 +439,7 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         let vheadView = UIView()
         vheadView.backgroundColor = UIColor.clear
         let headerCell = UILabel()
-        headerCell.frame=CGRect(x: 10, y: 10, width: tableView.frame.width-30, height: 20)
+        headerCell.frame = CGRect(x: 10, y: 10, width: tableView.frame.width-30, height: 20)
         vheadView.addSubview(headerCell)
         headerCell.attributedText = NSAttributedString(string: meals[section].name, attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
@@ -453,7 +460,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         calorieCountLabel.attributedText = NSAttributedString(string: totalCaloriesString + " kcal", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_TITLE, NSForegroundColorAttributeName:Constants.MP_WHITE])
         vheadView.addSubview(calorieCountLabel)
         
-        //create button inside header view
         let addItemButton = UIButton()
         addItemButton.frame = CGRect(x: 10, y: 25, width: self.view.frame.size.width - 100, height: 35)
         //addItemButton.setTitle("Add item + ", forState: UIControlState.Normal)
@@ -470,7 +476,6 @@ class MealPlanViewController: UIViewController, UITableViewDataSource, UITableVi
         //let sep = UIView(frame:CGRectMake(0, 55, self.view.frame.size.width, 1) )
         //sep.backgroundColor = UIColor.whiteColor()
         //vheadView.addSubview(sep)
-        
         return vheadView
     }
     

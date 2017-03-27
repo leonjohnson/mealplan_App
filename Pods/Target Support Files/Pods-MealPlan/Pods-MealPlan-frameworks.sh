@@ -98,6 +98,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Reachability/Reachability.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift/RealmSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Spring/Spring.framework"
   install_framework "$BUILT_PRODUCTS_DIR/UnderKeyboard/UnderKeyboard.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -115,5 +116,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Reachability/Reachability.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift/RealmSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Spring/Spring.framework"
   install_framework "$BUILT_PRODUCTS_DIR/UnderKeyboard/UnderKeyboard.framework"
 fi

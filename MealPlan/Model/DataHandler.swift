@@ -84,7 +84,7 @@ class DataHandler: NSObject {
         let notProteinBreakfastFood = NSPredicate(format: "NOT SELF.name IN %@", names)
         let breakieResults = realm.objects(Food.self).filter(nonProteinBreakfastCompound).filter(notProteinBreakfastFood)
         let nonProteinBreakfastFoods = getRandomSelection(fromFoods: Array(breakieResults), count: 3)
-        print("get 3 breakfast foods other than proteins:\n")
+        print("\nget 3 breakfast foods other than proteins:")
         for food in nonProteinBreakfastFoods{
             print("\(food.name)")
         }
@@ -100,7 +100,7 @@ class DataHandler: NSObject {
         let foodResults = realm.objects(Food.self).filter(nonBreakfastProteinCompoundPred)
         let fourProteins = getRandomSelection(fromFoods: Array(foodResults), count: 4)
         foodBasket[proteinIndex].append(contentsOf: fourProteins)
-        print("get 4 protein sources, non breakfast, that are within my diet style:\n")
+        print("\nget 4 protein sources, non breakfast, that are within my diet style:")
         for food in fourProteins{
             print("\(food.name)")
         }

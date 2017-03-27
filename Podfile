@@ -15,6 +15,7 @@ target 'MealPlan' do
     pod 'FacebookCore'
     pod 'FacebookLogin'
     pod 'FacebookShare'
+    pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
 end
 
 target 'MealPlanTests' do

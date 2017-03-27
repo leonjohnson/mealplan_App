@@ -543,7 +543,7 @@ class MealPlanAlgorithm : Object{
                         print("\(food.name)\n")
                     }
                 }
-                return [dailyMealPlan]
+                //return [dailyMealPlan]
                 #endif
                 
                 //divide kcal required by number of meals, each one should not be +-20% of this

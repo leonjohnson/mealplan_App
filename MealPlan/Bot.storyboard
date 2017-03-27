@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7Q8-yP-9rI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7Q8-yP-9rI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -74,8 +74,13 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bde-8u-bTO">
-                                <rect key="frame" x="41" y="371" width="97" height="96"/>
-                                <color key="backgroundColor" red="0.981854856" green="0.43127131460000001" blue="0.42322295900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="41" y="421" width="97" height="96"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="like" translatesAutoresizingMaskIntoConstraints="NO" id="cl3-n6-c81">
+                                        <rect key="frame" x="0.0" y="0.0" width="97" height="96"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="96" id="RTM-Jl-Df4"/>
@@ -83,7 +88,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food preferences" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ef-Ga-yUD">
-                                <rect key="frame" x="26" y="35" width="323.5" height="35"/>
+                                <rect key="frame" x="26" y="35" width="323" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="6RD-0Q-fb0"/>
                                 </constraints>
@@ -102,8 +107,17 @@
                                 </variation>
                             </label>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZJE-eg-CvY">
-                                <rect key="frame" x="237" y="370" width="97" height="97"/>
-                                <color key="backgroundColor" red="0.5179978609" green="0.84126728770000003" blue="0.78084480759999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="237" y="420" width="97" height="97"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dislike" translatesAutoresizingMaskIntoConstraints="NO" id="XCB-Vg-PbY">
+                                        <rect key="frame" x="0.0" y="0.0" width="97" height="97"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES"/>
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="97" id="3s2-ON-dZ6"/>
@@ -111,8 +125,9 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HJv-uY-ZBb" customClass="MPButton" customModule="MealPlan" customModuleProvider="target">
-                                <rect key="frame" x="36" y="555" width="298" height="50"/>
+                                <rect key="frame" x="36" y="567" width="298" height="50"/>
                                 <color key="backgroundColor" red="0.30796393750000001" green="0.3627106249" blue="0.88787561660000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Done"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="uhE-C1-bdw"/>
                                 </constraints>
@@ -130,14 +145,32 @@
                                     <segue destination="pK2-R4-G12" kind="presentation" id="oPs-zZ-sry"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26n-1s-vfn">
-                                <rect key="frame" x="106" y="150" width="163" height="76.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="64"/>
-                                <color key="textColor" red="0.29016065600000002" green="0.29021644590000001" blue="0.29015710950000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Vdc-8o-F1O">
+                                <rect key="frame" x="36" y="150" width="268" height="89"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spinach?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26n-1s-vfn">
+                                        <rect key="frame" x="0.0" y="23" width="159" height="43"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                        <color key="textColor" red="0.29016065600000002" green="0.29021644590000001" blue="0.29015710950000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="duX-au-ag7">
+                                        <rect key="frame" x="179" y="0.0" width="89" height="89"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="89" id="UF3-TJ-TYu"/>
+                                            <constraint firstAttribute="height" constant="89" id="rPQ-31-zTb"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="duX-au-ag7" firstAttribute="top" secondItem="Vdc-8o-F1O" secondAttribute="top" id="wqF-z2-f7f"/>
+                                </constraints>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 3 out of 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6u-n9-RSZ">
-                                <rect key="frame" x="129" y="75" width="117.5" height="20"/>
+                                <rect key="frame" x="129.5" y="75" width="117.5" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="OTu-0u-ANf"/>
                                 </constraints>
@@ -166,23 +199,24 @@
                             <constraint firstItem="dSB-23-Yyt" firstAttribute="top" secondItem="GFO-fE-aCq" secondAttribute="bottom" constant="507" id="3vH-fO-mqN"/>
                             <constraint firstItem="HJv-uY-ZBb" firstAttribute="leading" secondItem="GFO-fE-aCq" secondAttribute="leading" id="6vT-RV-pYk"/>
                             <constraint firstItem="GFO-fE-aCq" firstAttribute="centerX" secondItem="6FC-vg-qZ8" secondAttribute="centerX" id="789-bC-dO1"/>
-                            <constraint firstItem="dSB-23-Yyt" firstAttribute="top" secondItem="HJv-uY-ZBb" secondAttribute="bottom" constant="62" id="7fD-CF-ghG"/>
+                            <constraint firstItem="dSB-23-Yyt" firstAttribute="top" secondItem="HJv-uY-ZBb" secondAttribute="bottom" constant="50" id="7fD-CF-ghG"/>
                             <constraint firstItem="YHj-vO-peC" firstAttribute="leading" secondItem="6FC-vg-qZ8" secondAttribute="leadingMargin" constant="10" id="CPv-Lc-Lfm"/>
-                            <constraint firstItem="26n-1s-vfn" firstAttribute="top" secondItem="C6u-n9-RSZ" secondAttribute="bottom" constant="55" id="ELn-MP-ThU"/>
                             <constraint firstItem="YHj-vO-peC" firstAttribute="top" secondItem="6FC-vg-qZ8" secondAttribute="topMargin" constant="35" id="EhT-NA-pYq"/>
                             <constraint firstItem="C6u-n9-RSZ" firstAttribute="centerX" secondItem="7ef-Ga-yUD" secondAttribute="centerX" id="IJn-lD-RYO"/>
-                            <constraint firstItem="dSB-23-Yyt" firstAttribute="top" secondItem="ZJE-eg-CvY" secondAttribute="bottom" constant="200" id="MN3-di-5IU"/>
+                            <constraint firstItem="dSB-23-Yyt" firstAttribute="top" secondItem="ZJE-eg-CvY" secondAttribute="bottom" constant="150" id="MN3-di-5IU"/>
                             <constraint firstItem="Bde-8u-bTO" firstAttribute="leading" secondItem="6FC-vg-qZ8" secondAttribute="leadingMargin" constant="25" id="ONx-vh-vqc"/>
-                            <constraint firstItem="dSB-23-Yyt" firstAttribute="top" secondItem="Bde-8u-bTO" secondAttribute="bottom" constant="200" id="ZSr-RF-DCp"/>
+                            <constraint firstItem="dSB-23-Yyt" firstAttribute="top" secondItem="Bde-8u-bTO" secondAttribute="bottom" constant="150" id="ZSr-RF-DCp"/>
                             <constraint firstItem="7ef-Ga-yUD" firstAttribute="top" secondItem="6FC-vg-qZ8" secondAttribute="topMargin" constant="35" id="cnr-yf-wYB"/>
                             <constraint firstItem="GFO-fE-aCq" firstAttribute="leading" secondItem="6FC-vg-qZ8" secondAttribute="leadingMargin" constant="20" id="gJH-wi-umL"/>
-                            <constraint firstItem="26n-1s-vfn" firstAttribute="centerX" secondItem="6FC-vg-qZ8" secondAttribute="centerX" id="giY-al-fFl"/>
+                            <constraint firstItem="Vdc-8o-F1O" firstAttribute="leading" secondItem="GFO-fE-aCq" secondAttribute="leading" id="gqV-2A-yb3"/>
                             <constraint firstItem="GFO-fE-aCq" firstAttribute="top" secondItem="ArY-SC-68M" secondAttribute="bottom" constant="81" id="ufq-5j-kVm"/>
+                            <constraint firstItem="Vdc-8o-F1O" firstAttribute="top" secondItem="C6u-n9-RSZ" secondAttribute="bottom" constant="55" id="vcm-Es-dLM"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="dislikeButton" destination="ZJE-eg-CvY" id="sb1-fo-aCl"/>
                         <outlet property="doneButton" destination="HJv-uY-ZBb" id="q0K-lK-c9A"/>
+                        <outlet property="foodImageView" destination="duX-au-ag7" id="cT3-HE-jGC"/>
                         <outlet property="foodLabel" destination="26n-1s-vfn" id="jTA-CM-J1m"/>
                         <outlet property="likeButton" destination="Bde-8u-bTO" id="nww-kT-2UI"/>
                     </connections>
@@ -909,6 +943,8 @@
     </scenes>
     <resources>
         <image name="back arrow" width="24" height="24"/>
+        <image name="dislike" width="57" height="58"/>
+        <image name="like" width="57" height="58"/>
         <image name="logo" width="156" height="37"/>
         <image name="up arrow" width="16" height="16"/>
     </resources>

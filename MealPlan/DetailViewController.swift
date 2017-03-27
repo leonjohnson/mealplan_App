@@ -1,5 +1,6 @@
 import UIKit
 import FacebookCore
+import Spring
 /*
 private extension Selector {
     static let hideKeyboard =
@@ -21,7 +22,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var producerNameLabel: UILabel!
     @IBOutlet var weightHolder: UIView!
     @IBOutlet var valServingType: UILabel!
-    @IBOutlet var valServingSize: UITextField!
+    @IBOutlet var valServingSize: SpringTextField!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var addFoodButton: UIButton!
     @IBOutlet var deleteFoodButton: UIButton!
@@ -132,6 +133,21 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         servingSizeTextLabel?.attributedText = NSAttributedString(string: "Serving size", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
         
         numberOfServingsTextLabel?.attributedText = NSAttributedString(string: "Number of servings", attributes: [NSFontAttributeName:Constants.MEAL_PLAN_FOODITEM_LABEL, NSForegroundColorAttributeName:Constants.MP_WHITE])
+        
+        
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore  {
+            //do nothing
+        } else {
+            valServingSize.animation = "squeezeDown"
+            valServingSize.duration = 0.9
+            valServingSize.animate()
+            print("First launch, setting UserDefault.")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        }
+        
+        
+        
         
 
         
