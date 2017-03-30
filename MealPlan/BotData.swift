@@ -1023,4 +1023,251 @@ class BotData: NSObject {
             static let didTap : Constants.botDidTap? = .quit
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    struct COACH_SAYS_HI {
+        static let questions : [String] = [
+            BotData.COACH_SAYS_HI.greeting.question,
+            BotData.COACH_SAYS_HI.dontCountCalories.question,
+            BotData.COACH_SAYS_HI.gentlyStart.question,
+            BotData.COACH_SAYS_HI.hereAreTheTips.question,
+            BotData.COACH_SAYS_HI.advice1.question,
+            BotData.COACH_SAYS_HI.advice2.question,
+            BotData.COACH_SAYS_HI.advice3.question,
+            BotData.COACH_SAYS_HI.notification.question,
+            BotData.COACH_SAYS_HI.notificationWillAppear.question,
+            BotData.COACH_SAYS_HI.noThanks.question]
+        
+        static let options : [[String]]  = [
+            BotData.COACH_SAYS_HI.greeting.tableViewList,
+            BotData.COACH_SAYS_HI.dontCountCalories.tableViewList,
+            BotData.COACH_SAYS_HI.gentlyStart.tableViewList,
+            BotData.COACH_SAYS_HI.hereAreTheTips.tableViewList,
+            BotData.COACH_SAYS_HI.advice1.tableViewList,
+            BotData.COACH_SAYS_HI.advice2.tableViewList,
+            BotData.COACH_SAYS_HI.advice3.tableViewList,
+            BotData.COACH_SAYS_HI.notification.tableViewList,
+            BotData.COACH_SAYS_HI.notificationWillAppear.tableViewList,
+            BotData.COACH_SAYS_HI.noThanks.tableViewList]
+        
+        static let answers : [[String]] = [[String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()],
+                                           [String()]
+        ]
+        
+        static let keyboardType : [Constants.botKeyboardValidationType]  = [
+            BotData.COACH_SAYS_HI.greeting.keyboardType,
+            BotData.COACH_SAYS_HI.dontCountCalories.keyboardType,
+            BotData.COACH_SAYS_HI.gentlyStart.keyboardType,
+            BotData.COACH_SAYS_HI.hereAreTheTips.keyboardType,
+            BotData.COACH_SAYS_HI.advice1.keyboardType,
+            BotData.COACH_SAYS_HI.advice2.keyboardType,
+            BotData.COACH_SAYS_HI.advice3.keyboardType,
+            BotData.COACH_SAYS_HI.notification.keyboardType,
+            BotData.COACH_SAYS_HI.notificationWillAppear.keyboardType,
+            BotData.COACH_SAYS_HI.noThanks.keyboardType]
+        
+        static let validation : [[[Constants.botContentValidationType:String?]]] = [
+            BotData.COACH_SAYS_HI.greeting.validationTypes,
+            BotData.COACH_SAYS_HI.dontCountCalories.validationTypes,
+            BotData.COACH_SAYS_HI.gentlyStart.validationTypes,
+            BotData.COACH_SAYS_HI.hereAreTheTips.validationTypes,
+            BotData.COACH_SAYS_HI.advice1.validationTypes,
+            BotData.COACH_SAYS_HI.advice2.validationTypes,
+            BotData.COACH_SAYS_HI.advice3.validationTypes,
+            BotData.COACH_SAYS_HI.notification.validationTypes,
+            BotData.COACH_SAYS_HI.notificationWillAppear.validationTypes,
+            BotData.COACH_SAYS_HI.noThanks.validationTypes]
+        
+        static let buttonText : [String?] = [
+            BotData.COACH_SAYS_HI.greeting.buttonText,
+            BotData.COACH_SAYS_HI.dontCountCalories.buttonText,
+            BotData.COACH_SAYS_HI.gentlyStart.buttonText,
+            BotData.COACH_SAYS_HI.hereAreTheTips.buttonText,
+            BotData.COACH_SAYS_HI.advice1.buttonText,
+            BotData.COACH_SAYS_HI.advice2.buttonText,
+            BotData.COACH_SAYS_HI.advice3.buttonText,
+            BotData.COACH_SAYS_HI.notification.buttonText,
+            BotData.COACH_SAYS_HI.notificationWillAppear.buttonText,
+            BotData.COACH_SAYS_HI.noThanks.buttonText]
+        
+        static let nextSteps : [Constants.botNextSteps] = [
+            BotData.COACH_SAYS_HI.greeting.nextSteps,
+            BotData.COACH_SAYS_HI.dontCountCalories.nextSteps,
+            BotData.COACH_SAYS_HI.gentlyStart.nextSteps,
+            BotData.COACH_SAYS_HI.hereAreTheTips.nextSteps,
+            BotData.COACH_SAYS_HI.advice1.nextSteps,
+            BotData.COACH_SAYS_HI.advice2.nextSteps,
+            BotData.COACH_SAYS_HI.advice3.nextSteps,
+            BotData.COACH_SAYS_HI.notification.nextSteps,
+            BotData.COACH_SAYS_HI.notificationWillAppear.nextSteps,
+            BotData.COACH_SAYS_HI.noThanks.nextSteps]
+        
+        static let didTAP : [Constants.botDidTap?] = [
+            BotData.COACH_SAYS_HI.greeting.didTap,
+            BotData.COACH_SAYS_HI.dontCountCalories.didTap,
+            BotData.COACH_SAYS_HI.gentlyStart.didTap,
+            BotData.COACH_SAYS_HI.hereAreTheTips.didTap,
+            BotData.COACH_SAYS_HI.advice1.didTap,
+            BotData.COACH_SAYS_HI.advice2.didTap,
+            BotData.COACH_SAYS_HI.advice3.didTap,
+            BotData.COACH_SAYS_HI.notification.didTap,
+            BotData.COACH_SAYS_HI.notificationWillAppear.didTap,
+            BotData.COACH_SAYS_HI.noThanks.didTap]
+        
+        struct greeting {
+            static let question = "Hey Leon, this is Coach! Your meal plan has been created and I can't wait for you to get started!"
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let keyboardType = Constants.botKeyboardValidationType.text
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct dontCountCalories {
+            static let question = "You don’t need to count calories or macronutrients, it’s all been done for you! You simply follow your meal plan, every day. If you eat anything else you need to log it, and if you don't eat an item you need to delete it from your meal plan."
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct gentlyStart {
+            static let question = "I'll start you off gently. For the first week you need to eat all of the foods in the meal plan plus any extra foods you want. Just add them in the app."
+            static let tableViewList:[String] = ["Option 1", "Option 2"]
+            static let buttonText : String? = nil
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .awaitResponse
+        }
+        
+        struct hereAreTheTips {
+            static let question = "Here are a 3 tips to help you succeed in your first week and beyond:"
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct advice1 {
+            static let question = "1. Preparation IS KEY.\nBuy your food in advance or know where you're going to get each meal from before you need to eat it. "
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.text
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.minCharacterCount:"2"]
+            ]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .awaitResponse
+        }
+        
+        
+        struct advice2 {
+            static let question = "2. To know how much you're eating, you'll need scales to weigh your food.\nGet a food scale."
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct advice3 {
+            static let question = "3. You have got to stay active!\nEnsure you stick with all of the physical activities that you told me about during the sign up process."
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .hurryAlong
+        }
+        
+        struct notification {
+            static let question = "Lastly, I'd like to send you an occasional notification to help you with your meal plan. It's customisable and you can stop them whenever you like. Is that okay?"
+            static let tableViewList:[String] = [Constants.BOOL_YES,
+                                                 Constants.BOOL_NO]
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let didTap : Constants.botDidTap? = nil
+            static let nextSteps : Constants.botNextSteps = .awaitResponse
+            
+        }
+        
+        struct notificationWillAppear {
+            static let question = "Great. In a moment you should see a pop-up asking for permission. Please tap 'OK'"
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let nextSteps : Constants.botNextSteps = .awaitResponse
+            static let didTap : Constants.botDidTap? = .requestNotificationPermission
+        }
+        
+        struct noThanks {
+            static let question = "No worries. If you ever change your mind, head over to your phones settings -> notifications and turn on notifcations from there. "
+            static let tableViewList:[String] = []
+            static let buttonText : String? = nil
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let nextSteps : Constants.botNextSteps = .awaitResponse
+            static let didTap : Constants.botDidTap? = .requestNotificationPermission
+        }
+        
+        struct ending {
+            static let question = "We're gonna work well together ☺️🙌. Let's get started!"
+            static let tableViewList:[String] = []
+            static let buttonText : String? = "Show me my meal plan"
+            static let tips : String = ""
+            static let keyboardType = Constants.botKeyboardValidationType.none
+            static let validationTypes : [[Constants.botContentValidationType:String?]] = [
+                [.none:nil]
+            ]
+            static let nextSteps : Constants.botNextSteps = .awaitResponse // next steps is what happens once the bubble and its data is displayed.
+            static let didTap : Constants.botDidTap? = .quit
+        }
+    }
 }

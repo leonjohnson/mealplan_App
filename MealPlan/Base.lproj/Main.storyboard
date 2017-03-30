@@ -190,7 +190,7 @@
         <scene sceneID="8SL-HJ-ULx">
             <objects>
                 <navigationController storyboardIdentifier="LogedInView" title="Meal Plan" navigationBarHidden="YES" id="0ll-Ml-c7K" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Meal Plan" image="Meal-50" selectedImage="Meal Filled-50" id="mMK-YU-fqF"/>
+                    <tabBarItem key="tabBarItem" title="Meal Plan" image="mealplan-1" selectedImage="mealplan-1" id="mMK-YU-fqF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xgJ-f9-HB8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4099,12 +4099,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Meal Filled-50" width="25" height="25"/>
-        <image name="Meal-50" width="25" height="25"/>
         <image name="More Filled" width="25" height="25"/>
         <image name="back" width="22" height="22"/>
         <image name="back arrow" width="24" height="24"/>
         <image name="backButton" width="24" height="24"/>
+        <image name="mealplan-1" width="25" height="25"/>
         <image name="next" width="22" height="22"/>
         <image name="up arrow" width="16" height="16"/>
     </resources>

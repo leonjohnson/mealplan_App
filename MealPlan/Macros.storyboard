@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -114,7 +114,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title="Macros and calories" id="T9k-hx-3FB">
-                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Edit" id="aaU-nI-vHY">
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="aaU-nI-vHY">
                                             <connections>
                                                 <segue destination="EwE-Tv-JIc" kind="presentation" id="dd4-Z2-Dwe"/>
                                             </connections>
@@ -204,7 +204,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Nutrition" image="Pie Chart-50" selectedImage="Pie Chart Filled-50" id="4Hm-Mx-zfn"/>
+                    <tabBarItem key="tabBarItem" title="Nutrition" image="nutrition" selectedImage="nutrition" id="4Hm-Mx-zfn"/>
                     <navigationItem key="navigationItem" id="J4G-0q-X58"/>
                     <connections>
                         <outlet property="caloriesCountLabel" destination="BS0-9B-W6B" id="zyL-pl-mjX"/>
@@ -351,7 +351,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Pie Chart Filled-50" width="25" height="25"/>
-        <image name="Pie Chart-50" width="25" height="25"/>
+        <image name="nutrition" width="25" height="22"/>
     </resources>
 </document>
