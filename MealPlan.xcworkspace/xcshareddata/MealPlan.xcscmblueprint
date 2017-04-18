@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1B9D4EBC5FAE3A5E2E2B2A03B210BA7340E4FADB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "1B9D4EBC5FAE3A5E2E2B2A03B210BA7340E4FADB" : 9223372036854775807,
+    "2D995C79877B7AF7A279CF630AE8A5F03DBD90D4" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F137C59F-C30E-494F-866D-E3A48CCE9DFE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "1B9D4EBC5FAE3A5E2E2B2A03B210BA7340E4FADB" : "mealapp_exp\/",
+    "2D995C79877B7AF7A279CF630AE8A5F03DBD90D4" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MealPlan",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "MealPlan.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/leonjohnson\/mealplan_App.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1B9D4EBC5FAE3A5E2E2B2A03B210BA7340E4FADB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "toobler.git.beanstalkapp.com:\/toobler\/mealsapp.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2D995C79877B7AF7A279CF630AE8A5F03DBD90D4"
+    }
+  ]
+}

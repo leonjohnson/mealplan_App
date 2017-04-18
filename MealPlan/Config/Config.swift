@@ -47,6 +47,10 @@ class Config: NSObject {
     static func hideAlert(){
         
     }
-    
+    static func pr(string:String){
+        #if DEBUG
+            print(string)
+        #endif
+    }
     
 }

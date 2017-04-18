@@ -15,7 +15,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     
     @IBOutlet var settingsTable : UITableView!
     @IBOutlet var settingsLabel : UILabel!
-    let imagesForSettings = ["AboutUs", "ContactUs"]
+    let imagesForSettings = ["AboutUs", "ContactUs","AboutUs"]
     let delegate = MailComposeDelegate()
     
     
@@ -40,7 +40,7 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if (section == 0){
-            return 2
+            return 3
         }else{
             return 1
         }
@@ -66,6 +66,9 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
         case 1:
             cell.textLabel?.text = "Contact us"
             cell.imageView?.image = imageName
+        case 2:
+            cell.textLabel?.text = "Notifications"
+            cell.imageView?.image = imageName
         default:
             break
         }
@@ -82,8 +85,13 @@ class settings: UIViewController, UITableViewDataSource, UITableViewDelegate,MFM
         
         if indexPath.row == 1{
             sendEmail()
+        }else if(indexPath.row == 2){
+            openNotification();
         }
-        self.settingsTable.deselectRow(at: indexPath, animated: true)
+        self.settingsTable.deselectRow(at: indexPath, animated: true) ;
+    }
+    func openNotification(){
+        performSegue(withIdentifier: "showNotificationController", sender: nil)
     }
 
     

@@ -28,18 +28,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
          #endif
         UpdateController.checkUpdate()
         SetUpMealPlan.loadDatabaseWithData()
-        
         AppEventsLogger.activate(application)
-        
+        Config.pr(string: "Move Out");
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
             
             let response = SetUpMealPlan.doesMealPlanExistForThisWeek()
-            
+          /*
             #if DEBUG
-                //DataHandler.getInitialFoods()
-                //SetUpMealPlan.createNewDailyMeaPlanslFor(week: response.weeksAheadIncludingCurrent[0])
+              _ =   DataHandler.getInitialFoods()
+              _ =  SetUpMealPlan.createNewDailyMeaPlanslFor(week: response.weeksAheadIncludingCurrent[0])
             #endif
-            
+            */
             let mealPlanExistsForThisWeek = response.yayNay
             
             if mealPlanExistsForThisWeek == false{
@@ -60,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     #if DEBUG
                     print("Case 2")
                     #endif
+
                     return //we're good so return to your meal plan
                 default:
                     // this could be because the user is between the 8th day and 12th day of a meal plan.
@@ -80,7 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
          1- if we're one day away from the week end, then ask for new details, delete next weeks plan, run a new meal plan for the next two weeks
          2-exit
          */
-        
+
+        Config.pr(string: "Move Out 2");
+
     }
     
     
@@ -159,11 +161,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         
         if(Config.getBoolValue(Constants.HAS_PROFILE)){
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
             let pvc = storyboard.instantiateViewController(withIdentifier: "feedback")
-            self.window?.rootViewController?.present(pvc, animated: true, completion: { () -> Void in
+         /*   self.window?.rootViewController?.present(pvc, animated: true, completion: { () -> Void in
                 UIApplication.shared.cancelAllLocalNotifications();
             })
+ */
             
         }
     }

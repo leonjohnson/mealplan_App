@@ -26,7 +26,7 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - Crashlytics (3.8.3):
+  - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
   - FacebookCore (0.2.0):
@@ -53,12 +53,11 @@ PODS:
   - JSQSystemSoundPlayer (2.0.1)
   - MBProgressHUD (1.0.0)
   - Reachability (3.2)
-  - Realm (2.4.2):
-    - Realm/Headers (= 2.4.2)
-  - Realm/Headers (2.4.2)
-  - RealmSwift (2.4.2):
-    - Realm (= 2.4.2)
-  - Spring (1.0.3)
+  - Realm (2.4.3):
+    - Realm/Headers (= 2.4.3)
+  - Realm/Headers (2.4.3)
+  - RealmSwift (2.4.3):
+    - Realm (= 2.4.3)
   - UnderKeyboard (4.0.2)
 
 DEPENDENCIES:
@@ -72,23 +71,12 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.0.0)
   - Reachability
   - RealmSwift
-  - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift3`)
   - UnderKeyboard (~> 4.0)
-
-EXTERNAL SOURCES:
-  Spring:
-    :branch: swift3
-    :git: https://github.com/MengTo/Spring.git
-
-CHECKOUT OPTIONS:
-  Spring:
-    :commit: 3a9227c6e9157e7b47f5ac1ee5abab2a56b50002
-    :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
@@ -100,11 +88,10 @@ SPEC CHECKSUMS:
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Realm: d27b758e12d62a3371879a065d4c40aa212c5a54
-  RealmSwift: 9556c0fe0f0cfecacfb755ae9e68ff379fc6bead
-  Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
+  Realm: e08d60b0048ccccd3949c8c28a92c4db5712d7e9
+  RealmSwift: 30d49739ccb3385d201242736ca4dda56aec9dfc
   UnderKeyboard: 6ec3057822332c985806da7c36b8dd57647d54e9
 
-PODFILE CHECKSUM: 7ca63baafc4c2801796106a336cfcd2831d9c59b
+PODFILE CHECKSUM: f80d286e493ee1b7e29dfb91db7abf60b8bdc4f9
 
 COCOAPODS: 1.1.1
